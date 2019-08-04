@@ -1,6 +1,6 @@
-name: "my-website"
+name: "Glass Frog Data Analysis"
 navbar:
-  title: "My Website"
+  title: "Glass Frog DAta Analysis"
   left:
     - text: "Home"
       href: index.html
