@@ -1,7 +1,7 @@
-name: "FrnaciscoPiccolo-website"
+name: "Glass Frog Data Analysis"
 output_dir: "."
 navbar:
-  title: "Francisco Piccolo Website"
+  title: "Glass Frog Data Analysis"
   left:
     - text: "Home"
       href: index.html
@@ -9,6 +9,8 @@ navbar:
       href: about.html
     - text: "Projects"
       href: project_1.html
+    - text: "Books"
+      href: books.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/FranciscoPiccolo
