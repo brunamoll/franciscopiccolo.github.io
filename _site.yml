@@ -1,8 +1,9 @@
-name: "Glass Frog Data Analysis"
+name: "nicks-website"
+output_dir: "."
 navbar:
-  title: "Glass Frog DAta Analysis"
+  title: "Nicks Website"
   left:
     - text: "Home"
       href: index.html
-    - text: "About"
+    - text: "About Me"
       href: about.html
