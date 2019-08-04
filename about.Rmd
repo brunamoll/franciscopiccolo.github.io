@@ -1,7 +1,7 @@
 ---
-title: "about"
+title: "About"
 ---
 
-# About page
+## Breve Resumo
 
-Este site tem como objetivo oferecer análises de dados feitas em R.
+Sou um profissional da área de dados e B.I, formado em Economia pela Puc Campinas e com experiência em empresas de logísitca e e-commerce.
