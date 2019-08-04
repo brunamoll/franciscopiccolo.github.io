@@ -4,4 +4,4 @@ title: "about"
 
 # About page
 
-Teste
+Este site tem como objetivo oferecer análises de dados feitas em R.

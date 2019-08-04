@@ -1,9 +1,13 @@
-name: "nicks-website"
+name: "FrnaciscoPiccolo-website"
 output_dir: "."
 navbar:
-  title: "Nicks Website"
+  title: "Francisco Piccolo Website"
   left:
     - text: "Home"
       href: index.html
     - text: "About Me"
       href: about.html
+output:
+  html_document:
+    theme: flatly
+    css: style.css
