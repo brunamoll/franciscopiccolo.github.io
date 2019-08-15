@@ -2,7 +2,6 @@ name: "Glass Frog Data Analysis"
 output_dir: "."
 navbar:
   title: "Glass Frog Data Analysis"
-  type: inverse
   left:
     - text: "Home"
       icon: fa-home
@@ -15,28 +14,14 @@ navbar:
       href: books.html
     - text: 'Projects'
       menu:
-        - text: 'Heading_1'
-        - text: "Project_1"
+        - text: '2018'
+        - text: "2019"
           href: project_1.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/FranciscoPiccolo
     - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/franciscopiccolo/
-      
-# Defaults
-defaults:
-  # _posts
-  - scope:
-      path: ""
-      type: posts
-    values:
-      layout: single
-      author_profile: true
-      read_time: true
-      comments: true
-      share: true
-      related: true
 
 output:
   html_document:
