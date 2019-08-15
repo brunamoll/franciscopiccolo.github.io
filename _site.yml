@@ -21,6 +21,7 @@ navbar:
           href: project_1.html
     - text: 'Random'
       icon: 'fas fa-dna'
+      href: random.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/FranciscoPiccolo

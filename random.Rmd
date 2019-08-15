@@ -1,0 +1,8 @@
+---
+title: "Assuntos diversos"
+output: html_document
+---
+
+##### Esta seção tratará de assuntos diversos, que possuem alguma relação com Data Science
+
+teste,teste
