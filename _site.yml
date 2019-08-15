@@ -15,13 +15,13 @@ navbar:
     - text: 'Projects'
       icon: 'fas fa-pencil-alt'
       menu:
-        - text: '2018'
-          href: project_2.html
         - text: '2019'
-          href: project_1.html
+          href: articles_2019_.html
     - text: 'Random'
       icon: 'fas fa-dna'
       href: random.html
+    - text: 'article'
+      href: article.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/FranciscoPiccolo
