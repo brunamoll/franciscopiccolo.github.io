@@ -336,6 +336,23 @@ $(document).ready(function () {
 <p>You can also embed plots, for example:</p>
 <p><img src="project_1_files/figure-html/pressure-1.png" width="672" /></p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<pre class="sql"><code>-- Tabela de estoque com dados atualizados no dia
+create table #stock
+distkey(src_fk_sku_simple_seller)
+sortkey(valid_from,valid_to,src_fk_sku_simple_seller)
+as
+select
+    1 as fk_company
+    ,material as src_fk_sku_simple_seller
+    ,calday
+    ,date(calday)::timestamp as valid_from
+    ,dateadd(second,-1,date(sysdate+1)) as valid_to
+    ,stock_qty_b002
+    ,stock_qty_b006
+from table_xyz
+where 1=1
+and calday = to_char(sysdate,&#39;YYYYMMDD&#39;)
+;</code></pre>
 </div>
 
 
