@@ -9,19 +9,20 @@ navbar:
     - text: "About"
       icon: fa-info
       href: about.html
-    - text: "Books"
-      icon: fa-book
-      href: books.html
+    - text: "Resources"
+      menu:
+      - text: 'Books'
+        href: books.html
+      - text: 'Courses'
+        icon: books.html
     - text: 'Projects'
       icon: 'fas fa-pencil-alt'
       menu:
         - text: '2019'
-          href: articles_2019_.html
+          href: articles_2019.html
     - text: 'Random'
       icon: 'fas fa-dna'
       href: random.html
-    - text: 'article'
-      href: article.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/FranciscoPiccolo
