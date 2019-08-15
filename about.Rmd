@@ -1,7 +1,6 @@
 ---
+title: 'Bio'
 ---
-
-#### Breve Resumo
 
 Sou de Jundiaí, formado em Economia pela Puc de Campinas-SP e profissional da área de Dados e B.I (a.k.a Inteligência de Negócios). Atuo há mais de 5 anos com análise de dados e data warehouse e atualmente venho aprimorando meus conhecimentos em Data Science, através de cursos, livros e projetos pessoais.
 

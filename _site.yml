@@ -2,15 +2,20 @@ name: "Glass Frog Data Analysis"
 output_dir: "."
 navbar:
   title: "Glass Frog Data Analysis"
+  type: inverse
   left:
     - text: "Home"
+      icon: fa-home
       href: index.html
     - text: "About"
+      icon: fa-info
       href: about.html
-    - text: "Projects"
-      href: project_1.html
-    - text: "Books"
-      href: books.html
+      menu:
+        - text: 'Heading_1'
+        - text: "Projects"
+          href: project_1.html
+        - text: "Books"
+          href: books.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/FranciscoPiccolo

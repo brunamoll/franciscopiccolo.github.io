@@ -263,7 +263,7 @@ $(document).ready(function () {
 
 
 
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -276,16 +276,29 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
 </li>
-<li>
-  <a href="about.html">About</a>
-</li>
-<li>
-  <a href="project_1.html">Projects</a>
-</li>
-<li>
-  <a href="books.html">Books</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-info"></span>
+     
+    About
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Heading_1</li>
+    <li>
+      <a href="project_1.html">Projects</a>
+    </li>
+    <li>
+      <a href="books.html">Books</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -314,7 +327,6 @@ $(document).ready(function () {
 </div>
 
 
-<p>####Index</p>
 <p>Este site tratará sobre análise de dados (a.k.a análise exploratória de dados), onde as análises serão feitas usando a linguagem R (que venho aprendendo desde 2017). Os dados para construção dos projetos, serão dados abertos que podem ser encontrados na web e farei o possível para disponibilizá-los na minha conta do Github. O nome do site ‘glass frog’ advém do fato de que este pequeno sapo possui uma pele transparente, sendo esta característia algum em comum com um dos objetivos da análise de dados, que é tornar as decisões e processos mais ‘transparentes’.</p>
 
 
