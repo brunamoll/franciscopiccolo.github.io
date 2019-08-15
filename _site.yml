@@ -23,6 +23,21 @@ navbar:
       href: https://github.com/FranciscoPiccolo
     - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/franciscopiccolo/
+      
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+
 output:
   html_document:
     theme: flatly
