@@ -19,6 +19,8 @@ navbar:
           href: project_2.html
         - text: '2019'
           href: project_1.html
+    - text: 'Random'
+      icon: 'fas fa-dna'
   right:
     - icon: fa-github fa-lg
       href: https://github.com/FranciscoPiccolo
@@ -27,5 +29,11 @@ navbar:
 
 output:
   html_document:
-    theme: flatly
+    theme: cosmo
+    highlight: textmate
     css: style.css
+    
+    
+    
+    
+    
