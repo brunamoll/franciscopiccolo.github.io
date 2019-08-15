@@ -1,15 +1,16 @@
-name: "Glass Frog Data Analysis"
+name: 'Glass Frog Data Analysis'
 output_dir: "."
 navbar:
-  title: "Glass Frog Data Analysis"
+  title: 'Glass Frog Data Analysis'
   left:
-    - text: "Home"
+    - text: 'Home'
       icon: fa-home
       href: index.html
-    - text: "About"
+    - text: 'About'
       icon: fa-info
       href: about.html
-    - text: "Resources"
+    - text: 'Resources'
+      icon: 'fas fa-brain'
       menu:
       - text: 'Books'
         href: books.html
