@@ -1,0 +1,61 @@
+---
+title: "Projetos desenvolvidos em 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Projeto_2, teste
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+#### Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+```{sql,eval=F,include=T}
+-- Tabela de estoque com dados atualizados no dia
+create table #stock
+distkey(src_fk_sku_simple_seller)
+sortkey(valid_from,valid_to,src_fk_sku_simple_seller)
+as
+select
+    1 as fk_company
+    ,material as src_fk_sku_simple_seller
+    ,calday
+    ,date(calday)::timestamp as valid_from
+    ,dateadd(second,-1,date(sysdate+1)) as valid_to
+    ,stock_qty_b002
+    ,stock_qty_b006
+from table_xyz
+where 1=1
+and calday = to_char(sysdate,'YYYYMMDD')
+;
+```
+
+
+
+
+
+
+
+
+
+
+

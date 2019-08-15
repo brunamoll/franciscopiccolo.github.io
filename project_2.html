@@ -12,7 +12,7 @@
 
 
 
-<title>Books</title>
+<title>Projetos desenvolvidos em 2019</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -336,13 +336,46 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Books</h1>
+<h1 class="title toc-ignore">Projetos desenvolvidos em 2019</h1>
 
 </div>
 
 
-<div id="livros-que-recomendo" class="section level5">
-<h5>Livros que recomendo</h5>
+<div id="projeto_2-teste" class="section level4">
+<h4>Projeto_2, teste</h4>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+<pre class="r"><code>summary(cars)</code></pre>
+<pre><code>##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00</code></pre>
+</div>
+<div id="including-plots" class="section level4">
+<h4>Including Plots</h4>
+<p>You can also embed plots, for example:</p>
+<p><img src="project_2_files/figure-html/pressure-1.png" width="672" /></p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<pre class="sql"><code>-- Tabela de estoque com dados atualizados no dia
+create table #stock
+distkey(src_fk_sku_simple_seller)
+sortkey(valid_from,valid_to,src_fk_sku_simple_seller)
+as
+select
+    1 as fk_company
+    ,material as src_fk_sku_simple_seller
+    ,calday
+    ,date(calday)::timestamp as valid_from
+    ,dateadd(second,-1,date(sysdate+1)) as valid_to
+    ,stock_qty_b002
+    ,stock_qty_b006
+from table_xyz
+where 1=1
+and calday = to_char(sysdate,&#39;YYYYMMDD&#39;)
+;</code></pre>
 </div>
 
 

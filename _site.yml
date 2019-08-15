@@ -13,9 +13,11 @@ navbar:
       icon: fa-book
       href: books.html
     - text: 'Projects'
+      icon: 'fas fa-pencil-alt'
       menu:
         - text: '2018'
-        - text: "2019"
+          href: project_2.html
+        - text: '2019'
           href: project_1.html
   right:
     - icon: fa-github fa-lg

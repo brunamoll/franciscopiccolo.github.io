@@ -2,5 +2,11 @@
 title: "Glass Frog Data Analysis"
 ---
 
-Este site tratará sobre análise de dados (a.k.a análise exploratória de dados), onde  as análises serão feitas usando a linguagem R (que venho aprendendo desde 2017). Os dados para construção dos projetos, serão dados abertos que podem ser encontrados na web e farei o possível para disponibilizá-los na minha conta do Github. O nome do site 'glass frog' advém do fato de que este pequeno sapo possui uma pele transparente, sendo esta característia algum em comum com um dos objetivos da análise de dados, que é tornar as decisões e processos mais 'transparentes'.
+Este site tratará sobre análise de dados (a.k.a análise exploratória de dados), onde  as análises serão feitas usando a linguagem R (que venho aprendendo desde 2017). Para desenvolver os projetos, irei utilizar dados abertos (públicos) que podem ser encontrados na web (colocarei o link sempre que possível) e em alguns casos a base de dados estará na minha conta do Github. 
+
+O nome do site 'Glass Frog' advém do fato de que este pequeno sapo possui uma pele transparente, sendo esta característia uma similaridade com um dos objetivos da análise de dados, que é tornar as decisões mais 'transparentes' e embasadas.
+
+O intuito dos projetos aqui desenvolvidos é mostrar como que uma base de dados pode ser explorada, bem como o funcionamento iterativo de um processo de análise exploratória de dados, onde ocorre a formulação da hipótese / pergunta, tratamento dos dados, geração de gráficos ou modelo estatístico e por fim a conclusão sobre a hipótese. Além destes propósitos, pelo fato de os projetos serem feito utilizando a linguagem R (que sou bastante fã), serão destacados os códigos criados em R para geração das análises, bem como pacotes necessários.
+
+Fiz este site tendo como referência um canal do Youtube de David Robinson, chamado [tidytuesday](https://www.youtube.com/channel/UCeiiqmVK07qhY-wvg3IZiZQ). Neste canal o autor cria lives realizando análises de dados de bases de dados que ele não tem prévio conhecimento e as vezes sobre assuntos que ele desconhece. Mesmo com este desafio, ele é capaz de gerar insights valiosos em um período curto de tempo (+/-60 minutos de vídeo).
 
