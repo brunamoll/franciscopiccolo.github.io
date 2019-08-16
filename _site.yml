@@ -10,14 +10,14 @@ navbar:
       icon: fa-info
       href: about.html
     - text: 'Resources'
-      icon: 'fas fa-brain'
+      icon: 'fab fa-react'
       menu:
       - text: 'Books'
         href: books.html
       - text: 'Courses'
-        icon: books.html
+        href: books.html
     - text: 'Projects'
-      icon: 'fas fa-pencil-alt'
+      icon: 'fas fa-code'
       menu:
         - text: '2019'
           href: articles_2019.html
