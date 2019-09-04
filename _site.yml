@@ -24,7 +24,7 @@ navbar:
       icon: 'fas fa-dna'
       href: random.html
     - text: 'Monografia'
-      href: monografia.html
+      href: Monografia.html
 
   right:
     - icon: fa-github fa-lg
