@@ -1,7 +1,5 @@
 ---
 title: 'Valuation com utilização da Simulação Monte carlo: Um estudo de caso'
-author: "Francisco Piccolo"
-date: "20/04/2019"
 output:
   html_document: default
   word_document: default
@@ -105,7 +103,7 @@ $VR$    = Valor residual
 
 $t$     = Período da projeção
 
-Segundo Viebig, Poddig e Varmaz (2008) o período de tempo em que se realiza a projeção é chamado de período competitivo da empresa e geralmente se utilizam 10 anos para projetar os fluxos de caixa. Após este período, o valor gerado pela empresa é chamado de Valor Residual e seu cálculo é feito de acordo com a fórmula abaixo (artigo (https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve).
+Segundo Viebig, Poddig e Varmaz (2008) o período de tempo em que se realiza a projeção é chamado de período competitivo da empresa e geralmente se utilizam 10 anos para projetar os fluxos de caixa. Após este período, o valor gerado pela empresa é chamado de Valor Residual e seu cálculo é feito de acordo com a fórmula abaixo [artigo] (https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve).
 
 $$VR=\frac{FCO}{(r-g)}$$
 Onde:
@@ -132,11 +130,11 @@ $CI$ = Investimentos realizados no período.
 
 $t$ = Taxa de Imposto de Renda (IR) e Constribuição Social sobre Lucro Líquido (CSLL).
 
-Assaf Neto (2012) indica que a obtenção do EBITDA pode ser feita através dos demonstrativos financeiros que a empresa publica. A utilização de lucros antes de juros, depreciação e amortização ocorre por conta de que, na questão de juros, a ideia é que o valor da empresa não deve depender de como os fundadores adquiriram capital para criar o negócio. Por outro lado, na questão da depreciação e amortização, estes são valores provisionados, que não serão gastos no exercício avaliado, por isso não devem impactar na valoração do negócio. 
+Assaf Neto (2012) indica que a obtenção do EBITDA pode ser feita através dos demonstrativos financeiros que a empresa publica. A utilização de lucros antes de juros, depreciação e amortização ocorre por conta de que, na questão de juros, a ideia é que o valor da empresa não deve depender de como os fundadores adquiriram capital para criar o negócio. Por outro lado, na questão da depreciação e amortização, estes são valores provisionados, que não serão gastos no exercício avaliado, por isso não devem impactar na valoração do negócio.
 
-A redução do imposto de renda ocorre por conta de que este valor não ficará com os investidores, por isso o valor da empresa deve refletir esta redução. O valor resultante deverá também estar líquido de investimentos, visto que este é um gasto que sai do caixa da empresa, portanto reduz o valor no presente para garantir rendimentos futuros, desta forma afeta o *valuation*. 
+A redução do imposto de renda ocorre por conta de que este valor não ficará com os investidores, por isso o valor da empresa deve refletir esta redução. O valor resultante deverá também estar líquido de investimentos, visto que este é um gasto que sai do caixa da empresa, portanto reduz o valor no presente para garantir rendimentos futuros, desta forma afeta o *valuation*.
 
-Após realizar o cálculo do Fluxo de Caixa Operacional, será necessário estabelecer a taxa de desconto deste fluxo de caixa, que representará o risco deste investimento e o custo de oportunidade dos acionistas da empresa. Para o Fluxo de Caixa Livre para a empresa, a taxa utilizada será obtida pelo custo médio ponderado do capital, mais conhecido como *Weight* *Average* *Cost* *of* *Capital* (WACC) e para o Fluxo de Caixa Livre para o acionista a taxa de desconto é o custo do capital próprio, obtido pela metodologia *Capital Asset Pricing Model* (CAPM). O presente trabalho utilizará o Fluxo de Caixa Livre para a empresa como Fluxo de Caixa Operacional, por isso será realizado o cálculo da taxa *WACC*. 
+Após realizar o cálculo do Fluxo de Caixa Operacional, será necessário estabelecer a taxa de desconto deste fluxo de caixa, que representará o risco deste investimento e o custo de oportunidade dos acionistas da empresa. Para o Fluxo de Caixa Livre para a empresa, a taxa utilizada será obtida pelo custo médio ponderado do capital, mais conhecido como *Weight* *Average* *Cost* *of* *Capital* (WACC) e para o Fluxo de Caixa Livre para o acionista a taxa de desconto é o custo do capital próprio, obtido pela metodologia *Capital Asset Pricing Model* (CAPM). O presente trabalho utilizará o Fluxo de Caixa Livre para a empresa como Fluxo de Caixa Operacional, por isso será realizado o cálculo da taxa *WACC*.
 
 No modelo de *valuation* pelo Fluxo de Caixa Descontado, o cálculo da taxa de desconto é a parte mais complexa, visto que este cálculo envolve estimativas de riscos que não podem ser encontradas com exatidão (Damodaran, 2012). Segundo [artigo](http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf), o método *WACC* para desconto de fluxos de caixa é a metodologia mais utilizada na área de finanças coportativas. e esta taxa representa o custo de oportunidade para investidores que direcionam capital para a companhia. Esta taxa deverá incluir o retorno demandado para cada tipo de investidor (i.e. acionistas e credores). 
 
@@ -187,11 +185,31 @@ $R_m - R_f$ = Diferença entre a taxa de retorno do mercado e a taxa de retorno 
 
 $\beta$     = Beta da empresa.
 
-Seguindo os conceitos de [artigo]((http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf), para o retorno de títulos com baixo risco $R_f$ pode-se utilizar a taxa Selic, visto que esta taxa é usada nos títulos públicos que são os de menor risco no Brasil. O retorno de mercado pode ser obtido através da taxa de rendimento obtida no mercado acionário, sendo neste caso uma boa alternativa o índice Bovespa
+Seguindo os conceitos de [artigo]((http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf), para o retorno de títulos com baixo risco $R_f$ pode-se utilizar a taxa Selic, visto que esta taxa é usada nos títulos públicos que são os de menor risco no Brasil. O retorno de mercado pode ser obtido através da taxa de rendimento obtida no mercado acionário, sendo neste caso uma boa alternativa o índice Bovespa.
 
-Geralmente, para a variável $R_f$, se utiliza a taxa Selic anual ou títulos do tesouro americano, que possuem risco próximo de zero. Para o retorno do mercado, é válido utilizar uma média do mercado de ações, como Índice Bovespa. O Beta da empresa indicará o quão sensível é a ação da empresa com relação ao mercado acionário, sendo que esta sensibilidade possui relação direta com o custo do capital próprio, pois é uma medida de risco.
+O Beta da empresa, de acordo com Assaf Neto (2012), indica o quão sensível é a ação da empresa com relação ao mercado acionário, sendo que esta sensibilidade possui relação direta com o custo do capital próprio, pois é uma medida de risco. De acordo com [artigo](http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf), o Beta quantificará a oscilação de uma ação e do mercado (utilizando um índice). Esta oscilação conjunta é calculada através da fórmula de regressão:
 
-Importante salientar que o risco será uma variável sempre presente na atividade de investimento e consequentemente na avaliação de empresas, visto que há uma relação forte e direta entre risco e retorno sobre o investimento (DAMODARAN, 2012). Para o mesmo autor o risco é definido como a probabilidade de receber um retorno sobre um investimento diferente do que se esperava, desta forma, o risco não é inerentemente algo negativo, pois há casos em que o risco, ao se materializar, gera ganhos superiores ao esperado. Após obter os dados para as variáveis de cada equação, será possível desenvolver o modelo de *valuation* pelo Fluxo de Caixa Descontado utilizando a fórmula indicada anteriormente. Conforme mencionado, ao se calcular o valor da empresa apenas com estas equações, será gerado um valor determinísticos para a empresa, visto que nenhuma variável apresentará comportamento estocástico, pois o Fluxo de Caixa Operacional será obtido através de uma média dos últimos anos, bem como a taxa de desconto será estática e também a taxa de crescimento para o valor residual. Desta forma, este modelo precisa ser aprimorado com a utilização da Simulação Monte Carlo.
+$$ \beta = \frac{COV(R_i;R_m)}{VAR(R_m)} $$
+Onde:
+
+$R_i$ = Retorno da ação
+
+$R_m$ = Retorno do mercado
+
+O seguinte gráfico contextualiza este movimento de valorização ou desvalorização da ação e do índice utilizado.
+
+```{r,eval=T,include=T,echo=F,warning=F}
+df <- data.frame(
+  a = rnorm(n=100,mean=1,sd=0.05),
+  b = a*(1+rnorm(n=100,mean=3,sd=0.00001))
+)
+
+ggplot(df,aes(x=a,y=b))+
+  geom_point()
+```
+
+
+Após obter os dados para as variáveis de cada equação, será possível desenvolver o modelo de *valuation* pelo Fluxo de Caixa Descontado utilizando a fórmula indicada anteriormente. Conforme mencionado, ao se calcular o valor da empresa apenas com estas equações, será gerado um valor determinísticos para a empresa, visto que nenhuma variável apresentará comportamento estocástico, pois o Fluxo de Caixa Operacional será obtido através de uma média dos últimos anos, bem como a taxa de desconto será estática e também a taxa de crescimento para o valor residual. Desta forma, este modelo precisa ser aprimorado com a utilização da Simulação Monte Carlo.
 
 ##### 1.2. Simulação Monte Carlo aplicada ao *valitation*
 

@@ -10,7 +10,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Francisco Piccolo" />
 
 
 <title>Valuation com utilização da Simulação Monte carlo: Um estudo de caso</title>
@@ -352,8 +351,6 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Valuation com utilização da Simulação Monte carlo: Um estudo de caso</h1>
-<h4 class="author">Francisco Piccolo</h4>
-<h4 class="date">20/04/2019</h4>
 
 </div>
 
@@ -417,7 +414,7 @@ $(document).ready(function () {
 <p><span class="math inline">\(r\)</span> = Taxa de desconto que representa o risco da empresa</p>
 <p><span class="math inline">\(VR\)</span> = Valor residual</p>
 <p><span class="math inline">\(t\)</span> = Período da projeção</p>
-<p>Segundo Viebig, Poddig e Varmaz (2008) o período de tempo em que se realiza a projeção é chamado de período competitivo da empresa e geralmente se utilizam 10 anos para projetar os fluxos de caixa. Após este período, o valor gerado pela empresa é chamado de Valor Residual e seu cálculo é feito de acordo com a fórmula abaixo (artigo (<a href="https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve" class="uri">https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve</a>).</p>
+<p>Segundo Viebig, Poddig e Varmaz (2008) o período de tempo em que se realiza a projeção é chamado de período competitivo da empresa e geralmente se utilizam 10 anos para projetar os fluxos de caixa. Após este período, o valor gerado pela empresa é chamado de Valor Residual e seu cálculo é feito de acordo com a fórmula abaixo [artigo] (<a href="https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve" class="uri">https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve</a>).</p>
 <p><span class="math display">\[VR=\frac{FCO}{(r-g)}\]</span> Onde:</p>
 <p><span class="math inline">\(FCO\)</span> = Fluxo de Caixa Operacional.</p>
 <p><span class="math inline">\(r\)</span> = Taxa de desconto que representa o risco da empresa.</p>
@@ -455,9 +452,14 @@ $(document).ready(function () {
 <p><span class="math inline">\(R_m\)</span> = Retorno do mercado.</p>
 <p><span class="math inline">\(R_m - R_f\)</span> = Diferença entre a taxa de retorno do mercado e a taxa de retorno de investimentos livre de riscos.</p>
 <p><span class="math inline">\(\beta\)</span> = Beta da empresa.</p>
-<p>Seguindo os conceitos de [artigo]((<a href="http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf" class="uri">http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf</a>), para o retorno de títulos com baixo risco <span class="math inline">\(R_f\)</span> pode-se utilizar a taxa Selic, visto que esta taxa é usada nos títulos públicos que são os de menor risco no Brasil. O retorno de mercado pode ser obtido através da taxa de rendimento obtida no mercado acionário, sendo neste caso uma boa alternativa o índice Bovespa</p>
-<p>Geralmente, para a variável <span class="math inline">\(R_f\)</span>, se utiliza a taxa Selic anual ou títulos do tesouro americano, que possuem risco próximo de zero. Para o retorno do mercado, é válido utilizar uma média do mercado de ações, como Índice Bovespa. O Beta da empresa indicará o quão sensível é a ação da empresa com relação ao mercado acionário, sendo que esta sensibilidade possui relação direta com o custo do capital próprio, pois é uma medida de risco.</p>
-<p>Importante salientar que o risco será uma variável sempre presente na atividade de investimento e consequentemente na avaliação de empresas, visto que há uma relação forte e direta entre risco e retorno sobre o investimento (DAMODARAN, 2012). Para o mesmo autor o risco é definido como a probabilidade de receber um retorno sobre um investimento diferente do que se esperava, desta forma, o risco não é inerentemente algo negativo, pois há casos em que o risco, ao se materializar, gera ganhos superiores ao esperado. Após obter os dados para as variáveis de cada equação, será possível desenvolver o modelo de <em>valuation</em> pelo Fluxo de Caixa Descontado utilizando a fórmula indicada anteriormente. Conforme mencionado, ao se calcular o valor da empresa apenas com estas equações, será gerado um valor determinísticos para a empresa, visto que nenhuma variável apresentará comportamento estocástico, pois o Fluxo de Caixa Operacional será obtido através de uma média dos últimos anos, bem como a taxa de desconto será estática e também a taxa de crescimento para o valor residual. Desta forma, este modelo precisa ser aprimorado com a utilização da Simulação Monte Carlo.</p>
+<p>Seguindo os conceitos de [artigo]((<a href="http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf" class="uri">http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf</a>), para o retorno de títulos com baixo risco <span class="math inline">\(R_f\)</span> pode-se utilizar a taxa Selic, visto que esta taxa é usada nos títulos públicos que são os de menor risco no Brasil. O retorno de mercado pode ser obtido através da taxa de rendimento obtida no mercado acionário, sendo neste caso uma boa alternativa o índice Bovespa.</p>
+<p>O Beta da empresa, de acordo com Assaf Neto (2012), indica o quão sensível é a ação da empresa com relação ao mercado acionário, sendo que esta sensibilidade possui relação direta com o custo do capital próprio, pois é uma medida de risco. De acordo com <a href="http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf">artigo</a>, o Beta quantificará a oscilação de uma ação e do mercado (utilizando um índice). Esta oscilação conjunta é calculada através da fórmula de regressão:</p>
+<p><span class="math display">\[ \beta = \frac{COV(R_i;R_m)}{VAR(R_m)} \]</span> Onde:</p>
+<p><span class="math inline">\(R_i\)</span> = Retorno da ação</p>
+<p><span class="math inline">\(R_m\)</span> = Retorno do mercado</p>
+<p>O seguinte gráfico contextualiza este movimento de valorização ou desvalorização da ação e do índice utilizado.</p>
+<p><img src="Monografia_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Após obter os dados para as variáveis de cada equação, será possível desenvolver o modelo de <em>valuation</em> pelo Fluxo de Caixa Descontado utilizando a fórmula indicada anteriormente. Conforme mencionado, ao se calcular o valor da empresa apenas com estas equações, será gerado um valor determinísticos para a empresa, visto que nenhuma variável apresentará comportamento estocástico, pois o Fluxo de Caixa Operacional será obtido através de uma média dos últimos anos, bem como a taxa de desconto será estática e também a taxa de crescimento para o valor residual. Desta forma, este modelo precisa ser aprimorado com a utilização da Simulação Monte Carlo.</p>
 </div>
 <div id="simulacao-monte-carlo-aplicada-ao-valitation" class="section level5">
 <h5>1.2. Simulação Monte Carlo aplicada ao <em>valitation</em></h5>
