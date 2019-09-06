@@ -38,7 +38,7 @@ Para aplicação da Simulação Monte Carlo no *valuation* pelo Fluxo de Caixa D
 
 Tendo realizado estas etapas preliminares, o analista poderá desenvolver um algoritmo de Simualação Monte Carlo que irá utilizar estas informações para gerar números aleatórios para cada variável classificadas como estocástica. O algoritmo irá gerar n números aleatórios, onde n é o período de tempo que será feita a projeção do fluxo de caixa (e.g. 5 ou 10 anos). Para cada período em n, será calculado um fluxo de caixa a ser descontado pela taxa de desconto definida, para trazer o fluxo de caixa ao valor presente e após ter todos os fluxos de caixa a valores presentes e somados junto ao valor residual (VR), será gerado o valor da empresa para a primeira iteração. Ao repetir esta iteração durante k vezes, dividindo o valor resultante pelo número de ações, será possível gerar um gráficos com os possíveis valores da ação da empresa. O gráfico gerado será semelhante à uma distribuição normal, com média e desvio padrão estabelecidos, conforme ilustração abaixo:
 
-```{r,echo=F,warning=F}
+```{r,echo=F,warning=F,fig.align='center',fig.width=5,fig.height=3}
 library(ggplot2)
 dados_2 <- data.frame(
                 x=seq(40,120,by=2),
@@ -194,17 +194,6 @@ $R_i$ = Retorno da ação
 $R_m$ = Retorno do mercado
 
 O seguinte gráfico contextualiza este movimento de valorização ou desvalorização da ação e do índice utilizado.
-
-```{r,eval=T,include=T,echo=F,warning=F}
-df <- data.frame(
-  a = rnorm(n=100,mean=1,sd=0.05),
-  b = a*(1+rnorm(n=100,mean=3,sd=0.00001))
-)
-
-ggplot(df,aes(x=a,y=b))+
-  geom_point()
-```
-
 
 Após obter os dados para as variáveis de cada equação, será possível desenvolver o modelo de *valuation* pelo Fluxo de Caixa Descontado utilizando a fórmula indicada anteriormente. Conforme mencionado, ao se calcular o valor da empresa apenas com estas equações, será gerado um valor determinísticos para a empresa, visto que nenhuma variável apresentará comportamento estocástico, pois o Fluxo de Caixa Operacional será obtido através de uma média dos últimos anos, bem como a taxa de desconto será estática e também a taxa de crescimento para o valor residual. Desta forma, este modelo precisa ser aprimorado com a utilização da Simulação Monte Carlo.
 
