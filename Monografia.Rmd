@@ -1,8 +1,5 @@
 ---
 title: 'Valuation com utilização da Simulação Monte carlo: Um estudo de caso'
-output:
-  html_document: default
-  word_document: default
 ---
 
 ### Introdução

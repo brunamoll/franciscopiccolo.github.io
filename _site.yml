@@ -31,13 +31,12 @@ navbar:
       href: https://github.com/FranciscoPiccolo
     - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/franciscopiccolo/
-
+      
 output:
   html_document:
-    theme: cosmo
+    theme: paper
     highlight: textmate
     css: style.css
-    
     
     
     

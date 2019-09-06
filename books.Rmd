@@ -1,11 +1,5 @@
 ---
 title: 'Livros'
-output: 
-  prettydoc::html_pretty:
-    theme: cayman
-    fig_width: 6
-    fig_height: 4
-    fig_caption: true
 ---
 
 #### Livros que recomendo
