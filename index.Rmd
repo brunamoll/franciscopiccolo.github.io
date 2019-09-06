@@ -14,6 +14,11 @@ Fiz este site tendo como referência um canal do Youtube de David Robinson, cham
 
 O nome do site 'Glass Frog' advém do fato de que este pequeno sapo possui uma pele transparente, sendo esta característia uma similaridade com um dos objetivos da análise de dados, que é tornar as decisões mais 'transparentes' e embasadas. A imagem abaixo mostra este pequeno anfíbio.
 
+
+```{r,fig.align='center',fig.width=4,fig.height=3}
+knitr::include_graphics('Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/site_images/glass_frog.png')
+```
+
 ![Glass Frog](/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/site_images/glass_frog.png)
 
 
