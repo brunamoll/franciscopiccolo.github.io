@@ -1,6 +1,11 @@
 ---
 title: "Glass Frog Data Analysis"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+    fig_width: 6
+    fig_height: 4
+    fig_caption: true
 ---
 
 Este site tratará sobre análise de dados (a.k.a análise exploratória de dados), onde  as análises serão feitas usando a linguagem R (que venho aprendendo desde 2017). Para desenvolver os projetos, irei utilizar dados abertos (públicos) que podem ser encontrados na web (colocarei o link sempre que possível) e em alguns casos a base de dados estará na minha conta do Github. 

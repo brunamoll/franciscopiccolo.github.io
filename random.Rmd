@@ -1,8 +1,13 @@
 ---
 title: "Assuntos diversos"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+    fig_width: 6
+    fig_height: 4
+    fig_caption: true
 ---
 
-##### Esta seção tratará de assuntos diversos, que possuem alguma relação com Data Science
+#### Esta seção tratará de assuntos diversos, que possuem alguma relação com Data Science
 
 teste,teste
