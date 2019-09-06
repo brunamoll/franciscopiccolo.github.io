@@ -36,8 +36,8 @@ output:
   html_document:
     theme: paper
     highlight: textmate
-    fig_width: 6
-    fig_height: 4
+    fig_width: 3
+    fig_height: 2
     css: style.css
     
     
