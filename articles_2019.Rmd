@@ -1,5 +1,5 @@
 ---
-title: "article" 
+title: "Posts" 
 ---
 
 <!---
@@ -18,8 +18,7 @@ entries will follow this format:
 <h3><a href="project_1.html">REFLECTIONS ON THE START OF MY DATA FELLOWSHIP WITH UPTAKE</a></h3>
 <div class="summary">
 <span><i class="fa fa-calendar"></i> _2018-03-21_</span>
-<p>I can't believe it's been more than a week since I returned from my trip to Chicago. This was an incredible opportunity and before I start this post a few thank yous are in order: I really can't thank [Uptake](www.uptake.com) enough for being the kind of company that does more than just 'have an mission statement'--having the motivation to start a philanthropic arm...</p>
-<a class="btn btn-outline-primary btn-sm" href="blog-uptake-fellowship-start.html" role="button">Full Post</a>
+<p> Teste...</p>
 </div>
 </article>
 
@@ -28,6 +27,5 @@ entries will follow this format:
 <div class="summary">
 <span><i class="fa fa-calendar"></i> _2017-12-01_</span>
 <p> Over on the `rOpenSci` Slack, [Sam](https://twitter.com/samfirke) asked if anyone was doing the (Advent of Code)[http://adventofcode.com/] challenges in R.  A few others said they were interested and I decided to go for it as well!  My solutions...</p>
-<a class="btn btn-outline-primary btn-sm" href="">Full Post</a>
 </div>
 </article>
