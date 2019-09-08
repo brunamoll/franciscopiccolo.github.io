@@ -370,7 +370,7 @@ $(document).ready(function () {
 <p>O desenvolvimento de um modelo de <em>valuation</em> pode ser feito de diversas maneiras. Damodaran (2012) indica que não há a um método mais correto, porém o analista deve buscar construir um modelo simples, que seja fácil de ser compreendido e ajustado caso necessário. Viebig, Poddig e Varmaz (2008) indicam que um bom modelo de <em>valuation</em> deve ser simples e ajudar investidores a fazerem decisões corretas. Dentre as metodologias existentes para realização desta atividade, Muller e Teló (2003) mencionam os seguintes modelos:</p>
 <p>1.Modelos baseados no Balanço Patrimonial: Calculam o valor de um negócio baseado no valor de seus ativos 2.Modelos baseados na demonstração do resultado: Determinam o valor de uma empresa através de indicadores encontrados no demonstrativo de resultado da empresa, como por exemplo lucros e receitas 3.Modelos baseados no fluxo de caixa: Se baseiam em estimativas de fluxo de caixa que serão gerados no futuro pela empresa avaliada.</p>
 <p>Dentre os grupos de modelos indicados os autores indicam que os métodos baseados no Fluxo de Caixa Descontado são os mais aceitos por analistas e investidores. Viebig, Poddig e Varmaz (2008) confirmam que a técnica mais aceita no setor é a do Fluxo de Caixa Descontado, por sua simplicidade de execução e entendimento. Nesta mesma direção, Assaf Neto (2012) corrobora a superioridade do método do Fluxo de Caixa Descontado para execução do <em>valuation</em>, indicando que esta metodologia consegue expressar melhor o potencial da empresa em gerar valor no futuro.</p>
-<p>De forma resumida, (<a href="https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve" class="uri">https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve</a>) indica que a construção do modelo de <em>valuation</em> passa por quatro etapas. A primeira é o cálculo do fluxo de caixa operacional, seguindo pelo segundo passo que é definir a taxa apropriada para descontar estes fluxos de caixa que serão projetados para um determinado período de tempo (e.g. 10 anos). Na sequência há o cálculo do valor residual, que será o valor gerado pela empresa após o período de projeção do fluxo de caixa e então, por último, ocorre o cálculo do valor da empresa, sendo a soma de todos os fluxos de caixa descontados pela taxa de desconto mais o valor residual. Tendo o valor da empresa calculado, basta dividí-lo pelo número de ações disponíveis no mercado acionário para se ter um preço por ação do modelo, sendo este valor uma valiosa informação para tomada de decisão.</p>
+<p>De forma resumida, o <a href="https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve">artigo</a> indica que a construção do modelo de <em>valuation</em> passa por quatro etapas. A primeira é o cálculo do fluxo de caixa operacional, seguindo pelo segundo passo que é definir a taxa apropriada para descontar estes fluxos de caixa que serão projetados para um determinado período de tempo (e.g. 10 anos). Na sequência há o cálculo do valor residual, que será o valor gerado pela empresa após o período de projeção do fluxo de caixa e então, por último, ocorre o cálculo do valor da empresa, sendo a soma de todos os fluxos de caixa descontados pela taxa de desconto mais o valor residual. Tendo o valor da empresa calculado, basta dividí-lo pelo número de ações disponíveis no mercado acionário para se ter um preço por ação do modelo, sendo este valor uma valiosa informação para tomada de decisão.</p>
 <p>Apesar de sua ampla aplicação, o <em>valuation</em> pelo Fluxo de Caixa Descontado possui limitações que são inerentes aos métodos projetivos. Pelo fato de que esta metodologia realiza projeções do fluxo de caixa da empresa, para depois descontar estes valores por uma taxa que represente o risco deste negócio, as projeções podem não representar o valor efetivado no futuro, por conta de mudanças não previstas em variáveis chave que compõem o fluxo de caixa, como por exemplo receitas, custos e despesas. Desta forma, a principal limitação do <em>valuation</em> pelo Fluxo de Caixa Descontado se encontra em seu embasamento determinístico das projeções, onde na realidade os fluxos de caixa, quando projetados, possuem riscos que precisam ser inseridos no modelo.</p>
 <p>Visando corrigir esta limitação, convencionou-se utilizar métodos de simulação, onde um destes métodos é o de Simualação Monte Carlo. Com a aplicação da Simulação Monte Carlo o <em>valuation</em> recebe cenários probabilísticos e desta forma não gera apenas um resultado final com o valor da empresa, mas muitos cenários a depender do número de iterações indicado pelo criados do modelo. A Simulação Monte Carlo é um método de geração de números aleatórios que foi desenvolvido por volta de 1940 por Von Neumann e Ulam (MALETTA, 2005), onde sua aplicação inicial foi na resolução de problemas matemáticos complexos cuja resolução exata não era viável. Mais precisamente, a aplicação foi na atividade de fusão nuclear na segunda guerra mundial.</p>
 <p>As oportunidades de aplicação da Simulação Monte Carlo em outras áreas são diversas, porém na maioria das vezes a aplicação depende do estabelecimento de distribuições de probabilidade (e.g. Normal, Binomial, Triangular, etc) para fundamentar a geração de números aleatórios. No campo dsa finanças, especificamente na atividade de <em>valuation</em>, a tentativa inicial foi por volta de 1980 e desde então as duas técnicas foram cada vez mais usadas em conjunto, por apresentarem resultados mais robustos do que o modelo de <em>valuation</em> determinístico.</p>
@@ -404,8 +404,8 @@ $(document).ready(function () {
 </div>
 <div id="referencial-teorico" class="section level3">
 <h3>Referencial Teórico</h3>
-<div id="valiation-pelo-fluxo-de-caixa-descontado" class="section level5">
-<h5>Valiation pelo Fluxo de Caixa Descontado</h5>
+<div id="valiation-pelo-fluxo-de-caixa-descontado" class="section level4">
+<h4>Valiation pelo Fluxo de Caixa Descontado</h4>
 <p>A metodologia do Fluxo de Caixa Descontado possui diversas formas de ser aplicada, porém o resultado final será o mesmo se a aplicação do modelo for correta (VIEBIG; PODDIG; VARMAZ, 2008). Nessa técnica, o objetivo será encontrar o valor intrínseco de um ativo se baseando em expectativas de rendimentos futuros, tendo como premissa a ideia de que o valor de um ativo é a soma dos fluxos de caixa futuros gerados por este ativo, descontado por uma taxa que represente o risco deste investimento. Este técnica se mostra superior às outras técnicas disponíveis, por sua simplicidade de elaboração e por seu embasamento no fluxo de caixa, que é uma variável fundamental que indica se a empresa está criando ou destruindo valor em um determinado período.</p>
 <p>A fórmula básica para o cálculo do <em>valuation</em> é descrita abaixo:</p>
 <p><span class="math display">\[ EV=\sum_{t=1}^n\frac{FCO_t}{(1+r)^t} + \frac{FCO_2}{(1+r)^2} ... \frac{FCO_n}{(1+r)^n} + VR \]</span></p>
@@ -415,19 +415,20 @@ $(document).ready(function () {
 <p><span class="math inline">\(r\)</span> = Taxa de desconto que representa o risco da empresa</p>
 <p><span class="math inline">\(VR\)</span> = Valor residual</p>
 <p><span class="math inline">\(t\)</span> = Período da projeção</p>
-<p>Segundo Viebig, Poddig e Varmaz (2008) o período de tempo em que se realiza a projeção é chamado de período competitivo da empresa e geralmente se utilizam 10 anos para projetar os fluxos de caixa. Após este período, o valor gerado pela empresa é chamado de Valor Residual e seu cálculo é feito de acordo com a fórmula abaixo [artigo] (<a href="https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve" class="uri">https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve</a>).</p>
+<p>Segundo Viebig, Poddig e Varmaz (2008) o período de tempo em que se realiza a projeção é chamado de período competitivo da empresa e geralmente se utilizam 10 anos para projetar os fluxos de caixa. Após este período, o valor gerado pela empresa é chamado de Valor Residual e seu cálculo é feito de acordo com a fórmula abaixo <a href="https://repositorio.comillas.edu/rest/bitstreams/37921/retrieve">artigo</a>.</p>
 <p><span class="math display">\[VR=\frac{FCO}{(r-g)}\]</span> Onde:</p>
-<p><span class="math inline">\(FCO\)</span> = Fluxo de Caixa Operacional.</p>
-<p><span class="math inline">\(r\)</span> = Taxa de desconto que representa o risco da empresa.</p>
-<p><span class="math inline">\(g\)</span> = Taxa de crescimento da empresa.</p>
+<p><span class="math inline">\(VR\)</span> = Valor Residual</p>
+<p><span class="math inline">\(FCO\)</span> = Fluxo de Caixa Operacional</p>
+<p><span class="math inline">\(r\)</span> = Taxa de desconto que representa o risco da empresa</p>
+<p><span class="math inline">\(g\)</span> = Taxa de crescimento da empresa</p>
 <p>Quando se menciona o fluxo de caixa para a atividade de <em>valuation</em>, não indica-se o fluxo de caixa que ocorre entre pagamentos e recebimentos da empresa em um determinado período, indicado no Demonstrativo de Fluxo de Caixa nas publicações para investidores. O fluxo de caixa para aplicação do modelo é o Fluxo de Caixa Operacional, obtido através de transformações no Demonstrativo de Resultados da Empresa (DRE) e do Balanço Patrimonial (BP).</p>
 <p>Este fluxo de caixa indica os valores monetários gerados pelas operações da empresa, após o desconto de quantias gastas em investimentos e impostos e antes do pagamento de juros sobre a dívida (Damodaran, 2012). Após obter os relatórios financeiros da empresa, será necessário ajustá-lo para se conseguir calcular o Fluxo de Caixa Operacional, pois estes demonstrativos misturam performance operacional com performance financeira, sendo que o <em>valuation</em> é fundamentado apenas pela performance operacional da empresa. De acordo com Bruni (2010) o Fluxo de Caixa Operacional pode ser expresso como a diferença entre entradas e saídas operacionais de caixa, que representa o lucro operacional, líquido de impostos e investimentos e com a adição da depreciação e amortização. Sabendo disso, é possível conceber o Fluxo de Caixa Operacional através da seguinte equação:</p>
 <p><span class="math display">\[FCO = EBITDA(1-t) - CI\]</span></p>
 <p>Onde:</p>
 <p><span class="math inline">\(FCO\)</span> = Fluxo de Caixa Operacional</p>
-<p><span class="math inline">\(EBITDA\)</span> = Lucro antes de juros, impostos, depreciação e amortização.</p>
-<p><span class="math inline">\(CI\)</span> = Investimentos realizados no período.</p>
-<p><span class="math inline">\(t\)</span> = Taxa de Imposto de Renda (IR) e Constribuição Social sobre Lucro Líquido (CSLL).</p>
+<p><span class="math inline">\(EBITDA\)</span> = Lucro antes de juros, impostos, depreciação e amortização</p>
+<p><span class="math inline">\(CI\)</span> = Investimentos realizados no período</p>
+<p><span class="math inline">\(t\)</span> = Taxa de Imposto de Renda (IR) e Constribuição Social sobre Lucro Líquido (CSLL)</p>
 <p>Assaf Neto (2012) indica que a obtenção do EBITDA pode ser feita através dos demonstrativos financeiros que a empresa publica. A utilização de lucros antes de juros, depreciação e amortização ocorre por conta de que, na questão de juros, a ideia é que o valor da empresa não deve depender de como os fundadores adquiriram capital para criar o negócio. Por outro lado, na questão da depreciação e amortização, estes são valores provisionados, que não serão gastos no exercício avaliado, por isso não devem impactar na valoração do negócio.</p>
 <p>A redução do imposto de renda ocorre por conta de que este valor não ficará com os investidores, por isso o valor da empresa deve refletir esta redução. O valor resultante deverá também estar líquido de investimentos, visto que este é um gasto que sai do caixa da empresa, portanto reduz o valor no presente para garantir rendimentos futuros, desta forma afeta o <em>valuation</em>.</p>
 <p>Após realizar o cálculo do Fluxo de Caixa Operacional, será necessário estabelecer a taxa de desconto deste fluxo de caixa, que representará o risco deste investimento e o custo de oportunidade dos acionistas da empresa. Para o Fluxo de Caixa Livre para a empresa, a taxa utilizada será obtida pelo custo médio ponderado do capital, mais conhecido como <em>Weight</em> <em>Average</em> <em>Cost</em> <em>of</em> <em>Capital</em> (WACC) e para o Fluxo de Caixa Livre para o acionista a taxa de desconto é o custo do capital próprio, obtido pela metodologia <em>Capital Asset Pricing Model</em> (CAPM). O presente trabalho utilizará o Fluxo de Caixa Livre para a empresa como Fluxo de Caixa Operacional, por isso será realizado o cálculo da taxa <em>WACC</em>.</p>
@@ -435,127 +436,88 @@ $(document).ready(function () {
 <p>Para se calcular o WACC é necessário estimar os três componentes desta taxa, sendo eles o custo do capital próprio, o custo da dívida após impostos e a estrutura da companhia em termos de proporção entre dívida de credores e capital próprio. Dado que nenhum componente é acessível de maneira direta (por meio de demonstrativos financeiros ou informações de mercado), sua estimativa é baseada em modelos, premissas e aproximações (KOLLER; GOEDHART; WESSELS, 2010). A fórmula do <em>WACC</em> é representada abaixo:</p>
 <p><span class="math display">\[WACC = \frac{D}{D+E}[K_d(1-T_m)]+\frac{E}{D+E}(K_e)\]</span> Onde:</p>
 <p><span class="math inline">\(WACC\)</span> = <em>Weight Average Cost of Capital</em></p>
-<p><span class="math inline">\(K_d\)</span> = Custo da dívida.</p>
-<p><span class="math inline">\(\frac{D}{D+E}\)</span> = Proporção de débito sobre o valor da empresa.</p>
-<p><span class="math inline">\(\frac{E}{D+E}\)</span> = Proporção do patrimônio dos acionistas sobre o valor da empresa.</p>
-<p><span class="math inline">\(K_e\)</span> = Custo do capital próprio.</p>
-<p><span class="math inline">\(T_m\)</span> = Imposto de renda.</p>
+<p><span class="math inline">\(K_d\)</span> = Custo da dívida</p>
+<p><span class="math inline">\(\frac{D}{D+E}\)</span> = Proporção de débito sobre o valor da empresa</p>
+<p><span class="math inline">\(\frac{E}{D+E}\)</span> = Proporção do patrimônio dos acionistas sobre o valor da empresa</p>
+<p><span class="math inline">\(K_e\)</span> = Custo do capital próprio</p>
+<p><span class="math inline">\(T_m\)</span> = Imposto de renda</p>
 <p>De acordo com <a href="http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf">artigo</a>, custo da dívida pode ser calculado com base nos gastos com juros indicados nos demonstrativos financeiros da empresa, mais precisamente a linha despesas financeiras, onde esta linha deverá ser divida pela conta Empréstimos observada no Balanço Patrimonial para assim obter um percentual que representará a taxa de juros paga pela empresa, visto que os juros pagos são decorrentes dos empréstimos relaizados.</p>
 <p>Para o indicador de estrutura de capital, que informará a proporção de débito e patrimônio dos acionistas sobre o valor da empresa, o analista deve recorrer ao Balanço Patrimonial. Neste demonstrativo será possível obter os valores de Capital Social, Passivo Circulante e Passivo Não Circulante, que permitem o cálculo da estrutura de capital de acordo com as fórmulas:</p>
-<p><span class="math display">\[\frac{D}{D+E} = \frac{PC+PNC}{PC+PNC+CS}   \]</span> <span class="math display">\[\frac{E}{D+E} = 1-\frac{PC+PNC}{PC+PNC+CS}   \]</span> Onde:</p>
+<p><span class="math display">\[\frac{D}{D+E} = \frac{PC+PNC}{PC+PNC+CS}   \]</span> <span class="math display">\[\frac{E}{D+E} = 1-\frac{D}{D+E}   \]</span> Onde:</p>
+<p><span class="math inline">\(\frac{D}{D+E}\)</span> = Proporção de capital de terceiros</p>
+<p><span class="math inline">\(\frac{E}{D+E}\)</span> = Proporção de capital próprio</p>
 <p><span class="math inline">\(PC\)</span> = Passivo Circulante</p>
 <p><span class="math inline">\(PNC\)</span> = Passivo Não Circulante</p>
 <p><span class="math inline">\(CS\)</span> = Capital Social</p>
-<p>Já o custo do capital próprio é calculado através do modelo CAPM, recomendando em <a href="(http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf)">artigo</a>, que irá indicar, através de estimativas de riscos, qual o retorno necessário para os acionistas da empresa. A fórmula do modelo CAPM é definida abaixo:</p>
+<p>Já o custo do capital próprio é calculado através do modelo CAPM, recomendando em <a href="http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf">artigo</a>, que irá indicar, através de estimativas de riscos, qual o retorno necessário para os acionistas da empresa. A fórmula do modelo CAPM é definida abaixo:</p>
 <p><span class="math display">\[K_e = R_f+\beta(R_m - R_f)\]</span> Onde:</p>
 <p><span class="math inline">\(K_e\)</span> = Custo do capital próprio</p>
 <p><span class="math inline">\(R_f\)</span> = Retorno de investimentos de baixo risco (<em>risk free</em>).</p>
 <p><span class="math inline">\(R_m\)</span> = Retorno do mercado.</p>
 <p><span class="math inline">\(R_m - R_f\)</span> = Diferença entre a taxa de retorno do mercado e a taxa de retorno de investimentos livre de riscos.</p>
 <p><span class="math inline">\(\beta\)</span> = Beta da empresa.</p>
-<p>Seguindo os conceitos de [artigo]((<a href="http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf" class="uri">http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf</a>), para o retorno de títulos com baixo risco <span class="math inline">\(R_f\)</span> pode-se utilizar a taxa Selic, visto que esta taxa é usada nos títulos públicos que são os de menor risco no Brasil. O retorno de mercado pode ser obtido através da taxa de rendimento obtida no mercado acionário, sendo neste caso uma boa alternativa o índice Bovespa.</p>
+<p>Seguindo os conceitos de <a href="http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf">artigo</a>, para o retorno de títulos com baixo risco pode-se utilizar a taxa Selic, visto que esta taxa é usada nos títulos públicos que são os de menor risco no Brasil. O retorno de mercado pode ser obtido através da taxa de rendimento obtida no mercado acionário, sendo neste caso uma boa alternativa o índice Bovespa <a href="http://bvmf.bmfbovespa.com.br/indices/ResumoTaxaMediaCrescimento.aspx?Indice=IBOV&amp;idioma=pt-br">base</a>.</p>
 <p>O Beta da empresa, de acordo com Assaf Neto (2012), indica o quão sensível é a ação da empresa com relação ao mercado acionário, sendo que esta sensibilidade possui relação direta com o custo do capital próprio, pois é uma medida de risco. De acordo com <a href="http://www.fazenda.gov.br/centrais-de-conteudos/publicacoes/guias-e-manuais/metodologia-de-calculo-do-wacc2018.pdf">artigo</a>, o Beta quantificará a oscilação de uma ação e do mercado (utilizando um índice). Esta oscilação conjunta é calculada através da fórmula de regressão:</p>
 <p><span class="math display">\[ \beta = \frac{COV(R_i;R_m)}{VAR(R_m)} \]</span> Onde:</p>
 <p><span class="math inline">\(R_i\)</span> = Retorno da ação</p>
 <p><span class="math inline">\(R_m\)</span> = Retorno do mercado</p>
 <p>O seguinte gráfico contextualiza este movimento de valorização ou desvalorização da ação e do índice utilizado.</p>
-<p>Após obter os dados para as variáveis de cada equação, será possível desenvolver o modelo de <em>valuation</em> pelo Fluxo de Caixa Descontado utilizando a fórmula indicada anteriormente. Conforme mencionado, ao se calcular o valor da empresa apenas com estas equações, será gerado um valor determinísticos para a empresa, visto que nenhuma variável apresentará comportamento estocástico, pois o Fluxo de Caixa Operacional será obtido através de uma média dos últimos anos, bem como a taxa de desconto será estática e também a taxa de crescimento para o valor residual. Desta forma, este modelo precisa ser aprimorado com a utilização da Simulação Monte Carlo.</p>
+<p>A informação do beta de cada empresa poderá ser obtido em sites que disponibilizam informações financeiras, como Bloomberg.</p>
+<p>Após obter os dados para as variáveis de cada equação, será possível desenvolver o modelo de <em>valuation</em> pelo Fluxo de Caixa Descontado utilizando a fórmula indicada anteriormente. Conforme mencionado, ao se calcular o valor da empresa apenas com estas equações, será gerado um valor determinísticos para a empresa, visto que nenhuma variável apresentará comportamento estocástico, pois o Fluxo de Caixa Operacional será obtido através de uma média dos últimos anos, bem como a taxa de desconto será estática e também a taxa de crescimento para o cálculo do valor residual. Desta forma, este modelo precisa ser aprimorado com a utilização da Simulação Monte Carlo.</p>
 </div>
-<div id="simulacao-monte-carlo-aplicada-ao-valitation" class="section level5">
-<h5>1.2. Simulação Monte Carlo aplicada ao <em>valitation</em></h5>
+<div id="simulacao-monte-carlo-aplicada-ao-valitation" class="section level4">
+<h4>1.2. Simulação Monte Carlo aplicada ao <em>valitation</em></h4>
 <p>Buratto (2005) indica que a Simulação Monte Carlo é um processo de amostragem com o objetivo de resolver problemas que envolvem variáveis estocásticas. Já para Lar e Kelton (2000), a Simulação Monte Carlo é uma técnica estatística de geração de números aleatórios a partir de uma dada distribuição de probabilidade indicada para resolução de problemas estocásticos. A técnica de Simulação Monte Carlo foi criada na década de 40 do século XX por Von Neumann e Ulam (MALETTA, 2005), que a utilizaram para resolver problemas matemáticos cuja resolução determinística não se mostrava viável. A aplicação ocorreu primeiramente no tratamento de fusão nuclear, sendo depois expandida para auxiliar na resolução de problemas em física e química. O nome Monte Carlo advém do fato que a capital de Mônaco se chama Monte Carlo e é reconhecida por seus cassinos, que possuem o jogo da roleta, onde esta tem como característica a aleatoriedade, similar a técnica de simulação Monte Carlo.</p>
 <p>A Simulação Monte Carlo começou a ganhar adeptos que aplicaram-a na resolução de problemas dos mais diversos tipos. Isto se deu por conta do aumento da capacidade de processamento de dados dos computadores, que viabilizou simulações mais complexas com um número de iterações cada vez mais alto. Na base da técnica de Simulação Monte Carlo há a geração de números aleatórios, que é feita na maioria das vezes por um computador que reproduz números pseudo-aleatórios, visto que computadores não conseguem gerar sequências puramente aleatórias (BURATTO, 2005). Esta geração de números pseudo-aleatórios deve ser feita levando-se em conta uma determinada distribuição de probabilidade, para que a amostra seja aplicada na resolução de problemas reais (GENTLE, 2002). Ademais, caso o modelo contenha mais de uma variável que assumirá comportamento aleatório, é necessário determinar, antes da geração das sequências aleatórias, se há correlação entre as variáveis do modelo.</p>
-<p>A definição da distribuição de probabilidade das variáveis do modelo pode ser feita de diversas formas. Uma delas é através de gráficos, como o histograma ou gráfico quantil-quantil, que deixam para o autor do modelo a definição de qual distribuição mais se adequa à variável analisada. Outra forma são os índices de inclinação e curtose, usados para testes de normalidade da variável e há também testes formais de aderência à distribuição de probabilidades, como por exemplo o teste de Shapiro-Wilk, Kolmogorov-Smirnov ou Anderson-Darling (artigo <a href="http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf" class="uri">http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf</a>) e (<a href="http://www2.psychology.uiowa.edu/faculty/mordkoff/GradStats/part%201/I.07%20normal.pdf">http://www2.psychology.uiowa.edu/faculty/mordkoff/GradStats/part%201/I.07%20normal.pdf</a>).</p>
-<p>No presente projeto distribuição normal será sempre preferível, visto que esta premissa facilita na construção do modelo e geração de conclusões finais. Em estatística paramétrica, é necessário assumir uma determinada distribuição de probabilidade dos dados e usualmente se opta pela distribuição normal. Quando a premissa de normalidade é violada, a interpretação e inferência dos dados não será confiável ou até mesmo será incorreta (artigo <a href="http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf" class="uri">http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf</a>). O autor (<a href="file:///C:/Users/francisco.piccolo/Downloads/A_Brief_Review_of_Tests_for_Normality.pdf" class="uri">file:///C:/Users/francisco.piccolo/Downloads/A_Brief_Review_of_Tests_for_Normality.pdf</a>) indica a mesma afirmação sobre a importância da normalidade dos dados, afirmando que o ferramental estatístico muitas vezes se fundamenta na normalidade dos dados e se esta premissa não é válida, a inferência fica corrompida. O artigo (<a href="file:///C:/Users/francisco.piccolo/Downloads/A_Brief_Review_of_Tests_for_Normality.pdf" class="uri">file:///C:/Users/francisco.piccolo/Downloads/A_Brief_Review_of_Tests_for_Normality.pdf</a>) corrobora esta afirmação, indicando que a violação da normalidade dos dados pode gerar estimadores incorretos e por consequência, invalidar as conclusões e inferências geradas pelo analista.</p>
-<p>No presente trabalho, a atribuição da distribuição de probabilidade para as variáveis classificadas como estocásticas se dará da seguinte forma. Primeiro, será verificado se a variável se encaixa na distribuição normal através da análise gráfica e, caso não se encaixe, será usada a distribuição triangular, definindo-se o valor máximo, mínimo e mais provável, necessário para utilizar esta distribuição. Segundo o autor (<a href="http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf" class="uri">http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf</a>), a distribuição triangular é recomendada quando a variável não se encaixa em uma distribuição conhecida ou quando não há dados históricos que possibilitem inferir uma distribuição adequada.</p>
-<p>Dando continuidade, a Simulação Monte Carlo começou a ganhar mais adeptos que a utilizaram para resolver problemas dos mais diversos tipos. Na área de finanças, especificamente para avaliação de empresas pelo fluxo de caixa descontado, a Simulação Monte Carlo obteve grande aceitação, visto que corrige uma limitação latente da técnica, que é a de não incluir incertezas nos dados de entrada do fluxo de caixa. A aplicação da técnica na atividade de <em>valuation</em> ocorreu por volta de 1980, através de uma publicação da empresa de consultoria McKisney e David Hertz, que mostraram sua aplicação na projeção do fluxo de caixa de uma empresa (SHARMA; PEACOCK, 2008). A combinação das duas técnicas passa pela identificação das principais variáveis que formam o fluxo de caixa operacional da empresa e de suas respectivas curvas de distribuição de probabilidade. Após isso é possível criar um modelo que terá como variável de entrada não apenas um único valor, mas uma grande quantidade de valores que serão gerados aleatoriamente pela técnica de Monte Carlo com base na respectiva distribuição de probabilidade indicada.</p>
-<p>Na literatura foi possível identificar diversos autores que realizaram a combinação das duas técnicas, adaptando-as para cada cenário encontrado. Classen (2017) realizou a combinação da Simulação Monte Carlo com o método do Fluxo de Caixa Descontado para gerar a curva de distribuição de probabilidade do valor de uma empresa, visando apoiar o processo decisório de fundos de <em>Venture</em> <em>Capital</em>. As variáveis indicadas como estocásticas deste modelo foram receita líquida, custos de matéria prima, custos com pessoal, despesas administrativas e despesas com vendas, suas distribuições de probabilidade foram determinadas como triangulares, devido à falta de informações históricas para testar qual distribuição se encaixaria melhor para as variáveis. Já Buratto (2005) utilizou a técnica da Simulação Monte Carlo para estimar a probabilidade de empresas tomadoras de crédito não pagarem a dívida assumida. A principal variável estocástica inserida no modelo foi a receita bruta, que também foi definida como tendo uma distribuição triangular. Neste trabalho houve os testes Kolmogorov-Smirnov, Qui-quadrado e Anderson-Darling, que não apresentaram resultados que permitissem enquadrar as variáveis de entrada do <em>valuation</em> em uma determinada distribuição de probabilidade existente.</p>
+<p>A definição da distribuição de probabilidade das variáveis do modelo pode ser feita de diversas formas. Uma delas é através de gráficos, como o histograma ou gráfico quantil-quantil, que deixam para o autor do modelo a definição de qual distribuição mais se adequa à variável analisada. Outra forma são os índices de inclinação e curtose, usados para testes de normalidade da variável e há também testes formais de aderência à distribuição de probabilidades, como por exemplo o teste de Shapiro-Wilk, Kolmogorov-Smirnov ou Anderson-Darling <a href="http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf">artigo</a> e <a href="http://www2.psychology.uiowa.edu/faculty/mordkoff/GradStats/part%201/I.07%20normal.pdf">artigo</a>.</p>
+<p>No presente projeto distribuição normal será sempre preferível, visto que esta premissa facilita na construção do modelo e geração de conclusões finais. Em estatística paramétrica, é necessário assumir uma determinada distribuição de probabilidade dos dados e usualmente se opta pela distribuição normal. Quando a premissa de normalidade é violada, a interpretação e inferência dos dados não será confiável ou até mesmo será incorreta <a href="http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf">artigo</a>. O <a href="https://www.researchgate.net/publication/304339245_A_Brief_Review_of_Tests_for_Normality">autor</a> indica a mesma afirmação sobre a importância da normalidade dos dados, afirmando que o ferramental estatístico muitas vezes se fundamenta na normalidade dos dados e se esta premissa não é válida, a inferência fica corrompida.</p>
+<p>No presente trabalho, a atribuição da distribuição de probabilidade para as variáveis classificadas como estocásticas se dará da seguinte forma. Primeiro, será verificado se a variável se encaixa na distribuição normal através da análise gráfica e, caso não se encaixe, será usada a distribuição triangular, definindo-se o valor máximo, mínimo e mais provável, necessário para utilizar esta distribuição. Segundo o <a href="http://www.de.ufpb.br/~ulisses/disciplinas/normality_tests_comparison.pdf">autor</a>, a distribuição triangular é recomendada quando a variável não se encaixa em uma distribuição conhecida ou quando não há dados históricos que possibilitem inferir uma distribuição adequada.</p>
+<p>Dando continuidade, a Simulação Monte Carlo começou a ganhar mais adeptos que a utilizaram para resolver problemas dos mais diversos tipos. Na área de finanças, especificamente para avaliação de empresas pelo fluxo de caixa descontado, a Simulação Monte Carlo obteve grande aceitação, visto que corrige uma limitação latente da técnica, que é a de não incluir incertezas nos dados de entrada do fluxo de caixa. A aplicação da técnica na atividade de <em>valuation</em> ocorreu por volta de 1980, através de uma publicação da empresa de consultoria McKisney e David Hertz, que mostraram sua aplicação na projeção do fluxo de caixa de uma empresa (SHARMA; PEACOCK, 2008).</p>
+<p>A combinação das duas técnicas ocorre através da identificação das principais variáveis que formam o fluxo de caixa operacional da empresa que podem assumir comportamento estocástico, bem como das variáveis usadas no cálculo do valor residual e da taxa de desconto <em>WACC</em>. Após esta definição, é necessário estudar e definir a curva de distribuição de probabilidade para cada variável do modelo que assumirá comportamento estocástico. Tendo posse das variáveis e da distribuição de probabilidade de cada uma, é possível criar um modelo que terá como variável de entrada não apenas um único valor, mas uma grande quantidade de valores que serão gerados aleatoriamente pela técnica de Monte Carlo, com base na respectiva distribuição de probabilidade definida.</p>
+<p>Na literatura foi possível identificar diversos autores que realizaram a combinação das duas técnicas, adaptando-as para cada cenário encontrado. Classen (2017) realizou a combinação da Simulação Monte Carlo com o <em>valution</em> estimat o valor de uma empresa, visando apoiar o processo decisório de fundos de <em>Venture</em> <em>Capital</em>. As variáveis indicadas como estocásticas deste modelo foram receita líquida, custos de matéria prima, custos com pessoal, despesas administrativas e despesas com vendas. As distribuições de probabilidade foram determinadas como triangulares, devido à falta de informações históricas para realizar testes mais formais para definir qual distribuição se encaixaria melhor nas as variáveis.</p>
+<p>Já Buratto (2005) utilizou a técnica da Simulação Monte Carlo no estudo de empresas tomadoras de crédito. O objetivo era calcular a probabilidade destas empresas não pagarem a dívida assumida. A principal variável estocástica inserida no modelo foi a receita bruta, que também foi definida como tendo uma distribuição triangular. Neste trabalho houve os testes Kolmogorov-Smirnov, Qui-quadrado e Anderson-Darling, que não apresentaram resultados que permitissem enquadrar as variáveis de entrada do <em>valuation</em> em uma determinada distribuição de probabilidade existente.</p>
 <p>Por outro lado Oliveira (2012) realiza a aplicação do <em>valuation</em> com uso da Simulação Monte Carlo na análise da empresa Copasa S.A, uma empresa de abastecimento de água e esgoto. O autor utilizou o método do Fluxo de Caixa Descontado, analisando inicialmente o histórico financeiro da empresa para definição das variáveis chave do modelo, sendo que as variáveis chave definidas foram: população da área atendida, nível de cobertura de água e esgoto, volume médio de consumo e tarifas do serviço. Para as variáveis escolhidas foram realizados testes de aderência a distribuições de probabilidades, usando os testes kolmogorov-smirnoff , Qui-quadrado e Anderson-Darling. Após isso, foram realizados testes de correlação entre as variáveis para inclusão desta premissa no algoritmo de Simulação Monte Carlo. Ao final, foram geradas 10.000 simulações onde o resultado de cada iteração era o preço estimado da ação da empresa que, ao ser consolidado, resultou em uma curva de distribuição de probabilidades do preço da ação, com média e desvio padrão definidos.</p>
 </div>
-</div>
-<div id="construcao-do-modelo" class="section level3">
-<h3>Construção do modelo</h3>
-<div id="aplicacao-do-modelo-em-um-caso-real" class="section level4">
-<h4>Aplicação do modelo em um caso real</h4>
+<div id="construcao-do-modelo" class="section level4">
+<h4>Construção do modelo</h4>
 <p>Após entender a sistemática por traz do modelo de <em>valuation</em> pelo Fluxo de Caixa Descontado e da Simulação Monte Carlo, se torna possível realizar a aplicação em casos reais, para se comparar o valor gerado pelo algoritmo com o valor atual da ação da empresa.</p>
 <p>A aplicação ocorrerá através dos seguintes passos:</p>
 <ol style="list-style-type: decimal">
-<li>Escolha da empresa a ser analisada</li>
-<li>Coleta dos dados financeiros necessários para o cálculo do Fluxo de Caixa Operacional</li>
-<li>Coleta dos dados necessários para cálculo da taxa de desconto (WACC)</li>
-<li>Definição do período de projeção para o <em>valuation</em></li>
-<li>Cálculo do valor residual</li>
-<li>Definição das variáveis que assumirão comportamento estocástico</li>
-<li>Definição da distribuição de probabilidade das variáveis estocásticas</li>
-<li>Análise e definição de correlações entre as variáveis estocásticas</li>
-<li>Criação do algoritmo para realização das iterações e geração do valor da empresa para cada iteração</li>
-<li>Criação do histograma apresentando a distribuição dos valores da empresa (por ação)</li>
+<li>Escolha da empresa a ser analisada.</li>
+<li>Coleta dos dados financeiros necessários para o cálculo do Fluxo de Caixa Operacional e da taxa de desconto (WACC).</li>
+<li>Definição do período de projeção para o <em>valuation</em>.</li>
+<li>Cálculo do valor residual.</li>
+<li>Definição das variáveis que assumirão comportamento estocástico.</li>
+<li>Definição da distribuição de probabilidade das variáveis estocásticas.</li>
+<li>Análise e definição de correlações entre as variáveis estocásticas.</li>
+<li>Criação do algoritmo para realização das iterações e geração do valor da empresa para cada iteração.</li>
 </ol>
-<p>A tabela abaixo apresenta as varáveis que serão usadas no modelo, bem como suas respectivas classificação com relação ao comportamento estocástico ou determinístico e suas respectivas distribuições de probabilidade.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Variávies do modelo</th>
-<th align="center">Característica</th>
-<th align="right">Distribuição</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Receita líquida</td>
-<td align="center">Estocástica</td>
-<td align="right">Normal</td>
-</tr>
-<tr class="even">
-<td>Crescimento da receita líquida</td>
-<td align="center">Estocástica</td>
-<td align="right">Triangular</td>
-</tr>
-<tr class="odd">
-<td>Lajir</td>
-<td align="center">Estocástica</td>
-<td align="right">Normal</td>
-</tr>
-<tr class="even">
-<td>Percentual do Lajir sobre receita líquida</td>
-<td align="center">Estocástica</td>
-<td align="right">Normal</td>
-</tr>
-<tr class="odd">
-<td>DONP</td>
-<td align="center">Estocástica</td>
-<td align="right">Normal</td>
-</tr>
-<tr class="even">
-<td>Capital de Giro</td>
-<td align="center">Estocástica</td>
-<td align="right">Normal</td>
-</tr>
-<tr class="odd">
-<td>WACC</td>
-<td align="center">Estocástica</td>
-<td align="right">Triangular</td>
-</tr>
-<tr class="even">
-<td>Taxa de crescimento do FCO</td>
-<td align="center">Estocástica</td>
-<td align="right">Triangular</td>
-</tr>
-<tr class="odd">
-<td>Valor Residual</td>
-<td align="center">Determinística</td>
-<td align="right"></td>
-</tr>
-</tbody>
-</table>
-<p>Em posse das variáveis de entrada do modelo, de suas respectivas distribuições de probabilidade e correlações, pode-se aplicar o algoritmo para gerar iterações do valor da ação da empresa. Uma iteração do algoritmo irá gerar dez valores aleatórios para cada variável do modelo, indicada como estocástica na tabela acima, sendo que estes números aleatórios serão gerados com base nos parâmetros estabelecidos (i.e. distribuição, média, desvio padrão, valor máximo e valor mínimo) . Os dez valores representam o período de projeção do modelo de <em>valuation</em>.</p>
-<p>Em posse dos dez valores gerados para cada variável do modelo, o algoritmo irá realizar o cálculo de dez Fluxos de Caixa Operacional, um para cada ano. Após isso, cada fluxo de caixa será aplicado na equação do <em>valuation</em> explicada anteriormente, para se obter o fluxo de caixa descontado pela taxa <em>WACC</em>, ou seja, o fluxo de caixa a valores presentes. Importante notar que a taxa <em>WACC</em> embora estocástica, não será gerada dez vezes como as outras variáveis. Esta será gerada apenas uma vez por iteração, onde o valor gerado será aplicado para os dez períodos.</p>
+<p>Ao final do processo de aplicação do algoritmo em várias empresas, será gerado um gráfico que irá mostrar, para cada empresa, o valor atual da ação e uma faixa de valor estimado pelo modelo, sendo esta faixa composta por um valor mínimo e máximo. O valor mínimo será o valor médio gerado pelo algoritmo menos 2 desvios padrão e para o valor máximo será adicionado ao valor médio 2 desvios padrão.</p>
 <p>Tendo o fluxo de caixa a valores presentes, o algoritmo irá realizar a soma destes fluxos com o valor residual, que no modelo terá um valor fixo, e depois dividirá o valor pelo número de ações da empresa, resultando assim no valor da ação da empresa para a primeira iteração, que será salva em uma variável.</p>
 <p>O processo se repetirá n vezes, onde ao final será gerado um histograma representando a variável que gravou todas as iterações, ou seja, um histograma com todas as iterações com o valor da ação da empresa analisada. O histograma também irá representar com uma linha horizontal o valor da ação e também o valor da ação com o modelo determinístico, para que seja possível comparar a eficiência do algoritmo.</p>
+<pre class="r"><code>dplyr::union_all(
+                  alpargatas_stock_est,
+                  carrefour_stock_est,
+                  azul_stock_est
+                  ) %&gt;% 
+  ggplot() + 
+  geom_dumbbell(aes(y = name,
+                    x = min, 
+                    xend = max),
+  colour = &quot;grey70&quot;, size = 3,
+  colour_x = &quot;#F7BC08&quot;, colour_xend = &quot;#395B74&quot;)+
+  geom_point(aes(x=real,y=name,color=&quot;dark orange&quot;,size=3))+
+  theme(legend.title = element_blank(),legend.text = element_blank(),legend.position = &quot;none&quot;,axis.title.y = element_blank())</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector</code></pre>
+<p><img src="Monografia_files/figure-html/unnamed-chunk-3-1.png" width="288" /></p>
 </div>
-</div>
-<div id="referencias-bibliograficas" class="section level2">
-<h2><strong>REFERÊNCIAS BIBLIOGRÁFICAS</strong></h2>
+<div id="referencias-bibliograficas" class="section level4">
+<h4><strong>REFERÊNCIAS BIBLIOGRÁFICAS</strong></h4>
 <p>ASSAF NETO, A. Finanças corporativas e valor. 5ª ed. São Paulo: Atlas, 2010.</p>
 <p>BURATTO, M. V. Construção e avaliação de um modelo de Simulação de Monte Carlo para analisar a capacidade de pagamento das empresas em financiamentos de longo prazo. Dissertação (Mestrado acadêmico em contabilidade e finanças), Universidade Federal do Rio Grande do Sul, Escola de Administração, Porto Alegre, 2005.</p>
 <p>CLASSEN, L. P. et al. Simulação de monte carlo incorporada ao método de fluxo de caixa descontado para determinação de valuation. In: Congresso Brasileiro de Custos, 26, Florianópolis, 2017.</p>
@@ -571,6 +533,7 @@ $(document).ready(function () {
 <p>SHARMA, P.; PEACOCK, SD. Monte Carlo simulation: an alternative to single point data entry for technical modelling. Proc. S. Afr. Sug. Technol. Ass., LOCAL DE PUBLICAÇÃO África do Sul?, v. 81, p. 216 - 226 , 2008.</p>
 <p>Sheskin, David. Handbook of parametric and nonparametric statistical procedures. 2. ed. New York Washington, D.C.: CHAPMAN &amp; HALL/CRC, 2000.</p>
 <p>VIEBIG, J.; PODDIG, T.; VARMAZ, A. Equity valuation: models from leading investment banks. EDIÇÃO Inglaterra: John Wiley &amp; Sons, Inc., 2008.</p>
+</div>
 </div>
 
 

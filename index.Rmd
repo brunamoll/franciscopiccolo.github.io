@@ -2,7 +2,7 @@
 title: "Objetivos, motivações e expectativas para o site"
 ---
 
-Este site tratará sobre análise de dados (a.k.a análise exploratória de dados), onde  as análises serão feitas usando a linguagem R (que venho aprendendo desde 2017). Para desenvolver os projetos, irei utilizar dados abertos (públicos) que podem ser encontrados na web (colocarei o link sempre que possível) e em alguns casos a base de dados estará na minha conta do [Github] (https://github.com/FranciscoPiccolo). 
+Este site tratará sobre análise de dados (a.k.a análise exploratória de dados), onde  as análises serão feitas usando a linguagem R (que venho aprendendo desde 2017). Para desenvolver os projetos, irei utilizar dados abertos (públicos) que podem ser encontrados na web (colocarei o link sempre que possível) e em alguns casos a base de dados estará na minha conta do [Github](https://github.com/FranciscoPiccolo). 
 
 Os objetivos dos projetos apresentados (e consequentemente do site) são: (i) mostrar como uma base de dados pode ser explorada (de maneira rápida e simples), (ii) apresentar insights sobre os dados analisados, pois poderão agregar ao conhecimento do leitor e (iii) disseminar a linguagem R para a comunidade que a utiliza, através da apresentação dos códigos usados para realização do processo de análise de dados. 
 
