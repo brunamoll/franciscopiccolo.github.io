@@ -4,12 +4,13 @@ navbar:
   title: 'Glass Frog'
   left:
     - text: 'Home'
-      icon: fa-home
+      icon: 'fa-home'
       href: index.html
     - text: 'About'
-      icon: fa-info
+      icon: 'fa-info'
       href: about.html
     - text: 'Books'
+      icon: 'fas fa-brain'
       href: books.html
     - text: 'Projects'
       icon: 'fas fa-code'
