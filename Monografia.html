@@ -483,38 +483,71 @@ $(document).ready(function () {
 <p>Após entender a sistemática por traz do modelo de <em>valuation</em> pelo Fluxo de Caixa Descontado e da Simulação Monte Carlo, se torna possível realizar a aplicação em casos reais, para se comparar o valor gerado pelo algoritmo com o valor atual da ação da empresa.</p>
 <p>A aplicação ocorrerá através dos seguintes passos:</p>
 <ol style="list-style-type: decimal">
-<li>Escolha da empresa a ser analisada.</li>
-<li>Coleta dos dados financeiros necessários para o cálculo do Fluxo de Caixa Operacional e da taxa de desconto (WACC).</li>
-<li>Definição do período de projeção para o <em>valuation</em>.</li>
-<li>Cálculo do valor residual.</li>
+<li>Coleta de dados financeiros necessários para o cálculo do Fluxo de Caixa Operacional e da taxa de desconto (WACC).</li>
 <li>Definição das variáveis que assumirão comportamento estocástico.</li>
 <li>Definição da distribuição de probabilidade das variáveis estocásticas.</li>
 <li>Análise e definição de correlações entre as variáveis estocásticas.</li>
 <li>Criação do algoritmo para realização das iterações e geração do valor da empresa para cada iteração.</li>
 </ol>
-<p>Ao final do processo de aplicação do algoritmo em várias empresas, será gerado um gráfico que irá mostrar, para cada empresa, o valor atual da ação e uma faixa de valor estimado pelo modelo, sendo esta faixa composta por um valor mínimo e máximo. O valor mínimo será o valor médio gerado pelo algoritmo menos 2 desvios padrão e para o valor máximo será adicionado ao valor médio 2 desvios padrão.</p>
-<p>Tendo o fluxo de caixa a valores presentes, o algoritmo irá realizar a soma destes fluxos com o valor residual, que no modelo terá um valor fixo, e depois dividirá o valor pelo número de ações da empresa, resultando assim no valor da ação da empresa para a primeira iteração, que será salva em uma variável.</p>
-<p>O processo se repetirá n vezes, onde ao final será gerado um histograma representando a variável que gravou todas as iterações, ou seja, um histograma com todas as iterações com o valor da ação da empresa analisada. O histograma também irá representar com uma linha horizontal o valor da ação e também o valor da ação com o modelo determinístico, para que seja possível comparar a eficiência do algoritmo.</p>
-<pre class="r"><code>dplyr::union_all(
-                  alpargatas_stock_est,
-                  carrefour_stock_est,
-                  azul_stock_est
-                  ) %&gt;% 
-  ggplot() + 
-  geom_dumbbell(aes(y = name,
-                    x = min, 
-                    xend = max),
-  colour = &quot;grey70&quot;, size = 3,
-  colour_x = &quot;#F7BC08&quot;, colour_xend = &quot;#395B74&quot;)+
-  geom_point(aes(x=real,y=name,color=&quot;dark orange&quot;,size=3))+
-  theme(legend.title = element_blank(),legend.text = element_blank(),legend.position = &quot;none&quot;,axis.title.y = element_blank())</code></pre>
-<pre><code>## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</code></pre>
-<pre><code>## Warning in bind_rows_(x, .id): binding character and factor vector,
-## coercing into character vector
-
-## Warning in bind_rows_(x, .id): binding character and factor vector,
-## coercing into character vector</code></pre>
-<p><img src="Monografia_files/figure-html/unnamed-chunk-3-1.png" width="288" /></p>
+<p>O processo será aplicado em x empresas, para que seja possível avaliar se o algoritmo está gerando valores acurados. Para validar a acuracidade do algoritmo, será gerado um gráfico comparando o valor atual da ação da empresa com o valor médio da ação gerado pelo algoritmo, mais ou menos dois desvio padrão, ou seja, uma faixa de valor estimado.</p>
+<p>As empresas selecionadas para aplicação do algoritmo foram: Alpargatas, Carrefour, Azul Linha Aéreas, Camil, CPFL Energia. Após coletas os dados financeiros publicados ao final do trimestre e consolidá-los de maneira padronizada, se torna possível definir quais variáveis assumirão comportamento estocástico. A tabela abaixo indica quais variáveis serão usadas no modelo, seu respectivo comportamento e sua distribuição de probabilidade.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Variável</th>
+<th align="left">Comportamento</th>
+<th align="left">Distribuição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">EBTIDA</td>
+<td align="left">Estocástica</td>
+<td align="left">Normal</td>
+</tr>
+<tr class="even">
+<td align="left">Investimento</td>
+<td align="left">Estocástica</td>
+<td align="left">Normal</td>
+</tr>
+<tr class="odd">
+<td align="left">Custo de capital de terceiros</td>
+<td align="left">Determinística</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Retorno de mercado</td>
+<td align="left">Estocástia</td>
+<td align="left">Triangular</td>
+</tr>
+<tr class="odd">
+<td align="left">Retorno livre de risco</td>
+<td align="left">Estocástica</td>
+<td align="left">Triangular</td>
+</tr>
+<tr class="even">
+<td align="left">Parcela de capital próprio</td>
+<td align="left">Determinística</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Parcela de capital de terceiros</td>
+<td align="left">Determinística</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Beta</td>
+<td align="left">Determinística</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Crescimento esperado</td>
+<td align="left">Determinística</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p><img src="Monografia_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="referencias-bibliograficas" class="section level4">
 <h4><strong>REFERÊNCIAS BIBLIOGRÁFICAS</strong></h4>

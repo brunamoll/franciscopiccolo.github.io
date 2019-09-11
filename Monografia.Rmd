@@ -233,257 +233,135 @@ Após entender a sistemática por traz do modelo de *valuation* pelo Fluxo de Ca
 
 A aplicação ocorrerá através dos seguintes passos:
 
-1. Escolha da empresa a ser analisada.
-2. Coleta dos dados financeiros necessários para o cálculo do Fluxo de Caixa Operacional e da taxa de desconto (WACC).
-3. Definição do período de projeção para o *valuation*.
-4. Cálculo do valor residual.
-5. Definição das variáveis que assumirão comportamento estocástico.
-6. Definição da distribuição de probabilidade das variáveis estocásticas.
-7. Análise e definição de correlações entre as variáveis estocásticas.
-8. Criação do algoritmo para realização das iterações e geração do valor da empresa para cada iteração.
+1. Coleta de dados financeiros necessários para o cálculo do Fluxo de Caixa Operacional e da taxa de desconto (WACC).
+2. Definição das variáveis que assumirão comportamento estocástico.
+3. Definição da distribuição de probabilidade das variáveis estocásticas.
+4. Análise e definição de correlações entre as variáveis estocásticas.
+5. Criação do algoritmo para realização das iterações e geração do valor da empresa para cada iteração.
 
-Ao final do processo de aplicação do algoritmo em várias empresas, será gerado um gráfico que irá mostrar, para cada empresa, o valor atual da ação e uma faixa de valor estimado pelo modelo, sendo esta faixa composta por um valor mínimo e máximo. O valor mínimo será o valor médio gerado pelo algoritmo menos 2 desvios padrão e para o valor máximo será adicionado ao valor médio 2 desvios padrão.
+O processo será aplicado em x empresas, para que seja possível avaliar se o algoritmo está gerando valores acurados. Para validar a acuracidade do algoritmo, será gerado um gráfico comparando o valor atual da ação da empresa com o valor médio da ação gerado pelo algoritmo, mais ou menos dois desvio padrão, ou seja, uma faixa de valor estimado.
 
-Tendo o fluxo de caixa a valores presentes, o algoritmo irá realizar a soma destes fluxos com o valor residual, que no modelo terá um valor fixo, e depois dividirá o valor pelo número de ações da empresa, resultando assim no valor da ação da empresa para a primeira iteração, que será salva em uma variável. 
+As empresas selecionadas para aplicação do algoritmo foram: Alpargatas, Carrefour, Azul Linha Aéreas, Camil, CPFL Energia. Após coletas os dados financeiros publicados ao final do trimestre e consolidá-los de maneira padronizada, se torna possível definir quais variáveis assumirão comportamento estocástico. A tabela abaixo indica quais variáveis serão usadas no modelo, seu respectivo comportamento e sua distribuição de probabilidade.
 
-O processo se repetirá n vezes, onde ao final será gerado um histograma representando a variável que gravou todas as iterações, ou seja, um histograma com todas as iterações com o valor da ação da empresa analisada. O histograma também irá representar com uma linha horizontal o valor da ação e também o valor da ação com o modelo determinístico, para que seja possível comparar a eficiência do algoritmo.
+```{r,eval=T,include=T,echo=F,warning=F,message=F}
+knitr::kable(x = data.frame(
+  "Variável" = c("EBTIDA","Investimento","Custo de capital de terceiros","Retorno de mercado","Retorno livre de risco","Parcela de capital próprio","Parcela de capital de terceiros","Beta","Crescimento esperado"),
+  Comportamento = c("Estocástica","Estocástica","Determinística","Estocástia","Estocástica","Determinística","Determinística","Determinística","Determinística"),
+  "Distribuição" = c("Normal","Normal","","Triangular","Triangular","","","","")
+))
+```
 
 ```{r,eval=T,echo=F,include=F,warning=F,message=F}
-library(tidyverse)
-library(triangle)
+library(tidyverse) # pacote para tratar os dados
+library(triangle) # pacote para gerar distribuição triangular
 library(knitr) # pacote para renderizar tabelas num melhor formato
 library(scales) # pacote para ajustar escala dos eixos do gráfico
 library(googlesheets) # pacote para ler planilhas do Google Drive
 library(mvtnorm) # pacote para gerar números aleatórios correlacionados
-library(gridExtra)
-library(ggalt)
+library(ggalt) # pacote para gerar o gráfico de resultados
 
-# Base de dados
-dados <- googlesheets::gs_title('dados_monografia') %>%
-  googlesheets::gs_read(ws = 'alpargatas')
+th <- theme_light()
 
-# Coletando as variáveis da planilha
-n <- 5
-ano <- dados[1,2:5]
-stock_price <- as.numeric(dados[3,8])
-stock_vol <- as.numeric(dados[2,8])
-g <- as.numeric(dados[5,8])
-rm <- rtriangle(n=10000,a=0.005,b=0.15,c=0.096)
-rf <- rtriangle(n=10000,a=0.05,b=0.09,c=0.065)
-beta <- as.numeric(dados[4,8])
+# buscando nome das empresas para rodar o loop com o algoritmo
+company <- as.character(googlesheets::gs_title("dados_monografia") %>% googlesheets::gs_ws_ls())
 
-ebitda <- as.numeric(dados[9,2:n])*1000
-avg_ebitda <- mean(ebitda)
-sd_ebitda <- sd(ebitda)
+df <- NULL
 
-donp <- as.numeric(dados[10,2:n])*1000
-avg_donp <- mean(donp)
-sd_donp <- sd(donp)
+for (k in company){
+  dados <- googlesheets::gs_title("dados_monografia") %>% 
+    googlesheets::gs_read(ws = k)
 
-invest <- as.numeric(dados[11,2:n])*1000
-avg_invest <- mean(invest)
-sd_invest <- sd(invest)
+  n <- 5
+  ano <- dados[1,2:5]
+  stock_price <- as.numeric(dados[3,8]) # atual valor da ação
+  stock_vol <- as.numeric(dados[2,8])   # número de ações
+  g <- as.numeric(dados[5,8])           # crescimento esperado da empresa
+  rm <- rtriangle(n=10000,a=0.05,b=0.15,c=0.096)   # retorno do mercado
+  rf <- rtriangle(n=10000,a=0.05,b=0.09,c=0.065)   # retorno livre de risco
+  beta <- as.numeric(dados[4,8])                   # beta da empresa
 
-equity <- as.character(dados[14,2:n])
-equity <- stringr::str_remove_all(equity,"%")
-equity <- str_replace_all(equity,",",".")
-equity <- as.numeric(equity)
-avg_equity <- mean(equity)
-sd_equity <- sd(equity)
-equity <- rtriangle(n=10000,a=avg_equity-(2*sd_equity),b=avg_equity+(2*sd_equity),c=avg_equity)/100
-debt <- 1- equity
+  ebitda <- as.numeric(dados[9,2:n])*1000          # ebtida
+  avg_ebitda <- mean(ebitda)                       
+  sd_ebitda <- sd(ebitda)
+  
+  invest <- as.numeric(dados[10,2:n])*1000         # investimento
+  avg_invest <- mean(invest)
+  sd_invest <- sd(invest)
+  
+  equity <- as.character(dados[13,2:n])            # equity/debt+equity
+  equity <- stringr::str_remove_all(equity,"%")
+  equity <- str_replace_all(equity,",",".")
+  equity <- as.numeric(equity)
+  equity <- round(mean(equity),digits = 2)/100
+  debt <- 1-equity
 
-kd <- as.character(dados[15,2:n])
-kd <- stringr::str_remove_all(kd,"%")
-kd <- str_replace_all(kd,",",".")
-kd <- as.numeric(kd)
-avg_kd <- mean(kd)
-sd_kd <- sd(kd)
-kd <- rtriangle(n=10000,a=avg_kd-(2*sd_kd),b=avg_kd+(2*sd_kd),c=avg_kd)
+  kd <- as.character(dados[12,2:n])
+  kd <- stringr::str_remove_all(kd,"%")
+  kd <- str_replace_all(kd,",",".")
+  kd <- as.numeric(kd)
+  avg_kd <- mean(kd)
+  sd_kd <- sd(kd)
+  kd <- rtriangle(n=10000,a=avg_kd-(2*sd_kd),b=avg_kd+(2*sd_kd),c=avg_kd)/100
 
-ke <- rf+(beta*(rm-rf))
-wacc <- ((equity)*(kd)) + ((debt*ke))
+  ke <- rf+(beta*(rm-rf))
+  wacc <- ((debt)*(kd)) + ((equity*ke))
 
-# Valor residual
-vr <- ((avg_ebitda)+avg_donp-avg_invest)/(wacc-g) # Valor Residual
+  # Valor residual
+  vr <- (avg_ebitda-avg_invest)/(wacc-g) # Valor Residual
 
-# Iterações
-iter <- 10000 
+  # Iterações
+  iter <- 10000 
+  
+  saida <- rep(NA,iter)
+  for (i in 1:iter)     # criando loop do algoritmo
+  {
+    saida[i] <- 
+      (data.frame(              # criando data.frame para cada iteração
+        ebda = rnorm(10, avg_ebitda, sd_ebitda),
+        inv = rnorm(10, avg_invest, sd_invest),
+        t = 1:10
+      )%>%
+        mutate(fco = ebda-inv,
+               fcd = (fco / (1+(sample(wacc,size = 1)))^t)
+        )%>% 
+        summarize((sum(fcd)+sample(vr,size = 1))/(stock_vol))) # sumarizando os 10 anos e somando os valores com o valor residual
+  }
 
-saida <- rep(NA,iter)
-for (i in 1:iter)     # criando loop do algoritmo
-{
-  saida[i] <- 
-    (data.frame(              # criando data.frame para cada iteração
-      ebda = rnorm(10, avg_ebitda, sd_ebitda),
-      dnp = rnorm(10, avg_donp, sd_donp),
-      inv = rnorm(10, avg_invest, sd_invest),
-      t = 1:10
-    )%>%
-      mutate(fco = ((ebda+dnp-inv)),
-             fcd = (fco / (1+(sample(wacc,size = 1)))^t)
-      )%>% 
-      summarize((sum(fcd)+sample(vr,size = 1))/(stock_vol))) # sumarizando os 10 anos e somando os valores com o valor residual
+  dados_saida <- 
+    data.frame(
+      ev = matrix(unlist(saida),nrow = iter,byrow = T),stringsAsFactors=FALSE)
+
+  df =
+      rbind(df,data.frame(
+        name = k,
+        avg = round(mean(dados_saida$ev),digits = 2),
+        max = round(mean(dados_saida$ev)+(2*(sd(dados_saida$ev))),digits = 2),
+        min = round(mean(dados_saida$ev)-(2*(sd(dados_saida$ev))),digits = 2),
+        real = stock_price
+        )
+    )
 }
-
-dados_saida <- 
-  data.frame(
-    ev = matrix(unlist(saida),nrow = iter,byrow = T),stringsAsFactors=FALSE)
-
-alpargatas_stock_est <-
-  data.frame(
-    name = "alpargatas",
-    avg = mean(dados_saida$ev),
-    max = mean(dados_saida$ev)+(2*(sd(dados_saida$ev))),
-    min = mean(dados_saida$ev)-(2*(sd(dados_saida$ev))),
-    real = stock_price
-  )
-
-############################################################################
-
-# Base de dados
-dados <- googlesheets::gs_title('dados_monografia') %>%
-  googlesheets::gs_read(ws = 'carrefour')
-
-# Coletando as variáveis da planilha e criando os parâmetros para distribuição normal
-
-## Alpargatas
-n <- 5
-ano <- dados[1,2:5]
-stock_price <- as.numeric(dados[3,8])
-stock_vol <- as.numeric(dados[2,8])
-beta <- as.numeric(dados[4,8])
-g <- as.numeric(dados[5,8])
-
-ebitda <- as.numeric(dados[9,2:n])*1000
-avg_ebitda <- mean(ebitda)
-sd_ebitda <- sd(ebitda)
-
-donp <- as.numeric(dados[10,2:n])*1000
-avg_donp <- mean(donp)
-sd_donp <- sd(donp)
-
-invest <- as.numeric(dados[11,2:n])*1000
-avg_invest <- mean(invest)
-sd_invest <- sd(invest)
-
-# Valor residual
-vr <- ((avg_ebitda)+avg_donp-avg_invest)/((rltriangle(n=1, a=8, b=15, c=10)/100)-(rltriangle(n=1, a=2, b=5, c=4)/100)) # Valor Residual
-
-# Iterações
-iter <- 10000 
-
-saida <- rep(NA,iter)
-for (i in 1:iter)     # criando loop do algoritmo
-{
-  saida[i] <- 
-    (data.frame(              # criando data.frame para cada iteração
-      ebda = rnorm(10, avg_ebitda, sd_ebitda),
-      dnp = rnorm(10, avg_donp, sd_donp),
-      inv = rnorm(10, avg_invest, sd_invest),
-      t = 1:10
-    )%>%
-      mutate(fco = ((ebda+dnp-inv)),
-             fcd = (fco / (1+(rltriangle(n=1, a=8, b=15, c=10)/100))^t) # distribuição triangular do wacc
-      )%>% 
-      summarize((sum(fcd)+vr)/(stock_vol))) # sumarizando os 10 anos e somando os valores com o valor residual
-}
-
-dados_saida <- 
-  data.frame(
-    ev = matrix(unlist(saida),nrow = iter,byrow = T),stringsAsFactors=FALSE)
-
-carrefour_stock_est <-
-  data.frame(
-    name = "carrefour",
-    avg = round(mean(dados_saida$ev),digits = 2),
-    max = round(mean(dados_saida$ev)+(2*(sd(dados_saida$ev))),digits = 2),
-    min = round(mean(dados_saida$ev)-(2*(sd(dados_saida$ev))),digits = 2),
-    real = stock_price
-  )
-
-############################################################################
-
-# Base de dados
-dados <- googlesheets::gs_title('dados_monografia') %>%
-  googlesheets::gs_read(ws = 'azul')
-
-# Coletando as variáveis da planilha e criando os parâmetros para distribuição normal
-
-## Alpargatas
-n <- 5
-ano <- dados[1,2:5]
-stock_price <- as.numeric(dados[3,8])
-stock_vol <- as.numeric(dados[2,8])
-beta <- as.numeric(dados[4,8])
-g <- as.numeric(dados[5,8])
-
-ebitda <- as.numeric(dados[9,2:n])*1000
-avg_ebitda <- mean(ebitda)
-sd_ebitda <- sd(ebitda)
-
-donp <- as.numeric(dados[10,2:n])*1000
-avg_donp <- mean(donp)
-sd_donp <- sd(donp)
-
-invest <- as.numeric(dados[11,2:n])*1000
-avg_invest <- mean(invest)
-sd_invest <- sd(invest)
-
-# Valor residual
-vr <- ((avg_ebitda)+avg_donp-avg_invest)/((rltriangle(n=1, a=8, b=15, c=10)/100)-(rltriangle(n=1, a=2, b=5, c=4)/100)) # Valor Residual
-
-# Iterações
-iter <- 10000 
-
-saida <- rep(NA,iter)
-for (i in 1:iter)     # criando loop do algoritmo
-{
-  saida[i] <- 
-    (data.frame(              # criando data.frame para cada iteração
-      ebda = rnorm(10, avg_ebitda, sd_ebitda),
-      dnp = rnorm(10, avg_donp, sd_donp),
-      inv = rnorm(10, avg_invest, sd_invest),
-      t = 1:10
-    )%>%
-      mutate(fco = ((ebda+dnp-inv)),
-             fcd = (fco / (1+(rltriangle(n=1, a=8, b=15, c=10)/100))^t) # distribuição triangular do wacc
-      )%>% 
-      summarize((sum(fcd)+vr)/(stock_vol))) # sumarizando os 10 anos e somando os valores com o valor residual
-}
-
-dados_saida <- 
-  data.frame(
-    ev = matrix(unlist(saida),nrow = iter,byrow = T),stringsAsFactors=FALSE)
-
-azul_stock_est <-
-  data.frame(
-    name = "azul",
-    avg = round(mean(dados_saida$ev),digits = 2),
-    max = round(mean(dados_saida$ev)+(2*(sd(dados_saida$ev))),digits = 2),
-    min = round(mean(dados_saida$ev)-(2*(sd(dados_saida$ev))),digits = 2),
-    real = stock_price
-  )
-
-############################################################################
-
 ```
 
-```{r}
-dplyr::union_all(
-                  alpargatas_stock_est,
-                  carrefour_stock_est,
-                  azul_stock_est
-                  ) %>% 
+```{r,eval=T,include=T,warning=F,message=F,echo=F,fig.align='center',fig.width=5,fig.height=3}
+df %>% 
   ggplot() + 
-  geom_dumbbell(aes(y = name,
+  geom_dumbbell(aes(y = fct_reorder(name,real),
                     x = min, 
                     xend = max),
-  colour = "grey70", size = 3,
-  colour_x = "#F7BC08", colour_xend = "#395B74")+
-  geom_point(aes(x=real,y=name,color="dark orange",size=3))+
-  theme(legend.title = element_blank(),legend.text = element_blank(),legend.position = "none",axis.title.y = element_blank())
-
+  colour = "#DADADA", size = 2,
+  colour_x = "#E86767", colour_xend = "#2B8B0E")+
+  geom_point(aes(x=real,y=fct_reorder(name,real)),size=4,color="dark orange",alpha=.7)+
+  geom_text(aes(x=real,y=name,label = real,vjust = 2),size=2.6)+
+  geom_text(aes(x=avg,y=name,label = avg,vjust = 2),size=2.6)+
+  labs(
+    title = "Comparativo do valor da ação com o valor estimado (+/- 2 desvios)",
+    subtitle = "",
+    x = "Valor da ação",
+    y = "Empresas avaliadas"
+  )+
+  th+
+  theme(legend.title = element_blank(),legend.position = "none")
 ```
 
 
