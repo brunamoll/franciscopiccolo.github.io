@@ -241,15 +241,20 @@ A aplicação ocorrerá através dos seguintes passos:
 
 O processo será aplicado em x empresas, para que seja possível avaliar se o algoritmo está gerando valores acurados. Para validar a acuracidade do algoritmo, será gerado um gráfico comparando o valor atual da ação da empresa com o valor médio da ação gerado pelo algoritmo, mais ou menos dois desvio padrão, ou seja, uma faixa de valor estimado.
 
-As empresas selecionadas para aplicação do algoritmo foram: Alpargatas, Carrefour, Azul Linha Aéreas, Camil, CPFL Energia. Após coletas os dados financeiros publicados ao final do trimestre e consolidá-los de maneira padronizada, se torna possível definir quais variáveis assumirão comportamento estocástico. A tabela abaixo indica quais variáveis serão usadas no modelo, seu respectivo comportamento e sua distribuição de probabilidade.
+As empresas selecionadas para aplicação do algoritmo foram: Alpargatas, Carrefour, Camil, CPFL Energia, Estácio, Duratex e Fleury. Após coletar os dados financeiros históricos destas empresas, especificamente de 2015 até 2018, e consolidá-los de maneira padronizada, se tornou possível definir quais variáveis deverão assumir comportamento estocástico, bem como qual distribuição de probabilidade melhor se aplica a variável e quais parâmetros foram calculados para a geração dos números aleatórios. 
+
+A tabela abaixo resume estas informações:
 
 ```{r,eval=T,include=T,echo=F,warning=F,message=F}
 knitr::kable(x = data.frame(
   "Variável" = c("EBTIDA","Investimento","Custo de capital de terceiros","Retorno de mercado","Retorno livre de risco","Parcela de capital próprio","Parcela de capital de terceiros","Beta","Crescimento esperado"),
   Comportamento = c("Estocástica","Estocástica","Determinística","Estocástia","Estocástica","Determinística","Determinística","Determinística","Determinística"),
-  "Distribuição" = c("Normal","Normal","","Triangular","Triangular","","","","")
+  "Distribuição" = c("Normal","Normal","","Triangular","Triangular","","","",""),
+  "Parâmetros calculados" = c("Média e Desvio Padrão","Média e Desvio Padrão","","Valor minimo, máximo e moda","Valor minimo, máximo e moda","","","","")
 ))
 ```
+
+Tendo definida esta etapa, foi gerado um algoritmo para utilizar como insumo as informações coletadas e calcular o possível valor da ação das empresas.
 
 ```{r,eval=T,echo=F,include=F,warning=F,message=F}
 library(tidyverse) # pacote para tratar os dados
@@ -363,6 +368,9 @@ df %>%
   th+
   theme(legend.title = element_blank(),legend.position = "none")
 ```
+
+O gráfico acima, gerado após a execução do algoritmo, resume os resultados obtidos. É possível concluir que o algoritmo consegue gerar valores próximos do atual valor das empresas analisadas. Embora a parte mais técnica de coleta de informações, como por exemplo calculo do beta ou calculo do custo da dívida, tenha tido menor relevância, o algoritmo permite escalabilidade, para analisar várias empresas de forma instantânea, bastando padronizar os dados de entrada.
+
 
 
 #### **REFERÊNCIAS BIBLIOGRÁFICAS**
