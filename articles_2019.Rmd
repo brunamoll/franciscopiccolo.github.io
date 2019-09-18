@@ -15,7 +15,7 @@ entries will follow this format:
 --->
 
 <article>
-<h3><a href="project_1.html">Acessando o banco de dados Redshift através do R</a></h3>
+<h3><a href="acessando_redshift_via_r.html">Acessando o banco de dados Redshift através do R</a></h3>
 <div class="summary">
 <span><i class="fa fa-calendar"></i> _2019-09-17_</span>
 <p> Neste tutorial, irei apresentar um passo a passo sobre como acesar o banco de dados Redshift através da ferramenta R...</p>
