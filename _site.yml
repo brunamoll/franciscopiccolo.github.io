@@ -1,16 +1,13 @@
 name: 'Glass Frog'
 output_dir: "."
 navbar:
-  title: 'Glass Frog'
+  title: 'glass fRog'
   left:
     - text: 'Home'
-      icon: 'fa-home'
       href: index.html
     - text: 'About'
-      icon: 'fa-info'
       href: about.html
     - text: 'Books'
-      icon: 'fas fa-brain'
       href: books.html
     - text: 'Projects'
       icon: 'fas fa-code'
