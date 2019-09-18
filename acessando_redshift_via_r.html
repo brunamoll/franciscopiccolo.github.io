@@ -12,7 +12,7 @@
 
 
 
-<title>Projetos desenvolvidos em 2019</title>
+<title>Acessando o banco de dados Redshift através do R</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -317,9 +317,6 @@ $(document).ready(function () {
     Random
   </a>
 </li>
-<li>
-  <a href="Monografia.html">Monografia</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -343,46 +340,85 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Projetos desenvolvidos em 2019</h1>
+<h1 class="title toc-ignore">Acessando o banco de dados Redshift através do R</h1>
 
 </div>
 
 
-<div id="r-markdown" class="section level4">
-<h4>R Markdown</h4>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<div id="introducao" class="section level5">
+<h5>Introdução</h5>
+<p>Neste tutorial, irei apresentar um passo a passo sobre como acesar o banco de dados Redshift através da ferramenta R. Esta tarefa será muito útil para quem prefere utilizar o R, ao invés do convencional Excel para realizar projetos de análise de dados. O objetivo é consultar o banco de dados, criar um data.frame e trazê-lo ao R, para então realizar as análises.</p>
 </div>
-<div id="including-plots" class="section level4">
-<h4>Including Plots</h4>
-<p>You can also embed plots, for example:</p>
-<p><img src="project_1_files/figure-html/pressure-1.png" width="288" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
-<pre class="sql"><code>-- Tabela de estoque com dados atualizados no dia
-create table #stock
-distkey(src_fk_sku_simple_seller)
-sortkey(valid_from,valid_to,src_fk_sku_simple_seller)
-as
-select
-    1 as fk_company
-    ,material as src_fk_sku_simple_seller
-    ,calday
-    ,date(calday)::timestamp as valid_from
-    ,dateadd(second,-1,date(sysdate+1)) as valid_to
-    ,stock_qty_b002
-    ,stock_qty_b006
-from table_xyz
-where 1=1
-and calday = to_char(sysdate,&#39;YYYYMMDD&#39;)
-;</code></pre>
+<div id="-passo" class="section level5">
+<h5>1º Passo</h5>
+<p>Baixe o driver JDBC da Amazon. Ele é necessário para permitir a conexão de uma ferramenta (i.e. R) ao cluster da Amazon que você tem acesso. Neste <a href="https://docs.aws.amazon.com/pt_br/redshift/latest/mgmt/configure-jdbc-connection.html#obtain-jdbc-url">link</a> há os arquivos para cada versão do JDBC.</p>
+<p>Obs: Caso ao final do processo a consulta ao banco falhe, veja se o arquivo não veio corrompido. Isso pode acontecer caso o dowload seja feito diretamente pelo R.</p>
+</div>
+<div id="-passo-1" class="section level5">
+<h5>2º Passo</h5>
+<p>Após baixar o driver, acesse o R ou Rstudio, instale e chame os seguintes pacotes: rJava e RJDBC.</p>
+<pre class="r"><code>install.packages(&quot;rJava&quot;)
+install.packages(&quot;RJDBC&quot;)
+
+library(rJava)
+library(RJDBC)</code></pre>
+</div>
+<div id="-passo-2" class="section level5">
+<h5>3º Passo</h5>
+<p>Crie uma variável (e.g. driver) contendo o arquivo JDBC que foi baixado no passo 1. Use o código abaixo para este passo:</p>
+<pre class="r"><code>driver &lt;- JDBC(driverClass = &quot;com.amazon.redshift.jdbc41.Driver&quot;, classPath = Sys.glob(&quot;caminho_do_arquivo/RedshiftJDBC41-1.1.9.1009.jar&quot;), identifier.quote=&quot;`&quot;)</code></pre>
+</div>
+<div id="-passo-3" class="section level5">
+<h5>4º Passo</h5>
+<p>Crie uma variável (e.g. db_connection) que irá indicar as informações do banco de dados a ser acessado pelo R. Use o código abaixo para este passo:</p>
+<pre class="r"><code>db_connection &lt;- sprintf(&quot;jdbc:redshift://%s:%s/%s?tcpKeepAlive=true&amp;ssl=true&amp;sslfactory=com.amazon.redshift.ssl.NonValidatingFactory&quot;, &quot;host_do_banco&quot;, &quot;porta&quot;, &quot;nome do banco&quot;)</code></pre>
+</div>
+<div id="-passo-4" class="section level5">
+<h5>5º Passo</h5>
+<p>Crie uma variável (e.g. access) que irá conter as informações do banco a ser acessado e também do usuário que irá acessá-lo. Use o código abaixo para este passo, colocando suas respectivas informações de usuário e senha.</p>
+<pre class="r"><code>access &lt;- dbConnect(driver, db_end, &quot;user&quot;, &quot;password&quot;)</code></pre>
+<p>Veja que a função “dbConnect” usa o arquivo driver de acesso ao banco, as informações de qual banco será acessado e as informações do usuário que irá acessá-lo.</p>
+</div>
+<div id="-passo-5" class="section level5">
+<h5>6º Passo</h5>
+<p>Tendo as 3 variáveis criadas, para acessar o banco de dados será necessário apenas a última (criada no item 5). Para acessar o banco de dados, será usado o pacote RJDBC (baixado no passo 2). Abaixo há alguns exemplos de códigos consultando o Redshift:</p>
+<p>Obs: Queries executadas diretamente no console do R devem estar entre aspas.</p>
+<pre class="r"><code>RJDBC::dbGetQuery(jconn,&quot;select order,client,sale_date from orders_tb limit 10&quot;)
+
+RJDBC::dbGetQuery(jconn,&quot;select supplier,invoice,delivery_date from supplier_tb where 1=1 and delivery_date = 2019-01-30 limit 10&quot;)</code></pre>
+</div>
+<div id="-passo-6" class="section level5">
+<h5>7º Passo</h5>
+<p>Para explorar de maneira completa esta funcionalidade, é interessante que, ao invés de escrever a query no console do R, a query seja salva em um arquivo (.sql) e o R acesse este arquivo e salve-o em uma variável. Para isso, é necessário instalar e chamar o pacote readr. Após isso, o código do passo 6 será:</p>
+<pre class="r"><code>-- salvando o arquivo .sql em uma variável
+sql_file &lt;- readr::read_file(&quot;Caminho_do_arquivo/script.sql&quot;)
+
+-- consultando o redshift através do arquivo
+query_redshift &lt;- RJDBC::dbGetQuery(jconn,sql_file)</code></pre>
+</div>
+<div id="bonus" class="section level5">
+<h5>Bônus</h5>
+<p>Se houver a necessidade de criar várias consultas no Redshift para um mesmo projeto de análise de dados, é possível salvar várias queries no mesmo arquivo. Para acessar estas queries separadamente é necessário o uso de funções regexp (a.k.a expressões regulares), para que o arquivo seja delimitado, indicando o início e fim de cada query dentro dele.</p>
+<p>Para realizar esta etapa, primeiro separe cada query dentro do arquivo .sql através de comentários (e.g. “– query_x_begin” e “query_x_end”). Na sequência, instale e chame o pacote stringr, que possui funções de manipulação de strings.</p>
+<pre class="r"><code>-- salvando o arquivo .sql em uma variável
+sql_syntax &lt;- readr::read_file(&#39;C:/Users/francisco.piccolo/Desktop/R/Queries/cmv_validation.sql&#39;)
+
+-- criando variável com query 1. Uso de regexp para separar as queries dentro do arquivo
+query_1 &lt;- RJDBC::dbGetQuery(jconn,substr(sql_syntax,min(stringr::str_locate(string=sql_syntax,&#39;-- query_1_begin&#39;)),max(stringr::str_locate(string=sql_syntax,&#39;-- query_1_end&#39;))))
+
+query_2 &lt;- RJDBC::dbGetQuery(jconn,substr(sql_syntax,min(stringr::str_locate(string=sql_syntax,&#39;-- query_2_begin&#39;)),max(stringr::str_locate(string=sql_syntax,&#39;-- query_2_end&#39;))))
+
+query_3 &lt;- RJDBC::dbGetQuery(jconn,substr(sql_syntax,min(stringr::str_locate(string=sql_syntax,&#39;-- query_3_begin&#39;)),max(stringr::str_locate(string=sql_syntax,&#39;-- query_3_end&#39;))))</code></pre>
+</div>
+<div id="conclusao" class="section level5">
+<h5>Conclusão</h5>
+<p>Este passo a passo buscou mostrar como é simples o acesso ao redshift através do R. Uma excelente alternativa caso voê deseje fazer análises de dados mais robustas, onde o Excel não consegue ser tão eficiente. Com o arquivo .sql é possível criar qualquer data.frame no redshift e salvar em uma variável dentro do R.</p>
+<p>Os passos 3, 4 e 5 podem ser automatizados através de uma função, onde as informações de acesso ao banco podem ser salvas em um arquivo (.txt) e a função pode consultá-lo para então trazer os parâmetros necessários de maneira mais fácil. Irei fazer esta melhoria em breve e atualizo este post.</p>
+</div>
+<div id="leituras-adicionais" class="section level5">
+<h5>Leituras adicionais</h5>
+<p><a href="https://www.progress.com/tutorials/jdbc/connecting-to-amazon-redshift-from-r-via-jdbc-driver">Connecting to Amazon Redshift from R</a></p>
+<p><a href="https://www.r-bloggers.com/a-comprehensive-guide-to-connect-r-to-amazon-redshift/">A comprehensive guide to connect R to Amazon Redshift</a></p>
 </div>
 
 

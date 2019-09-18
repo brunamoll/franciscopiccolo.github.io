@@ -15,17 +15,9 @@ entries will follow this format:
 --->
 
 <article>
-<h3><a href="project_1.html">REFLECTIONS ON THE START OF MY DATA FELLOWSHIP WITH UPTAKE</a></h3>
+<h3><a href="project_1.html">Acessando o banco de dados Redshift através do R</a></h3>
 <div class="summary">
-<span><i class="fa fa-calendar"></i> _2018-03-21_</span>
-<p> Teste...</p>
-</div>
-</article>
-
-<article>
-<h3><a href="project_2.html">ADVENT OF CODE IN R: DAY 1</a></h3>
-<div class="summary">
-<span><i class="fa fa-calendar"></i> _2017-12-01_</span>
-<p> Over on the `rOpenSci` Slack, [Sam](https://twitter.com/samfirke) asked if anyone was doing the (Advent of Code)[http://adventofcode.com/] challenges in R.  A few others said they were interested and I decided to go for it as well!  My solutions...</p>
+<span><i class="fa fa-calendar"></i> _2019-09-17_</span>
+<p> Neste tutorial, irei apresentar um passo a passo sobre como acesar o banco de dados Redshift através da ferramenta R...</p>
 </div>
 </article>
