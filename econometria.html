@@ -359,10 +359,8 @@ library(readxl)</code></pre>
 ## 5       5    72 0.110 
 ## 6       6    57 0.132</code></pre>
 <p>Gráfico de dispersão (área plantada x preço da cana)</p>
-<pre class="r"><code>dados %&gt;% 
-  ggplot(aes(x=Área,y=`Preço da Cana de Açúcar`))+
-  geom_point()</code></pre>
-<p><img src="econometria_files/figure-html/unnamed-chunk-4-1.png" width="288" /></p>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="econometria_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
 <ol style="list-style-type: decimal">
 <li>Verifique se há autocorrelação serial dos erros. Comente o diagrama de dispersão e o correlograma.</li>
 </ol>

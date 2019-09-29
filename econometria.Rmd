@@ -48,10 +48,11 @@ dados_2 %>%
 
 Gráfico de dispersão (área plantada x preço da cana)
 
-```{r}
+```{r,eval=T,include=T,echo=F,fig.align='center',fig.width=5,fig.height=3}
 dados %>% 
   ggplot(aes(x=Área,y=`Preço da Cana de Açúcar`))+
-  geom_point()
+  geom_point()+
+  geom_smooth()
 ```
 
 1. Verifique se há autocorrelação serial dos erros. Comente o diagrama de dispersão e o correlograma.
