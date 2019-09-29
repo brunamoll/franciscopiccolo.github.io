@@ -12,7 +12,7 @@
 
 
 
-<title>Posts</title>
+<title>econometria</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -328,44 +328,111 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Posts</h1>
+<h1 class="title toc-ignore">econometria</h1>
 
 </div>
 
 
-<!---
-entries will follow this format:
-<article>
-<h3><a href=""> </a></h3>
-<div class="summary">
-<span><i class="fa fa-calendar"></i> _date_</span>
-<p> ...</p>
-<a class="btn btn-outline-primary btn-sm" href="">Full Post</a>
+<div id="exercicio-sobre-autocorrelacao-de-residuos" class="section level3">
+<h3>Exercício sobre autocorrelação de resíduos</h3>
+<p>Pacotes utilizados para execução das atividades</p>
+<pre class="r"><code>library(tidyverse)
+library(lmtest)
+library(corrplot)
+library(readxl)</code></pre>
+<p>Objetivos: desenvolver gráficos para analisar autocorrelação de resíduos, aplicar o teste Durbin Watson, aplicar o teste Godfrey e aplicar o teste Q (a.k.a Ljung–Box test).</p>
+<div id="primeira-parte" class="section level4">
+<h4><strong>Primeira parte</strong></h4>
+<p>Base de dados com valores do preço da cana de açucar e área plantada (em hectares), por período analisado. Deseja-se avaliar a elasticidade da área plantada com relação ao preço, a partir de uma série histórica. O modelo é descrito abaixo:</p>
+<p><span class="math display">\[ lnY_t = \beta_1+\beta_2 (lnX_t) + U_t \]</span></p>
+<p>Onde:</p>
+<p><span class="math inline">\(Y_t\)</span> = área plantada no ano t (em hectares)</p>
+<p><span class="math inline">\(X_t\)</span> = preço no ano t</p>
+<p>Base de dados para o exercício (apenas as primeiras 5 linhas):</p>
+<pre><code>## # A tibble: 6 x 3
+##   periodo  area  valor
+##     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1       1    29 0.0753
+## 2       2    71 0.115 
+## 3       3    42 0.101 
+## 4       4    90 0.110 
+## 5       5    72 0.110 
+## 6       6    57 0.132</code></pre>
+<p>Gráfico de dispersão (área plantada x preço da cana)</p>
+<pre class="r"><code>dados %&gt;% 
+  ggplot(aes(x=Área,y=`Preço da Cana de Açúcar`))+
+  geom_point()</code></pre>
+<p><img src="econometria_files/figure-html/unnamed-chunk-4-1.png" width="288" /></p>
+<ol style="list-style-type: decimal">
+<li>Verifique se há autocorrelação serial dos erros. Comente o diagrama de dispersão e o correlograma.</li>
+</ol>
+<p>R: Primeiro, deve-se criar o modelo de regressão para depois gerar os erros. O modelo é resumido abaixo:</p>
+<pre><code>## 
+## Call:
+## lm(formula = area ~ valor, data = dados_2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -97.901 -25.544  -8.999  24.135  99.908 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     2.54      17.77   0.143    0.887    
+## valor         479.18      62.95   7.612 1.13e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 39.65 on 32 degrees of freedom
+## Multiple R-squared:  0.6442, Adjusted R-squared:  0.6331 
+## F-statistic: 57.95 on 1 and 32 DF,  p-value: 1.131e-08</code></pre>
+<p>Abaixo há uma amostra dos resíduos gerados pelo modelo:</p>
+<pre><code>##   periodo area    valor  residual
+## 1       1   29 0.075258 -9.602554
+## 2       2   71 0.114894 13.404698
+## 3       3   42 0.101075 -8.973524
+## 4       4   90 0.110309 34.601735
+## 5       5   72 0.109562 16.959682
+## 6       6   57 0.132486 -9.025023</code></pre>
+<p>Após gerar os resíduos, pode-se analisar se há autocorrelação. Os gráficos abaixo mostram se há este comportamento.</p>
+<p><img src="econometria_files/figure-html/unnamed-chunk-8-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="econometria_files/figure-html/unnamed-chunk-9-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Dá para ver que não há autocorrelação entre os resíduos. Porém, para garantir, é interessante usar testes estatísticos formais, como o Durbin Watson ou Godfrey.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Aplique o teste de Durbin Watson, escrevendo as hipóteses e testando a autocorrelação. Use um nível de significância de 5%.</li>
+</ol>
+<p>R: Abaixo há a aplicação do teste DW.</p>
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  lr
+## DW = 1.4745, p-value = 0.04089
+## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+<p>De maneira resumida, o valor-p foi de 0.04089 e o valor d, 1.91822. Neste teste, usa-se o valor d para gerar a conclusão do teste. Antes, é preciso trazer os intervalos para comparação deste valor d. Para encontrar o intervalor, use a <a href="http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia">tablea</a> específica do teste.</p>
+<p>De acordo com a tabela, sabendo a quantidade de registros (n = 33), a significância (0.05) e o nível de liberdade (degrees of freedom = 1) que é o número de variáveis independentes, pode-se achar os valores <strong>dl</strong> e <strong>du</strong>. Para este exercício tem-se:</p>
+<p><strong>dl</strong> = 1.35</p>
+<p><strong>du</strong> = 1.49</p>
+<p>Sabendo que d = 1.91822 e os critérios do teste, pode-se concluir que a hipótese nula é verdadeira, ou seja, não existe autocorrelação. Isso corrobora os gráficos gerados anteriormente.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Aplique o teste Breusch Godfrey (a.k.a teste LM) escrevendo as hipóteses. Teste a autocorrelação com nível de significância de 5% e escreva a conclusão.</li>
+</ol>
+<pre class="r"><code>lmtest::bgtest(lr)</code></pre>
+<pre><code>## 
+##  Breusch-Godfrey test for serial correlation of order up to 1
+## 
+## data:  lr
+## LM test = 2.0872, df = 1, p-value = 0.1485</code></pre>
+<p>O teste godfrey gerou um p valor de 0.1485</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Aplique o teste Q e comente os resultados.</li>
+</ol>
+<pre class="r"><code>Box.test(residual,lag = 1,type = c(&quot;Box-Pierce&quot;, &quot;Ljung-Box&quot;), fitdf = 0)</code></pre>
+<pre><code>## 
+##  Box-Pierce test
+## 
+## data:  residual
+## X-squared = 1.9896, df = 1, p-value = 0.1584</code></pre>
 </div>
-</article>
---->
-<article>
-<h3>
-<a href="acessando_redshift_via_r.html">Acessando o banco de dados Redshift através do R</a>
-</h3>
-<div class="summary">
-<span><i class="fa fa-calendar"></i> <em>2019-09-17</em></span>
-<p>
-Neste tutorial, irei apresentar um passo a passo sobre como acesar o banco de dados Redshift através da ferramenta R…
-</p>
 </div>
-</article>
-<article>
-<h3>
-<a href="econometria.html">Exercícios de Econometria</a>
-</h3>
-<div class="summary">
-<span><i class="fa fa-calendar"></i> <em>2019-09-29</em></span>
-<p>
-Neste post, irei desenvolver alguns exercícios de econometria, que geralmente são alicados nos cursos de economia…
-</p>
-</div>
-</article>
 
 
 

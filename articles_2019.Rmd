@@ -21,3 +21,13 @@ entries will follow this format:
 <p> Neste tutorial, irei apresentar um passo a passo sobre como acesar o banco de dados Redshift através da ferramenta R...</p>
 </div>
 </article>
+
+
+<article>
+<h3><a href="econometria.html">Exercícios de Econometria</a></h3>
+<div class="summary">
+<span><i class="fa fa-calendar"></i> _2019-09-29_</span>
+<p> Neste post, irei desenvolver alguns exercícios de econometria, que geralmente são alicados nos cursos de economia...</p>
+</div>
+</article>
+
