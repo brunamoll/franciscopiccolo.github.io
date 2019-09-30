@@ -339,7 +339,10 @@ $(document).ready(function () {
 <pre class="r"><code>library(tidyverse)
 library(lmtest)
 library(corrplot)
-library(readxl)</code></pre>
+library(readxl)
+library(gridExtra)
+
+theme_set(theme_light())</code></pre>
 <p>Objetivos: desenvolver gráficos para analisar autocorrelação de resíduos, aplicar o teste Durbin Watson, aplicar o teste Godfrey e aplicar o teste Q (a.k.a Ljung–Box test).</p>
 <div id="primeira-parte" class="section level4">
 <h4><strong>Primeira parte</strong></h4>
@@ -361,28 +364,15 @@ library(readxl)</code></pre>
 <p>Gráfico de dispersão (área plantada x preço da cana)</p>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="econometria_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="econometria_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;" /></p>
 <ol style="list-style-type: decimal">
 <li>Verifique se há autocorrelação serial dos erros. Comente o diagrama de dispersão e o correlograma.</li>
 </ol>
 <p>R: Primeiro, deve-se criar o modelo de regressão para depois gerar os erros. O modelo é resumido abaixo:</p>
-<pre><code>## 
-## Call:
-## lm(formula = area ~ valor, data = dados_2)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -97.901 -25.544  -8.999  24.135  99.908 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)     2.54      17.77   0.143    0.887    
-## valor         479.18      62.95   7.612 1.13e-08 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 39.65 on 32 degrees of freedom
-## Multiple R-squared:  0.6442, Adjusted R-squared:  0.6331 
-## F-statistic: 57.95 on 1 and 32 DF,  p-value: 1.131e-08</code></pre>
+<p><span class="math display">\[ lnY_t = \beta_1+\beta_2 (lnX_t) + U_t \]</span></p>
+<p>R² = 64.4% Adjusted R² = 63.3%</p>
+<p>Equação: <span class="math inline">\(lnY_t = 2.54 + 479.18 (lnX_t) + U_t\)</span></p>
 <p>Abaixo há uma amostra dos resíduos gerados pelo modelo:</p>
 <pre><code>##   periodo area    valor  residual
 ## 1       1   29 0.075258 -9.602554
@@ -392,9 +382,9 @@ library(readxl)</code></pre>
 ## 5       5   72 0.109562 16.959682
 ## 6       6   57 0.132486 -9.025023</code></pre>
 <p>Após gerar os resíduos, pode-se analisar se há autocorrelação. Os gráficos abaixo mostram se há este comportamento.</p>
-<p><img src="econometria_files/figure-html/unnamed-chunk-8-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p><img src="econometria_files/figure-html/unnamed-chunk-9-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>Dá para ver que não há autocorrelação entre os resíduos. Porém, para garantir, é interessante usar testes estatísticos formais, como o Durbin Watson ou Godfrey.</p>
+<p><img src="econometria_files/figure-html/unnamed-chunk-10-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Aparentemente não há autocorrelação entre os resíduos. Porém, para garantir, é interessante usar testes estatísticos formais, como o Durbin Watson ou Godfrey.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Aplique o teste de Durbin Watson, escrevendo as hipóteses e testando a autocorrelação. Use um nível de significância de 5%.</li>
 </ol>
@@ -409,26 +399,11 @@ library(readxl)</code></pre>
 <p>De acordo com a tabela, sabendo a quantidade de registros (n = 33), a significância (0.05) e o nível de liberdade (degrees of freedom = 1) que é o número de variáveis independentes, pode-se achar os valores <strong>dl</strong> e <strong>du</strong>. Para este exercício tem-se:</p>
 <p><strong>dl</strong> = 1.35</p>
 <p><strong>du</strong> = 1.49</p>
-<p>Sabendo que d = 1.91822 e os critérios do teste, pode-se concluir que a hipótese nula é verdadeira, ou seja, não existe autocorrelação. Isso corrobora os gráficos gerados anteriormente.</p>
+<p>Sabendo que dw = 1.47 e os critérios do teste, chega-se a uma inconclusão. O teste não consegue concluir se há autocorrelação serial dos resíduos com defasagem de um período (t). Na zona de indecisão não se pode nem aceitar ou rejeitar H0.</p>
 <ol start="3" style="list-style-type: decimal">
-<li>Aplique o teste Breusch Godfrey (a.k.a teste LM) escrevendo as hipóteses. Teste a autocorrelação com nível de significância de 5% e escreva a conclusão.</li>
+<li><p>Aplique o teste Breusch Godfrey (a.k.a teste LM) escrevendo as hipóteses. Teste a autocorrelação com nível de significância de 5% e escreva a conclusão.</p></li>
+<li><p>Aplique o teste Q e comente os resultados.</p></li>
 </ol>
-<pre class="r"><code>lmtest::bgtest(lr)</code></pre>
-<pre><code>## 
-##  Breusch-Godfrey test for serial correlation of order up to 1
-## 
-## data:  lr
-## LM test = 2.0872, df = 1, p-value = 0.1485</code></pre>
-<p>O teste godfrey gerou um p valor de 0.1485</p>
-<ol start="4" style="list-style-type: decimal">
-<li>Aplique o teste Q e comente os resultados.</li>
-</ol>
-<pre class="r"><code>Box.test(residual,lag = 1,type = c(&quot;Box-Pierce&quot;, &quot;Ljung-Box&quot;), fitdf = 0)</code></pre>
-<pre><code>## 
-##  Box-Pierce test
-## 
-## data:  residual
-## X-squared = 1.9896, df = 1, p-value = 0.1584</code></pre>
 </div>
 </div>
 
