@@ -1,6 +1,6 @@
 ---
 title: "About"
-layout: "page"
+layout: page
 permalink: /about/
 author_profile: true
 ---
