@@ -2,6 +2,7 @@
 title: "About"
 layout: "page"
 permalink: /about/
+author_profile: true
 ---
 
-Francisc Piccolo
+Francisco Piccolo
