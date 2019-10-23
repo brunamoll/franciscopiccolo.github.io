@@ -1,7 +1,7 @@
 ---
 title: "Projects_2"
-layout: pages
+layout: archive
 permalink: /about/
 ---
 
-Francisco_3 Piccolo
+Francisco_4 Piccolo
