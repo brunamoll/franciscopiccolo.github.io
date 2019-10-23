@@ -1,8 +1,7 @@
 ---
-title: "About"
-layout: page
+title: "Projects_2"
+layout: pages
 permalink: /about/
-author_profile: true
 ---
 
 Francisco_2 Piccolo
