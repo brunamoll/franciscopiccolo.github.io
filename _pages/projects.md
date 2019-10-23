@@ -1,10 +1,8 @@
 ---
 layout: archive
-title: "Projects"
 permalink: /machine-learning/
+title: "Projects"
 author_profile: true
-header:
-	image: ""
 ---
 
 {% include base_path %}
@@ -17,4 +15,3 @@ header:
     {% include archive-single.html %}
   {% endfor %}
 {% endfor %}
-
