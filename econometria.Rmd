@@ -1,9 +1,11 @@
 ---
-title: "econometria"
+title: "Econometria, validanto autocorrelação de resíduos"
 output: html_document
 ---
 
-### Exercício sobre autocorrelação de resíduos
+Na área de econometria busca-se encontrar relações de causalidade entre variáveis econômicas, onde estas relações são determinadas pelo grau de correlação entre as variáveis estudadas. O ferramental frequentemente utilizado para isso é a regressão, podendo ser linear simples ou múltipla, regressão com variáveis *dummy* ou regressão logística. 
+
+Ao utilizar a regressão, uma das hipóteses que validam as conclusões tiradas do modelo é a de não existência de autocorrelação dos resíduos gerados na criação da reta de regressão. Por esta ser uma premissa chave para a validade do modelo, há testes estatísticos formais que auxiliam na comprovação desta premissa. Neste post irei comentar sobre alguns destes testes e como eles podem ser implementados no R.
 
 Pacotes utilizados para execução das atividades
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
