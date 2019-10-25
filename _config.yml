@@ -109,9 +109,7 @@ analytics:
 author:
   name             : "Francisco Piccolo"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Entusiasta por dados e estatística, economista e profissional da área de business intelligence e data analytics. Atuo na área há 5 anos e busco diariamente aprender novos modelos e ferramentas para resolução de problemas.
-                      Sou grande fã de esportes (premier league principalmente), documentários, filmes e jogos (me dava bem no Dota l, Age of Empires ll e CS). No tempo livre busco passar o tempo com minha Esposa, sair com os amigos, me exercitar e ler livros
-                      didáticos ou futuristicos (Isaac Asimov e Arthur Clarke são meus preferidos)"
+  bio              : "If you can't explain it simply, you don't understand it well enough"
   location         : "Jundiaí, SP"
   email            :
   links:
@@ -125,7 +123,7 @@ author:
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/FranciscoPicco1"
     - label: "Linkedin"
-      icon: "fab fa-linkedin"
+      icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/franciscopiccolo/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
