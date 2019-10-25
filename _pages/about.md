@@ -1,5 +1,5 @@
 ---
-title: "Projects_2"
+title: "About"
 layout: archive
 permalink: /about/
 ---

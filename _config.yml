@@ -109,25 +109,27 @@ analytics:
 author:
   name             : "Francisco Piccolo"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Teste, teste, teste"
+  bio              : "Entusiasta por dados e estatística, economista e profissional da área de business intelligence e data analytics. Atuo na área há 5 anos e busco diariamente aprender novos modelos e ferramentas para resolução de problemas.
+                      Sou grande fã de esportes (premier league principalmente), documentários, filmes e jogos (me dava bem no Dota l, Age of Empires ll e CS). No tempo livre busco passar o tempo com minha Esposa, sair com os amigos, me exercitar e ler livros
+                      didáticos ou futuristicos (Isaac Asimov e Arthur Clarke são meus preferidos)"
   location         : "Jundiaí, SP"
   email            :
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: tobias.piccolo@gmail.com
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
+    - #label: "Email"
+      #icon: "fas fa-fw fa-envelope-square"
+      #url: tobias.piccolo@gmail.com
+    - #label: "Website"
+      #icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    #- label: "Facebook"
-      #icon: "fab fa-fw fa-facebook-square"
-      # url: "https://facebook.com/"
+      url: "https://twitter.com/FranciscoPicco1"
+    - label: "Linkedin"
+      icon: "fab fa-linkedin"
+      url: "https://www.linkedin.com/in/franciscopiccolo/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
+      url: "https://github.com/FranciscoPiccolo"
     - #label: "Instagram"
       #icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
