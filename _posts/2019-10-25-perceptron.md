@@ -1,7 +1,7 @@
 ---
 title: "ml post"
 date: 2019-10-25
-tages: [tag1,tag2]
+tags: [tag1,tag2]
 header:
 excerpt: "ml project, data science"
 ---
