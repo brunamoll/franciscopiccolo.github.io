@@ -3,6 +3,7 @@ title: "Executando queries no Redshift através do R"
 date: 2019-10-25
 header:
 excerpt: "Neste post irei mostrar uma forma fácil e rápida de acessar o banco de dados Redshift através do R"
+categories: [articles]
 ---
 
 ##### Introdução
