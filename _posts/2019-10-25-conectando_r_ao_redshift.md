@@ -45,11 +45,13 @@ no passo 1. Use o código abaixo para este passo:
 arquivo/RedshiftJDBC41-1.1.9.1009.jar”), identifier.quote=“\`”) {%
 endhighlight %}
 
-´´´R
+```r
 install.packages("tidyverse")
 
 a -> data.frame(a = c(1,2,4))
-´´´
+
+head(a)
+```
 
 ##### 4º Passo
 
