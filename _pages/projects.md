@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tags
-permalink: /project/
+permalink: /projects/
 ---
 
 {% include group-by-array.html collection=site.posts field='tags' %}
