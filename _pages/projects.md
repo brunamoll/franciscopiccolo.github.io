@@ -1,7 +1,7 @@
 ---
-layout: page
+layout: archive
 title: Tags
-permalink: /projects/
+permalink: /machine-learning/
 ---
 
 {% include group-by-array.html collection=site.posts field='tags' %}
