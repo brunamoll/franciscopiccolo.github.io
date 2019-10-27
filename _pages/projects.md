@@ -1,6 +1,6 @@
 ---
 title: "Projects"
-layout: archive
+layout: page
 permalink: /machine-learning/
 author_profile: true
 ---
