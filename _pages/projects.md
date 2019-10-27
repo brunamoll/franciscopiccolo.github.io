@@ -5,7 +5,6 @@ permalink: /machine-learning/
 author_profile: true
 ---
 
-{% include base_path %}
 {% include group-by-array.html collection=site.posts field="tags" %}
 
 {% for tag in group_names %}
