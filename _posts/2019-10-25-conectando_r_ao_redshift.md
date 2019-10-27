@@ -1,9 +1,8 @@
 ---
 title: "Executando queries no Redshift através do R"
 date: 2019-10-25
-tags: [Redshift,R]
 header:
-excerpt: "Este post irá mostrar como acessar o banco de dados Redshift através do R."
+excerpt: "Neste post irei mostrar uma forma fácil e rápida de acessar o banco de dados Redshift através do R"
 ---
 
 ##### Introdução
@@ -45,6 +44,12 @@ no passo 1. Use o código abaixo para este passo:
 “com.amazon.redshift.jdbc41.Driver”, classPath = Sys.glob(“caminho do
 arquivo/RedshiftJDBC41-1.1.9.1009.jar”), identifier.quote=“\`”) {%
 endhighlight %}
+
+´´´R
+install.packages("tidyverse")
+
+a -> data.frame(a = c(1,2,4))
+´´´
 
 ##### 4º Passo
 
