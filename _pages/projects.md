@@ -5,21 +5,12 @@ permalink: /machine-learning/
 author_profile: true
 ---
 
-{% include group-by-array.html collection=site.posts field='tags' %}
+{% include group-by-array.html collection=site.posts field="tags" %}
 
-<ul>
-  {% for tag in group_names %}
-    {% assign posts = group_items[forloop.index0] %}
-
-    <li>
-      <h2>{{ tag }}</h2>
-      <ul>
-        {% for post in posts %}
-        <li>
-          <a href='{{ site.baseurl }}{{ post.url }}'>{{ post.title }}</a>
-        </li>
-        {% endfor %}
-      </ul>
-    </li>
+{% for tag in group_names %}
+  {% assign posts = group_items[forloop.index0] %}
+  <h2 id="{{ tag | slugify }}" class="archive__subtitle">{{ tag }}</h2>
+  {% for post in posts %}
+    {% include archive-single.html %}
   {% endfor %}
-</ul>
+{% endfor %}
