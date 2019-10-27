@@ -45,14 +45,6 @@ no passo 1. Use o código abaixo para este passo:
 arquivo/RedshiftJDBC41-1.1.9.1009.jar”), identifier.quote=“\`”) {%
 endhighlight %}
 
-```r
-install.packages("tidyverse")
-
-a -> data.frame(a = c(1,2,4))
-
-head(a)
-```
-
 ##### 4º Passo
 
 Crie uma variável (e.g. db.connection) que irá indicar as informações
@@ -126,17 +118,19 @@ possui funções de manipulação de strings.
 readr::read.file(‘C:/Users/francisco.piccolo/Desktop/R/Queries/cmv.validation.sql’)
 
 – criando variável com query 1. Uso de regexp para separar as queries
-dentro do arquivo query.1 &lt;-
+dentro do arquivo
+
+query.1 ->
 RJDBC::dbGetQuery(jconn,substr(sql.syntax,min(stringr::str\_locate(string=sql\_syntax,‘–
 query.1.begin’)),max(stringr::str.locate(string=sql\_syntax,‘–
 query.1.end’))))
 
-query_2 &lt;-
+query_2 ->
 RJDBC::dbGetQuery(jconn,substr(sql.syntax,min(stringr::str.locate(string=sql.syntax,‘–
 query.2.begin’)),max(stringr::str.locate(string=sql.syntax,‘–
 query.2.end’))))
 
-query_3 &lt;-
+query_3 ->
 RJDBC::dbGetQuery(jconn,substr(sql_syntax,min(stringr::str_locate(string=sql_syntax,‘–
 query.3.begin’)),max(stringr::str_locate(string=sql_syntax,‘–
 query.3.end’)))) {% endhighlight %}
