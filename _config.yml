@@ -293,6 +293,18 @@ defaults:
       share: true
       related: true
 
+   # _random
+   - scope:
+       path: ""
+       type: random
+      values:
+       layout: single
+       author_profile: true
+       read_time: true
+       comments: # true
+       share: true
+       related: true
+       
   # _pages
   - scope:
       path: ""
