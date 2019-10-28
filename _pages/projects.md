@@ -1,7 +1,7 @@
 ---
 layout: archive
 permalink: /machine-learning/
-title: "Articles"
+title: "Articles teste"
 pagination:
   enabled: true
 date: 2016-08-26
