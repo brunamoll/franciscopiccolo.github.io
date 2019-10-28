@@ -2,7 +2,7 @@
 main:
   - title: "About"
     url: /about/
-  - title: "Random"
+  - title: "Random 2"
     url: /random/
   - title: "Projects"
     url: /posts/
