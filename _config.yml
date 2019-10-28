@@ -295,7 +295,7 @@ defaults:
   # _random
   - scope:
       path: ""
-      type: posts
+      type: random
     values:
       layout: single
       author_profile: true
