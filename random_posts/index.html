@@ -1,14 +1,14 @@
 ---
 layout: archive
 permalink: /random/
-title: "Random 2"
+title: "Random 3"
 author_profile: true
 ---
 
 {% include base_path.html %}
 {% capture written_year %}'None'{% endcapture %}
 {% for post in site.random_posts %}
-  {% capture year %}{{ random.date | date: '%Y' }}{% endcapture %}
+  {% capture year %}{{ random_posts.date | date: '%Y' }}{% endcapture %}
   {% if year != written_year %}
     <h2 id="{{ year | slugify }}" class="archive__subtitle"><a href="#{{ year | slugify }}">#{{ year }}</a></h2>
     {% capture written_year %}{{ year }}{% endcapture %}
