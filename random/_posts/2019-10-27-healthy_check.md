@@ -1,4 +1,4 @@
-Esta página irá apresentar meu desempenho nos exercícios que faço
+Teste Esta página irá apresentar meu desempenho nos exercícios que faço
 durante a semana para tentar ficar em forma. Nos primeiros dias não será
 muito interessante, porém acredito que no longo prazo irá valer a pena.
 Os dados serão inseridos diretamente em um data.frame do R que irá
