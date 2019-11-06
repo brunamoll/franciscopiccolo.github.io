@@ -9,3 +9,5 @@ que eu possa enviar as informações do meu treino para este chatbot e o R
 possa ler esta “conversa” e atualizar a página de maneira mais prática.
 
 ![](2019-10-27-healthy_check_files/figure-markdown_strict/unnamed-chunk-2-1.png)
+
+![](assets/images/Post_images_and_graphs/2019-10-27-healthy_check_images/unnamed-chunk-2-1.png)
