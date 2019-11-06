@@ -1,0 +1,38 @@
+---
+title: "2019-10-27-healthy_check"
+date: 2019-10-27
+header: 
+excerpt: "Healthy Dashboard"
+output: md_document
+---
+
+Esta página irá apresentar meu desempenho nos exercícios que faço durante a semana para tentar ficar em forma. Nos primeiros dias não será muito interessante, porém acredito que no longo prazo irá valer a pena. Os dados serão inseridos diretamente em um data.frame do R que irá alimentar os dashboards.
+
+No futuro irei ver a possibilidade de criar um bot no Telegram, de forma que eu possa enviar as informações do meu treino para este chatbot e o R possa ler esta "conversa" e atualizar a página de maneira mais prática.
+
+```{r,eval=T,include=F,warning=F,message=F,echo=F}
+library(tidyverse)
+library(ggthemes)
+
+theme_set(theme_economist())
+
+bike <- data.frame(read.table("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/base_de_dados/Controle de exercícios/bike.txt",header = T,sep=";"))
+
+bike$data <- lubridate::ymd(bike$data)
+```
+
+```{r,eval=T,include=T,echo=F,message=F,warning=F}
+bike %>% 
+  mutate(
+    avg_speed = round(dist/(tempo_min/60),digits = 4)
+  ) %>% 
+  ggplot(aes(x=data,y=avg_speed))+
+  geom_col()+
+  labs(
+    title = "Performance cicloturismo",
+    x = "Data",
+    y = "Velocidade média (km/h)"
+  )
+```
+
+
