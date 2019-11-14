@@ -6,9 +6,18 @@ excerpt: "Healthy Dashboard"
 output: md_document
 ---
 
-Esta página irá apresentar meu desempenho nos exercícios que faço durante a semana para tentar ficar em forma. Nos primeiros dias não será muito interessante, porém acredito que no longo prazo irá valer a pena. Os dados serão inseridos diretamente em um data.frame do R que irá alimentar os dashboards.
+Esta página irá apresentar meu desempenho nos exercícios que faço
+durante a semana para tentar ficar em forma. Nos primeiros dias não será
+muito interessante, porém acredito que no longo prazo irá valer a pena.
+Os dados serão inseridos em um data.frame no R, que irá
+alimentar os dashboards abaixo.
 
-No futuro irei ver a possibilidade de criar um bot no Telegram, de forma que eu possa enviar as informações do meu treino para este chatbot e o R possa ler esta "conversa" e atualizar a página de maneira mais prática.
+No futuro, vou verificar se é possível criar um bot no Telegram, de forma
+que eu possa enviar as informações do meu treino para este bot. Com isso, o R
+poderá ler esta “conversa” e atualizar a página de maneira mais prática e automatizada.
+
+Por enquanto, vamos mantendo de maneira mais manual. Os dados são armazenados em um 
+arquivo .txt (um arquivo para cada treino) e o R lê estes arquivos e gera os gráficos.
 
 ```{r,eval=T,include=F,warning=F,message=F,echo=F}
 library(tidyverse)
@@ -26,11 +35,14 @@ bike %>%
   mutate(
     avg_speed = round(dist/(tempo_min/60),digits = 4)
   ) %>% 
-  ggplot(aes(x=data,y=avg_speed))+
-  geom_col()+
+  ggplot()+
+  geom_col(aes(x=data,y=avg_speed),fill = "#46519B")+
+  geom_line(aes(x=data,y=dist),color="#54B574",size=2)+
+  scale_y_continuous(sec.axis = sec_axis(~.,name = "Distância (km)"))+
+  theme(axis.title = element_text(vjust = 1))+
   labs(
-    title = "Performance cicloturismo",
-    x = "Data",
+    title = "Performance bicicleta",
+    x = "",
     y = "Velocidade média (km/h)"
   )
 ```
