@@ -7,12 +7,6 @@ excerpt: "Este post irá apresentar um passo a passo para se conectar ao Redshif
 output: md_document
 ---
 
-```{r setup,include=F}
-knitr::opts_chunk$set(fig.path = "C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/assets/images")
-knitr::render_jekyll()
-```
-
-
 ##### Introdução
 
 Neste tutorial, irei apresentar um passo a passo sobre como acesar o banco de dados Redshift através da ferramenta R. Esta tarefa será muito útil para quem prefere utilizar o R, ao invés do convencional Excel para realizar projetos de análise de dados. O objetivo é consultar o banco de dados, criar um data.frame e trazê-lo ao R, para então realizar as análises.

@@ -1,0 +1,257 @@
+---
+title: "Analisando autocorrelação de resíduos"
+date: 2019-10-25
+header: 
+excerpt: "Neste post, irei explorar algumas formas de analisar a autocorrelação dos resíduos gerados no modelo de regressão linear"
+output: md_document
+---
+
+O modelo de regressão linear é bastante utilizado na predição de variáveis contínuas, onde há uma ou mais variáveis independentes e uma variável dependente (em que se busca comprova uma hipótese sobre seu comportamento). Este é um modelo bastante simples de ser aplicado e um dos primeiros a ser ensinado nas aulas de Econometria. Porém, apesar de sua simplicidade, para que o modelo gere resultados confiáveis algumas premissas precisam ser satisfeitas, sendo elas:
+
+i) Não existência de multicolinearidade entre as variáveis dependentes.
+
+ii) Não existência de autocorrelação na variável dependente.
+
+iii) Homocedasticidade nos resíduos gerados pelo modelo, ou seja, não existência de padrão no comportamento dos resíduos.
+
+iv) Distribuição normal dos resíduos.
+
+v) Média aritmética dos residuos deve ser igual a zero.
+
+Satisfazendo estas premissas, o modelo pode ser execuato e as conclusões geradas serão confiáveis para permitir a tomada de decisão. Neste post, irei analisar a premissa nº 3 e 4, que trata dos resíduos gerados pelo modelo de regressão linear. Para isso, vou usar uma base de dados que apresenta o preço da cana de açucar como variável independente e a área plantada (em hectares) de cana de açucar, que será a variável dependente.
+
+A ideia deste exemplo é analisar, através de um modelo de regressão linear simples, a elasticidade da oferta da cana de açucar em função do preço de venda. A hipótese é que existe elasticidade na oferta, onde a área plantada aumenta conforme o preço também aumenta. Porém para validar esta elasticidade, é necessário comprovar, através da regressão, que as variáveis possuem correlação e isso dependerá da validade da premissa 3 e 4 do modelo.
+
+Para este exemplo, serão utilizados os pacotes abaixo:
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+library(tidyverse)
+library(lmtest)
+library(corrplot)
+library(readxl)
+library(gridExtra)
+library(ggthemes)
+
+# Definindo tema padrão dos gráficos
+theme_set(theme_economist())
+```
+
+```{r,eval=T,include=F,echo=F}
+dados <- readxl::read_excel("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/base_de_dados/Econometria_exercicios/autocorrelacao_cana_de_acucar.xlsx")
+
+dados %>% 
+  transmute(
+    periodo = Período,
+    area = Área,
+    valor = `Preço da Cana de Açúcar`
+  ) -> dados_2 
+```
+
+Abaixo consta uma amostra da base de dados com os valores do preço da cana de açucar e área plantada.
+
+```{r,eval=T,include=T,echo=F}
+dados_2 %>%
+  select(periodo,area,valor) %>% 
+  head(10) %>% 
+  knitr::kable(align = "c",caption = "Tabela 1: Amostra dos dados")
+```
+
+O modelo de regressão proposto para este exemplo é definido pela equação abaixo.
+
+$$ lnY_t = \beta_1+\beta_2 (lnX_t) + U_t $$
+Onde:
+
+$Y_t$ = área plantada no ano t (em hectares), em log natural 
+
+$X_t$ = preço no ano t em, log natural
+
+Ao se utilizar a transformação em log natural (base **e**), por conta de suas propriedades específicas, a variação de um período para o outro é interpretada como variação percentual. 
+
+O exemplo abaixo mostra como isto ocorre:
+
+```{r,eval=T,echo=F,include=T}
+data.frame(
+    "Valor" = c(100,105,112,120),
+    "Crescimento" = c("-","5%","6.67%","7.14%"),
+    "Log natural" = c(log(100),log(105),log(112),log(120)),
+    "Delta" = c("-",
+                  round(log(105)-log(100),4),
+                  round(log(112)-log(105),4),
+                  round(log(120)-log(112),4))
+) %>% 
+  knitr::kable(caption = "Tabela 2: Valores com log na base e")
+```
+
+Veja como o crescimento percentual dos valores (5.00%, 6.67% e 7.14%) ficam bem próximos dos deltas, que é a diferença entre o log natural do número com relação ao log natural do número anterior (4.88%,6.45% e 6.90%). Desta forma, se a equação estiver em logarítmo natural em ambos os lados, pode-se interpretar que a variação percentual na variável explicativa irá gerar uma variação percentual de $\beta_1$ na variável dependente. Olhando na tabela acima, é como se o cálculo estivesse partindo da coluna delta em direção à coluna Valor.
+
+Ao tentar criar esta mesma tabela com outros logarítmos (e.g. base 2 ou base 10), não se alcança os mesmos resultados.
+
+```{r,eval=T,echo=F,include=T}
+data.frame(
+    "Valor" = c(100,105,112,120),
+    "Crescimento" = c("-","5%","6.67%","7.14%"),
+    "Log natural" = c(log(100,2),log(105,2),log(112,2),log(120,2)),
+    "Delta" = c("-",
+                  round(log(105,2)-log(100,2),4),
+                  round(log(112,2)-log(105,2),4),
+                  round(log(120,2)-log(112,2),4))
+) %>% 
+  knitr::kable(caption = "Tabela 3: Valores com log na base 2")
+```
+
+```{r,eval=T,echo=F,include=T}
+data.frame(
+    "Valor" = c(100,105,112,120),
+    "Crescimento" = c("-","5%","6.67%","7.14%"),
+    "Log natural" = c(log(100,10),log(105,10),log(112,10),log(120,10)),
+    "Delta" = c("-",
+                  round(log(105,10)-log(100,10),4),
+                  round(log(112,10)-log(105,10),4),
+                  round(log(120,10)-log(112,10),4))
+) %>% 
+  knitr::kable(caption = "Tabela 4: Valores com log na base 10")
+```
+
+Abaixo, o gráfico de dispersão mostra a correlação entre as duas variáveis estudadas e a reta de regressão gerada.
+
+```{r,eval=T,include=T,echo=F,fig.align='center',fig.width=5,fig.height=3}
+dados_2 %>% 
+  ggplot(aes(x=area,y=valor))+
+  geom_point()+
+  geom_smooth(method = "lm",se = F)+
+  labs(
+    title = "Relação entre Área e Preço da Cana (em log)",
+    subtitle= "Indício de elasticidade",
+    x = "Área de plantação",
+    y = "Preço de venda"
+  )
+```
+
+
+1. Verifique se há autocorrelação serial dos erros. Comente o diagrama de dispersão e o correlograma.
+
+R: Primeiro, deve-se criar o modelo de regressão para depois gerar os erros. O modelo é resumido abaixo:
+
+$$ lnY_t = \beta_1+\beta_2 (lnX_t) + U_t $$
+
+R² = 64.4%
+Adjusted R² = 63.3%
+
+Equação:  $lnY_t = 2.54 + 479.18 (lnX_t) + U_t$
+
+```{r,eval=T,include=F,echo=F}
+lr <- lm(area~valor,data = dados_2)
+
+summary(lr)
+
+residual <- residuals(lr)
+```
+
+Abaixo há uma amostra dos resíduos gerados pelo modelo:
+
+```{r,eval=T,include=F,echo=F}
+df <- cbind(dados_2, residual)
+```
+
+```{r,eval=T,include=T,echo=F}
+df %>% 
+  select(periodo,area,valor,residual) %>% 
+  head()
+```
+
+Após gerar os resíduos, pode-se analisar se há autocorrelação. Os gráficos abaixo mostram se há este comportamento.
+
+```{r,eval=T,include=T,echo=F,warning=F,message=F,fig.align='center',fig.width=5,fig.height=3}
+df %>% 
+  ggplot(aes(x=periodo,y=residual,group=1))+
+  geom_line()+
+  geom_hline(lty=2,yintercept = 0,size=.2,color="red")+
+  labs(
+    title = "Resíduos ao longo dos períodos analisados",
+    subtitle = "Não há correlação serial dos resíduos",
+    x = "Período",
+    y = "Valor dos resíduos"
+  )
+```
+
+```{r,eval=T,include=T,echo=F,warning=F,message=F,fig.align='center',fig.width=5,fig.height=3}
+g1 <- df %>% 
+  select(
+    residual
+  ) %>% 
+  mutate(
+    residual_lag_1 = lag(residual,1),
+    residual_lag_2 = lag(residual,2)
+  ) %>% 
+  filter(!is.na(residual_lag_2)) %>% 
+  ggplot()+
+  geom_point(aes(x=residual,y=residual_lag_1),color="dark orange")+
+  geom_hline(lty=2,yintercept = 0,size=.2,color="red")+
+  geom_vline(lty=2,xintercept = 0,size=.2,color="red")+
+  labs(
+    title = "Resíduos (t) vs Resíduos (t-1)",
+    subtitle = "Não há autocorrelação serial",
+    x = "Resíduos (t)",
+    y = "Resíduos (t-1)"
+  )
+
+g2 <- df %>% 
+  select(
+    residual
+  ) %>% 
+  mutate(
+    residual_lag_1 = lag(residual,1),
+    residual_lag_2 = lag(residual,2)
+  ) %>% 
+  filter(!is.na(residual_lag_2)) %>% 
+  ggplot()+
+  geom_point(aes(x=residual,y=residual_lag_2),color="blue")+
+  geom_hline(lty=2,yintercept = 0,size=.2,color="red")+
+  geom_vline(lty=2,xintercept = 0,size=.2,color="red")+
+  labs(
+    title = "Resíduos (t) vs Resíduos (t-2)",
+    subtitle = "Não há autocorrelação serial",
+    x = "Resíduos (t)",
+    y = "Resíduos (t-2)"
+  )
+
+gridExtra::grid.arrange(g1,g2,ncol=2)
+```
+
+Aparentemente não há autocorrelação entre os resíduos. Porém, para garantir, é interessante usar testes estatísticos formais, como o Durbin Watson ou Godfrey.
+
+2. Aplique o teste de Durbin Watson, escrevendo as hipóteses e testando a autocorrelação. Use um nível de significância de 5%.
+
+R: Abaixo há a aplicação do teste DW.
+
+```{r,eval=T,include=T,echo=F,warning=F,message=F}
+lmtest::dwtest(lr)
+```
+
+De maneira resumida, o valor-p foi de 0.04089 e o valor d, 1.91822. Neste teste, usa-se o valor d para gerar a conclusão do teste. Antes, é preciso trazer os intervalos para comparação deste valor d. Para encontrar o intervalor, use a [tablea](http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia) específica do teste.
+
+De acordo com a tabela, sabendo a quantidade de registros (n = 33), a significância (0.05) e o nível de liberdade (degrees of freedom = 1) que é o número de variáveis independentes, pode-se achar os valores **dl** e **du**. Para este exercício tem-se:
+
+**dl** = 1.35
+
+**du** = 1.49
+
+Sabendo que dw = 1.47 e os critérios do teste, chega-se a uma inconclusão. O teste não consegue concluir se há autocorrelação serial dos resíduos com defasagem de um período (t). Na zona de indecisão não se pode nem aceitar ou rejeitar H0.
+
+3. Aplique o teste Breusch Godfrey (a.k.a teste LM) escrevendo as hipóteses. Teste a autocorrelação com nível de significância de 5% e escreva a conclusão.
+
+4. Aplique o teste Q e comente os resultados.
+
+```{r,eval=T,echo=F,include=F,warning=F,message=F}
+Box.test(residual,lag = 2,type = c("Box-Pierce", "Ljung-Box"), fitdf = 0)
+```
+
+
+
+
+
+
+
+
+
+
