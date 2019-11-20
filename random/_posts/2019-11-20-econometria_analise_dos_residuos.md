@@ -115,6 +115,7 @@ O modelo de regressão proposto para este exemplo é definido pela equação
 abaixo.
 
 *l**n**Y*<sub>*t*</sub> = *β*<sub>1</sub> + *β*<sub>2</sub>(*l**n**X*<sub>*t*</sub>) + *U*<sub>*t*</sub>
+
 Onde:
 
 *Y*<sub>*t*</sub> = área plantada no ano t (em hectares), em log natural
@@ -287,6 +288,8 @@ gráficos abaixo mostram se há este comportamento.
 <img src="econometria_analise_dos_residuos_files/figure-markdown_strict/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 <img src="econometria_analise_dos_residuos_files/figure-markdown_strict/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+
+<img src="/assets/images/profile_image.png" style="display: block; margin: auto;" />
 
 Aparentemente não há autocorrelação entre os resíduos. Porém, para
 garantir, é interessante usar testes estatísticos formais, como o Durbin

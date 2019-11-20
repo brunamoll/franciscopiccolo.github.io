@@ -59,6 +59,7 @@ dados_2 %>%
 O modelo de regressão proposto para este exemplo é definido pela equação abaixo.
 
 $$ lnY_t = \beta_1+\beta_2 (lnX_t) + U_t $$
+
 Onde:
 
 $Y_t$ = área plantada no ano t (em hectares), em log natural 
