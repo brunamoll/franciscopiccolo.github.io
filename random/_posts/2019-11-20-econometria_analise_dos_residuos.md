@@ -1,3 +1,10 @@
+---
+title: "Análise dos resíduos no modelo de regressão linear"
+date: 2019-11-20
+header:
+excerpt: "Neste post, irei analisar os resíduos gerados no modelo de regressão linear para validar uma das premissas necessárias do modelo"
+---
+
 O modelo de regressão linear é bastante utilizado na predição de
 variáveis contínuas, onde há uma ou mais variáveis independentes e uma
 variável dependente (em que se busca comprova uma hipótese sobre seu
