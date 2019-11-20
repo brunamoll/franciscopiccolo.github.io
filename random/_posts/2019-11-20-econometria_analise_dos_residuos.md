@@ -264,7 +264,7 @@ base 10), não se alcança os mesmos resultados.
 Abaixo, o gráfico de dispersão mostra a correlação entre as duas
 variáveis estudadas e a reta de regressão gerada.
 
-<img src="/assets/images/econometria_analise_dos_residuos_files/figure-markdown_strict/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="\assets\images\Post_images_and_graphs\2019-11-20-econometria_analise_dos_residuos_files\figure-markdown_strict\unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 1.  Verifique se há autocorrelação serial dos erros. Comente o diagrama
     de dispersão e o correlograma.
@@ -292,9 +292,9 @@ Abaixo há uma amostra dos resíduos gerados pelo modelo:
 Após gerar os resíduos, pode-se analisar se há autocorrelação. Os
 gráficos abaixo mostram se há este comportamento.
 
-<img src="/assets/images/econometria_analise_dos_residuos_files/figure-markdown_strict/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="\assets\images\Post_images_and_graphs\2019-11-20-econometria_analise_dos_residuos_files\figure-markdown_strict\unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
-<img src="/assets/images/econometria_analise_dos_residuos_files/figure-markdown_strict/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="\assets\images\Post_images_and_graphs\2019-11-20-econometria_analise_dos_residuos_files\figure-markdown_strict\unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 Aparentemente não há autocorrelação entre os resíduos. Porém, para
 garantir, é interessante usar testes estatísticos formais, como o Durbin
