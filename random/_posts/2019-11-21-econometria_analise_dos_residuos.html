@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -12,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2019-10-25" />
+<meta name="date" content="2019-10-26" />
 
 <title>Analisando autocorrelação de resíduos</title>
 
@@ -352,23 +350,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(area<span class="op">~</span>valor,<span class="dt">data =</span> dados_<span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="kw">summary</span>(model)</a></code></pre></div>
-<pre><code>## 
+<pre><code>##
 ## Call:
 ## lm(formula = area ~ valor, data = dados_2)
-## 
+##
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -97.901 -25.544  -8.999  24.135  99.908 
-## 
+##     Min      1Q  Median      3Q     Max
+## -97.901 -25.544  -8.999  24.135  99.908
+##
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)     2.54      17.77   0.143    0.887    
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)     2.54      17.77   0.143    0.887
 ## valor         479.18      62.95   7.612 1.13e-08 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
+##
 ## Residual standard error: 39.65 on 32 degrees of freedom
-## Multiple R-squared:  0.6442, Adjusted R-squared:  0.6331 
+## Multiple R-squared:  0.6442, Adjusted R-squared:  0.6331
 ## F-statistic: 57.95 on 1 and 32 DF,  p-value: 1.131e-08</code></pre>
 <p>A equação de regressão gerada pelo modelo é definida como: <span class="math inline">\(lnY_t = 2.54 + 479.18 (lnX_t) + U_t\)</span></p>
 <p>O coeficiente de correlação (R²) ficou em 64%, o R² ajustado em 63% e um valor-p abaixo de 0.05, o que mostra uma correlação significativa entre as variáveis. Porém, não basta estes resultados para indicar que o modelo é confiável, é preciso analisar as premissas com relação aos resíduos para poder confiar nos resultados gerados.</p>
@@ -421,9 +419,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Aplique o teste de Durbin Watson, escrevendo as hipóteses e testando a autocorrelação. Use um nível de significância de 5%.</li>
 </ol>
 <p>R: Abaixo há a aplicação do teste DW.</p>
-<pre><code>## 
+<pre><code>##
 ##  Durbin-Watson test
-## 
+##
 ## data:  model
 ## DW = 1.4745, p-value = 0.04089
 ## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
