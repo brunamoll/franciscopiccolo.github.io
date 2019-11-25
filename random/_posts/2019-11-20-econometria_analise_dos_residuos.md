@@ -2,7 +2,8 @@
 title: "Análise dos resíduos no modelo de regressão linear"
 date: 2019-11-20
 header:
-excerpt: "Neste post, irei analisar os resíduos gerados no modelo de regressão linear para validar uma das premissas necessárias do modelo"
+excerpt: "Neste post, irei analisar os resíduos gerados no modelo de regressão
+linear para validar uma das premissas necessárias do modelo"
 ---
 
 O modelo de regressão linear é bastante utilizado na predição de
@@ -305,9 +306,9 @@ Watson ou Godfrey.
 
 R: Abaixo há a aplicação do teste DW.
 
-    ## 
+    ##
     ##  Durbin-Watson test
-    ## 
+    ##
     ## data:  lr
     ## DW = 1.4745, p-value = 0.04089
     ## alternative hypothesis: true autocorrelation is greater than 0
