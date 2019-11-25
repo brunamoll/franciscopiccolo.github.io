@@ -1,6 +1,6 @@
 ---
 title: "Analisando autocorrelação de resíduos"
-date: 2019-10-25
+date: 2019-11-25
 header: 
 excerpt: "Neste post, irei explorar algumas formas de analisar a autocorrelação dos resíduos gerados no modelo de regressão linear"
 output:
