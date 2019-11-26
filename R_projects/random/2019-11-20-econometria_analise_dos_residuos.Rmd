@@ -1,7 +1,7 @@
 ---
 title: ""
 date: 2019-11-24
-header: 
+header: "Teste"
 excerpt: "Neste post, irei explorar algumas formas de analisar a autocorrelação dos resíduos gerados no modelo de regressão linear"
 output:
   prettydoc::html_pretty:
@@ -172,7 +172,6 @@ df %>%
   )
 ```
 
-
 ```{r,eval=T,include=T,echo=F,warning=F,message=F,fig.align='center',fig.width=5,fig.height=3}
 df %>% 
   ggplot(aes(x=periodo,y=residual,group=1))+
@@ -186,8 +185,7 @@ df %>%
   )
 ```
 
-
-
+Pode-se ver que os resíduos não se distribuem de forma normal, onde tem-se alta concentração de valores próximos de zero. Para 
 
 2. Aplique o teste de Durbin Watson, escrevendo as hipóteses e testando a autocorrelação. Use um nível de significância de 5%.
 
