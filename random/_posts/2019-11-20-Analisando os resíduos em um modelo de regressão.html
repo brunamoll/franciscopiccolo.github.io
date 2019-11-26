@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -836,23 +834,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(log_area<span class="op">~</span>log_valor,<span class="dt">data =</span> dados_<span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="kw">summary</span>(model)</a></code></pre></div>
-<pre><code>## 
+<pre><code>##
 ## Call:
 ## lm(formula = log_area ~ log_valor, data = dados_2)
-## 
+##
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.65076 -0.18823 -0.03096  0.24914  0.60492 
-## 
+##      Min       1Q   Median       3Q      Max
+## -0.65076 -0.18823 -0.03096  0.24914  0.60492
+##
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
+##             Estimate Std. Error t value Pr(&gt;|t|)
 ## (Intercept)   1.6416     0.3534   4.645 5.56e-05 ***
 ## log_valor     0.9706     0.1106   8.773 5.03e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
+##
 ## Residual standard error: 0.3088 on 32 degrees of freedom
-## Multiple R-squared:  0.7063, Adjusted R-squared:  0.6972 
+## Multiple R-squared:  0.7063, Adjusted R-squared:  0.6972
 ## F-statistic: 76.97 on 1 and 32 DF,  p-value: 5.031e-10</code></pre>
 <p>A equação de regressão gerada pelo modelo é definida como: <span class="math inline">\(lnY_t = 1.64 + 0.97 (lnX_t) + U_t\)</span></p>
 <p>O coeficiente de correlação (R²) ficou em 70.6%, o que mostra uma correlação significativa entre as variáveis. Porém, não basta apenas este resultado para gerar conclusões a respeito das variáveis estudadas, é preciso analisar as premissas com relação aos resíduos.</p>
@@ -879,9 +877,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 <p>A visualização gráfica é uma das formas para validar o comportamento dos resíduos porém não a única. Alguns testes formais podem ser usados para esta validação, como o Durbin-Watson, Breusch-Godfrey (a.k.a teste LM) e Ljung–Box Q test.</p>
 <p>Aplicando ao exemplo proposto, o teste Durbin-Watson gerou os resultados abaixo:</p>
-<pre><code>## 
+<pre><code>##
 ##  Durbin-Watson test
-## 
+##
 ## data:  model
 ## DW = 1.2912, p-value = 0.009801
 ## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
@@ -891,9 +889,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>DU</strong> = 1.49</p>
 <p>O valor DW (1.2912) ficou acima de 0 e abaixo de DL, o que permite concluir que não há dependência entre os resíduos.</p>
 <p>Além deste teste, que verifica autocorrelação positiva dos resíduos, é necessário incluir outros testes que analisam autocorrelação negativa também. O teste Breusch-Godfrey pode ser aplicado neste caso.</p>
-<pre><code>## 
+<pre><code>##
 ##  Breusch-Godfrey test for serial correlation of order up to 1
-## 
+##
 ## data:  residual_1 ~ residual_2
 ## LM test = 0.0082778, df = 1, p-value = 0.9275</code></pre>
     </section>
