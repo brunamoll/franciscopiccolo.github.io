@@ -154,21 +154,11 @@ summary(model)
 
 A equação de regressão gerada pelo modelo é definida como: $lnY_t = 1.64 + 0.97 (lnX_t) + U_t$
 
-O coeficiente de correlação (R²) ficou em 70.6%, o que mostra uma correlação significativa entre as variáveis. Porém, não basta apenas estes resultados para indicar que o modelo é confiável, é preciso analisar as premissas com relação aos resíduos.
+O coeficiente de correlação (R²) ficou em 70.6%, o que mostra uma correlação significativa entre as variáveis. Porém, não basta apenas este resultado para gerar conclusões a respeito das variáveis estudadas, é preciso analisar as premissas com relação aos resíduos.
 
 ```{r,eval=T,include=F,echo=T}
 residual <- residuals(model)
 ```
-
-A tabela abaixo apresenta uma amostra dos resíduos gerados:
-
-```{r,eval=T,include=T,echo=F}
-residual %>%
-  head(10) %>% 
-  knitr::kable(caption = "Tabela 6: Resíduos gerados pelo modelo",align = "c",digits = 3)
-```
-
-É interessante combinar os resíduos gerados com os dados originais do modelo em um mesmo data.frame, para facilitar na construção de gráficos.
 
 ```{r,eval=T,include=F,echo=T}
 df <- cbind(dados_2, residual)
@@ -208,15 +198,17 @@ Aplicando ao exemplo proposto, o teste Durbin-Watson gerou os resultados abaixo:
 lmtest::dwtest(model)
 ```
 
-De maneira resumida, o valor DW foi de 1.4745 e usa-se o DW para gerar a conclusão do teste. Para isso, é preciso trazer os intervalos para comparar com o valor DW. Para encontrar o intervalo, use esta [tablea](http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia) específica do teste.
+O valor DW foi de 1.2912 e ele é usado para gerar a conclusão do teste. Para se concluir o teste, é preciso antes trazer os intervalos (DL e DU) que comparados com o valor DW. Para encontrar os valores de DL e DU veja esta [tablea](http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia).
 
-De acordo com a tabela, sabendo a quantidade de registros (n = 33), a significância (0.05) e o nível de liberdade (degrees of freedom (df) = 1) que é o número de variáveis independentes, pode-se achar os valores **DL** e **DU**. Para este exercício tem-se:
+De acordo com a tabela, sabendo a quantidade de registros (n = 33), a significância (0.05) e o nível de liberdade (degrees of freedom (df) = 1), que é o número de variáveis independentes, pode-se achar os valores DL e DU. Para este exercício tem-se:
 
 **DL** = 1.35
 
 **DU** = 1.49
 
-O valor DW (1.2912) ficou acima de 0 e abaixo de DL, o que permite concluir que não há dependência entre os resíduos. Além deste teste, que verifica autocorrelação positiva dos resíduos, é necessário incluir outros testes que analisam autocorrelação negativa também. O teste Breusch-Godfrey pode ser aplicado neste caso.
+O valor DW (1.2912) ficou acima de 0 e abaixo de DL, o que permite concluir que não há dependência entre os resíduos. 
+
+Além deste teste, que verifica autocorrelação positiva dos resíduos, é necessário incluir outros testes que analisam autocorrelação negativa também. O teste Breusch-Godfrey pode ser aplicado neste caso.
 
 ```{r,eval=T,include=T,echo=F,warning=F,message=F}
 df_residual <- data.frame(
@@ -226,13 +218,4 @@ df_residual <- data.frame(
 
 bgtest(residual_1~residual_2,order = 1,data = df_residual)
 ```
-
-Teste Q
-
-```{r,eval=T,echo=F,include=F,warning=F,message=F}
-Box.test(residual,lag = 2,type = c("Box-Pierce", "Ljung-Box"), fitdf = 0)
-```
-
-
-
 
