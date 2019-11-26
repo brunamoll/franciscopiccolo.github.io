@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -13,7 +14,7 @@
 
 <meta name="date" content="2019-11-24" />
 
-<title>Analise dos residuos.utf8</title>
+<title>2019-11-20-econometria_analise_dos_residuos.utf8</title>
 
 
 
@@ -130,16 +131,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="content-wrapper">
   <div class="inner clearfix">
     <section id="main-content">
-<p>O modelo de regressão linear é bastante utilizado na predição de variáveis contínuas, onde há uma ou mais variáveis independentes e uma variável dependente (em que se busca comprovar uma hipótese sobre seu comportamento). Este é um modelo bastante simples de ser aplicado e um dos primeiros a ser ensinado nas aulas de econometria. Porém, apesar de sua simplicidade, para que o modelo gere resultados confiáveis, algumas premissas precisam ser satisfeitas sendo elas:</p>
+<p>O modelo de regressão linear é bastante utilizado na predição de variáveis contínuas, onde há uma ou mais variáveis independentes e uma variável dependente (em que se busca comprovar uma hipótese sobre seu comportamento). Este é um modelo bastante simples de ser aplicado e um dos primeiros a ser ensinado nas aulas de econometria. Porém, apesar de sua simplicidade, para que o modelo gere resultados confiáveis, algumas premissas precisam ser satisfeitas, sendo elas:</p>
 <ol style="list-style-type: lower-roman">
 <li><p>Não existência de multicolinearidade entre as variáveis dependentes.</p></li>
 <li><p>Não existência de autocorrelação na variável dependente.</p></li>
-<li><p>Não existência de padrão no comportamento dos resíduos, ou seja, não ocorre heterocedasticidade.</p></li>
+<li><p>Não existência de padrão no comportamento dos resíduos, ou seja, não ocorrência de heterocedasticidade.</p></li>
 <li><p>Distribuição normal dos resíduos.</p></li>
-<li><p>Média aritmética dos residuos deve ser igual a zero.</p></li>
 </ol>
-<p>Satisfazendo estas premissas, o modelo pode ser execuato e as conclusões geradas serão confiáveis para permitir a tomada de decisão. Neste post, irei analisar a premissa nº 3 e 4, que trata dos resíduos gerados no modelo de regressão linear. Para isso, vou usar uma base de dados que apresenta o preço da cana de açucar como variável independente e a área plantada (em hectares) de cana de açucar, que será a variável dependente.</p>
-<p>A ideia deste exemplo é analisar, através de um modelo de regressão linear simples, a elasticidade da oferta da cana de açucar em função do preço de venda. A hipótese é que existe elasticidade na oferta, onde a área plantada aumenta conforme o preço também aumenta. Porém para validar esta elasticidade, é necessário comprovar, através da regressão, que as variáveis possuem correlação e a validade das premissas 3 e 4 ajudarão a apoiar esta conclusão.</p>
+<p>Satisfazendo estas premissas, o modelo pode ser executado e as conclusões geradas serão confiáveis para permitir a tomada de decisão. Neste post, irei analisar o comportamento dos resíduos com um exemplo prático para validar as premissas (iii) e (iv). Para isso, vou usar uma base de dados que apresenta o preço da cana de açucar como variável independente e a área plantada (em hectares) de cana de açucar, que será a variável dependente (a.k.a explicativa).</p>
+<p>A ideia deste exemplo é analisar, através de um modelo de regressão linear simples, a elasticidade da oferta da cana de açucar em função do preço de venda. A hipótese é que existe elasticidade na oferta, onde a área plantada aumenta conforme o preço aumenta. Porém para validar esta elasticidade, é necessário comprovar, através da regressão, que as variáveis possuem correlação e a validade das premissas (iii) e (iv) ajudarão a apoiar esta conclusão.</p>
 <p>Para este exemplo, serão utilizados os pacotes abaixo:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(tidyverse)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(lmtest)</a>
@@ -150,7 +150,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb1-7" title="7"></a>
 <a class="sourceLine" id="cb1-8" title="8"><span class="co"># Definindo tema padrão dos gráficos</span></a>
 <a class="sourceLine" id="cb1-9" title="9"><span class="kw">theme_set</span>(<span class="kw">theme_economist</span>())</a></code></pre></div>
-<p>A base de dados apresenta 34 registros com informação de área plantada e preço da cana de açucar, ambos já transformados em logarítmo natural. Abaixo consta uma amostra da base de dados com os valores do preço da cana de açucar e área plantada.</p>
+<p>A base de dados deste exemplo contêm 34 registros, com informação de área plantada e preço da cana de açucar, ambos com a transformação em logarítmo natural inclusas.</p>
+<p>Abaixo consta uma amostra dos dados:</p>
 <table>
 <caption>Tabela 1: Amostra dos dados</caption>
 <thead>
@@ -158,58 +159,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <th align="center">periodo</th>
 <th align="center">area</th>
 <th align="center">valor</th>
+<th align="center">log_area</th>
+<th align="center">log_valor</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="center">1</td>
 <td align="center">29</td>
-<td align="center">0.075</td>
+<td align="center">7.526</td>
+<td align="center">3.367</td>
+<td align="center">2.018</td>
 </tr>
 <tr class="even">
 <td align="center">2</td>
 <td align="center">71</td>
-<td align="center">0.115</td>
+<td align="center">11.489</td>
+<td align="center">4.263</td>
+<td align="center">2.441</td>
 </tr>
 <tr class="odd">
 <td align="center">3</td>
 <td align="center">42</td>
-<td align="center">0.101</td>
+<td align="center">10.107</td>
+<td align="center">3.738</td>
+<td align="center">2.313</td>
 </tr>
 <tr class="even">
 <td align="center">4</td>
 <td align="center">90</td>
-<td align="center">0.110</td>
+<td align="center">11.031</td>
+<td align="center">4.500</td>
+<td align="center">2.401</td>
 </tr>
 <tr class="odd">
 <td align="center">5</td>
 <td align="center">72</td>
-<td align="center">0.110</td>
+<td align="center">10.956</td>
+<td align="center">4.277</td>
+<td align="center">2.394</td>
 </tr>
 <tr class="even">
 <td align="center">6</td>
 <td align="center">57</td>
-<td align="center">0.132</td>
+<td align="center">13.249</td>
+<td align="center">4.043</td>
+<td align="center">2.584</td>
 </tr>
 <tr class="odd">
 <td align="center">7</td>
 <td align="center">44</td>
-<td align="center">0.142</td>
+<td align="center">14.178</td>
+<td align="center">3.784</td>
+<td align="center">2.652</td>
 </tr>
 <tr class="even">
 <td align="center">8</td>
 <td align="center">61</td>
-<td align="center">0.210</td>
+<td align="center">20.956</td>
+<td align="center">4.111</td>
+<td align="center">3.042</td>
 </tr>
 <tr class="odd">
 <td align="center">9</td>
 <td align="center">60</td>
-<td align="center">0.188</td>
+<td align="center">18.826</td>
+<td align="center">4.094</td>
+<td align="center">2.935</td>
 </tr>
 <tr class="even">
 <td align="center">10</td>
 <td align="center">70</td>
-<td align="center">0.196</td>
+<td align="center">19.595</td>
+<td align="center">4.248</td>
+<td align="center">2.975</td>
 </tr>
 </tbody>
 </table>
@@ -218,8 +241,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Onde:</p>
 <p><span class="math inline">\(Y_t\)</span> = área plantada no ano t (em hectares), em log natural</p>
 <p><span class="math inline">\(X_t\)</span> = preço no ano t, em log natural</p>
-<p>A utilização de logarítmo natural ocorre por conta de que esta transformação faz com que variações de um período para o outro (e.g. período 1 para o período 2) sejam intepretadas como variação percentual. Desta forma, no exemplo em questão, tem-se no período 1 os valores de (área = 29; valor = 0.075) e no período 2 tem-se (área = 71; valor = 0.115), cada um com as respectivas variações (área = 42; valor = 0.04). Estas variações podem ser intepretadas como variação percentual ao invés de variação bruta e essa mudança é essencial para a análise de elasticidade, que se baseia em variações percentuais nas variáveis independentes e dependentes.</p>
-<p>Abaixo consta um exemplo que mostra como variações brutas podem ser interpretadas como variações percentuais quando os valores estão transformados em logarítmo natural. Para mais informações veja <a href="https://people.duke.edu/~rnau/411log.htm">artigo 1</a> <a href="https://dev.to/rokaandy/logarithmic-transformation-in-linear-regression-models-why-when-3a7c">artigo 2</a>.</p>
+<p>Utiliza-se o logarítmo natural para que as variações de um período para o outro (e.g. período 1 para o período 2) sejam intepretadas como variação percentual. Esta interpretação de variação percentual é possivel apenas para transformações em logarítmo natural e ela é necessária por conta do conceito de elasticidade, que indica que uma variação percentual de uma variável provoca uma determinada variação percentual em outra variável, como se fosse uma sensibilidade relativa.</p>
+<p>Abaixo, consta um exemplo desta propriedade particular do log natural. Veja que as variações brutas podem ser interpretadas como variações percentuais após a transformação em log natural. Para mais informações veja <a href="https://people.duke.edu/~rnau/411log.htm">artigo 1</a> <a href="https://dev.to/rokaandy/logarithmic-transformation-in-linear-regression-models-why-when-3a7c">artigo 2</a>.</p>
 <table>
 <caption>Tabela 2: Valores com log na base e</caption>
 <thead>
@@ -257,7 +280,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Veja como o crescimento percentual dos valores (5.00%, 6.67% e 7.14%) ficam bem próximos dos deltas, que é a diferença entre o log natural do número com relação ao log natural do número anterior (e.g. 4.654 - 4.605 = 0.0488). Desta forma, se a equação estiver em logarítmo natural em ambos os lados, pode-se interpretar que a variação percentual na variável explicativa irá gerar uma variação percentual de <span class="math inline">\(\beta_1\)</span> na variável dependente.</p>
+<p>Veja como o crescimento percentual dos valores (5.00%, 6.67% e 7.14%) ficam bem próximos do respectivo delta, que é a diferença entre o log natural do número com relação ao log natural do número anterior (e.g. 4.654 - 4.605 = 0.0488). Desta forma, se a equação estiver em logarítmo natural em ambos os lados, pode-se interpretar que a variação percentual na variável explicativa irá gerar uma variação percentual de <span class="math inline">\(\beta_1\)</span> na variável dependente.</p>
 <p>Ao tentar criar esta mesma tabela com outros logarítmos (e.g. base 2 ou base 10), não se alcança os mesmos resultados. Portanto, esta interpretação e transformação só faz sentido com logaritmo natural.</p>
 <table>
 <caption>Tabela 3: Valores com log na base 2</caption>
@@ -333,9 +356,473 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Após entender um dos motivos da transformação em log, podemos continuar com a construção do modelo para validar as premissas dos resíduos. O gráfico abaixo mostra o comportamento das variáveis estudadas e a curva de regressão.</p>
+<p>Após entender esta propriedade do log natural, pode-se validar esta característica na tabela que será usada para o modelo de regressão. O campo delta_ _area mostra a variação percentual da área de um período com relação ao período anterior e o mesmo cálculo no campo delta_valor. No campo delta_log_valor e delta_log_area é feita a diferença entre o período com o período anterior e os campos log_area_precision e log_valor_precision fazem a diferença entre delta_area com delta_log_area e delta_valor com delta_log_valor. Quanto mais baixo o valor de log_area_precision e log_valor_precision, mais forte é a característica do log natural explicada anteriormente. Veja abaixo para ficar mais claro:</p>
+<table>
+<caption>Tabela 5: Dados do modelo com a validação da característica do log natural</caption>
+<thead>
+<tr class="header">
+<th align="center">periodo</th>
+<th align="center">area</th>
+<th align="center">valor</th>
+<th align="center">log_area</th>
+<th align="center">log_valor</th>
+<th align="center">delta_area</th>
+<th align="center">delta_log_area</th>
+<th align="center">delta_valor</th>
+<th align="center">delta_log_valor</th>
+<th align="center">log_area_precicion</th>
+<th align="center">log_valor_precision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">29</td>
+<td align="center">7.526</td>
+<td align="center">3.367</td>
+<td align="center">2.018</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">71</td>
+<td align="center">11.489</td>
+<td align="center">4.263</td>
+<td align="center">2.441</td>
+<td align="center">1.45</td>
+<td align="center">0.90</td>
+<td align="center">0.53</td>
+<td align="center">0.42</td>
+<td align="center">0.55</td>
+<td align="center">0.11</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">42</td>
+<td align="center">10.107</td>
+<td align="center">3.738</td>
+<td align="center">2.313</td>
+<td align="center">-0.41</td>
+<td align="center">-0.53</td>
+<td align="center">-0.12</td>
+<td align="center">-0.13</td>
+<td align="center">0.12</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">11.031</td>
+<td align="center">4.500</td>
+<td align="center">2.401</td>
+<td align="center">1.14</td>
+<td align="center">0.76</td>
+<td align="center">0.09</td>
+<td align="center">0.09</td>
+<td align="center">0.38</td>
+<td align="center">0.00</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">72</td>
+<td align="center">10.956</td>
+<td align="center">4.277</td>
+<td align="center">2.394</td>
+<td align="center">-0.20</td>
+<td align="center">-0.22</td>
+<td align="center">-0.01</td>
+<td align="center">-0.01</td>
+<td align="center">0.02</td>
+<td align="center">0.00</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">57</td>
+<td align="center">13.249</td>
+<td align="center">4.043</td>
+<td align="center">2.584</td>
+<td align="center">-0.21</td>
+<td align="center">-0.23</td>
+<td align="center">0.21</td>
+<td align="center">0.19</td>
+<td align="center">0.02</td>
+<td align="center">0.02</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">44</td>
+<td align="center">14.178</td>
+<td align="center">3.784</td>
+<td align="center">2.652</td>
+<td align="center">-0.23</td>
+<td align="center">-0.26</td>
+<td align="center">0.07</td>
+<td align="center">0.07</td>
+<td align="center">0.03</td>
+<td align="center">0.00</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">61</td>
+<td align="center">20.956</td>
+<td align="center">4.111</td>
+<td align="center">3.042</td>
+<td align="center">0.39</td>
+<td align="center">0.33</td>
+<td align="center">0.48</td>
+<td align="center">0.39</td>
+<td align="center">0.06</td>
+<td align="center">0.09</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">60</td>
+<td align="center">18.826</td>
+<td align="center">4.094</td>
+<td align="center">2.935</td>
+<td align="center">-0.02</td>
+<td align="center">-0.02</td>
+<td align="center">-0.10</td>
+<td align="center">-0.11</td>
+<td align="center">0.00</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">70</td>
+<td align="center">19.595</td>
+<td align="center">4.248</td>
+<td align="center">2.975</td>
+<td align="center">0.17</td>
+<td align="center">0.15</td>
+<td align="center">0.04</td>
+<td align="center">0.04</td>
+<td align="center">0.02</td>
+<td align="center">0.00</td>
+</tr>
+<tr class="odd">
+<td align="center">11</td>
+<td align="center">88</td>
+<td align="center">22.609</td>
+<td align="center">4.477</td>
+<td align="center">3.118</td>
+<td align="center">0.26</td>
+<td align="center">0.23</td>
+<td align="center">0.15</td>
+<td align="center">0.14</td>
+<td align="center">0.03</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="even">
+<td align="center">12</td>
+<td align="center">80</td>
+<td align="center">14.558</td>
+<td align="center">4.382</td>
+<td align="center">2.678</td>
+<td align="center">-0.09</td>
+<td align="center">-0.10</td>
+<td align="center">-0.36</td>
+<td align="center">-0.44</td>
+<td align="center">0.01</td>
+<td align="center">0.08</td>
+</tr>
+<tr class="odd">
+<td align="center">13</td>
+<td align="center">125</td>
+<td align="center">19.403</td>
+<td align="center">4.828</td>
+<td align="center">2.965</td>
+<td align="center">0.56</td>
+<td align="center">0.45</td>
+<td align="center">0.33</td>
+<td align="center">0.29</td>
+<td align="center">0.11</td>
+<td align="center">0.04</td>
+</tr>
+<tr class="even">
+<td align="center">14</td>
+<td align="center">232</td>
+<td align="center">27.036</td>
+<td align="center">5.447</td>
+<td align="center">3.297</td>
+<td align="center">0.86</td>
+<td align="center">0.62</td>
+<td align="center">0.39</td>
+<td align="center">0.33</td>
+<td align="center">0.24</td>
+<td align="center">0.06</td>
+</tr>
+<tr class="odd">
+<td align="center">15</td>
+<td align="center">125</td>
+<td align="center">23.582</td>
+<td align="center">4.828</td>
+<td align="center">3.160</td>
+<td align="center">-0.46</td>
+<td align="center">-0.62</td>
+<td align="center">-0.13</td>
+<td align="center">-0.14</td>
+<td align="center">0.16</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="even">
+<td align="center">16</td>
+<td align="center">99</td>
+<td align="center">22.083</td>
+<td align="center">4.595</td>
+<td align="center">3.095</td>
+<td align="center">-0.21</td>
+<td align="center">-0.23</td>
+<td align="center">-0.06</td>
+<td align="center">-0.07</td>
+<td align="center">0.02</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="odd">
+<td align="center">17</td>
+<td align="center">250</td>
+<td align="center">38.095</td>
+<td align="center">5.521</td>
+<td align="center">3.640</td>
+<td align="center">1.53</td>
+<td align="center">0.93</td>
+<td align="center">0.73</td>
+<td align="center">0.55</td>
+<td align="center">0.60</td>
+<td align="center">0.18</td>
+</tr>
+<tr class="even">
+<td align="center">18</td>
+<td align="center">91</td>
+<td align="center">20.539</td>
+<td align="center">4.511</td>
+<td align="center">3.022</td>
+<td align="center">-0.64</td>
+<td align="center">-1.01</td>
+<td align="center">-0.46</td>
+<td align="center">-0.62</td>
+<td align="center">0.37</td>
+<td align="center">0.16</td>
+</tr>
+<tr class="odd">
+<td align="center">19</td>
+<td align="center">121</td>
+<td align="center">26.740</td>
+<td align="center">4.796</td>
+<td align="center">3.286</td>
+<td align="center">0.33</td>
+<td align="center">0.28</td>
+<td align="center">0.30</td>
+<td align="center">0.26</td>
+<td align="center">0.05</td>
+<td align="center">0.04</td>
+</tr>
+<tr class="even">
+<td align="center">20</td>
+<td align="center">162</td>
+<td align="center">23.041</td>
+<td align="center">5.088</td>
+<td align="center">3.137</td>
+<td align="center">0.34</td>
+<td align="center">0.29</td>
+<td align="center">-0.14</td>
+<td align="center">-0.15</td>
+<td align="center">0.05</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="odd">
+<td align="center">21</td>
+<td align="center">143</td>
+<td align="center">36.877</td>
+<td align="center">4.963</td>
+<td align="center">3.608</td>
+<td align="center">-0.12</td>
+<td align="center">-0.12</td>
+<td align="center">0.60</td>
+<td align="center">0.47</td>
+<td align="center">0.00</td>
+<td align="center">0.13</td>
+</tr>
+<tr class="even">
+<td align="center">22</td>
+<td align="center">138</td>
+<td align="center">28.508</td>
+<td align="center">4.927</td>
+<td align="center">3.350</td>
+<td align="center">-0.03</td>
+<td align="center">-0.04</td>
+<td align="center">-0.23</td>
+<td align="center">-0.26</td>
+<td align="center">0.01</td>
+<td align="center">0.03</td>
+</tr>
+<tr class="odd">
+<td align="center">23</td>
+<td align="center">230</td>
+<td align="center">36.033</td>
+<td align="center">5.438</td>
+<td align="center">3.584</td>
+<td align="center">0.67</td>
+<td align="center">0.51</td>
+<td align="center">0.26</td>
+<td align="center">0.23</td>
+<td align="center">0.16</td>
+<td align="center">0.03</td>
+</tr>
+<tr class="even">
+<td align="center">24</td>
+<td align="center">128</td>
+<td align="center">32.298</td>
+<td align="center">4.852</td>
+<td align="center">3.475</td>
+<td align="center">-0.44</td>
+<td align="center">-0.59</td>
+<td align="center">-0.10</td>
+<td align="center">-0.11</td>
+<td align="center">0.15</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="odd">
+<td align="center">25</td>
+<td align="center">87</td>
+<td align="center">30.127</td>
+<td align="center">4.466</td>
+<td align="center">3.405</td>
+<td align="center">-0.32</td>
+<td align="center">-0.39</td>
+<td align="center">-0.07</td>
+<td align="center">-0.07</td>
+<td align="center">0.07</td>
+<td align="center">0.00</td>
+</tr>
+<tr class="even">
+<td align="center">26</td>
+<td align="center">124</td>
+<td align="center">28.783</td>
+<td align="center">4.820</td>
+<td align="center">3.360</td>
+<td align="center">0.43</td>
+<td align="center">0.35</td>
+<td align="center">-0.04</td>
+<td align="center">-0.05</td>
+<td align="center">0.08</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="odd">
+<td align="center">27</td>
+<td align="center">97</td>
+<td align="center">40.144</td>
+<td align="center">4.575</td>
+<td align="center">3.692</td>
+<td align="center">-0.22</td>
+<td align="center">-0.25</td>
+<td align="center">0.39</td>
+<td align="center">0.33</td>
+<td align="center">0.03</td>
+<td align="center">0.06</td>
+</tr>
+<tr class="even">
+<td align="center">28</td>
+<td align="center">152</td>
+<td align="center">40.469</td>
+<td align="center">5.024</td>
+<td align="center">3.701</td>
+<td align="center">0.57</td>
+<td align="center">0.45</td>
+<td align="center">0.01</td>
+<td align="center">0.01</td>
+<td align="center">0.12</td>
+<td align="center">0.00</td>
+</tr>
+<tr class="odd">
+<td align="center">29</td>
+<td align="center">197</td>
+<td align="center">35.319</td>
+<td align="center">5.283</td>
+<td align="center">3.564</td>
+<td align="center">0.30</td>
+<td align="center">0.26</td>
+<td align="center">-0.13</td>
+<td align="center">-0.14</td>
+<td align="center">0.04</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="even">
+<td align="center">30</td>
+<td align="center">220</td>
+<td align="center">41.023</td>
+<td align="center">5.394</td>
+<td align="center">3.714</td>
+<td align="center">0.12</td>
+<td align="center">0.11</td>
+<td align="center">0.16</td>
+<td align="center">0.15</td>
+<td align="center">0.01</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="odd">
+<td align="center">31</td>
+<td align="center">171</td>
+<td align="center">36.042</td>
+<td align="center">5.142</td>
+<td align="center">3.585</td>
+<td align="center">-0.22</td>
+<td align="center">-0.25</td>
+<td align="center">-0.12</td>
+<td align="center">-0.13</td>
+<td align="center">0.03</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="even">
+<td align="center">32</td>
+<td align="center">208</td>
+<td align="center">46.309</td>
+<td align="center">5.338</td>
+<td align="center">3.835</td>
+<td align="center">0.22</td>
+<td align="center">0.20</td>
+<td align="center">0.28</td>
+<td align="center">0.25</td>
+<td align="center">0.02</td>
+<td align="center">0.03</td>
+</tr>
+<tr class="odd">
+<td align="center">33</td>
+<td align="center">237</td>
+<td align="center">40.158</td>
+<td align="center">5.468</td>
+<td align="center">3.693</td>
+<td align="center">0.14</td>
+<td align="center">0.13</td>
+<td align="center">-0.13</td>
+<td align="center">-0.14</td>
+<td align="center">0.01</td>
+<td align="center">0.01</td>
+</tr>
+<tr class="even">
+<td align="center">34</td>
+<td align="center">235</td>
+<td align="center">39.166</td>
+<td align="center">5.460</td>
+<td align="center">3.668</td>
+<td align="center">-0.01</td>
+<td align="center">-0.01</td>
+<td align="center">-0.02</td>
+<td align="center">-0.03</td>
+<td align="center">0.00</td>
+<td align="center">0.01</td>
+</tr>
+</tbody>
+</table>
+<p>Após entender um dos motivos da transformação em log, podemos continuar com a construção do modelo para validar as premissas dos resíduos. O modelo e os gráficos serão todos feitos com utilização das variáveis transformadas em log natural.</p>
+<p>O gráfico abaixo mostra o comportamento das variáveis estudadas e a curva de regressão.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">dados_<span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>area,<span class="dt">y=</span>valor))<span class="op">+</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>log_area,<span class="dt">y=</span>log_valor))<span class="op">+</span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,<span class="dt">se =</span> T)<span class="op">+</span></a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw">labs</span>(</a>
@@ -344,34 +831,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb2-8" title="8">    <span class="dt">x =</span> <span class="st">&quot;Área de plantação (ln)&quot;</span>,</a>
 <a class="sourceLine" id="cb2-9" title="9">    <span class="dt">y =</span> <span class="st">&quot;Preço de venda (ln)&quot;</span></a>
 <a class="sourceLine" id="cb2-10" title="10">  )</a></code></pre></div>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAzkAAAHgCAMAAACxYlPlAAAA5FBMVEUAAAAAADUAAF4AMzUAM14AM4QAW14AW6gwAAAwADUwAF4wMwAwMzUwM14wM4QwW14wW4QwW6gwgIQwgKgwgMkzZv89PT1VAABVADVVAF5VMwBVMzVVM4RVWzVVW15VgKhVgMlVo8lVo+t4MwB4MzV4M154WzV4gDV4gF54o4R4o8l4xKh4xMl4xOuYWwCYWzWYgDWYgF6Yo8mYxISYxKiYxMmYxOuY5Ou3gDW3o163o4S3o6i3xIS3xMm3xOu35Ki35Mm35Ou9xsrVo17Vo4TVxITVxKjV5KjV5MnV5OvW1tb////aH7VUAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAbV0lEQVR4nO2dCXvjxnmAIW0Uade1sxvL0tpJ45hynDat2MPtinbcJiJLi/D+//9TDDC4AQKYG8D7PvuseIDAN8Pv5Ry4ohgAJvMx8h0BwBzBHAAVMAdABcwBUAFzAFTAHAAVMAdABcwBUAFzAFTAHAAVMAdABcwBUGEZ5pweossn30HAqliGOcebi0ffMcC6WIY522jjOwRYGcswB8A16uZso4xX755rr58bc5y+i95+OEztWR2/HlrgRm+YkxflU/Uu38t9dPXc+c6PvxNr/u9pqzv0ra3G2eFd8iYNsUX0zYkaX/K5r/OQLj8xy3fR9eASkVaWlEVRXkufOUltZNxOXNuY5c9PjOyYNbGJCXPq3/JZcy6ffv7dtCQSDcqAOWl2jvmN7qPvR2ACPeYU4kyT8hCNapfPmzNSP1BDx5zs201+8GuZbXqGeNicZIl/HJdqPcii/HijvpYec5JG9uKbOP75q0lSJlU4aumBqt5q/ZzAefTNkTnz83dJknz9XHydP35VDBxO/3GTDIe+EQ8rr6aPX31d+W6LVYh1/2vyoVd/yduDa/HSv3wVXT5WlspJuiXf38jf167FqhttbKhelPRv1xoqJWiHnQzeos/+K6uFxqZEk5O2NS/vv/7fWiSVErYDPMrSFBGI5uOHT6KLP8Y/3KQqFqtPzamEJIJ5+7csmJ3WzwmcR9uc07+nbU7yZcveTvZ1ZiOabBHZGXoX1179t2b/qFyF+MQncsHSnOzNylKSZIPXxa90x2LVjTY3VCtK1uZ0bagsQTvsJKuLl5qbarRElbcrJWwHuMt8KyMotvEPtY6fNKcS0otwMHp1kz7JBQQbGBnnbNLv8EP8gxjypF9nlsm7dAiU/P/588/3SWZUX03S5eqD0C7/ciurEOu+/HDapo9lby19Kf6f6lKSZIFN8fvaXqy60daGmkVJluzYUFmCdthpb/VZNC5Xz61N1Xua1bcrJWx9SppciUCY8/lz8jD7/7pcYfYjVYSUBvPzg9TofnBuBZQxYc5t/vOW5kCl850mjny+e5tPzGbpVGZHuXC+CrHuTb5gac5tYylJKk3++9q3WCWH26soiiJbg8YaqiVohS0fHm96NtXK3bz4ZQmbi5arzCNIHEheKf7Pt5QtWAlJfvJQmMNAxxr65rwTHfhDnnvFtxeffvzuRvw81r+/5qtlX7yyih5zNo2l5BofZB8x71e1F8s32t5QrSgXbz90rqFSgnbY8pX8jfqmWuYUb9fNqX9KlqUVQfX/fMEyOhFSPRiO5rOJ5jgnGRpEYsDaMuf4Vfa8bk771V3Ra6+bIxKzYU6aq+20l6OBYkzVWqzcaHtDlaLE9SdD5uRh15K1uanGr37l7VoJuz812Zxogznu0J0hOBSD3OowQnydF2//86ebujkdr9banEZHv8ecxqh3lydY+kZ7scpG2xuqbq7+pL6GcW1Oa1Pl3Nrvkqa5+nalhF2fkubUI6DNCQntubVt2qdu9tIP+SxAMc45fPqXuP5qe5xzXV93lznt/k+5rzGblWsuVtloe0O1otSetMcdogTtsKvjnNam6vtzqm9XStj6VLnKeivUbU41JMY57tA2R0z7pPNDSa/th8KUQz7Hc12Z79lUX+2aW8tXccac6lIpxVDhQY7vm4tVN9raUK0otSfVpcoS9M2tZdNZrU3VjyGovl03p/GpYsyfR3DOnI65tXvm1uxj5BgCMZi4yYcOeRei6Lvn2ZP2Zsoefd/+HPGjWTUn/dB1sbnKUrHc/G3lQXux2kabG6oXpfakslRZgo6wCzka5Wu8+y6uRVLvrTU+Vd+fU8yn9ZhT25+Trov9OQ7QN+eU/VqK/d3R26J3Lfonv/qwzRIv3QMv9nFXX00PIn71TWWNxSpq5sT/94nIuyK7y6Xk1uXr2bxwx2K1jXasosec6lJlCTrCFrvtP82OIWhvKj79IPZ4ZsdKV96ulrD1qeoxBGkE582phiSCefe3rLHhGAKbODk/R4yB/+hgO/ZwWwJxVITO52U3jePWbOLozLb5n+7stAQH1UmxrRjnyI4rx0pbxZk5c58fdVqCJOnVzhTK9wFlM2xzr/OgcWGOGLb+atZNjvMS7FQ7WukZqBfvssEiTY5FuA4BgAqYA6AC5gCogDkAKmAOgAqYA6AC5gCogDkAKiibc3xT3UH98v4xLq56W38rf3tgDa0X5aP6RztXBOAeg+Zs+w8YGWdOp0qYA0Fi0JwzYA4sDR1zjm/+nJ8I/Ov3jyLvxblYm1g+qlxgIHlbXvMoJXsoFjtE+Qmi6Un0F421yI+WSzVWBOALLXNubsU11l/uN/EuzXnxKDUqfXTI8lu+fXpI/mSHMcqH+WKJM8KO9IW4tZadUCpbqrUiAG9omfP6Ufw5iBMV0zbnkCV0lvZ5z6p8O39FPiynAIQT8vXaWuRH5VLtFQF4Q6+3lmb6rsjoXS3nReOQkL8tTqqvnOFfdswu0g5Y3surrkV+VC7VXhGANwyYM77NKT+aL5a0Wvlil099bY5cqr0iAG8YMKcxznmdP2qPc2TSy4dCDXEti4tUDWFO1vurryX5qFyqvSIAbxgwR3Smfntmbi17O70IRnldzItUEnHdnM8fNvJKoeLOlq21JB/Nl2qvCMAXHH0DoALmAKiAOQAqYA6ACpgDoALmAKiAOQAqYA6ACpgDoALmAKiAOQAqYA6ACpgDoALmAKiAOQAqYA6ACpgDoALmAKiAOQAqYA6ACpgDoALmAKiAOQAqYA6ACpgDoALmAKiAOQAJ+/3ED2AOQOIN5gBMZb/HHICJ7HMmfg5zYM3s95gDMJX9HnMAprLfYw7MnChynYf7FhNXgDngnyhyrE7bG8yBGeLYnC5vMAdmiFNzur3BHJgj7sTp8wZzAPrp9wZzAPo45w3mAHRz3hvMAehgSBvMAWgxQhvMAagzThvMAagwWhvMASiY4g3mAGRM8wZzAARTvcEcABVvMAdAxRvMgbWj5g3mwLpR9QZzYMWoa4M5sF60vMEcWCma3mAOrBJtbzAH1ocBbTAHVocZbzAH1oUpbzAH1oQ5bzAHVoNJbTAH1oJhbzAH1oBxbTAHlo8NbTAHlo4lbzAHFo01bzAHFow9bb744ouJsWAOzASr2nwxWR3MgVlgWxt6a7BErGuzxxxYHg60wRxYGm60wRxYFla9qb82MTLMgXCx6U3r1YmxYQ6EilNvMAcWgmNvMAeWgE1tur3BHJg9fXl/d3enr02fN5gD86Y/8+/uNNQZ0gZzYNacy2x1c0ZogzkwY85ntqI547TBHJBE0dy+2cHUVhBntDaYAxlRNC91piphWhvMgYx5mWPPmwkfmBjzoDmnh+jyKX9yfPN0btnFM59snJM5VrUZ38WbGPWgOdtr8S9/crlqc+aUjrOJ1JY2WXMzYVphYtxD5ry8fyxbmsOrss35uEJSc3wHsSx+MY3UJn+amjPuk8PBTjJHWCPsEZz+9D3mYI5BLGsTjDm7W8Y5M+kCzQKLnbQSb+Ocijkvv39euzlgDhfaTGJi/BPM2W5WP7cGhjAlTIYBbfYWZwhe7tNu/ka1sgAyjNhSYEabveVZadoc0EQ/w6uc02bqwToTCzJoTtLUiJ0421vxBHNABxOylJxvbSYfIDqxLBx9A64wIEvJYCcNc2AZ6KpSY8TYBnNgCWh50mDklIDvcQ6ALqqKdGFsKq3FxEJhDljGYHLb02aPORAW5jLbqjZ7zIGQMJbWtrXZYw6Eg6mcdqDNfn838WhezAFLGMpoJ9qImbiJB8JjDljBUEK70WaPORAGhtLZlTZ7zIEAMJXMDr3ZM84BzxjLZLfe7JlbA48Yy2Jnw5sKE8uKOWAIYynsaDatxvTiYg4YwVQKz0ObGHPACIZSeDbaxJgza0K5iJWZFPagjU6hMWe+BHKxXiM57Fwb7WJjznwJwhwTWexaGyMFx5z5EoA5JvLYrTbGio45M8a3OAYSeabaxJgDqhhIZLe9NMPlxxxQwEAiz1qbGHOgzVAn0EAiW9Gm72I3dmoJc6DB+YkHAxluqbXpusCaxWrCHGhwzhz9/LbXSWubY7WaMAca9JujndxWxzYNc2xXE+ZAkx5xdDPb+pRARRwHtYQ5MAbdrHY4k+aoRjAHhtHMZWfauKwTzIEBNLPZlTauqwVz4By6+ZxpM/W2AhPxUjOYA/1oZrRsbSbfyWYSvuoGc6APvYyu9NLsieOxdjAHutHKaCeDG7/1gznQgVZGu9DGdwVhDrTRy2n72viunwzMgRp6Sb0WbWLMgSqaWW3dG9/1UwVzIEczrdekTdxpzukhPVr26tlDOOANvbS23Nz4rpwOWuYcby4e0weHSD6AFaCX2Da98V0zfTTNefl92dSc/vTkOBrwg1ZqW21ufNdMP4xzQCezre678V0xZ+ky55COcy5pcFaBRmavV5u405yX+42HQMAL6pltUxvftTKGLnPeMzOwDtRT2542vutkNF29td21+zjANerJbU0b31Uyic7eGuOcpaOe3Za08V0h02FubX2o57et1sZ3jaiAOWtDOb3RpkZrT2jWVaO3tlBU0xttmtDmrAnF9GZs0wFH36wHxQS3oY3vqjAAR3yGhMWbsCmmONr0wVkGAWHtxp+KKW6jl2ajeF5gnBMQdsxBGytgTkBYMCccbcyWyz+YExKGxQlFG5NlCgbMWSqhaLNMbzBnqaCNbTBniaCNfTrPMuDom1mj4Q3WjKb7nNDD1fP21kM0oE0A2viuAjd0nxP68uXT8Q1tzvxQ18aUN75rwBmdxxBsTt8+Ys7sQBuXdI1zjq8fD1FEb21WoI1jmFtbAkqZblIb3xXgAcyZPb618V1+T3BO6LxRS3Zz3vguvz96rxrFrPQM0PAGbTTpvVJhPrd2eihan0PEyW4hoa6NCW98l943nbPSaZsjz2zbXot/guPrx/iw8D6cxZMyTePTG99lD4Gu3lp6Uqi8zqdogCq7dhZ+5VxrJ2Waxp82vkseDENza8Kaii674hzrj0skNcd3EMP8ooDcd6Py0RLfBfeMujnF1T0wxx9o441Bc6r3z2m0OYxz/KLeSdPspfkueHgM3T+nYc7Cxzlh400bvOlg6P4565ohCBi0CYzB++eUs9Kip3b8jKuweQBtwmPw/jnJM/FIHFKwizgkxwPetPFd8LDhiM+w8aSN72LPAMwJGLQJmJ5jCK5+4pRQR/ROhKNN0HQet3Z7uHrecUV2J/Qd8KPsDdq4oXtWOjGH6xC4oduc7sS+u7uzqA3eTKK3zdnS5jihy5yezL6761OHXpp7eo+VRhxHNMXpT+4ec9DGC8ytBcXZ/O4yR18b30WeK5gTDoNJ3hRHVxvfBZ41mBMIk9MebfzSefQNYxzHoM386Gxzjjdc4tMdaDNLentrOw7udMH0vNedEvBd4qVAm+MRtJkxjHN8oaoNvbQwYG7ND2gzdzDHA2hjEVcXYcEc10zPe7SZgLOLTWKOU1xr47u87sGcBVJN6XMnDJjxxndpPeHVHM4JtUA9rftPGGh5gzbT8DjO4ZxQ47Qye4Q56s2N79KuA84JtU5Xcg+ao+yN79KuBs4JtUtfgp8Vh+ZmBnBOqE1Ukl99343v0q4L5tasgTaLBnPsgDZLh7u6m0fFGrSZG9zV3ShK0qDNHBm8qzuMBm3WxOBd3WEcaLMyhu7qDmNAm/XB3Jo2zrXBmxDAHD3QZq1gjgaK2nB0zRLAHGXQZtVgjhpa2jAnsAAwRwG0AY6VngzagIA9oZNAG5Bw9M140AZKaHPGoWgNO24WC+OcQVSlQZtFw9zaALreoM1CwZxzoA300WXO8fUjN55y2UsrL4Tju8wwms4Zgk3y/+7qp5uN+3hCwZ025cXXfJcZptA/K31z8c/v3McTBC61yc3xXWaYSFdvbStnpY+rNEddG9XBzd2dq2shgzmYla6iYY3O9Ww9iIOrujC3JtGRRsMbT6V1dq+M5YI5KSa8mY02MeYYgPvn+GpuvBYZc7RZ/f1zWhk98m5qNW1m5k3MOEefdd8/pyOlx91Nbd7agAFWfP+c7qwebQ7arJu1zkr3JvZIc2Y2lwbGWePc2vncHhbnjlPVoP/om2WikO1NOMUTBJ1H3yz0SE9z2kyafkObRdLV5twv8c5TJrWZNnGNNotkHeMcc9qIhxPF8V14sMLyzTFgDWMbaNEyR0xJL+beOSas4Toc0EXLnO212BXqJRbDoA1YpHVvajElfZj/blAj2nAdDuhl3ub0HLfoWxu8WQGzNqfrWHkz1uj00vBmFSzJHEPS6GmDNyuhZU62G3Qee0Jr5qANuGTe+3MKcWxow5ECcIZ5m5NhQ5tpp7ihzfqYuzmmrGl30qaY47sWwD2D5pweihHP8SaKAjqM2pg03WOb0eb4rgfwwqA52+vsmp9i8mATHy4COXfHoDZ9O25GieO7HsAXQ+aIWWp5MQ8xV51drT39oEd+MUimjdpnfdYBuGeSOcKaykmiot3xbI55bfAGRqFjjuersJnso+ntuKGbtnammePxflSTU/v8MEVPG7yBSebsvM0PTM/ts1NjetoY94YLbs6QCTME3locpezuNycwbbjI8zyZMCstbh/qHtUE7zMnwF4a5syRQXNe7tM9odvbeJt+wy53harmd0qnOOFpE2POPAn16BsdZ/oIsLnJQJwZEqQ541LZze06JL6rBEIjPHPG5rKL23Xk+K4TCI/AzJmQzdZv15Hju04gSAIyZ2JCW75dR47vWoFACcQclZweIQ7agC1CMEc9s89CLw0s4t0cg6pU0dUGb+A8fs0xZ0oNbW3wBobwZ44xTxroa4M3MIwXc0xJ0gZtwBEezDFlSQu0AXe4NseUJS3QBpzi1BxTlrRBG3CMM3NMOdKBvjZ4A1NxYY4hQbox0EvDG5iObXMM+dGDCW3wBlSwaI4ZOfoxog3egBpzNQdtwC+zNAdtwDvzMwdtIARmZo4ZbfAGtJmTOYa0wRswwGzMMaUN3oAR5mEO2kBozMEcU9rgDZgjeHOMaYM3YJLAzcEbCJSQzUEbCJdwzcEbCJlQzUEbCJsgzWEyDYInPHOM7bvBG7BIYOaY0wZvwCohmWNQG7wBy4RjDtrAnAjEHIPajPSGe3OCFiGYY7KXNra94X7QoId3c4xqM76fhjmgh19zKtpMu9O0njYx5oAuHs2ptTZT7jSt703MOAc08WVOs5OmaY61QgB048WcjrGNjjnWSgDQi3tzeqYElMWxFj/AGVybY3QmDW/AG07NMa0N3oA33JljdscN2oBfHJljTpt8PGQtbIAxuDDHZGsj5+CsBQ0wDuvmGO6kpeZYCxlgLHbNMT62Scxh5z+EgEVzzGsjemmIA0Fg2RzD2gCEgvezDNAGZslMzLEWJIAaszDHWogAqszAHGsBAqgTvDnWwgPQIXBzrAUHoEfQ5lgLDUCXgM2xFhiAPqGaYyQCjjcAa4RpjpkAuDIU2CNEc0wFgDlgj/DMMRcA5oA9AjPHbAQa4uAcnCcocywEoWgAzRUMEI45VmJQNQBzYIBAzLEVA+aAJYIwx1oI6gYgDpwnAHOsBSDAALCDd3OsbR7AJoPmnB6iy6f8yfHN07ll66ANLJhBc7bX4l/Gy/2lSXPkcnSoYIYMmfPy/rFoaXbRbwy2OfliTGPBHBkyR1gj7BH89bnSW/s4yC/nKBdLzRleG4BvlM2pjXOGtzNGm4+YA7PBjDnDjJ0WoLMGM8S5OcqRAoTElBkCA+YoxwkQFpNmpXXNUYwRIDwGzXm5T/eEbm/FEx1zNIIECA5HR99Y2wiAH1yYY20LAN6wb4619QN4xLY51tYO4BW75lhbN4BnLJoDsGAwB0AFzAFQAXMAVMAcABUwB0AFzAFQwZ45nLAGS8aaOVyYAxYN5gCogDkAKjDOAVCBuTUAFTAHQAXMAVABcwBUwBwAFTAHQAXMAVAhZHMCDo3Y1Ag4tKmxYY4axKZEwKFhjhuITYmAQ8McNxCbEgGHhjluIDYlAg4Nc9xAbEoEHBrmuIHYlAg4NGfmRAArw4w5AKsGcwBUwBwAFTAHQAXMAVABcwBUwBwAFTAHQAXMAVABcwBUCNOc400UXT3Hp4fo8sl3LHWOb5KAZFyhhZfGFmLViZg2gVabjG16tYVpzuE6/bO9Fv9C4uVeVKyMK7DwstgCrLqX+018uHgMstry2KZXW5jmbG/F/y/vH7Pf0WDYRb9J4pFxBRZeFluIVXdIf8w3QVabjE2h2oI05/Tto/hzlFkaDn99FjHJuAILL4st1KpLftvDrLY4jU2h2oI05+X9J9HFY3hff5zVbagpkAUUZtXtrp5DrTYRm0K1BWnO8fVj/PLlU3h1HL45gVbd7jLcaktjm15tQZojCLGO4/DNEYQX2y75PQ+12tLYBBNjC9mcsMaSGXndBjfUjWvmhBXbLp3pDbPadsUs9MRqC9Kcg2g/P3sOa/4yI63XEKdX4yy2EKtOdIUEIVabjE2h2oI0J95F6Q6pl/uQ9pmlpObIuEILL40twKrbpifxb4Kstjy26dUWpjkAoYM5ACpgjg+ONxvfIYAmmOODLeLMHswBUAFzfHC4OL+3rXNv3KgdDduLx0aDtrstP3h8NzJAGARzPHB6+MP5nQbjzOlQ6fjZ3x/q06rymBIJ3URjYI4Hjm++P99+KJvTZndbXU4cVA9GwBwP7K7T80GOn351+ST3vR2iKJLtUPLw14k55U6507f/JN5MDxGIskd/jqLbZAFxSlb2QXlqY/lM9gfF4fPJB7NP9CgJKmCOe0T6ih9/MTctzqoSR7nLUxPj7CzF3cWjfEO8cnoQgonhilzseHMrjhdJj6HLXhF/yvfTP5l28ghV+Yl0c2AEzHGPsCZN9de1M0Lkn/Td2mG7abrvrmWnS7z3WjYkxRGelV5Y/bOH7PD+fFPy3EfQB3Occ3pIj5XKul+il5WeU3UTyQ7WTpoj34ilOYern+TiF495Q5JfsePiUbZO8ll+inCceSgXxRyjYI5zsqYiaQWKdJbn8rXaHEnZ5sjFKubIV2SbU3lfrq26KOaYBHOcIw9j36b7WYQVyV/Rqdq2xjnSntNDOhAqF8t1SDyRr8jOX+VZY5wjzWGcYwzMcU0+vXW4/F6esZAYI3pwn8usTnpcv83m1vL5sYc/iImxJPPlYtKD5Nkm/2A2t1Z5Vnx2UzWHuTVjYE74jGoo+g4P2NW6Z+zPMQbmhM+4Ltah+7CEly+ru0s5hsAYmBM+Y8xJ+nY9Y/9qoyNOGAYzYA6ACpgDoALmAKiAOQAqYA6ACpgDoALmAKiAOQAqYA6ACpgDoALmAKiAOQAqYA6ACpgDoMLH6CMATOf/AUZju0XQyNX4AAAAAElFTkSuQmCC" style="display: block; margin: auto;" /></p>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 <p>Nota-se que as variáveis possuem correlação linear, ou seja, há elasticidade de oferta neste mercado. Abaixo consta o sumário do modelo de regressão:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(area<span class="op">~</span>valor,<span class="dt">data =</span> dados_<span class="dv">2</span>)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(log_area<span class="op">~</span>log_valor,<span class="dt">data =</span> dados_<span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="kw">summary</span>(model)</a></code></pre></div>
-<pre><code>##
+<pre><code>## 
 ## Call:
-## lm(formula = area ~ valor, data = dados_2)
-##
+## lm(formula = log_area ~ log_valor, data = dados_2)
+## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max
-## -97.901 -25.544  -8.999  24.135  99.908
-##
+##      Min       1Q   Median       3Q      Max 
+## -0.65076 -0.18823 -0.03096  0.24914  0.60492 
+## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)     2.54      17.77   0.143    0.887
-## valor         479.18      62.95   7.612 1.13e-08 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1.6416     0.3534   4.645 5.56e-05 ***
+## log_valor     0.9706     0.1106   8.773 5.03e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-##
-## Residual standard error: 39.65 on 32 degrees of freedom
-## Multiple R-squared:  0.6442, Adjusted R-squared:  0.6331
-## F-statistic: 57.95 on 1 and 32 DF,  p-value: 1.131e-08</code></pre>
-<p>A equação de regressão gerada pelo modelo é definida como: <span class="math inline">\(lnY_t = 2.54 + 479.18 (lnX_t) + U_t\)</span></p>
-<p>O coeficiente de correlação (R²) ficou em 64%, o R² ajustado em 63% e um valor-p abaixo de 0.05, o que mostra uma correlação significativa entre as variáveis. Porém, não basta estes resultados para indicar que o modelo é confiável, é preciso analisar as premissas com relação aos resíduos para poder confiar nos resultados gerados.</p>
+## 
+## Residual standard error: 0.3088 on 32 degrees of freedom
+## Multiple R-squared:  0.7063, Adjusted R-squared:  0.6972 
+## F-statistic: 76.97 on 1 and 32 DF,  p-value: 5.031e-10</code></pre>
+<p>A equação de regressão gerada pelo modelo é definida como: <span class="math inline">\(lnY_t = 1.64 + 0.97 (lnX_t) + U_t\)</span></p>
+<p>O coeficiente de correlação (R²) ficou em 70.6%, o que mostra uma correlação significativa entre as variáveis. Porém, não basta apenas estes resultados para indicar que o modelo é confiável, é preciso analisar as premissas com relação aos resíduos.</p>
 <p>A tabela abaixo apresenta uma amostra dos resíduos gerados:</p>
 <table>
-<caption>Tabela 5: Resíduos gerados pelo modelo</caption>
+<caption>Tabela 6: Resíduos gerados pelo modelo</caption>
 <thead>
 <tr class="header">
 <th align="center">x</th>
@@ -379,60 +866,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">-9.603</td>
+<td align="center">-0.233</td>
 </tr>
 <tr class="even">
-<td align="center">13.405</td>
+<td align="center">0.251</td>
 </tr>
 <tr class="odd">
-<td align="center">-8.974</td>
+<td align="center">-0.149</td>
 </tr>
 <tr class="even">
-<td align="center">34.602</td>
+<td align="center">0.528</td>
 </tr>
 <tr class="odd">
-<td align="center">16.960</td>
+<td align="center">0.312</td>
 </tr>
 <tr class="even">
-<td align="center">-9.025</td>
+<td align="center">-0.106</td>
 </tr>
 <tr class="odd">
-<td align="center">-26.480</td>
+<td align="center">-0.431</td>
 </tr>
 <tr class="even">
-<td align="center">-41.957</td>
+<td align="center">-0.484</td>
 </tr>
 <tr class="odd">
-<td align="center">-32.750</td>
+<td align="center">-0.396</td>
 </tr>
 <tr class="even">
-<td align="center">-26.434</td>
+<td align="center">-0.281</td>
 </tr>
 </tbody>
 </table>
 <p>É interessante combinar os resíduos gerados com os dados originais do modelo em um mesmo data.frame, para facilitar na construção de gráficos.</p>
-<p>Os gráficos abaixo apresentam o comportamento dos resídos do modelo. O primeiro com a distribuição dos resíduos em um histograma e o segundo com os resíduos ao longo dos períodos analisados.</p>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Aplique o teste de Durbin Watson, escrevendo as hipóteses e testando a autocorrelação. Use um nível de significância de 5%.</li>
-</ol>
-<p>R: Abaixo há a aplicação do teste DW.</p>
-<pre><code>##
+<p>Abaixo é apresentado o gráfico de distribuição dos resíduos para validação da normalidade de seu comportamento. Tanto o histograma quanto o gráfico quantil-quantil (a.k.a qq-plot) são boas formas visuais de se validar a normalidade dos resíduos.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>residual))<span class="op">+</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">.05</span>,<span class="dt">alpha=</span>.<span class="dv">4</span>,<span class="dt">fill=</span><span class="st">&quot;dark orange&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">labs</span>(</a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">title =</span> <span class="st">&quot;Histograma dos resíduos&quot;</span>,</a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="dt">subtitle =</span> <span class="st">&quot;Aparente normalidade dos dados&quot;</span>,</a>
+<a class="sourceLine" id="cb5-7" title="7">    <span class="dt">x =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb5-8" title="8">    <span class="dt">y =</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb5-9" title="9">  )</a></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">sample=</span>residual))<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">geom_qq</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">labs</span>(</a>
+<a class="sourceLine" id="cb6-5" title="5">    <span class="dt">title =</span> <span class="st">&quot;QQ-Plot dos resíduos&quot;</span>,</a>
+<a class="sourceLine" id="cb6-6" title="6">    <span class="dt">subtitle =</span> <span class="st">&quot;Corrobora a suposta normalidade dos dados&quot;</span>,</a>
+<a class="sourceLine" id="cb6-7" title="7">    <span class="dt">x =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb6-8" title="8">    <span class="dt">y =</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb6-9" title="9">  )</a></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtAAAAGACAMAAACz76XEAAAAxlBMVEUAAAAAADUAAF4AMzUAM4QAW14AW6gwAAAwADUwAF4wMwAwM14wM4QwW14wW4QwW6gwgIQwgKgwgMlVAABVADVVAF5VMwBVMzVVM4RVW15VgIRVgKhVo8lVo+t4MwB4MzV4M154WzV4gDV4gF54o8l4xKh4xOuYWwCYWzWYgDWYxISYxKiYxMmYxOuY5MmY5Ou3gDW3gF63o163o4S3o6i3xIS3xMm3xOu35OvVo17Vo4TVxITVxKjVxMnV5KjV5MnV5Ov////MWCHgAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAPSklEQVR4nO3dC3vjxn2F8bPyVvJmGzuVttu0idS4TkTH7Vas3YtUuRL9/b9UcSWH4F34k2cAvr9n10sQg8GJdDQCoUs0A0ZE7gBAJLkDAJHkDgBEkjsAEEnuAEAkuQMAkeQOAESSOwAQSe4AQCS5AwCR5A4ARJI7ABBJ7gBAJLkDAJHkDgBEkjsAEEk9j//luyvp3Tf/tmm7NFHt4/1s9nqni4fOHM9/6DzxcqP3j31SpWfpPRmGRP0O/6Hpqr59XLtdaQst3a4r9FSXnVl7d/D56t192GQYEvU6elHVupTd7e6o94+rhX6+ii/0tPjQCZsMQ6I+Bxdd1DdfZrP/+6FafVe2GxNV6+XPV8W/pyn00SZD7tTn4Ml8IZ5Wj7rb82H1BcAkKfTPn6Wv/vDYLt/zwa/fSX/7r00H54Nms//4TXlp/iWd8y+fdXFfXLQXOzpj2pMkk9UZ2g+eLRNj2NTj2GS1rZbB7nY7bs0K/UN7CdIpdHHcfE8yqL1qWSzuk2ZX+UlhZUxzknSypUJvmxjDph7HJq2tKtTdbsetXkM/FQ+/vP5Vuu5ccpQrezmmnCgZVM88rcbP57z4Mvvvcrovs586Y5qzp5Olhd46MYZNPY49uNBFp+oddb3qx2mhm8OKp+YdrJ4qnnj356VzT+oOFjuuqzHVWt2OqadZM1l9rq0TY9jU49hdhS4Xx3J5bAq9uLxtB07LZqWFbnZU/6SD6pmaq97KpH7V+dR+rLRnq8bUVU4nSwu9fWIMm3oc2y6BH/9cL4NrtptCL+4KdwpdtHJ3octBn+uPifmtk2bOpNDJmH0LvW5iDJv6HFx/3i+K8dur9i5Hur1HofdcoYt/fvn+N83ruObUbaGTq992zP4r9OrEGDb1Obi67/w/5csrtX1Z2m6sFLr4z+5r6KVBlZfPiwvzZs6Vm9jVmI3X0E/Nx9mWiTFs6nV08pXB63Xb7ahOoXfc5fhl5S5HWcTH2fPNygpdfhL4Y3mX4zIdk97laCarH9+oc5djdWIMm3od/Tr/3o36ixvd7dpqodM7wdXd4svF7m33odW9hp4196HLORdjmpOkkzXjtOE+tLiGHgn1PL757rrvr5pOdLdLawo9+/kfpK/+WD31v8U17Lfz/d9JH+dfKVwM+qm80P249JXC+yZAseObx6Ux6VcK28mKV3/vvv2v9iuFmyfGsClonl++W/6k3d0GTkLuAEAkuQMAkeQOAESSOwAQSe4AQCS5AwCR5A4ARJI7ABBJ7gBAJLkDAJHkDgBEUq+jn6/U+X7kxOud81vYnj88FH/KRy+f7pPnl7fWP7N2x8ZhyIn6HPxUfRv9pkYHFrqp5tsOodDnRD2OfbkpG/v89YZ3NIXG6anHsU/zn1sqfxvA/ez54+eLH4u/D/Xm690/tj+S0ux8eFp8L//yw3JA0cDi7+s/f1/tqI+q973clI8XRzx/+JfOzP9+909Xupz/2o3in+aSo9j4m0/zY5utYr42evNMeralHcsHrg5DZtTj2Kf2W57Lpfqp7HH5M9y37ebrXfmTrrfJzuphXYX0Ydmb949toe/KH6K9bo5K9iVHPF9dVzsXM9fnKgZ+fd+Mqwtdbkzftc81W+WnjmmdPd0/P1t3x/zA1WHIjXocO3+nVn37dF9efFR/683qkmNymewsJZ+5m4f1lct8hS6PmrZHJfuSI5qTJDOXR7V/63H1/jJie5pP981Wc1z7P2HxTHO2ZMfaA5NhyI16HDu/5Cjf30WVmkq2m001k53VXZHmk3XysPypwtulQj+9/6k+KtmXHNEMTWZOC12Pqws9bXpZP9dsVT9fWM/UPPO0dLZkx/KBq8OQG/U4tl6piv+2S2VT6KUV+jrdWaylySKbLNbllcO6FTrdlxxcD01mTgrdjFtaoZvnkoW2Pe/qml1/lG48cHkYcqM+B0+rl37VlXJSyfQauri+TXaWLZi8mxeieViWprkinq5cedf7mn/mR9QnSmZOCt2MW7qGbp5LrqHbe9RLF8ftaRY7lg9cHYbcqNfR7Y2H5nZDU+jZ2rscVe2kv6uvcpOH7U2DqfS7v39YPqrZV4y+TY6YfypIZp4XuhnXrODFkN99um+Prbdm9V2TSvPM6u2LtQdylyN7cgfo8n59EUMnd4AuCo0+5A7QRaHRh9wBgEhyBwAiyR0AiCR3ACCS3AGASHIHACLJHQCIJHcAIJLcAYBIcgcAIskdAIgkdwAgktwBgEhyBwAiyR0AiCR3ACCS3AGAXSTtP/ZoKYAY1f8Z+96Dj5cDCEGhMSoUGuPCNTTOltwBgEhyBwAiyR0AiCR3ACCS3AGASHIHACLJHQCIJHcAIJLcAYBIcgfA+B3ypeve5zrZmXCuDvrmot4nO9WJcLYoNEaFQmNcuIYG3kjuAEAkuQMAkeQOAESSOwAQSe4AQCS5AwCR5A4ARJI7ABBJ7gBAJLkDAJHkDgBEkjsAEEnuAEAkuQMAkeQOAESSOwAQSe4AQCTt2P96p4uHduP5w8O2sYCdduyfXJZ/2o0LCo2OU/7A4B60fffLp/vFuvz01fIK/StQ/Ui3NcFBhS7LXJa69PqnHyk0OgZc6Ok119DoOukv3diDtu9OCv3y+0cKjRV59fmAQk9uucuB7Gn77sWLwpeb6pPL7SlCAW+lHfuXbtuxQiN32rG/WJjLm8+T63KDQiN3cgcAIskdAIgkdwAMQ2Z35zaSOwAGIbevn2wkdwAMAoXGqFBojMtA+kyhsWoo5V1H7gDIzmAuL9aROwBOr9PXbn0pNAalU9iV/lJoDMquQnMNjUHZWeghkzsATm/HNfSgyR0AiCR3ACCS3AGASHIHACLJHQCIJHcAnMKobmRsJXcAHEna4XHdat5K7gA4jqUOU2gM0cZFmUJjgLZ0+Gz6TKFH5Fw7vETuAAhzRhcWm8kdAHHoM4XGyMgdAIgkdwAgktwBgEhyBwAiyR0AiCR3ACCS3AHQEzefl8gdAP3w5cFlcgdAPxR6mdwB0A+FXiZ3APREn5fIHQCIJHcAvAXL8iZyB8DeFi3mwnkjuQNgX0mLKfRGcgfAvij0PuQOgH2lLabPm8gdAHujxXuQOwB2oMYHkTsAtuNy+TByB8B2FPowcgfAdhT6MHIHwA70+SByBwAiyR0AiCR3ACCS3AGASHIHACLJHQCIJHcAIJLcAYBIcgcAIskdAIgkdwAgktwBsBbfwfFGcgfAOnyP3VvJHQDrUOi3kjsAFvjFG/3JHQBz/Fh3AO3Y/3qni4eVhzgGluUA2rF/cln+6T7EMVDoANq+++XT/ez5w0PnIY6DPven7bvLBpdNXn7Y+BXwo9AYlbhCA9nR9t0UGsOi7bt5UXh8vBSMpB37uW13bNysC6Ud+19uqq+mTK7nDxGCX15+HHIHOFOLGlPoUHIHODNrakyfI8kd4LzMe8y6fCRyBzgvS1ca1iRjJXeAc8D3OZ+O3AHOAN/nfEJyBzgDLMsnJHeAM0ChT0juAOPFdYaD3AFGi3XZQu4Ao0WhLeQOMFoU2kLuAGPDlbOX3AFGhnXZTO4AI0OhzeQOMDIU2kzuAGNDn73kDgBEkjsAEEnuAEAkuQMAkeQOMAq8EsyG3AHGgHt1+ZA7wHDxg1U5kjvAYC3/IgIKnQm5AwwWPymYJbkDDBbLcpbkDjAsaYfpc47kDjAorMrZkztA/pIOU+jsyR0ge50XfxQ6b3IHyN5Sielz7uQOkKXOaz9aPBxyB8jRcofp85DIHSBHLMrDJXeAHFHo4ZI7QJbo82DJHSATVHgk5A6QBy4yxkLuAHmg0GMhd4A8UOixkDtAJujzSMgdAIgkdwAgktwBgEhyBwAiyR3AhVeB4yR3ABPu042U3AFMKPRIyR3AhEKPlNwBXOjzOMkdAIgkdwAgktwBgEhyBwAiyR0AiCR3ACCS3AGASHIHACLJHQCIJHcAIJLcAYBIcgcAIskdAIgkdwAgktwBgEhyBwAiyR0AiKQ9xrze6eKh3Xj+8LBtbK74AZUzoT3GTC7LP+3GxRALzY8QngvtHvLy6X6xLj99tVihfx2OqtDuEDiKgwtdlrksden1Tz9SaGSlV6Gn11xDI2faPSQp9MvvHwdaaJwJbd89lS6TQk9uh3qXA2dCu4csXhS+3FTXorfHDtUTlxdnTHuMWbptl/8KzS26c6Y9xhQLc3nzeXJdblBo5EzuAPEo9DmTO8AR0OczJncAIJLcAYBIcgcAIskdAIgkdwAgktwBNtjjTgU3M7BK7gDr7XEvmdvNWEPuAOtRaLyN3AHWo9B4G7kDbMA1NN5E7gBAJLkDAJHkDgBEkjsAEEnuAEAkuQMAkeQOAESSOwAQSe4AQCS5AwCR5A4ARJI7ABBJ7gBAJLkDAJHkDgBEkjsAEEnuAEAkuQMAkeQOAESSOwAQSe4AQCS5AwCR5A4ARJI7ABBJ7gBAJLkDAJHkDgBE0rHm5RfPwUFHmpZfDQoLHWlaCg0LHWlaCg0LHWte+gwHuQMAkeQOAESSOwAQSaM/4XpyB6jJHaAhd4Caspgi8xOuJ3eAmtwBGnIHqCmLKTI/4XpyB6jJHaAhd4Caspgi8xOuJ3eAmtwBGnIHqCmLKTI/4XpyB6jJHaAhd4Caspgi8xOuJ3eAmtwBGnIHqCmLKTI/4XpyB6jJHaAhd4CavFMI8IsrNJAduQMAkeQOAESSOwAQSe4AQCS5AwCR5A4ARJI7ABBJ7gBAJLkDAJF04vM9X0m3Jz7nWs8fHtwRXu90YQ9RyeCNEVUN9Q9yiJeb29nTu/vTnnR9EH+XJpflnwzk8MaIqoYCohzg6f1jsTD5l+ipfmtflF4+3eexNObwxgirhgKiHKj8UHT7z0d/lcoEZantcnhj1AKqoYAYB5oWH4p+/vdhNoXO4Y1RC6iGAmIcZprB9dosh/chhe6KqIb6x9jXVCpeAk3dLwnrGBm8Dyl0R0g11H+Kg2SyPufwPszmRWEOb4xZVDUUMMcBnr/OYkWaZfE+zOa2XQ5vjKhqKGKS/U2qnwLz3+XI4n34csMXVhaCqqGAKEA25A4ARJI7ABBJ7gBAJLkDAJHkDgBEkjsAEEnuAEAkuQMAkeQOAESSOwAQSe4AQCS5AwCR5A4ARJI7ABBJ7gBAJLkDAJHkDgBEkjsAEEnuAEAkuQMAkeQOAESSOwAQSe4AQCS5AwCR5A4ARJI7ABBJ7gBAJLkDAJHkDgBEkjsAEEnuAEAk/QqMyP8DHdmp6/dx7OMAAAAASUVORK5CYII=" style="display: block; margin: auto;" /></p>
+<p>A visualização gráfica é uma das formas para validar o comportamento dos resíduos porém não a única. Alguns testes formais podem ser usados para esta validação, como o Durbin-Watson, Breusch-Godfrey (a.k.a teste LM) e Ljung–Box Q test.</p>
+<p>Aplicando ao exemplo proposto, o teste Durbin-Watson gerou os resultados abaixo:</p>
+<pre><code>## 
 ##  Durbin-Watson test
-##
+## 
 ## data:  model
-## DW = 1.4745, p-value = 0.04089
+## DW = 1.2912, p-value = 0.009801
 ## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
-<p>De maneira resumida, o valor-p foi de 0.04089 e o valor dw de 1.4745. Neste teste, usa-se o valor dw para gerar a conclusão do teste. Antes, é preciso trazer os intervalos para comparar com o dw. Para encontrar o intervalor, use esta <a href="http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia">tablea</a> específica do teste.</p>
-<p>De acordo com a tabela, sabendo a quantidade de registros (n = 33), a significância (0.05) e o nível de liberdade (degrees of freedom = 1) que é o número de variáveis independentes, pode-se achar os valores <strong>dl</strong> e <strong>du</strong>. Para este exercício tem-se:</p>
-<p><strong>dl</strong> = 1.35</p>
-<p><strong>du</strong> = 1.49</p>
-<p>O valor dw (1.4745) ficou entre os limites dl e du, o que não permite gerar conclusões sobre o comportamento dos resíduos.</p>
-<ol start="3" style="list-style-type: decimal">
-<li><p>Aplique o teste Breusch Godfrey (a.k.a teste LM) escrevendo as hipóteses. Teste a autocorrelação com nível de significância de 5% e escreva a conclusão.</p></li>
-<li><p>Aplique o teste Q e comente os resultados.</p></li>
-</ol>
+<p>De maneira resumida, o valor DW foi de 1.4745 e usa-se o DW para gerar a conclusão do teste. Para isso, é preciso trazer os intervalos para comparar com o valor DW. Para encontrar o intervalo, use esta <a href="http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia">tablea</a> específica do teste.</p>
+<p>De acordo com a tabela, sabendo a quantidade de registros (n = 33), a significância (0.05) e o nível de liberdade (degrees of freedom (df) = 1) que é o número de variáveis independentes, pode-se achar os valores <strong>DL</strong> e <strong>DU</strong>. Para este exercício tem-se:</p>
+<p><strong>DL</strong> = 1.35</p>
+<p><strong>DU</strong> = 1.49</p>
+<p>O valor DW (1.2912) ficou acima de 0 e abaixo de DL, o que permite concluir que não há dependência entre os resíduos. Além deste teste, que verifica autocorrelação positiva dos resíduos, é necessário incluir outros testes que analisam autocorrelação negativa também. O teste Breusch-Godfrey pode ser aplicado neste caso.</p>
+<pre><code>## 
+##  Breusch-Godfrey test for serial correlation of order up to 1
+## 
+## data:  residual_1 ~ residual_2
+## LM test = 0.0082778, df = 1, p-value = 0.9275</code></pre>
+<p>Teste Q</p>
     </section>
   </div>
 </div>
