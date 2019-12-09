@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "pt-BR"
-title                    : "gRass Lab"
+title                    : "Glass Frog"
 title_separator          : " "
 subtitle                 : "Data Science Projects"
 name                     : "Francisco Piccolo"
