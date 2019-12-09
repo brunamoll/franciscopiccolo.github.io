@@ -1,0 +1,414 @@
+---
+title: ""
+date: 2019-11-30
+output:
+  prettydoc::html_pretty:
+    theme: architect
+---
+
+Neste post irei analisar alguns indicadores do Banco Mundial, que serão obtidos facilmente através de uma API desta instituição (World Bank Data API). Foi criado um pacote no R que pesquisa e extrai dados desta API, o pacote é o [wbstats](https://cran.r-project.org/web/packages/wbstats/wbstats.pdf) criado em Janeiro de 2018 por Jesse Piburn.
+
+O Banco Mundial foi criado em 1944 nas conferências de Bretton Woods e possui como objetivos combater a pobreza e a desigualdade, através de investimentos e conselhos para países em desenvolvimento. A missão encontrada em sua [página](https://www.worldbank.org/en/who-we-are) inicial é de reduzir para 3% a parcela da população vivendo na extrema pobreza até 2030, porém uma de suas primeiras atribuições foi ajudar a reconstruir a infraestrutura do continente europeu que estava destruída pela segunda guerra mundial [1](https://www.economist.com/the-economist-explains/2019/04/09/how-does-the-world-bank-work).
+
+Para execução de seu propósito de maneira eficiente, se faz necessário estudos que demandam um grande volume de dados para embasar suas decisões de investimento. Este grande volume de dados foi, e continua sendo construído pela instituição, podendo ser encontrado nesta [página](https://data.worldbank.org/indicator).
+
+O pacote trabalha de maneira bem simples, onde o principal desafio em sua utilização é identificar qual dado você quer extrair, pois tem-se basicamente um data lake disponível com informações que você nem imagina que tenham sido coletadas. Para este post relacionado à exploração de dados (a.k.a Exploratory Data Analysis EDA), serão usados os seguintes pacotes:
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+library(tidyverse)
+library(ggthemes)
+library(wbstats)
+library(ggalt)
+library(scales)
+
+# Definindo tema padrão dos gráficos
+theme_set(theme_economist())
+```
+
+A primeira função do pacote é a wb, que faz o dowload dos dados solicitados na API e retorna um data frame. Os principais parâmetros da função são: indicator, country, startdate e enddate. O indicator é um código que pode ser observado na URL da página do Banco Mundial, por exemplo, para o indicador do PIB per capital a valores do dólar de 2010, a URL é (https://data.worldbank.org/indicator/NY.GDP.MKTP.KD?view=chart) e o código do indicador para inserir na função é o "NY.GDP.MKTP.KD". O parâmetro country pode ser um país no formato iso2c (e.g. "BR","AF" ou "USA"), uma região (e.g. "1A" que representa os países Árabes), todos os países e regiões usando "all" no parâmetros ou todos os países apenas usando "countries_only" no parâmetros. O startdate e enddate são as datas de início da requisição, pode ser substituido pelo parâmetro mrv (most recent value) que receberá um valor inteiro (e.g. 4) e irá trazer os 4 valores mais recente do indicador requisitado.
+
+Para mostrar um pouco do processo de extração dos dados desta API e analisar como estão organizados os indicadores desta base de dados, vamos analisar alguns indicadores. Neste post, irei analisar especificamente os indicadores que estão no grupo "Economy & Growth" da página dos dados do Banco Mundial. Em outros post irei analisar outras áreas de estudo e indicadores.
+
+Para começar, vamos extrair as informações do PIB per capita a valores de dólar de 2010 para os países de América Latina. Caso haja dúvida no nome no país, basta consultar na própria página do indicador.
+
+```{r}
+# extraindo os dados e salvando em um data.frame
+df_gdp_pc <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",country = "all",startdate = 1990,enddate = 2010)
+
+# filtrando os países e analisando os resultados
+df_gdp_pc %>% 
+  select(country,value,date) %>% 
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>% 
+  arrange(date) %>% 
+  head(20) %>% 
+  knitr::kable(align = "c",digits = 0,format.args = list(big.mark = ".",decimal.mark = ","))
+```
+
+Em posse dos dados, vamos ver o PIB per capita dos países em 1990 e 2010.
+
+```{r}
+df_gdp_pc %>% 
+  select(country,value,date) %>% 
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>% 
+  filter(date %in% c("1990","2010")) %>% 
+  mutate(
+    country = fct_reorder(country,value)
+  ) %>% 
+  ggplot(aes(x=country,y=value))+
+  geom_col(fill="dark orange")+
+  coord_flip()+
+  theme(legend.position = "none",
+        legend.title = element_blank())+
+  labs(
+    title = "PIB per Capita em 1990",
+    subtitle = "Valores em US$ de 2010",
+    x = "",
+    y = ""
+  )+
+  facet_grid(~date)
+```
+
+Além do PIB per Capita, é interessante analisar o crescimento deste indicador. Nos gráficos abaixo, vamos verificar quais os 30 países que tiveram maior variação e os 30 com menor variação, também nos período de 1990 até 2010. Fiz uma classificação simples do PIB per Capita para conseguir segmentar a análise por tipo de país.
+
+```{r}
+df_gdp_pc_2 <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",country = "countries_only",startdate = 1990,enddate = 2010)
+
+df_gdp_pc_2 %>%
+  select(
+    date,
+    country,
+    value
+  ) %>% 
+  filter(date %in% c("1990",max(date))) %>% 
+  mutate(
+    gdp_90 = ifelse(date == "1990",value,0),
+    gdp_10 = ifelse(date == "2010",value,0)
+  ) %>% 
+  group_by(country) %>% 
+  summarise(
+    gdp_90 = sum(gdp_90),
+    gdp_10 = sum(gdp_10)
+  ) %>% 
+  filter(gdp_90 > 0 & gdp_10 > 0) %>% 
+  mutate(
+    delta = round(1-(gdp_90/gdp_10),digits = 4),
+    income_range = ifelse(gdp_10 <= 5000,"low",
+               ifelse(gdp_10 <= 15000,"middle",
+               ifelse(gdp_10 <= 45000,"up_middle",
+               ifelse(gdp_10 <= 60000,"high",
+               ifelse(gdp_10 <= 90000,"up_high",
+                      "ultra_rich")))))
+  ) %>% 
+  filter(income_range == "low") %>% 
+  arrange(desc(delta)) %>% 
+  head(20) %>% 
+  ggplot()+
+  ggalt::geom_dumbbell(aes(y = fct_reorder(country,gdp_10),
+                           x = gdp_90,
+                           xend = gdp_10),
+  colour = "#3E39CD", size = 1,
+  colour_x = "#BD274A", colour_xend = "#60AF1A")+
+  scale_x_continuous(labels = scales::comma)+ # separando por vírgula ('000)
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank())+
+  labs(
+    title = "Os 20 países com maior variação de PIB per capita",
+    subtitle = "Categoria: Low income (GDP per capital <= 5.000 US$)"
+  )
+```
+
+O código anterior pode ser replicado, alterando apenas os parâmetros "filter(income_range == "low")" para middle, up_middle, high e up_high, ou até memso retirando este filtro e trazendo todos os países.
+
+```{r,echo=F}
+df_gdp_pc_2 %>%
+  select(
+    date,
+    country,
+    value
+  ) %>% 
+  filter(date %in% c("1990",max(date))) %>% 
+  mutate(
+    gdp_90 = ifelse(date == "1990",value,0),
+    gdp_10 = ifelse(date == "2010",value,0)
+  ) %>% 
+  group_by(country) %>% 
+  summarise(
+    gdp_90 = sum(gdp_90),
+    gdp_10 = sum(gdp_10)
+  ) %>% 
+  filter(gdp_90 > 0 & gdp_10 > 0) %>% 
+  mutate(
+    delta = round(1-(gdp_90/gdp_10),digits = 4),
+    income_range = ifelse(gdp_10 <= 5000,"low",
+               ifelse(gdp_10 <= 15000,"middle",
+               ifelse(gdp_10 <= 45000,"up_middle",
+               ifelse(gdp_10 <= 60000,"high",
+               ifelse(gdp_10 <= 90000,"up_high",
+                      "ultra_rich")))))
+  ) %>% 
+  filter(income_range == "middle") %>% 
+  arrange(desc(delta)) %>% 
+  head(20) %>% 
+  ggplot()+
+  ggalt::geom_dumbbell(aes(y = fct_reorder(country,gdp_10),
+                           x = gdp_90,
+                           xend = gdp_10),
+  colour = "#3E39CD", size = 1,
+  colour_x = "#BD274A", colour_xend = "#60AF1A")+
+  scale_x_continuous(labels = comma)+ # separando por vírgula ('000)
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank())+
+  labs(
+    title = "Os 20 países com maior variação de PIB per capita",
+    subtitle = "Categoria: Middle income (GDP per capital <= 15.000 US$)"
+  )
+```
+
+```{r,echo=F}
+df_gdp_pc_2 %>%
+  select(
+    date,
+    country,
+    value
+  ) %>% 
+  filter(date %in% c("1990",max(date))) %>% 
+  mutate(
+    gdp_90 = ifelse(date == "1990",value,0),
+    gdp_10 = ifelse(date == "2010",value,0)
+  ) %>% 
+  group_by(country) %>% 
+  summarise(
+    gdp_90 = sum(gdp_90),
+    gdp_10 = sum(gdp_10)
+  ) %>% 
+  filter(gdp_90 > 0 & gdp_10 > 0) %>% 
+  mutate(
+    delta = round(1-(gdp_90/gdp_10),digits = 4),
+    income_range = ifelse(gdp_10 <= 5000,"low",
+               ifelse(gdp_10 <= 15000,"middle",
+               ifelse(gdp_10 <= 45000,"up_middle",
+               ifelse(gdp_10 <= 60000,"high",
+               ifelse(gdp_10 <= 90000,"up_high",
+                      "ultra_rich")))))
+  ) %>% 
+  filter(income_range == "up_middle") %>% 
+  arrange(desc(delta)) %>% 
+  head(20) %>% 
+  ggplot()+
+  ggalt::geom_dumbbell(aes(y = fct_reorder(country,gdp_10),
+                           x = gdp_90,
+                           xend = gdp_10),
+  colour = "#3E39CD", size = 1,
+  colour_x = "#BD274A", colour_xend = "#60AF1A")+
+  scale_x_continuous(labels = comma)+ # separando por vírgula ('000)
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank())+
+  labs(
+    title = "Os 20 países com maior variação de PIB per capita",
+    subtitle = "Categoria: Up Middle income (GDP per capital <= 45.000 US$)"
+  )
+```
+
+```{r,echo=F}
+df_gdp_pc_2 %>%
+  select(
+    date,
+    country,
+    value
+  ) %>% 
+  filter(date %in% c("1990",max(date))) %>% 
+  mutate(
+    gdp_90 = ifelse(date == "1990",value,0),
+    gdp_10 = ifelse(date == "2010",value,0)
+  ) %>% 
+  group_by(country) %>% 
+  summarise(
+    gdp_90 = sum(gdp_90),
+    gdp_10 = sum(gdp_10)
+  ) %>% 
+  filter(gdp_90 > 0 & gdp_10 > 0) %>% 
+  mutate(
+    delta = round(1-(gdp_90/gdp_10),digits = 4),
+    income_range = ifelse(gdp_10 <= 5000,"low",
+               ifelse(gdp_10 <= 15000,"middle",
+               ifelse(gdp_10 <= 45000,"up_middle",
+               ifelse(gdp_10 <= 60000,"high",
+               ifelse(gdp_10 <= 90000,"up_high",
+                      "ultra_rich")))))
+  ) %>% 
+  filter(income_range == "high") %>% 
+  arrange(desc(delta)) %>% 
+  head(20) %>% 
+  ggplot()+
+  ggalt::geom_dumbbell(aes(y = fct_reorder(country,gdp_10),
+                           x = gdp_90,
+                           xend = gdp_10),
+  colour = "#3E39CD", size = 1,
+  colour_x = "#BD274A", colour_xend = "#60AF1A")+
+  scale_x_continuous(labels = comma)+ # separando por vírgula ('000)
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank())+
+  labs(
+    title = "Os 20 países com maior variação de PIB per capita",
+    subtitle = "Categoria: Hight income (GDP per capital <= 60.000 US$)"
+  )
+```
+
+```{r,echo=F}
+df_gdp_pc_2 %>%
+  select(
+    date,
+    country,
+    value
+  ) %>% 
+  filter(date %in% c("1990",max(date))) %>% 
+  mutate(
+    gdp_90 = ifelse(date == "1990",value,0),
+    gdp_10 = ifelse(date == "2010",value,0)
+  ) %>% 
+  group_by(country) %>% 
+  summarise(
+    gdp_90 = sum(gdp_90),
+    gdp_10 = sum(gdp_10)
+  ) %>% 
+  filter(gdp_90 > 0 & gdp_10 > 0) %>% 
+  mutate(
+    delta = round(1-(gdp_90/gdp_10),digits = 4),
+    income_range = ifelse(gdp_10 <= 5000,"low",
+               ifelse(gdp_10 <= 15000,"middle",
+               ifelse(gdp_10 <= 45000,"up_middle",
+               ifelse(gdp_10 <= 60000,"high",
+               ifelse(gdp_10 <= 90000,"up_high",
+                      "ultra_rich")))))
+  ) %>% 
+  filter(income_range == "middle") %>% 
+  arrange((delta)) %>% 
+  head(20) %>% 
+  ggplot()+
+  ggalt::geom_dumbbell(aes(y = fct_reorder(country,gdp_10),
+                           x = gdp_90,
+                           xend = gdp_10),
+  colour = "#3E39CD", size = 1,
+  colour_x = "#BD274A", colour_xend = "#60AF1A")+
+  scale_x_continuous(labels = comma)+ # separando por vírgula ('000)
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank())+
+  labs(
+    title = "Os 20 países com menor variação de PIB per capita",
+    subtitle = "Categoria: Middle income (GDP per capital <= 15.000 US$)"
+  )
+```
+
+Agora vamos ver, para um mesmo país (i.e. Brasil), os diferentes indicadores de PIB que o Banco Mundial possui. Vamos analisar os seguintes indicadores ao longo dos anos:
+
+1. PIB per Capita (PPP)
+
+2. PIB per Capita (LCU - Local currency unit)
+
+3. PIB per Capita (dólar de 2010)
+
+4. PIB per Capita (dólar corrente)
+
+Veja que para trazer mais de um indicador, basta criar uma lista através do comando c("indicador_1","indicador_2").
+
+```{r}
+df_gdp_pc_3 <- wbstats::wb(indicator = c("NY.GDP.PCAP.PP.CD","NY.GDP.PCAP.CN","NY.GDP.PCAP.KD","NY.GDP.PCAP.CD"),country = "BRA",mrv = 10)
+```
+
+Vamos ver uma série temporal destess 4 indicadores.
+
+```{r}
+df_gdp_pc_3 %>% 
+  ggplot(aes(x=date,y=value,group=indicator,color=indicator))+
+  geom_line(size=1)+
+  geom_point()+
+  scale_y_continuous(labels = scales::comma)+
+  theme(legend.position = "right",
+        legend.title = element_blank())+
+  labs(
+    title = "PIB do Brasil em 4 visões",
+    x = "",
+    y = ""
+  )
+```
+
+Continuando com as análises sobre indicadores econômicos dos países da América Latina, vamos ver o débito do governo em proporção ao PIB. Para este indicador, vamos trazer os últimos 20 resultados partindo do mais recente, usando o parâmetro "mrv". 
+
+```{r}
+df_gov_debt <- wbstats::wb(country = "countries_only",indicator = "GC.DOD.TOTL.GD.ZS",mrv = 20) # mrv trazendo os 20 valores mais recentes
+```
+
+Após extrair os dados, 870 linhas foram criadas. Vamos ver qual país da América Latina mais aumentou os gastos em proporção ao PIB. Isso pode ocorrer por um aumento efetivo nos gastos ou por uma queda no PIB. Não encontrei informação sobre se a dívida neste indicador é bruta ou líquida, mas vamos seguir assim mesmo.
+
+```{r}
+df_gov_debt %>% 
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>% 
+  select(
+    country,
+    date,
+    value
+  ) %>% 
+  mutate(country = factor(country,levels = c( "Brazil","Bolivia","Colombia","Uruguay","Peru"))) %>% # reordenando os países
+  ggplot(aes(x=date,y=value,group=country,color=country))+
+  geom_line(size=1)+
+  geom_point()+
+  theme(legend.position = "right",
+        legend.title = element_blank(),
+        axis.text.x = element_text(size = 8,angle = 70,vjust = 0.6), # ajustando o eixo x
+        axis.title.x = element_blank())+
+  labs(
+    title = "Share da dívida sobre o PIB",
+    subtitle = "Venezuela sem dados para análise",
+    x = "",
+    y = ""
+  )
+```
+
+Agora vamos ver qual país da América Latina tem mais share de exportação e importação em relação ao PIB. Este indicador é bem legal para se ver a abertura comercial de um país. Nota-se que Brasil e Argentina são os países mais fechados do continente.
+
+```{r}
+wbstats::wb(indicator = "NE.TRD.GNFS.ZS",country = "countries_only") %>% 
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>%
+  select(
+    country,
+    date,
+    value
+  ) %>% 
+  mutate(country = fct_reorder(country,value,.desc = T)) %>% 
+  ggplot(aes(x=date,y=value,group=country,color=country))+
+  geom_line(size=1,alpha=.6)+
+  geom_point()+
+  theme(legend.position = "right",
+        legend.title = element_blank(),
+        axis.text.x = element_text(size=7,angle = 70,vjust = .8))+ # ajustando o eixo x
+  labs(
+    title = "% Exp + Imp sobre o PIB",
+    x = "",
+    y = ""
+  )
+```
+
+Por último, vamos analisar o índice Gini no continente.
+
+```{r}
+wbstats::wb(indicator = "SI.POV.GINI",country = "countries_only",mrv = 10) %>% 
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>%
+  select(
+    country,
+    date,
+    value
+  ) %>% 
+  mutate(country = fct_reorder(country,value,.desc = T)) %>% 
+  ggplot(aes(x=date,y=value,group=country,color=country))+
+  geom_line(size=1)+
+  theme(legend.position = "right",
+        legend.title = element_blank(),
+        axis.text.x = element_text(size=8,angle = 70,vjust = .8))+ # ajustando o eixo x
+  labs(
+    title = "Índice GINI da América Latina",
+    x = "",
+    y = ""
+  )
+```
+
+Espero que com os exemplos acima tenha sido possível entender como o pacote funciona. Acredito que esta base de dados pode ser bastante útil em diversos projetos, tanto acadêmicos quanto corporativos. Em um post futuro irei analisar outros indicadores desta base para buscar novas conclusões.

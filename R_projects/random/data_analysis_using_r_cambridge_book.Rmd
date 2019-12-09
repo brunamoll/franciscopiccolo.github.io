@@ -1,0 +1,112 @@
+---
+  title: ""
+date: 2019-11-30
+output:
+  prettydoc::html_pretty:
+  theme: architect
+---
+  
+```{r}
+library(DAAG)
+library(tidyverse)
+library(ggthemes)
+library(gapminder)
+library(wbstats)
+library(missmap)
+library(Amelia)
+```
+
+
+Substituindo NA por algum outro valor em um vetor
+
+```{r}
+a <- c(NA,2,4,5,1)
+
+a <- na.omit(a)
+
+mean(a,na.rm = T) #na.rm = removendo valores NA
+
+a[is.na(a)] <- 100 #substituindo o valor NA por 100
+
+```
+
+
+Exercício 1: Os dados abaixo representam o tamanho da área em hectares e o preço em milhares de 15 casas na Austrália em 1999.
+
+```{r}
+df_ex_1 <- data.frame(
+  area = c(694,905,802,1366,716,963,821,714,1018,887,790,696,771,1006,1191),
+  price = c(192,215,215,274,112,185,212,220,276,260,221,255,260,293,375)
+)
+```
+
+a) Plote um gráfico que relacione preço e área
+
+```{r}
+df_ex_1 %>% 
+  ggplot(aes(x=area,y=price))+
+  geom_point()
+```
+
+b) Veja a distribuição do preço através de um histograma
+
+```{r}
+df_ex_1 %>% 
+  ggplot(aes(x=price))+
+  geom_histogram()
+```
+
+c) Transforme os dados em logarítmo e analíse a correlação novamente
+
+```{r}
+df_ex_1 %>% 
+  mutate(
+    log_area = log(area),
+    log_price = log(price)
+  ) %>% 
+  ggplot(aes(x=log_area,y=log_price))+
+  geom_point()
+```
+
+```{r}
+DAAG::possum %>% head()
+
+
+str(possum)
+
+possum %>% ncol()
+
+Amelia::missmap(possum)
+
+Amelia::missmap(adj_training_data,main = "Missing values vs Observed")
+```
+
+```{r}
+ais %>% Amelia::missmap()
+
+ais %>% View()
+
+ais %>% nrow()
+```
+
+```{r}
+rainforest %>% Amelia::missmap()
+
+rainforest %>% View()
+```
+
+```{r}
+rep(c(2,3,5),c(4,3,1))
+```
+
+```{r}
+rep(c(3,1,1,5,7),length.out = 50)
+```
+
+
+Sperman Rank correlation 
+
+
+
+
+
