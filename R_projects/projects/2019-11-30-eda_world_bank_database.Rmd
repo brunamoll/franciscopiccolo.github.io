@@ -6,13 +6,13 @@ output:
     theme: architect
 ---
 
-Neste post irei analisar alguns indicadores do Banco Mundial, que serão obtidos facilmente através de uma API desta instituição (World Bank Data API). Foi criado um pacote no R que pesquisa e extrai dados desta API, o pacote é o [wbstats](https://cran.r-project.org/web/packages/wbstats/wbstats.pdf) criado em Janeiro de 2018 por Jesse Piburn.
+Neste post irei analisar alguns indicadores do Banco Mundial, que serão obtidos facilmente através de uma API desta instituição (World Bank Data API). Existe um pacote criado no R que pesquisa e extrai dados desta API, o pacote é o [wbstats](https://cran.r-project.org/web/packages/wbstats/wbstats.pdf) criado em Janeiro de 2018 por Jesse Piburn.
 
-O Banco Mundial foi criado em 1944 nas conferências de Bretton Woods e possui como objetivos combater a pobreza e a desigualdade, através de investimentos e conselhos para países em desenvolvimento. A missão encontrada em sua [página](https://www.worldbank.org/en/who-we-are) inicial é de reduzir para 3% a parcela da população vivendo na extrema pobreza até 2030, porém uma de suas primeiras atribuições foi ajudar a reconstruir a infraestrutura do continente europeu que estava destruída pela segunda guerra mundial [1](https://www.economist.com/the-economist-explains/2019/04/09/how-does-the-world-bank-work).
+O Banco Mundial foi criado em 1944 nas conferências de Bretton Woods e possui como objetivo combater a pobreza e a desigualdade, através de investimentos e conselhos para países em desenvolvimento. A missão encontrada em sua [página](https://www.worldbank.org/en/who-we-are) inicial é de reduzir para 3% a parcela da população vivendo na extrema pobreza até 2030, porém uma de suas primeiras atribuições foi ajudar a reconstruir a infraestrutura do continente europeu que estava destruída pela segunda guerra mundial [1](https://www.economist.com/the-economist-explains/2019/04/09/how-does-the-world-bank-work).
 
 Para execução de seu propósito de maneira eficiente, se faz necessário estudos que demandam um grande volume de dados para embasar suas decisões de investimento. Este grande volume de dados foi, e continua sendo construído pela instituição, podendo ser encontrado nesta [página](https://data.worldbank.org/indicator).
 
-O pacote trabalha de maneira bem simples, onde o principal desafio em sua utilização é identificar qual dado você quer extrair, pois tem-se basicamente um data lake disponível com informações que você nem imagina que tenham sido coletadas. Para este post relacionado à exploração de dados (a.k.a Exploratory Data Analysis EDA), serão usados os seguintes pacotes:
+O pacote wbstats trabalha de maneira bem simples, onde o principal desafio em sua utilização é identificar qual dado você quer extrair, pois tem-se basicamente um data lake disponível com informações que você nem imagina que tenham sido coletadas. Para este post, serão usados os seguintes pacotes:
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 library(tidyverse)
@@ -25,9 +25,9 @@ library(scales)
 theme_set(theme_economist())
 ```
 
-A primeira função do pacote é a wb, que faz o dowload dos dados solicitados na API e retorna um data frame. Os principais parâmetros da função são: indicator, country, startdate e enddate. O indicator é um código que pode ser observado na URL da página do Banco Mundial, por exemplo, para o indicador do PIB per capital a valores do dólar de 2010, a URL é (https://data.worldbank.org/indicator/NY.GDP.MKTP.KD?view=chart) e o código do indicador para inserir na função é o "NY.GDP.MKTP.KD". O parâmetro country pode ser um país no formato iso2c (e.g. "BR","AF" ou "USA"), uma região (e.g. "1A" que representa os países Árabes), todos os países e regiões usando "all" no parâmetros ou todos os países apenas usando "countries_only" no parâmetros. O startdate e enddate são as datas de início da requisição, pode ser substituido pelo parâmetro mrv (most recent value) que receberá um valor inteiro (e.g. 4) e irá trazer os 4 valores mais recente do indicador requisitado.
+A primeira função do pacote é a wb, que faz o dowload dos dados solicitados na API e retorna um data frame. Os principais parâmetros da função são: indicator, country, startdate e enddate. O indicator é um código que pode ser observado na URL da página do Banco Mundial, por exemplo, para o indicador do PIB per capital a valores do dólar de 2010, a URL é (https://data.worldbank.org/indicator/NY.GDP.MKTP.KD?view=chart) e o código do indicador para inserir na função é o "NY.GDP.MKTP.KD". O parâmetro country pode ser um país no formato iso2c (e.g. "BR","AF" ou "US"), uma região (e.g. "1A" que representa os países Árabes), todos os países e regiões usando "all" no parâmetros ou apenas países usando "countries_only". O startdate e enddate são as datas de interesse sobre o indicador em questão, onde estes campos podem ser substituidos pelo parâmetro mrv (most recent value) que receberá um valor inteiro (e.g. 4) e irá trazer os 4 valores mais recente do indicador.
 
-Para mostrar um pouco do processo de extração dos dados desta API e analisar como estão organizados os indicadores desta base de dados, vamos analisar alguns indicadores. Neste post, irei analisar especificamente os indicadores que estão no grupo "Economy & Growth" da página dos dados do Banco Mundial. Em outros post irei analisar outras áreas de estudo e indicadores.
+Para mostrar um pouco do processo de extração dos dados desta API e analisar como estão organizados os indicadores desta base de dados, vamos analisar alguns indicadores. Neste post, irei analisar especificamente os indicadores que estão no grupo "Economy & Growth".
 
 Para começar, vamos extrair as informações do PIB per capita a valores de dólar de 2010 para os países de América Latina. Caso haja dúvida no nome no país, basta consultar na própria página do indicador.
 
@@ -312,7 +312,8 @@ Agora vamos ver, para um mesmo país (i.e. Brasil), os diferentes indicadores de
 Veja que para trazer mais de um indicador, basta criar uma lista através do comando c("indicador_1","indicador_2").
 
 ```{r}
-df_gdp_pc_3 <- wbstats::wb(indicator = c("NY.GDP.PCAP.PP.CD","NY.GDP.PCAP.CN","NY.GDP.PCAP.KD","NY.GDP.PCAP.CD"),country = "BRA",mrv = 10)
+df_gdp_pc_3 <- wbstats::wb(indicator = c("NY.GDP.PCAP.PP.CD","NY.GDP.PCAP.CN","NY.GDP.PCAP.KD","NY.GDP.PCAP.CD"),
+                           country = "BRA",mrv = 10)
 ```
 
 Vamos ver uma série temporal destess 4 indicadores.
@@ -324,7 +325,8 @@ df_gdp_pc_3 %>%
   geom_point()+
   scale_y_continuous(labels = scales::comma)+
   theme(legend.position = "right",
-        legend.title = element_blank())+
+        legend.title = element_blank(),
+        axis.text.x = element_text(size = 8,angle = 70,vjust = .7))+
   labs(
     title = "PIB do Brasil em 4 visões",
     x = "",
@@ -335,20 +337,26 @@ df_gdp_pc_3 %>%
 Continuando com as análises sobre indicadores econômicos dos países da América Latina, vamos ver o débito do governo em proporção ao PIB. Para este indicador, vamos trazer os últimos 20 resultados partindo do mais recente, usando o parâmetro "mrv". 
 
 ```{r}
-df_gov_debt <- wbstats::wb(country = "countries_only",indicator = "GC.DOD.TOTL.GD.ZS",mrv = 20) # mrv trazendo os 20 valores mais recentes
+df_gov_debt <- wbstats::wb(country = "countries_only",
+                           indicator = "GC.DOD.TOTL.GD.ZS",
+                           mrv = 20) # mrv trazendo os 20 valores mais recentes
 ```
 
 Após extrair os dados, 870 linhas foram criadas. Vamos ver qual país da América Latina mais aumentou os gastos em proporção ao PIB. Isso pode ocorrer por um aumento efetivo nos gastos ou por uma queda no PIB. Não encontrei informação sobre se a dívida neste indicador é bruta ou líquida, mas vamos seguir assim mesmo.
 
 ```{r}
 df_gov_debt %>% 
-  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>% 
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB",
+                        "Colombia","Peru","Argentina","Bolivia",
+                        "Uruguay","Paraguay")) %>% 
   select(
     country,
     date,
     value
   ) %>% 
-  mutate(country = factor(country,levels = c( "Brazil","Bolivia","Colombia","Uruguay","Peru"))) %>% # reordenando os países
+  mutate(country = factor(country,
+                          levels = c( "Brazil","Bolivia",
+                                      "Colombia","Uruguay","Peru"))) %>% # reordenando os países
   ggplot(aes(x=date,y=value,group=country,color=country))+
   geom_line(size=1)+
   geom_point()+
@@ -368,7 +376,9 @@ Agora vamos ver qual país da América Latina tem mais share de exportação e i
 
 ```{r}
 wbstats::wb(indicator = "NE.TRD.GNFS.ZS",country = "countries_only") %>% 
-  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>%
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB",
+                        "Colombia","Peru","Argentina","Bolivia",
+                        "Uruguay","Paraguay")) %>%
   select(
     country,
     date,
@@ -392,7 +402,9 @@ Por último, vamos analisar o índice Gini no continente.
 
 ```{r}
 wbstats::wb(indicator = "SI.POV.GINI",country = "countries_only",mrv = 10) %>% 
-  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>%
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB",
+                        "Colombia","Peru","Argentina",
+                        "Bolivia","Uruguay","Paraguay")) %>%
   select(
     country,
     date,
@@ -411,4 +423,4 @@ wbstats::wb(indicator = "SI.POV.GINI",country = "countries_only",mrv = 10) %>%
   )
 ```
 
-Espero que com os exemplos acima tenha sido possível entender como o pacote funciona. Acredito que esta base de dados pode ser bastante útil em diversos projetos, tanto acadêmicos quanto corporativos. Em um post futuro irei analisar outros indicadores desta base para buscar novas conclusões.
+Espero que com os exemplos acima tenha sido possível entender como o pacote funciona. Acredito que esta base de dados pode ser bastante útil em diversos projetos, tanto acadêmicos quanto corporativos. Perceba como foi fácil trabalhar com os dados, sem precisar exportar um csv e depois importat ao R. Em um post futuro irei analisar outros indicadores desta base para buscar novas conclusões.
