@@ -18,7 +18,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 locale                   : "pt-BR"
 title                    : "gRass Lab"
 title_separator          : " "
-subtitle                 : # site tagline that appears below site title in masthead
+subtitle                 : "Data Science Projects"
 name                     : "Francisco Piccolo"
 description              : "Data Science Portfolio"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
