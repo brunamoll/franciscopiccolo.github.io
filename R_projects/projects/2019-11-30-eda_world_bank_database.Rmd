@@ -12,12 +12,15 @@ O Banco Mundial foi criado em 1944 nas conferências de Bretton Woods e possui c
 
 Para execução de seu propósito de maneira eficiente, se faz necessário estudos que demandam um grande volume de dados para embasar suas decisões de investimento. Este grande volume de dados foi, e continua sendo construído pela instituição, podendo ser encontrado nesta [página](https://data.worldbank.org/indicator).
 
-O pacote wbstats trabalha de maneira bem simples, onde o principal desafio em sua utilização é identificar qual dado você quer extrair, pois tem-se basicamente um data lake disponível com informações que você nem imagina que tenham sido coletadas. Para este post, serão usados os seguintes pacotes:
+O pacote wbstats trabalha de maneira bem simples, onde o principal desafio em sua utilização é identificar qual dado você quer extrair, pois tem-se basicamente um data lake disponível com informações que você nem imagina que tenham sido coletadas. 
+
+Neste demonstrativo, irei analisar alguns indicadores econômicos como PIB, dívida e índice Gini, visando mostrar como é fácil extrair e analisar os dados com o uso do wbstats. Além do pacote wbstats, irei usar outros pacotes que estão descritos abaixo:
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
+library(wbstats)
+
 library(tidyverse)
 library(ggthemes)
-library(wbstats)
 library(ggalt)
 library(scales)
 
@@ -33,12 +36,18 @@ Para começar, vamos extrair as informações do PIB per capita a valores de dó
 
 ```{r}
 # extraindo os dados e salvando em um data.frame
-df_gdp_pc <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",country = "all",startdate = 1990,enddate = 2010)
+df_gdp_pc <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",
+                         country = "all",
+                         startdate = 1990,
+                         enddate = 2010)
 
 # filtrando os países e analisando os resultados
 df_gdp_pc %>% 
   select(country,value,date) %>% 
-  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>% 
+  filter(country %in% c("Brazil","Chile","Ecuador",
+                        "Venezuela, RB","Colombia",
+                        "Peru","Argentina","Bolivia",
+                        "Uruguay","Paraguay")) %>% 
   arrange(date) %>% 
   head(20) %>% 
   knitr::kable(align = "c",digits = 0,format.args = list(big.mark = ".",decimal.mark = ","))
@@ -49,7 +58,9 @@ Em posse dos dados, vamos ver o PIB per capita dos países em 1990 e 2010.
 ```{r}
 df_gdp_pc %>% 
   select(country,value,date) %>% 
-  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB","Colombia","Peru","Argentina","Bolivia","Uruguay","Paraguay")) %>% 
+  filter(country %in% c("Brazil","Chile","Ecuador","Venezuela, RB"
+                        ,"Colombia","Peru","Argentina"
+                        ,"Bolivia","Uruguay","Paraguay")) %>% 
   filter(date %in% c("1990","2010")) %>% 
   mutate(
     country = fct_reorder(country,value)
@@ -60,7 +71,7 @@ df_gdp_pc %>%
   theme(legend.position = "none",
         legend.title = element_blank())+
   labs(
-    title = "PIB per Capita em 1990",
+    title = "PIB per Capita",
     subtitle = "Valores em US$ de 2010",
     x = "",
     y = ""
@@ -68,10 +79,13 @@ df_gdp_pc %>%
   facet_grid(~date)
 ```
 
-Além do PIB per Capita, é interessante analisar o crescimento deste indicador. Nos gráficos abaixo, vamos verificar quais os 30 países que tiveram maior variação e os 30 com menor variação, também nos período de 1990 até 2010. Fiz uma classificação simples do PIB per Capita para conseguir segmentar a análise por tipo de país.
+Além do PIB per Capita, é interessante analisar o crescimento deste indicador. Nos gráficos abaixo, vamos verificar quais os 30 países que tiveram maior variação e os 30 com menor variação, também no período de 1990 até 2010. Fiz uma classificação simples do PIB per Capita para conseguir segmentar a análise por tipo de país (e.g. low income, middle, high).
 
 ```{r}
-df_gdp_pc_2 <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",country = "countries_only",startdate = 1990,enddate = 2010)
+df_gdp_pc_2 <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",
+                           country = "countries_only",
+                           startdate = 1990,
+                           enddate = 2010)
 
 df_gdp_pc_2 %>%
   select(
@@ -312,7 +326,10 @@ Agora vamos ver, para um mesmo país (i.e. Brasil), os diferentes indicadores de
 Veja que para trazer mais de um indicador, basta criar uma lista através do comando c("indicador_1","indicador_2").
 
 ```{r}
-df_gdp_pc_3 <- wbstats::wb(indicator = c("NY.GDP.PCAP.PP.CD","NY.GDP.PCAP.CN","NY.GDP.PCAP.KD","NY.GDP.PCAP.CD"),
+df_gdp_pc_3 <- wbstats::wb(indicator = c("NY.GDP.PCAP.PP.CD",
+                                         "NY.GDP.PCAP.CN",
+                                         "NY.GDP.PCAP.KD",
+                                         "NY.GDP.PCAP.CD"),
                            country = "BRA",mrv = 10)
 ```
 
@@ -355,14 +372,17 @@ df_gov_debt %>%
     value
   ) %>% 
   mutate(country = factor(country,
-                          levels = c( "Brazil","Bolivia",
-                                      "Colombia","Uruguay","Peru"))) %>% # reordenando os países
+                          levels = c( "Brazil",
+                                      "Bolivia",
+                                      "Colombia",
+                                      "Uruguay",
+                                      "Peru"))) %>% # reordenando os países
   ggplot(aes(x=date,y=value,group=country,color=country))+
   geom_line(size=1)+
   geom_point()+
   theme(legend.position = "right",
         legend.title = element_blank(),
-        axis.text.x = element_text(size = 8,angle = 70,vjust = 0.6), # ajustando o eixo x
+        axis.text.x = element_text(size = 8,angle = 70,vjust = 0.6),
         axis.title.x = element_blank())+
   labs(
     title = "Share da dívida sobre o PIB",
