@@ -68,13 +68,19 @@ dados_2 %>%
 
 O modelo de regressão linear proposto para este exemplo é definido pela equação abaixo.
 
-$$ lnY_t = \beta_1+\beta_2 (lnX_t) + U_t $$
+$$ lnY_t = \beta_0+\beta_1 (lnX_t) + U_t $$
 
 Onde:
 
 $Y_t$ = área plantada no ano t (em hectares), em log natural 
 
 $X_t$ = preço no ano t, em log natural
+
+$\beta_0$ = Intercepto da equação
+
+$\beta_1$ = Inclinação da equação
+
+$U_t$ = Ruído do modelo (variações não explicadas pelo modelo)
 
 Utiliza-se o logarítmo natural para que as variações de um período para o outro (e.g. período 1 para o período 2) sejam intepretadas como variação percentual. Esta interpretação de variação percentual é possivel apenas para transformações em logarítmo natural e ela é necessária por conta do conceito de elasticidade, que indica que uma variação percentual de uma variável provoca uma determinada variação percentual em outra variável, como se fosse uma sensibilidade relativa.
 
@@ -120,7 +126,7 @@ data.frame(
 ) %>% knitr::kable(caption = "Tabela 4: Valores com log na base 10",digits = 3,align = "c")
 ```
 
-Após entender esta propriedade do log natural, pode-se validar esta característica na tabela que será usada para o modelo de regressão. O campo delta_ _area mostra a variação percentual da área de um período com relação ao período anterior e o mesmo cálculo no campo delta_valor. No campo delta_log_valor e delta_log_area é feita a diferença entre o período com o período anterior e os campos log_area_precision e log_valor_precision fazem a diferença entre delta_area com delta_log_area e delta_valor com delta_log_valor. Quanto mais baixo o valor de log_area_precision e log_valor_precision, mais forte é a característica do log natural explicada anteriormente. Veja abaixo para ficar mais claro:
+Após entender esta propriedade do log natural, pode-se validar esta característica na tabela que será usada para o modelo de regressão. Os campos delta_area e delta_valor mostram a variação percentual de um período com relação ao período anterior. No campo delta_log_valor e delta_log_area é feita a diferença entre o período com o período anterior e os campos log_area_precision e log_valor_precision fazem a diferença entre delta_area com delta_log_area e delta_valor com delta_log_valor. Quanto mais baixo o valor de log_area_precision e log_valor_precision, mais forte é a característica do log natural explicada anteriormente. Veja abaixo para ficar mais claro:
 
 ```{r,eval=T,include=T,echo=F,warning=F}
 dados_2 %>% 
@@ -153,6 +159,8 @@ summary(model)
 ```
 
 A equação de regressão gerada pelo modelo é definida como: $lnY_t = 1.64 + 0.97 (lnX_t) + U_t$
+
+Esta equação indica que a plantação de cana de açucar seria de $e^{1.64} = 5.15$ hectares caso o preço fosse 0. Conforme o preço aumenta em 1% o impacto na área plantada será de 0.97%, pois ambas as variáveis estão transformadas em log natural, logo uma variação unitária é interpretada como variação percentual (conforme demonstrado acima). 
 
 O coeficiente de correlação (R²) ficou em 70.6%, o que mostra uma correlação significativa entre as variáveis. Porém, não basta apenas este resultado para gerar conclusões a respeito das variáveis estudadas, é preciso analisar as premissas com relação aos resíduos.
 
@@ -206,16 +214,4 @@ De acordo com a tabela, sabendo a quantidade de registros (n = 33), a significâ
 
 **DU** = 1.49
 
-O valor DW (1.2912) ficou acima de 0 e abaixo de DL, o que permite concluir que não há dependência entre os resíduos. 
-
-Além deste teste, que verifica autocorrelação positiva dos resíduos, é necessário incluir outros testes que analisam autocorrelação negativa também. O teste Breusch-Godfrey pode ser aplicado neste caso.
-
-```{r,eval=T,include=T,echo=F,warning=F,message=F}
-df_residual <- data.frame(
-  residual_1 = residual[-34],
-  residual_2 = residual[-1]
-)
-
-bgtest(residual_1~residual_2,order = 1,data = df_residual)
-```
-
+O valor DW (1.2912) ficou acima de 0 e abaixo de DL, o que permite concluir que não há dependência entre os resíduos.

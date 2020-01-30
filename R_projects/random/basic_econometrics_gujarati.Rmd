@@ -1,0 +1,436 @@
+---
+title: "Livro - Econometria Básica, Gujarati"
+date: 2019-11-24
+output:
+  prettydoc::html_pretty:
+    theme: architect
+---
+
+```{r}
+# Pacotes necessários para exercução dos exercícios
+library(tidyverse)
+library(gridExtra)
+
+path <- "C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/base_de_dados/livro-econometria-basica-gujarati/"
+```
+
+
+## Liro do Gujarati - Econometria Básica
+
+Este post é basicamente um resumo do livro Econometria Básica dos professores Damodar N. Gujarati e Dawn C. Porter. Fiz ele por conta dos exercícios que estão contidos no livro, que precisei fazer usando o R.
+
+Irei destacar as partes mais importantes de cada capítulo para poder ler de tempos em tempos.
+
+### Introdução
+
+Econometria é a medição econômica; aplicação de estatística a dados econômicos; análise quantitativa de fenômenos econômicos.
+
+A metodologia econométrica se baseia em uma hipótese, especificação de um modelo matemático, obtenção de dados, estimação de parâmetros, teste de hipóteses e validção do modelo.
+
+### Capítulo 1 - A natureza da análise de regressão
+
+Regressão diz respeito ao estudo da dependência de uma variável em relação a uma ou mais variáveis explanatórias, visando estimar o valor médio da dependente usando os valores conhecidos das explanatórias.
+
+
+### Exercícios do capítulo 1
+
+1.1) Traga os dados da tabela 1.3 sobre o índice de preço ao consumidor (IPC) para responder as alternativas.
+
+```{r}
+tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ",")
+```
+
+a) Com base nos dados forneceidos, calcule a taxa de inflação de cada país:
+
+```{r}
+# Taxa de inflação (1985 = 100, até 2005)
+ipc_total <- tbl_1.3 %>% 
+  filter(Ano %in% c(1985,2005))
+
+ipc_total <- ipc_total[2,2:8]-ipc_total[1,2:8]
+
+knitr::kable(ipc_total,align = "c")
+```
+
+b) Represente graficamente a taxa de inflação de cada país:
+
+```{r}
+tbl_1.3 %>%
+  tidyr::gather("campo","valor",2:8) %>% 
+  ggplot(aes(x=Ano,y=valor,group=campo,color=campo))+
+  geom_line()
+```
+
+1.2) 
+
+a) Usando a tabela 1.3, represente as taxas de inflação do Canará, França, Alemanha e Itália, Japão e Reino Unido em relação à taxa do EUA
+
+```{r}
+can <- tbl_1.3 %>% 
+  ggplot(aes(x=EUA,y=Canada))+
+  geom_point()+
+  geom_abline(intercept = 0)
+
+fra <- tbl_1.3 %>% 
+  ggplot(aes(x=EUA,y=França))+
+  geom_point()+
+  geom_abline(intercept = 0)
+
+ale <- tbl_1.3 %>% 
+  ggplot(aes(x=EUA,y=Alemanha))+
+  geom_point()+
+  geom_abline(intercept = 0)
+
+ita <- tbl_1.3 %>% 
+  ggplot(aes(x=EUA,y=Italia))+
+  geom_point()+
+  geom_abline(intercept = 0)
+
+jap <- tbl_1.3 %>% 
+  ggplot(aes(x=EUA,y=Japão))+
+  geom_point()+
+  geom_abline(intercept = 0)
+
+rei <- tbl_1.3 %>% 
+  ggplot(aes(x=EUA,y=Reino.Unido))+
+  geom_point()+
+  geom_abline(intercept = 0)
+
+
+gridExtra::grid.arrange(can,fra,ale,ita,jap,rei,nrow = 2,ncol=3)
+```
+
+1.3) A tabela abaixo apresenta as taxas de câmbio em sete países industrializados, entre 1985 e 2006.
+
+```{r}
+tbl_1.4 <- read.table(file = paste(path,"tabela_1.4_cambio.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ",",
+                      )
+  
+# Ajustando a coluna do reino unido (1/taxa)
+tbl_1.4 <- 
+  tbl_1.4 %>% 
+  mutate(Reino.unido = 1/Reino.unido)
+```
+
+a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:
+
+```{r}
+tbl_1.4 %>% 
+  tidyr::gather("campo","valor",2:10) %>% 
+  filter(campo != "Coreia.sul",
+         campo != "Japao",
+         campo != "Suica",
+         campo != "Reino.unido",
+         campo != "Canada",
+         campo != "Australia"
+         ) %>% 
+  ggplot(aes(x=Ano,y=valor,group=campo,color=campo))+
+  geom_line()
+
+tbl_1.4 %>% 
+  tidyr::gather("campo","valor",2:10) %>% 
+  filter(campo %in% c("Coreia.sul","Japao")) %>% 
+  ggplot(aes(x=Ano,y=valor,group=campo,color=campo))+
+  geom_line()
+
+tbl_1.4 %>% 
+  tidyr::gather("campo","valor",2:10) %>% 
+  filter(campo %in% c("Reino.unido","Canada","Australia","Suica")) %>% 
+  ggplot(aes(x=Ano,y=valor,group=campo,color=campo))+
+  geom_line()
+```
+
+1.7) A tabela abaixo apresenta o orçamento de publicidade com as impressões retidas (através de uma pesquisa feita com 4 mil adultos).
+
+```{r}
+tbl_1.6 <- read.table(file = paste(path,"tabela_1.6_publicidade.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ","
+                      )
+```
+
+a) Mostre a relação entre impressões e o investimento em publicidade.
+
+```{r}
+tbl_1.6 %>% 
+  ggplot(aes(x=investment,y=impressions))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+### Capítulo 2 - Análise de regressão com duas variáveis: Algumas ideias básicas
+
+Exercícios aplicados
+
+2.14) Use a tabela abaixo com dados do EUA sobre o mercado de trabalho para responder as seguinter alternativas.
+
+```{r}
+tbl_2.7 <- read.table(file = paste(path,"tabela_2.7_labour_market.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ","
+                      )
+```
+
+
+a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.
+
+```{r}
+women_df <- 
+  tbl_2.7 %>% 
+  select(share_women_work_force,unemployment_women) %>% 
+  transmute(
+    share_work_force = share_women_work_force,
+    unemployment = unemployment_women
+  ) %>% 
+  mutate(type = "women")
+    
+tbl_2.7 %>% 
+  select(share_men_work_force,unemployment_men) %>% 
+  transmute(
+    share_work_force = share_men_work_force,
+    unemployment = unemployment_men
+  ) %>% 
+  mutate(type = "men") %>% 
+  union_all(women_df) %>% 
+  ggplot(aes(x=share_work_force,y=unemployment,color=type))+
+  geom_point()
+```
+
+c) Represente graficamente a taxa de participação de homens e mulheres em relação ao ganho médio por hora.
+
+```{r}
+women_df <- 
+  tbl_2.7 %>% 
+  select(share_women_work_force,avg_hourly_earning_women) %>% 
+  transmute(
+    share_work_force = share_women_work_force,
+    avg_hourly_earning = avg_hourly_earning_women
+  ) %>% 
+  mutate(type = "women")
+
+tbl_2.7 %>% 
+  select(share_men_work_force,avg_hourly_earning_men) %>% 
+  transmute(
+    share_work_force = share_men_work_force,
+    avg_hourly_earning = avg_hourly_earning_men
+  ) %>% 
+  mutate(type = "men") %>% 
+  union_all(women_df) %>% 
+  View()
+  
+  ggplot(aes(x=share_work_force,y=avg_hourly_earning,color=type))+
+  geom_point()
+```
+
+2.15) Use os dados da tabela 2.8, sobre despesas com alimentação e despesas totais, em rupias, para uma amostra de 55 domicílios da Índia, para responder as alternativas abaixo.
+
+```{r}
+tbl_2.8 <- read.table(file = paste(path,"tabela_2.8_despesa_india.txt",sep = ""),
+                      sep = " ",
+                      header = T,
+                      dec = ",")
+```
+
+a) Represente graficamente os dados colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais. Insira uma linha de regressão
+
+```{r}
+tbl_2.8 %>% 
+  ggplot(aes(x=total,y=alimento))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+### Capítulo 3 - Modelo de regressão de duas variáveis: o problema da estimação
+
+O objetivo neste capítulo será estimar a função de regressão populacional (FRP) com base na função de regressão amostral (FRA), da maneira mais precisa possível. Os métodos disponíveis para isso são (i) mpinimos quadrados ordinários e (ii) máxima verossimilhança. O método (i) é o mais usado, por ser mais simples, porém ambos geram resultados semelhantes.
+
+3.1 Método dos mínimos quadrados ordinários:
+
+Este método foi criado por Carl Friedrich Gauss, um matemático alemão. A ideia deste método é escolher uma FRA de tal forma que a soma dos resíduos seja a menor possível. Porém, se fosse apenas a soma dos resíduos, o resultado gerado (reta de regressão) poderia não ser apropriado, pois o que se deve usar é a soma dos quadrados dos resíduos para ser minimizada. O método dos mínimos quadrados se baseia no cálculo diferencial que gera os parâmetros ($\beta$) que minimizam a soma dos quadrados dos resíduos. A diferenciação gera as seguintes equações para estimar $\beta_1$ e $\beta_2$:
+
+$\sum Y_i = n\beta_1 + \beta_2 \sum X_i$
+
+$\sum Y_i X_i = \beta \sum X_i + \beta_2 \sum X_i^2$
+
+Onde n é o tamanho da amostra. Após resolver as equações se obtém: 
+
+$\beta_2 = \frac{\sum X_i Y_i}{\sum X_i^2}$
+
+$\beta_1 = Y - \beta_2 X$
+
+Existem propriedades estatísticas dos estimadores de MQO, ou seja, as propriedades que existem apenas quando algumas hipóteses sobre a geração dos dados se confirmam. 
+
+3.2 As hipóteses do método dos mínimos quadrados:
+
+Como o objetivo não é só obter os parâmetros ($\beta_1$ e $\beta_2$) com base em uma amostra, mas sim o de obtê-los e realizar inferências sobre os parâmetros populacionais, se faz neessário estabelecer certas hipóteses a respeito de como a variável explicada / dependente é gerada. 
+
+Hipótese 1: O modelo de regressão linear é linear nos parâmeteos $\beta$, embora possa não ser linear nas variáveis (x), ou seja, o regressando Y e o regressor X podem não ser lineares e o modelo continuará sendo linear.
+
+Hipótese 2: Existência de independência entre as variáveis X e o termo de erro. Esta independência se fundamenta na ideia de que os termos X e u possuem influências separadas (e aditivas) sobre Y. Se caso estes termos foram correlacionados, não é possível avaliar efeitos individuais sobre Y. Caso estes termos sejam correlacionados é bem provável que o termo u contenha uma variável importante no modelo que não foi incluída.
+
+Hipótese 3: O valor médio do termo de erro (u) deve ser zero. Esta hipótese indica que as variáveis não incluídas no modelo e consequentemente representadas por u não devem afetar sistematicamente o valor médio de Y, ou seja, os valores positivos de u cancelam os valores negativos. A hipótese 3 implica que não existe erro de especificação ou viés de especificação do modelo, que pode ocorrer quando alguma variável importante deixa de ser mapeada no modelo de regressão ou variáveis irrelevantes são incluídas.
+
+Hipótese 4: Homocedasticidade de u. Este hipótese indica que a variância do termo de erro u é a mesma independente do valor de X. Homocedasticidade é a constante variância do termo de erro.
+
+Hipótese 5: Não há autocorrelação entre os termos de erro. 
+
+Hipótese 6: O número de observações n deve ser maior que o número de parâmetros a serem estimados, ou seja, o número de observações n deve ser maior que o números de variáveis explicativas.
+
+Hipótese 7: Deve haver variabilidade dos valores de X. Isto também implica que não deve haver outliers ou valores discrepantes.
+
+3.3 Precisão ou erros padrão das estimativas de mínimos quadrados
+
+Em estatística, a precisão de uma estimativa é medida por seu erro padrão (ep), que é basicamente o desvio padrão da distribuiçõa amostral do estimador (coeficiente). 
+
+3.4 Propriedades dos estimadores (coeficientes) de mínimos quadrados: o teorema de Gauss-Markov
+
+Teorema de Gauss-Markov: Dadas as premissas do modelo clássico de regressão linear, os coeficientes possuem variância mínima, ou seja, são o melhor coeficiente linear não viesado.
+
+3.5 O coeficiente de determinação r²: uma medida de qualidade da regressão
+
+Este coeficiente é uma medida resumida que diz quanto a linha de regressão amostral ajusta-se aos dados. Conforme já mencionado, a ideia principal é que a variação total dos valores observados de Y em torno de sua média pode ser dividida em duas partes, uma atribuível à linha de regressão e a outra a forças aleatórias. 
+
+3.8 Experimentos de Monte Carlo para validação da qualidade dos coeficientes
+
+Conforme mencionado, os coeficientes gerados através do método MQO apresentam características desejáveis, porém como pode-se saber que o método MQO realmente gerou um coeficiente com estas características? Isto pode ser confirmado por experimentos de Monte Carlo que são simulações de computador através de números aleatórios.
+
+### Exercícios do capítulo 3
+
+3.18) Na tabela abaixo consta a classificação de dez estudantes nas provas parcial e final de estatística. Calcule o coeficiente de correlação de ranking de Spearman e interprete os resultados.
+
+```{r}
+df_318 <- data.frame(
+  prova_parcial = c(1,3,7,10,9,5,4,8,2,6),
+  prova_final = c(3,2,8,7,9,6,5,10,1,4)
+)
+
+cor.test(df_318$prova_parcial,df_318$prova_final,method = "spearman")
+
+df_318 %>% 
+  ggplot(aes(x = prova_parcial, y = prova_final))+
+  geom_point()
+```
+
+
+3.19) A relação entre taxa de câmbio e a inflação do Canadá e Estados Unidos: Entre 1985 e 2005 obteve-se a seguinte regressão:
+
+$\widehat{Y_t} = 0.912 + 2.25X_t$ 
+
+Onde: 
+
+$\widehat{Y_t}$ = DC/US$ (moeda do canadá / dólar)
+
+$X_t$ = inflação americana / inflação do canadá
+
+a) Interprete a regressão: A regressão indica que conforme a inflação é maior nos EUA do que no Canadá, a moeda canadense irá se valorizar com relação ao dólar. O que faz sentido teoricamente, pois a inflação corroi o poder de compra de uma modea.
+
+3.20) A tabela abaixo apresenta dados do índice de produção por hora (X) e remuneração real por hora (Y) para os setores empresarial e empresarial não agrícola, entre 1960 e 2005. O ano base é 1992 = 100.
+
+```{r}
+tbl_3.6 <- read.table(file = paste(path,"tabela_3.6_produtividade_e_salario.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ",",
+                      )
+```
+
+a) Represente graficamente Y contra X para os dois setores da economia separadamente.
+
+```{r}
+tbl_3.6 %>% 
+  tidyr::gather("production","X",2:3) %>% 
+  tidyr::gather("wage","Y",2:3) %>% 
+  ggplot(aes(x = X, y = Y, color = production))+
+  geom_point()+
+  geom_smooth(method = "lm",se = F)
+```
+
+c) Estime uma regressão de MQO de Y contra X.
+
+```{r}
+tbl_3.6 %>% 
+  tidyr::gather("production","X",2:3) %>% 
+  tidyr::gather("wage","Y",2:3) -> df_tbl_3.6
+
+lm(Y~X, data = df_tbl_3.6)
+
+summary(lm(Y~X, data = df_tbl_3.6))
+```
+
+### Capítulo 4: Modelo clássico de regressão linear normal
+
+Por que usar a hipótese de normalidade dos resíduos? Sabendo que u representa a influência combinada sobre a variável Y de um grande número de variáveis, espera-se que a influência destas variáveis seja independente e aleatória. O teorema do limite central indica que um grande número de variáveis aleatórias independentes e com distribuição idêntica, gera, através da soma de suas distribuições, uma distribuição que tende a ser normal. Desta forma, a hipótese da normalidade é baseada no teorema do limite central (TLC).
+
+Esta hipótese é importante pois sua derivação indica que os parâmetros (ou estimadores $\beta$) também se distribuirão normalmente. Isso ocorre por conta de que os parâmetros e o resíduo formam uma funçaõ linear (nor modelo de regressão linear), e dado que o resíduo apresenta comportamento normal, os parâmetros também terão. Com os parâmetros atendendo ao requisito de normalidade, tem-se um cenário mais fácil para teste de hipóteses.
+
+Caso se queira construir um modelo de regressão sem usar o método dos mínimos quadrados ordinários, pode-se optar pelo método da máxima verossimilhança, onde este método dependerá da normalidade dos resíduos gerados.
+
+
+### Capítulo 5: A regressão de duas variáveis. Estimação de intervalo e teste de hipóteses
+
+A estimação de intervalos e o teste de hipótese são os dois ramos principais na estatística clássica. 
+
+Na estatístic, a confiabilidade de um estimador é medido por seu erro padrão. Ao invés de se utilizar apenas a estimativa pontual de um parâmetro ($\beta$), pode-se construir um intervalo em torno deste estimador pontual, por exemplo de dois ou três erros padrão de cada lado do estimador pontual, de modo que o intervalo criado tenha 95% de probabilidade de incluir o verdadeiro valor do parâmetro (populacional). 
+
+Se caso seu nível de significância seja de 5%, você terá uma probabilidade de 95% de que o intervalo criado para o seu parâmetro estimado contenha o verdadeiro parâmetro estudado.
+
+O intervalo de confiança (e.g. 95%) não indica a probabilidade do verdadeiro parâmetro populacional se situar nos limites calculados. A fórmula mostra que, para o método descrito (e premissas adotadas), a probabilidade de estabelecer um intervalo que contenha o parâmetro populacional é de $1-\alpha$.
+
+5.5 Teste de hipóteses: Comentários gerais
+
+Na estatística, hipótese estabelecida é denominada hipótese nula ($H_0$). A hipótese nula é testada contra uma hipótese alternativa ($H_1$). A teoria do teste de hipótese indica a formulação de regras que devem ser adotados para decidir se a hipótese nula deve ser rejeitada ou não. Para elaborar estas regras pode-se usar o intervalo de confiança e o teste de significância. Ambas abordagens postulam que o parâmetro sendo estudado tem alguma distribuição de probabilidade e que o teste de hipótese envolve a formulação de declarações sobre o parâmetro estudado, ou seja sobre o parâmetro de uma distribuição. 
+
+5.8 Teste de hipóteses: Alguns aspectos práticos
+
+Ao realizar um teste de significância, por exemplo usando o teste t e optar por "aceitar" $H_0$, o que se está dizendo na verdade é que, com base na evidência amostral, não se têm razões para rejeitar $H_0$. Não se pode dizer que $H_0$ é verdadeira. Da mesma forma que um juri emite um veredicto de "não culpado" em vez de "inocente", a conclusão de um teste estatístico é "não rejeitamos" ao invés de "aceitamos". O teste apenas irá falhar em rejeitar dado o modelo e procedimento criado, ao invés de aceitar $H_0$.
+
+Uma hipótese nula muito usada empiricamente é $H_0: \beta_2 = 0$, ou seja, o coeficiente anglular é igual a zero e cria-se um modelo para tentar rejeitar esta hipótese, que em outras palavras vai informar que a variável explicativa gera algum efeito na variável dependente (Y). Esta $H_0$ é como se fosse uma testa de ferro, cujo objetivo é descobrir de Y está de alguma forma relacionado a X. 
+
+A formulação de $H_0$ e $H_1$ não segue uma regra rigorosa. 
+
+
+5.9 Análise de regressão e análise de variância (anova)
+
+Sabendo que a identidade $\sum{Y_i} = \sum{\widehat{Y_i}}+\sum{\widehat{\mu_i}^2} = \widehat{\beta_2}^2\sum{X_i}^2+\sum{\widehat{\mu_i}}^2$ é verdadeira (explicada no capítulo 3), indicando que a variação na variável dependente é explicada por variáveis do modelo e variáveis fora do modelo, tem-se por consequência a seguinte conclusão: $STQ = SQE + SQR$ 
+
+Onde: 
+
+STQ: soma total dos quadrados.
+
+SQE: soma dos quadrados da variável explicativa.
+
+SQR: soma dos quadrados dos resíduos.
+
+O estudo dos elementos de STQ é conhecido como anova do ponto de vista da regressão. Com base nestas variáveis, pode-se calcular o valor crítico F que será:
+
+$F = \frac{MSQ.QE}{MSQ.SQR} = \frac{\widehat{\beta_2}^2\sum{X_i}^2}{\frac{\sum{\widehat{\mu_i}}^2}{{(n-2)}}}$
+
+Onde:
+
+MSQ: Média da soma dos quadrados, obtida dividindo-se SQ pelos graus de liberdade correspondentes.
+
+Após realizar o cálculo e obter o valor de F, este valor fornecerá um teste estatístico para verificar a hipótese nula criada (e.g. $H_0:\beta_2 = 0$). O resultado será um valor-p de se cometer um erro tipo I (rejeitar uma hipótese nula quando não se deve rejeitá-la), que no caso seria uma probabilidade de afirmar que a variável independente explica a variação da variável dependente quando na verdade não explica.
+
+5.12 Avaliando os resultados de um modelo de regressão
+
+Ao finalizar o modelo de regressão, é necessário analisar se o modelo é bom ou não. Para fazer isso, primeiro verifique se os sinais dos coeficientes estão de acordo com o que você esperava (com base na sua expectativa e conhecimento prévio sobre o assunto estudado). Em seguida, verifique se os coeficientes criados são estatisticamente significativos. Para isso utilize o valor p. Em seguida, verifique se as variáveis incluídas explicam o modelo de maneira adequada, usando nesta etapa o valor de r². Por último, é importante verificar se os resíduos se distribuem normalmente, pois o teste t e F utilizam esta premissa. 
+
+A normalidade dos resíduos pode ser validada de várias formas. Algumas são histogramas dos resíduos, representação de probabilidade normal (artifício gráfico) e teste Jarque-Bera. 
+
+### Exercícios do capítulo 5
+
+5.1) Analise as afirmações abaixo e indique se é verdadeira ou falsa.
+
+a) O teste t de significância discutido no capítulo requer que as distribuições amostrais dos estimadores $\widehat\beta_1$ e $\widehat\beta_2$ sigam a distribuição normal: O teste t se baseia na hipótese de normalidade do estimador.
+
+b) 
+
+
