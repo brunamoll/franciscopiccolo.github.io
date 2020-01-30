@@ -1,5 +1,5 @@
 ---
-title: "2020-01-09-migration_article_and_data_analysis"
+title: ""
 date: 2020-01-09
 output:
   prettydoc::html_pretty:
