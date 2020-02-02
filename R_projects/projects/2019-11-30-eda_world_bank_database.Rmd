@@ -2,8 +2,13 @@
 title: ""
 date: 2019-11-30
 output:
-  prettydoc::html_pretty:
-    theme: architect
+  html_document:
+    df_print: paged
+    theme: cerulean
+    highlight: zenburn
+    fig_width: 8.5
+    fig_height: 4
+    code_folding: hide
 ---
 
 Neste post irei analisar alguns indicadores do Banco Mundial, que serão obtidos facilmente através de uma API desta instituição (World Bank Data API). Existe um pacote criado no R que pesquisa e extrai dados desta API, o pacote é o [wbstats](https://cran.r-project.org/web/packages/wbstats/wbstats.pdf) criado em Janeiro de 2018 por Jesse Piburn.
@@ -49,8 +54,7 @@ df_gdp_pc %>%
                         "Peru","Argentina","Bolivia",
                         "Uruguay","Paraguay")) %>% 
   arrange(date) %>% 
-  head(20) %>% 
-  knitr::kable(align = "c",digits = 0,format.args = list(big.mark = ".",decimal.mark = ","))
+  head(20)
 ```
 
 Em posse dos dados, vamos ver o PIB per capita dos países em 1990 e 2010.
