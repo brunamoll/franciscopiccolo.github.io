@@ -1804,119 +1804,12 @@ summary {
 <a class="sourceLine" id="cb2-12" title="12">                        <span class="st">&quot;Peru&quot;</span>,<span class="st">&quot;Argentina&quot;</span>,<span class="st">&quot;Bolivia&quot;</span>,</a>
 <a class="sourceLine" id="cb2-13" title="13">                        <span class="st">&quot;Uruguay&quot;</span>,<span class="st">&quot;Paraguay&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">arrange</span>(date) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>,<span class="dt">digits =</span> <span class="dv">0</span>,<span class="dt">format.args =</span> <span class="kw">list</span>(<span class="dt">big.mark =</span> <span class="st">&quot;.&quot;</span>,<span class="dt">decimal.mark =</span> <span class="st">&quot;,&quot;</span>))</a></code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="center">country</th>
-<th align="center">value</th>
-<th align="center">date</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">Argentina</td>
-<td align="center">4.333</td>
-<td align="center">1990</td>
-</tr>
-<tr class="even">
-<td align="center">Bolivia</td>
-<td align="center">709</td>
-<td align="center">1990</td>
-</tr>
-<tr class="odd">
-<td align="center">Brazil</td>
-<td align="center">3.100</td>
-<td align="center">1990</td>
-</tr>
-<tr class="even">
-<td align="center">Chile</td>
-<td align="center">2.495</td>
-<td align="center">1990</td>
-</tr>
-<tr class="odd">
-<td align="center">Colombia</td>
-<td align="center">1.445</td>
-<td align="center">1990</td>
-</tr>
-<tr class="even">
-<td align="center">Ecuador</td>
-<td align="center">1.490</td>
-<td align="center">1990</td>
-</tr>
-<tr class="odd">
-<td align="center">Paraguay</td>
-<td align="center">1.376</td>
-<td align="center">1990</td>
-</tr>
-<tr class="even">
-<td align="center">Peru</td>
-<td align="center">1.197</td>
-<td align="center">1990</td>
-</tr>
-<tr class="odd">
-<td align="center">Uruguay</td>
-<td align="center">2.990</td>
-<td align="center">1990</td>
-</tr>
-<tr class="even">
-<td align="center">Venezuela, RB</td>
-<td align="center">2.475</td>
-<td align="center">1990</td>
-</tr>
-<tr class="odd">
-<td align="center">Argentina</td>
-<td align="center">5.735</td>
-<td align="center">1991</td>
-</tr>
-<tr class="even">
-<td align="center">Bolivia</td>
-<td align="center">762</td>
-<td align="center">1991</td>
-</tr>
-<tr class="odd">
-<td align="center">Brazil</td>
-<td align="center">3.975</td>
-<td align="center">1991</td>
-</tr>
-<tr class="even">
-<td align="center">Chile</td>
-<td align="center">2.804</td>
-<td align="center">1991</td>
-</tr>
-<tr class="odd">
-<td align="center">Colombia</td>
-<td align="center">1.457</td>
-<td align="center">1991</td>
-</tr>
-<tr class="even">
-<td align="center">Ecuador</td>
-<td align="center">1.622</td>
-<td align="center">1991</td>
-</tr>
-<tr class="odd">
-<td align="center">Paraguay</td>
-<td align="center">1.611</td>
-<td align="center">1991</td>
-</tr>
-<tr class="even">
-<td align="center">Peru</td>
-<td align="center">1.525</td>
-<td align="center">1991</td>
-</tr>
-<tr class="odd">
-<td align="center">Uruguay</td>
-<td align="center">3.578</td>
-<td align="center">1991</td>
-</tr>
-<tr class="even">
-<td align="center">Venezuela, RB</td>
-<td align="center">2.661</td>
-<td align="center">1991</td>
-</tr>
-</tbody>
-</table>
+<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">head</span>(<span class="dv">20</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["value"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["date"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Argentina","2":"4333.4830","3":"1990","_rn_":"1"},{"1":"Bolivia","2":"709.0597","3":"1990","_rn_":"2"},{"1":"Brazil","2":"3100.2805","3":"1990","_rn_":"3"},{"1":"Chile","2":"2494.5257","3":"1990","_rn_":"4"},{"1":"Colombia","2":"1445.3284","3":"1990","_rn_":"5"},{"1":"Ecuador","2":"1489.5295","3":"1990","_rn_":"6"},{"1":"Paraguay","2":"1376.1647","3":"1990","_rn_":"7"},{"1":"Peru","2":"1196.5869","3":"1990","_rn_":"8"},{"1":"Uruguay","2":"2990.3642","3":"1990","_rn_":"9"},{"1":"Venezuela, RB","2":"2475.3805","3":"1990","_rn_":"10"},{"1":"Argentina","2":"5735.3603","3":"1991","_rn_":"11"},{"1":"Bolivia","2":"762.0780","3":"1991","_rn_":"12"},{"1":"Brazil","2":"3975.3901","3":"1991","_rn_":"13"},{"1":"Chile","2":"2803.5621","3":"1991","_rn_":"14"},{"1":"Colombia","2":"1456.6940","3":"1991","_rn_":"15"},{"1":"Ecuador","2":"1622.2082","3":"1991","_rn_":"16"},{"1":"Paraguay","2":"1611.4010","3":"1991","_rn_":"17"},{"1":"Peru","2":"1524.7709","3":"1991","_rn_":"18"},{"1":"Uruguay","2":"3578.2847","3":"1991","_rn_":"19"},{"1":"Venezuela, RB","2":"2661.0335","3":"1991","_rn_":"20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>Em posse dos dados, vamos ver o PIB per capita dos países em 1990 e 2010.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">df_gdp_pc <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">select</span>(country,value,date) <span class="op">%&gt;%</span><span class="st"> </span></a>
