@@ -1,9 +1,14 @@
 ---
 title: ""
-date: 2019-11-24
+date: 2020-01-09
 output:
-  prettydoc::html_pretty:
-    theme: architect
+  html_document:
+    df_print: paged
+    theme: cerulean
+    highlight: zenburn
+    fig_width: 8.5
+    fig_height: 4
+    code_folding: hide
 ---
 
 O modelo de regressão linear é bastante utilizado na predição de variáveis contínuas, onde há uma ou mais variáveis independentes e uma variável dependente (em que se busca comprovar uma hipótese sobre seu comportamento). Este é um modelo bastante simples de ser aplicado e um dos primeiros a ser ensinado nas aulas de econometria. Porém, apesar de sua simplicidade, para que o modelo gere resultados confiáveis, algumas premissas precisam ser satisfeitas, sendo elas:
@@ -62,8 +67,7 @@ Abaixo consta uma amostra dos dados:
 ```{r,eval=T,include=T,echo=F}
 dados_2 %>%
   select(periodo,area,valor,log_area,log_valor) %>% 
-  head(10) %>% 
-  knitr::kable(align = "c",digits = 3,caption = "Tabela 1: Amostra dos dados")
+  head(10)
 ```
 
 O modelo de regressão linear proposto para este exemplo é definido pela equação abaixo.
@@ -95,7 +99,7 @@ data.frame(
                   paste(round(log(105)-log(100),4)*100,"%",sep = ""),
                   paste(round(log(112)-log(105),4)*100,"%",sep = ""),
                   paste(round(log(120)-log(112),4)*100,"%",sep = ""))
-) %>% knitr::kable(caption = "Tabela 2: Valores com log na base e",digits = 3,align = "c")
+)
 ```
 
 Veja como o crescimento percentual dos valores (5.00%, 6.67% e 7.14%) ficam bem próximos do respectivo delta, que é a diferença entre o log natural do número com relação ao log natural do número anterior (e.g. 4.654 - 4.605 = 0.0488). Desta forma, se a equação estiver em logarítmo natural em ambos os lados, pode-se interpretar que a variação percentual na variável explicativa irá gerar uma variação percentual de $\beta_1$ na variável dependente.
@@ -111,7 +115,7 @@ data.frame(
                   paste(round(log(105,2)-log(100,2),4)*100,"%",sep = ""),
                   paste(round(log(112,2)-log(105,2),4)*100,"%",sep = ""),
                   paste(round(log(120,2)-log(112,2),4)*100,"%",sep = ""))
-) %>% knitr::kable(caption = "Tabela 3: Valores com log na base 2",digits = 3,align = "c")
+)
 ```
 
 ```{r,eval=T,echo=F,include=T}
@@ -123,14 +127,13 @@ data.frame(
                   paste(round(log(105,10)-log(100,10),4)*100,"%",sep = ""),
                   paste(round(log(112,10)-log(105,10),4)*100,"%",sep = ""),
                   paste(round(log(120,10)-log(112,10),4)*100,"%",sep = ""))
-) %>% knitr::kable(caption = "Tabela 4: Valores com log na base 10",digits = 3,align = "c")
+)
 ```
 
 Após entender esta propriedade do log natural, pode-se validar esta característica na tabela que será usada para o modelo de regressão. Os campos delta_area e delta_valor mostram a variação percentual de um período com relação ao período anterior. No campo delta_log_valor e delta_log_area é feita a diferença entre o período com o período anterior e os campos log_area_precision e log_valor_precision fazem a diferença entre delta_area com delta_log_area e delta_valor com delta_log_valor. Quanto mais baixo o valor de log_area_precision e log_valor_precision, mais forte é a característica do log natural explicada anteriormente. Veja abaixo para ficar mais claro:
 
 ```{r,eval=T,include=T,echo=F,warning=F}
-dados_2 %>% 
-  knitr::kable(caption = "Tabela 5: Dados do modelo com a validação da característica do log natural",digits = 3,align = "c")
+dados_2
 ```
 
 Após entender um dos motivos da transformação em log, podemos continuar com a construção do modelo para validar as premissas dos resíduos. O modelo e os gráficos serão todos feitos com utilização das variáveis transformadas em log natural.

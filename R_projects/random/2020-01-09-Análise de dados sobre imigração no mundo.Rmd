@@ -2,10 +2,13 @@
 title: ""
 date: 2020-01-09
 output:
-  prettydoc::html_pretty:
-    theme: architect
+  html_document:
+    df_print: paged
+    theme: cerulean
+    highlight: zenburn
     fig_width: 8.5
     fig_height: 4
+    code_folding: hide
 ---
 
 A imigração é um tema central nos debates para eleições presidenciais nos dias de hoje, que gera muitas controvérsias, polêmicas e também esperança para muitas pessoas. Este  fenômeno social está ganhando cada vez mais atenção, principalmente após os conflitos na Síria e o enfraquecimento da economia Venezuelana, talvez por ter pego de surpresa muitos políticos que não se prepararam com antecedência para obter os benefícios que o fluxo de pessoas entrando em seu território pode gerar. 
@@ -224,8 +227,7 @@ remitances_over_gdp %>%
          value > 10) %>%
   mutate(remitance_over_gdp = paste(round(value,digits = 0),"%",sep = "")) %>% 
   arrange(desc(value)) %>% 
-  select(date,country,remitance_over_gdp) %>% 
-  knitr::kable(align = "c",caption = "Parcela de remitance sobre o PIB")
+  select(date,country,remitance_over_gdp)
 ```
 
 Além do valor de remitances sobre o PIB, acho importante analisar se este fluxo de capital é acíclico (algo que foi comentado em uma das reportagens da The Economist), ou seja, se a remitance enviada possui correlação inversa com a variação do PIB (ou PIB per capita). A hipótese é de que a pessoa envie mais dinheiro caso a situação no país em que seus familiares estão piore.
