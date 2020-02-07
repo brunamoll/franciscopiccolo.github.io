@@ -6,6 +6,8 @@ main:
     url: /random/
   - title: "Projects"
     url: /posts/
+  - title: "Library"
+    url: /library/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"

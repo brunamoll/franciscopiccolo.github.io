@@ -18,6 +18,7 @@ library(gridExtra)
 library(WVPlots)
 library(corrplot)
 library(psych)
+library(tseries)
 ```
 
 
@@ -758,5 +759,36 @@ MASS::cement %>%
 DAAG::hills %>% 
   head()
 ```
+
+
+### Exercícios Capítulo 9
+
+```{r}
+plot(LakeHuron, ylab="depth (in feet)", xlab = "Time (in years)")
+
+# Lag plot para ver autocorrelação das observações com seus próprios valores de períodos passados
+lag.plot(LakeHuron, lags = 6, do.lines = F)
+
+# Validação da autocorrelação entre os lags
+acf(LakeHuron)
+```
+
+2) Use a função 'ar' para ajustar um modelo autoregressivo de segunda ordem no data set Lake Huron.
+
+```{r}
+ar(LakeHuron, order.max = 2)
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
 
 
