@@ -1,0 +1,184 @@
+---
+title: ""
+date: 2020-02-07
+output:
+  html_document:
+    df_print: paged
+    theme: cerulean
+    highlight: zenburn
+    fig_width: 8.5
+    fig_height: 4
+    code_folding: hide
+---
+
+```{r,echo=F,include=F,warning=F,message=F}
+library(tidyverse)
+library(DAAG)
+library(Amelia)
+library(ggthemes)
+
+theme_set(theme_minimal())
+
+# Parâmetros dos gráficos para facilitar a padronização
+title_size <- 9
+axis_size <- 8
+graph_color <- "#509533"
+```
+
+
+### Data Analysis and Graphs with R {.tabset .tabset-fade .tabset-pills}
+
+**Considerações gerais**
+
+Este livro faz parte de uma coleção da Universidade de Cambridge - *Cambridge Series in Statistics and Probabilistic Mathematics*, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística. 
+
+O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse. 
+
+A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento. Para a aplicação dos exemplos e resolução dos exercícios, foram usadas bibliotecas que contêm os data sets necessários para cada situação, o que facilitou bastante, pois não foi preciso copiar a tabela do livro e salvar em um arquivo para depois importar para o R.
+
+O que senti falta foi da resolução dos exercícios propostos. Por mais que haja exemplos ao longo do capítulo, na hora da resolução do exercício a pessoa pode se deparar com outro cenário não explorado nos exemplos.
+
+Após 2 meses (sem muita pressa), consegui finalizar este livro. Alguns capítulos estavam em um (ou vários) patamares acima do meu nível de conhecimento, por isso não consegui absorver o conteúdo o suficiente para comentar sobre estes capítulos. Por isso, neste post vou falar resumidamente sobre os capítulos que consegui entender, colocar os exercícios que resolvi e comentar sobre os data sets utilizados.
+
+```{r pressure, echo=FALSE,fig.align='center', fig.cap="Capa do livro"}
+knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-02-07_data analysis with R.png")
+```
+
+#### **Capítulo 1 - A brief introduction to R**
+
+##### **Resumo**
+
+Este capítulo trata de alguns conceitos básicos sobre a ferramenta R. O objetivo é apresentar ao leitor a ferramenta que será usada ao longo do livro para que ele se sinta a vontade em utilizá-la também. É tratado sobre os tipos de dados (e.g. factors, vectors, data.frames, list e strings), a forma de se plotar gráficos, instalar a chamar pacotes, pedir ajuda no sistema (via help) e construir funções. É falado também sobre alguns aspectos básicos de bons gráficos e como se realizar importação de arquivos para o R.
+
+##### **Exercícios**
+
+3) Aplique a função str() no data set *possum* do pacote DAAG e verifique se há valores nulos presentes.
+
+<input type=button class=hideshow></input>
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::possum %>% str()
+```
+
+<input type=button class=hideshow></input>
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::possum %>% Amelia::missmap(main = "Valores nulos vs não nulos")
+```
+
+4) Verifique no data set *ais* do pacote DAAG se há desequilíbrio entre homens e mulheres nos esportes analisados.
+
+<input type=button class=hideshow></input>
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::ais %>% 
+  group_by(sport,
+         sex) %>% 
+  summarise(qty = n()) %>% 
+  tidyr::spread(sex,qty,fill = 0) %>% 
+  mutate(m_proportion = round(m/(f+m),digits = 2)) %>% 
+  ggplot(aes(x = sport, y = m_proportion))+
+  geom_col(fill = graph_color)+
+  scale_y_continuous(labels = scales::percent)+
+  theme(
+    title = element_text(title_size)
+  )+
+  labs(
+    title = "Desequilíbrio entre os esportes analisados",
+    x = "",
+    y = "Male % participation"
+  )+
+  coord_flip()
+```
+
+5) Verifique no data set *rainforest* os valores nulos.
+
+<input type=button class=hideshow></input>
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::rainforest %>% 
+  Amelia::missmap(main = "Valores nulos vs não nulos")
+```
+
+#### **Capítulo 2 - Styles of data analysis**
+
+##### **Resumo**
+
+Este capítulo irá focar em princípios para se realizar uma análise exploratória dos dados através de gráficos. O livro apresenta uma conceituação para o termo 'Análise exploratória de dados' dizendo que é o nome para uma coleção de técnicas de apresentação de dados que objetivam fazer com que os dados falem por si só. O nome foi criado por John W. Tukey, que foi um grande influenciador desta área de estudo. 
+
+Neste capítulo, são explorados os principais gráficos que são usados na atividade de análise exploratória, sendo eles o histograma (para validação de normalidade), o box plot e o gráfico de dispersão. A ideia é apresentar técnicas que permitam o pesquisador / analista encontrar padrões nos dados para que se possa desenvolver um modelo estatístico em seguida.
+
+Neste capítulo também é tratado sobre outliers e dados distribuídos de maneira não normal (e.g. com caldas alongadas ) e como lidar com estes dados, seja retirando os outliers e realizando transformação em log para normalizar a distribuição.
+
+##### **Exercícios**
+
+1) Apresente a distribuição de idade para cada combinação de *site* e *sex* do data set *possum* do pacote DAAG.
+
+<input type=button class=hideshow></input>
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::possum %>%
+  select(site,
+         sex,
+         age) %>% 
+  ggplot(aes(x = age))+
+  geom_density(fill = "#00AFBB", alpha = .5)+
+  theme(
+    axis.text.y = element_blank()
+  )+
+  labs(
+    title = "Age distribution",
+    subtitle = "Site and Sex segmentation",
+    x = "Age",
+    y = ""
+  )+
+  facet_grid(site~sex,scales = "free")
+```
+
+
+3) Plote um histograma para o campo *earchonch* do data set *possum*. A distribuição deverá parecer bimodal (dois picos). Este é um exemplo de clusterização dos dados, neste caso por conta de que o data set contém informação de homens e mulheres. Plote um gráfico de box plot para homens e mulheres para o campo *earconch*.
+
+<input type=button class=hideshow></input>
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::possum %>% 
+  ggplot(aes(x = earconch))+
+  geom_density(fill = graph_color, alpha = .4)+
+  labs(
+    title = "Earconch distribution",
+    x = "",
+    y = ""
+  )
+```
+
+<input type=button class=hideshow></input>
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::possum %>% 
+  ggplot(aes(y = earconch, fill = sex))+
+  geom_boxplot()+
+  theme(legend.title = element_blank(),
+        legend.position = "top")+
+  labs(
+    title = "Earconch box plot distribution",
+    x = "",
+    y = ""
+  )
+```
+
+4) 
+
+
+
+
+<script>
+$( "input.hideshow" ).each( function ( index, button ) {
+  button.value = 'Hide Output';
+  $( button ).click( function () {
+    var target = this.nextSibling ? this : this.parentNode;
+    target = target.nextSibling.nextSibling.nextSibling.nextSibling;
+    if ( target.style.display == 'block' || target.style.display == '' ) {
+      target.style.display = 'none';
+      this.value = 'Show Output';
+    } else {
+      target.style.display = 'block';
+      this.value = 'Hide Output';
+    }
+  } );
+} );
+$("input.hideshow").click()
+</script>
+

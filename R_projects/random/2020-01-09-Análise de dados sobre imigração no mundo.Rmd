@@ -21,7 +21,7 @@ Abaixo, uma foto de um dos artigos. Esta foto ficou fantástica!
 knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-01-09_imigration_post.png")
 ```
 
-### Principais conclusões da reportagem
+### Principais conclusões da reportagem {.tabset .tabset-fade .tabset.pills}
 
 1) Pessoas que conseguem se mudar de um país pobre para um rico aumentam sua renda de 3 a 6 vezes, por conta de que países ricos possuem melhores instituições, melhor alocação de capital e empresas mais modernas.
 
@@ -37,7 +37,7 @@ knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.g
 
 7) Para obter benefícios do processo imigratório, o governo deve ser eficiente na integração das pessoas ao mercado de trabalho, para que as pessoas não demandem serviços públicos sem estarem contribuindo com a arrecadação e movimentação da economia.
 
-### Dados relevantes sobre o tema
+### Dados relevantes sobre o tema {.tabset .tabset-fade .tabset.pills}
 
 Após entendermos um pouco mais sobre a imigração, podemos analisar alguns dados públicos para gerar insights novos sobre o tema. Irei utilizar a API do Banco Mundial que possui dados bem organizados sobre imigração nos países.
 
