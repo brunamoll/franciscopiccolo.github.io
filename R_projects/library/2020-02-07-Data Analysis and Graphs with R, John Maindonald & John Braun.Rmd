@@ -26,7 +26,7 @@ graph_color <- "#509533"
 ```
 
 
-### Data Analysis and Graphs with R {.tabset .tabset-fade .tabset-pills}
+### Resumo e exercícios respondidos {.tabset .tabset-fade .tabset-pills}
 
 **Considerações gerais**
 
