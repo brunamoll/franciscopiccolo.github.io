@@ -25,7 +25,6 @@ axis_size <- 8
 graph_color <- "#509533"
 ```
 
-
 ### Resumo e exercícios respondidos {.tabset .tabset-fade .tabset-pills}
 
 **Considerações gerais**
