@@ -40,7 +40,7 @@ O que senti falta foi da resolução dos exercícios propostos. Por mais que haj
 
 Após 2 meses (sem muita pressa), consegui finalizar este livro. Alguns capítulos estavam em um (ou vários) patamares acima do meu nível de conhecimento, por isso não consegui absorver o conteúdo o suficiente para comentar sobre estes capítulos. Por isso, neste post vou falar resumidamente sobre os capítulos que consegui entender, colocar os exercícios que resolvi e comentar sobre os data sets utilizados.
 
-```{r pressure, echo=FALSE,fig.align='center', fig.cap="Capa do livro"}
+```{r pressure, echo=FALSE,fig.align='center',fig.cap="Capa do livro"}
 knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-02-07_data analysis with R.png")
 ```
 
