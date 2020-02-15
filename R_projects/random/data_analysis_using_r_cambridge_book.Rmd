@@ -319,7 +319,7 @@ g_5 <- ggplot(data = data.frame(a = sample(rnorm(n = 1000,mean = 100,sd = 10),si
 gridExtra::grid.arrange(g_500,g_300,g_200,g_100,g_70,g_50,g_30,g_20,g_5)
 ```
 
-6) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.
+7) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.
 
 ```{r}
 pexp(q = 21,rate = 0.05) # usando a fórmula pronta do R
@@ -778,17 +778,3 @@ acf(LakeHuron)
 ```{r}
 ar(LakeHuron, order.max = 2)
 ```
-
-```{r}
-
-```
-
-
-
-
-
-
-
-
-
-

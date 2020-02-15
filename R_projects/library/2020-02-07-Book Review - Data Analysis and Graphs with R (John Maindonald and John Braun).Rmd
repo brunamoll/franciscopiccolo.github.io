@@ -25,9 +25,7 @@ axis_size <- 8
 graph_color <- "#509533"
 ```
 
-### Resumo e exercícios respondidos {.tabset .tabset-fade .tabset-pills}
-
-**Considerações gerais**
+### Considerações Gerais {.tabset .tabset-fade .tabset-pills}
 
 Este livro faz parte de uma coleção da Universidade de Cambridge - *Cambridge Series in Statistics and Probabilistic Mathematics*, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística. 
 
@@ -35,9 +33,9 @@ O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos n
 
 A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento. Para a aplicação dos exemplos e resolução dos exercícios, foram usadas bibliotecas que contêm os data sets necessários para cada situação, o que facilitou bastante, pois não foi preciso copiar a tabela do livro e salvar em um arquivo para depois importar para o R.
 
-O que senti falta foi da resolução dos exercícios propostos. Por mais que haja exemplos ao longo do capítulo, na hora da resolução do exercício a pessoa pode se deparar com outro cenário não explorado nos exemplos.
+Apenas senti falta da resolução dos exercícios propostos, ou de pelo menos alguns deles. Por mais que haja exemplos ao longo do capítulo, na hora de resolver o exercício proposto a pessoa pode se deparar com outro cenário não explorado nos exemplos.
 
-Após 2 meses (sem muita pressa), consegui finalizar este livro. Alguns capítulos estavam em um (ou vários) patamares acima do meu nível de conhecimento, por isso não consegui absorver o conteúdo o suficiente para comentar sobre estes capítulos. Por isso, neste post vou falar resumidamente sobre os capítulos que consegui entender, colocar os exercícios que resolvi e comentar sobre os data sets utilizados.
+Após 2 meses (sem muita pressa), consegui finalizar este livro. Alguns capítulos estavam em um (ou vários) patamares acima do meu nível de conhecimento, por isso não consegui absorver o conteúdo o suficiente para comentá-lo aqui. Por isso, neste post vou falar resumidamente sobre os capítulos que consegui entender e colocar as respostas dos exercícios que resolvi.
 
 ```{r pressure, echo=FALSE,fig.align='center',fig.cap="Capa do livro"}
 knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-02-07_data analysis with R.png")
@@ -47,11 +45,13 @@ knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.g
 
 ##### **Resumo**
 
-Este capítulo trata de alguns conceitos básicos sobre a ferramenta R. O objetivo é apresentar ao leitor a ferramenta que será usada ao longo do livro para que ele se sinta a vontade em utilizá-la também. É tratado sobre os tipos de dados (e.g. factors, vectors, data.frames, list e strings), a forma de se plotar gráficos, instalar a chamar pacotes, pedir ajuda no sistema (via help) e construir funções. É falado também sobre alguns aspectos básicos de bons gráficos e como se realizar importação de arquivos para o R.
+Conseguir absorver o conteúdo deste livro usando uma ferramenta estatística de ponta e gratuita, com este objetivo em mente o primeiro capítulo apresenta o R. Uma ferramenta desenvolvida por uma comunidade engajada que é uma mão na roda para a modelagem estatística e análise de dados. 
+
+Neste capítulo, é fornecido uma visão geral do R, visando deixar o leitor familiarizado com suas funcionalidades. Além disso, tem-se a explicação dos tipos de dados usados na ferramenta (e.g. factors, vectors, data.frames, list e strings), formas de se plotar gráficos (incluindo algumas dicas sobre como se apresentar os dados nos gráficos), instalação e requisição de pacotes no ambiente, modos de acesso à ajuda do sistema (documentação dos pacotes), construção de funções (de maneira bem resumida) e importação de arquivos para o sistema.
 
 ##### **Exercícios**
 
-3) Aplique a função str() no data set *possum* do pacote DAAG e verifique se há valores nulos presentes.
+**3) Aplique a função str() no data set *possum* do pacote DAAG e verifique se há valores nulos presentes.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>% str()
@@ -61,7 +61,7 @@ DAAG::possum %>% str()
 DAAG::possum %>% Amelia::missmap(main = "Valores nulos vs não nulos")
 ```
 
-4) Verifique no data set *ais* do pacote DAAG se há desequilíbrio entre homens e mulheres nos esportes analisados.
+**4) Verifique no data set *ais* do pacote DAAG se há desequilíbrio entre homens e mulheres nos esportes analisados.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::ais %>% 
@@ -84,7 +84,7 @@ DAAG::ais %>%
   coord_flip()
 ```
 
-5) Verifique no data set *rainforest* os valores nulos.
+**5) Verifique no data set *rainforest* os valores nulos.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::rainforest %>% 
@@ -95,15 +95,15 @@ DAAG::rainforest %>%
 
 ##### **Resumo**
 
-Este capítulo irá focar em princípios para se realizar uma análise exploratória dos dados através de gráficos. O livro apresenta uma conceituação para o termo 'Análise exploratória de dados' dizendo que é o nome para uma coleção de técnicas de apresentação de dados que objetivam fazer com que os dados falem por si só. O nome foi criado por John W. Tukey, que foi um grande influenciador desta área de estudo. 
+A análise exploratória de dados é uma atividade do dia a dia de muitos profissionais (a cada dia esta habilidade se torna mais importante) e o capítulo 2 irá abordar esta técnica, apresentando uma conceituação para o termo e mostrando formas de se realizar uma análise exploratória com rigor técnico.
 
 Neste capítulo, são explorados os principais gráficos que são usados na atividade de análise exploratória, sendo eles o histograma (para validação de normalidade), o box plot e o gráfico de dispersão. A ideia é apresentar técnicas que permitam o pesquisador / analista encontrar padrões nos dados para que se possa desenvolver um modelo estatístico em seguida.
 
-Neste capítulo também é tratado sobre outliers e dados distribuídos de maneira não normal (e.g. com caldas alongadas ) e como lidar com estes dados, seja retirando os outliers e realizando transformação em log para normalizar a distribuição.
+Também é tratado sobre outliers e dados distribuídos de maneira não normal (e.g. com caldas alongadas ) e como lidar com estes dados, seja retirando os outliers ou realizando transformação em log para normalizar a distribuição.
 
 ##### **Exercícios**
 
-1) Apresente a distribuição de idade para cada combinação de *site* e *sex* do data set *possum* do pacote DAAG.
+**1) Apresente a distribuição de idade para cada combinação de *site* e *sex* do data set *possum* do pacote DAAG.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>%
@@ -123,7 +123,7 @@ DAAG::possum %>%
   facet_grid(site~sex,scales = "free")
 ```
 
-3) Plote um histograma para o campo *earchonch* do data set *possum*. A distribuição deverá parecer bimodal (dois picos). Este é um exemplo de clusterização dos dados, neste caso por conta de que o data set contém informação de homens e mulheres. Plote um gráfico de box plot para homens e mulheres para o campo *earconch*.
+**3) Plote um histograma para o campo *earchonch* do data set *possum*. A distribuição deverá parecer bimodal (dois picos). Este é um exemplo de clusterização dos dados, neste caso por conta de que o data set contém informação de homens e mulheres. Plote um gráfico de box plot para homens e mulheres para o campo *earconch*.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>% 
@@ -147,7 +147,7 @@ DAAG::possum %>%
   )
 ```
 
-4) Usando o data set *ais* do pacote DAAG, crie gráficos que mostre como os valores de medidas hematológicas (quantidade de células vermelhas, concentração de hemoglobina, hematrócito, células brancas e concentração de plasma) variam por esporte e gênero do atleta.
+**4) Usando o data set *ais* do pacote DAAG, crie gráficos que mostre como os valores de medidas hematológicas (quantidade de células vermelhas, concentração de hemoglobina, hematrócito, células brancas e concentração de plasma) variam por esporte e gênero do atleta.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::ais %>% 
@@ -219,13 +219,13 @@ DAAG::ais %>%
 
 ##### **Resumo**
 
-No capítulo 3, ocorre uma breve explicação sobre o que são e para que servem modelos estatísticos. Neste capítulo fala-se um pouco sobre os *resíduos*, escolhe de modelos, distribuições dos dados, por conta de serem um modelo para os valores populacionais de uma dada métrica (Bernoulli, Binomial, Poisson e Normal), utilização de números aleatórios na construção de modelos, técnicas de amostragem e principais premissas adotadas na construção de modelos (e.g. normalidade dos dados, amostragem aleatória). 
+No capítulo 3, ocorre uma breve explicação sobre o que são e para que servem modelos estatísticos. É feita a explicação sobre os *resíduos*, métodos para escolha de modelos, distribuições dos dados (Bernoulli, Binomial, Poisson e Normal), utilização de números aleatórios na construção de modelos, técnicas de amostragem e principais premissas adotadas na construção de modelos (e.g. normalidade dos dados, amostragem aleatória).
 
-Para a premissa de normalidade dos dados, os autores indicam técnicas para validar isso. A principal é o histograma, porém devendo ser reforçada pelo qq-plot e também testes formais.
+Para a premissa de normalidade dos dados, os autores indicam técnicas para validar isso. A principal é o histograma, porém necessitando ser reforçada pelo qq-plot e também por testes formais (e.g. Jarque-Beta, Anderson-Darling e Shapiro-Wilk).
 
 ##### **Exercícios**
 
-2) Use *y <- rnorm(100)* para gerar 100 números aleatórios de uma distribuição normal (mean = 0 e sd = 1). Calcule a média e o desvio padrão de y. Em seguida, crie um loop e repita esta função 25 vezes e depois insira as 25 médias em uma variável e depois calcule a média e o desvio padrão desta variável.
+**2) Use *y <- rnorm(100)* para gerar 100 números aleatórios de uma distribuição normal (mean = 0 e sd = 1). Calcule a média e o desvio padrão de y. Em seguida, crie um loop e repita esta função 25 vezes e depois insira as 25 médias em uma variável e depois calcule a média e o desvio padrão desta variável.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 y <- rnorm(100)
@@ -253,7 +253,7 @@ tibble(mean = mean(df[,1]),
            sd = sd(df[,1]))
 ```
 
-3) Crie uma função para gerar o resultado do exercício 2. Rode esta função várias vezes e plote o resultado em um gráfico de densidade.
+**3) Crie uma função para gerar o resultado do exercício 2. Rode esta função várias vezes e plote o resultado em um gráfico de densidade.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Criando a função, x = repetições, y = amostras aleatórias
@@ -274,9 +274,225 @@ fun(25,100) %>%
   geom_density(fill = graph_color, alpha = .4)
 ```
 
+**5) Plote uma matriz 3 x 4, apresentando em cada célula um histograma baseado em uma distribuição normal (média = 100 e desvio padrão = 10). Na 1º linha, utilize uma amostra com n = 10, na 2ª n = 100 e na 3ª n = 1000.**
 
+```{r, echo=F, include=T, message=F,warning=F}
+g_1000_1 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_1000_2 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_1000_3 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_1000_4 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_100_1 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_100_2 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_100_3 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_100_4 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_10_1 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_10_2 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_10_3 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+g_10_4 <- 
+  ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
+  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8))+
+  labs(x = "",
+       y = "")
+
+gridExtra::grid.arrange(g_1000_1,g_1000_2,g_1000_3,g_1000_4,
+                        g_100_1,g_100_2,g_100_3,g_100_4,
+                        g_10_1,g_10_2,g_10_3,g_10_4,
+                        nrow = 3, ncol = 4)
+```
+
+**7) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+pexp(q = 21,rate = 0.05) # usando a fórmula pronta do R
+```
 
 #### **Capítulo 4 - An introduction to formal inference**
+
+##### **Resumo**
+
+Inferência é um pilar importante da estatística, visto que muitas vezes não se pode acessar os dados de uma população toda para se construir um modelo ou gerar conclusões, por questões de custo e tempo. Desta forma, a capacidade de se fazer inferências com base em uma amostra da população é indispensável no processo científico. 
+
+Com esta necessidade em mente os autores desenvolvem o capítulo 4, buscando mostrar os princípios do processo de inferência estatística, apresentando os conceitos básicos para se realizá-la corretamente.
+
+Dentre as explicações e temas deste capítulo, as que merecem mais destaque são os parâmetros populacionais, erro padrão, teorema do limite central e por fim, dando sentido ao aspecto formal da inferência, é apresentada as ideias centrais dos testes de hipótese e do intervalo de confiança.
+
+Ao explicarem sobre a construção dos intervalos de confiança, os autores comentaram sobre as características da distribuição **t** e fizeram um comparativo com a distribuição **normal**, visto que são distribuições parecidas. Além disso, o capítulo traz também uma explicação sobre o valor-p e alguns comentários adicionais sobre as diferenças entre intervalos de confiança e teste de hipótese.
+
+Os autores indicam que há um movimento na direção de intervalos de confiança em detrimento do teste de hipótese nas atividades de inferência, por conta da simplicidade dos intervalos e do mau uso do teste de hipótese.
+
+##### **Exercícios**
+
+**1) Usando o data set *nsw74demo* do pacote DAAG, determine com 95% de confiança o intervalo dos seguintes parâmetros:**
+
+**(i) Renda média dos grupos de controle e teste em 1974**
+
+A ideia por traz destas questões é que o data set apresenta uma amostra de dados referente a cada grupo. Com base nestas amostras é preciso inferir qual o valor do parâmetro populacional (no caso média dos grupos), com um nível de confiança de 95%. Desta forma, será usada uma amostra para inferir o valor populacional.
+
+Antes de fazer este cálculo, é interessante dar uma olhada na distribuição dos dados. Abaixo encontra-se um histograma com a distribuição de renda dos dois grupos em 1974. É recomendado usar escala logarítma (com base 10) na distribuição de renda, pois geralmente possui cauda alongada.
+
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::nsw74demo %>%
+  mutate(group = ifelse(trt == 0,"control","teste")) %>% 
+  select(group,
+         re74) %>% 
+  ggplot(aes(x = re74, fill = group))+
+  geom_histogram(alpha = .4)+
+  scale_x_log10(label = scales::comma)+
+  theme(legend.title = element_blank())+
+  labs(title = "Income distribution between groups (1974)",
+       x = "Income, log10 scale",
+       y = "")
+```
+
+Além da distribuição, é importante ver o desvio padrão e a média das amostras coletadas. A tabela abaixo resume estes parâmetros amostrais.
+
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::nsw74demo %>%
+  select(trt,
+         re74) %>% 
+  filter(re74 != 0) %>% 
+  group_by(trt) %>% 
+  summarise(mean = round(mean(re74),digits = 2),
+            sd = round(sd(re74),digits = 2))
+```
+
+Após entender a distribuição dos dados amostrais e seus parâmetros (média e desvio padrão), pode-se usá-los para inferir sobre a média e desvio padrão populacional, usando a variável *standard error of the mean (SEM)* e a distribuição **t**.
+
+A variável *SEM* será obtida através da fórmula $SEM = \frac{s}{\sqrt{n}}$, onde *s* será o desvio padrão da amostra e *n* será o tamanho da amostra. Seu valor irá indicar uma estimativa da variabilidade da média amostral, ou seja, se caso fossem retiradas várias amostragens de uma população e realiza-se o cálculo da média de cada amostra e depois fosse calculado o desvio padrão desta médias, o resultado seria o valor de *SEM*. 
+
+Como o problema em questão pede um intervalo para a média populacional e fornece para isso apenas uma amostra de dados, ao obter uma estimativa de variabilidade da média amostral, pode-se usá-la juntamente com a distribuição *t* para estimar a média populacional. 
+
+O valor de *SEM* para cada grupo será:
+
+```{r}
+DAAG::nsw74demo %>%
+  select(trt,
+         re74) %>% 
+  filter(re74 != 0) %>% 
+  group_by(trt) %>% 
+  summarise(mean = round(mean(re74),digits = 2),
+            sd = round(sd(re74),digits = 2),
+            n = n(),
+            sqrt_n = n()^0.5,
+            sem = sd/(n()^(1/2)))
+```
+
+O uso da distribuição *t* ocorre por conta de que o desvio padrão usado na construção do *standard error of the mean* foi um desvio padrão amostral. Se fosse o desvio padrão populacional, poderia ser usada a distribuição normal.
+
+A utilização da distribuição *t* é bastante simples. No caso, será utilizado seu valor crítico para construção do intervalo. O valor crítico será obtido na tabela desta distribuição, que irá solicitar o nível de confiança (i.e. 95%) e os graus de liberdade (i.e. n-1 para cada um dos grupos).
+
+Os valores t para cada grupo são:
+
+Grupo de controle: nível de confiança **95%**, graus de liberdade **64**, valor t **1.998**
+
+Grupo de teste: nível de confiança **95%**, graus de liberdade **53**, valor t **2.005**
+
+Ao obter o valor t, pode-se usar a equação abaixo para gerar os limites inferiores e superiores. No limite inferior, usa-se a subtração e no superior usa-se a soma.
+
+$limites = (\bar{x} +/- SEM) t.value$
+
+O valor $\bar{x}$ será a média amostral calculada para cada grupo. Ao colocar os valores na equação, obtem-se:
+
+**Grupo de controle**
+
+Limite inferior: $8.428 - (1.087\times1,988) = 6.267$
+
+Limite superior: $8.428 + (1.087\times1,988) = 10.589$
+
+Intervalo de confiança para o grupo de controle, com 95% de confiança: (6.267, 10.589)
+
+**Grupo de teste**
+
+Limite inferior: $7.179 - (920\times2.005) = 5.334$
+
+Limite superior: $7.179 - (920\times2.005) = 9.023$
+
+Intervalo de confiança para o grupo de teste, com 95% de confiança: (5.334, 9.023)
+
+Obs: Importante notar que esta confiança de 95% não indica que há 95% de chance ou probabilidade de que a média populacional esteja neste intervalo (até por que não sabemos qual o valor desta média). Porém a confiança é em relação ao processo de geração dos intervalos e esta confiança indica que, se caso forem gerados diversos intervalos (e.g. 100), 95% deles conteriam o verdadeiro parâmetro populacional, que neste caso é a média da população.
+
+**(ii) Renda dos grupos de controle e teste em 1975**
+
+**(iii) Diferença de renda entre os grupos de controle e teste em 1978**
 
 #### **Capítulo 5 - Regression with a single predictor**
 
@@ -295,8 +511,5 @@ fun(25,100) %>%
 #### **Capítulo 12 - Multivariate data exploration and discrimination**
 
 #### **Capítulo 13 - Regression on principal component or discriminant scores**
-
-
-
 
 
