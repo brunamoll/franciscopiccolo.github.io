@@ -443,7 +443,7 @@ Como o problema em questão pede um intervalo para a média populacional e forne
 
 O valor de *SEM* para cada grupo será:
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 DAAG::nsw74demo %>%
   select(trt,
          re74) %>% 
@@ -488,11 +488,143 @@ Limite superior: $7.179 - (920\times2.005) = 9.023$
 
 Intervalo de confiança para o grupo de teste, com 95% de confiança: (5.334, 9.023)
 
+**Conslusão**
+
+Para o grupo de controle (trt = 0), a média de renda estimatva com nível de confiança de 95% fica entre 6.267 e 10.589. Para o grupo de teste (trt = 1), a média de renda estimada com nível de confiança de 95% fica entre 5.334 e 9.023. 
+
 Obs: Importante notar que esta confiança de 95% não indica que há 95% de chance ou probabilidade de que a média populacional esteja neste intervalo (até por que não sabemos qual o valor desta média). Porém a confiança é em relação ao processo de geração dos intervalos e esta confiança indica que, se caso forem gerados diversos intervalos (e.g. 100), 95% deles conteriam o verdadeiro parâmetro populacional, que neste caso é a média da população.
 
-**(ii) Renda dos grupos de controle e teste em 1975**
+**(ii) Renda média dos grupos de controle e teste em 1975**
 
-**(iii) Diferença de renda entre os grupos de controle e teste em 1978**
+Esta questão pede o mesmo cálculo acima, porém para os dados de 1975. Vamos fazer o mesmo gráfico e em seguida, plotar em uma única tabela os valores necessários para criação dos intervalos e os intervalos (limite inferior e superior). 
+
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::nsw74demo %>%
+  mutate(group = ifelse(trt == 0,"control","teste")) %>% 
+  select(group,
+         re75) %>% 
+  ggplot(aes(x = re75, fill = group))+
+  geom_histogram(alpha = .4)+
+  scale_x_log10(label = scales::comma)+
+  theme(legend.title = element_blank())+
+  labs(title = "Income distribution between groups (1975)",
+       x = "Income, log10 scale",
+       y = "")
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::nsw74demo %>%
+  select(trt,
+         re75) %>% 
+  filter(re75 != 0) %>% 
+  group_by(trt) %>% 
+  summarise(mean = round(mean(re75),digits = 2),
+            sd = round(sd(re75),digits = 2),
+            n = n(),
+            sqrt_n = n()^0.5,
+            sem = round(sd/sqrt_n,digits = 2),
+            t_value = qt(0.975,n()-1),
+            lower_limit = mean - (sem*t_value),
+            upper_limit = mean + (sem*t_value))
+```
+
+**(iii) Renda média dos grupos de controle e teste em 1978**
+
+Este questão também pede uma análise igual aos itens (i) e (ii), portanto, basta replicar os cálculos acima, mudando apenas de **re75** para **re78**. Veja que para o grupo de teste, a renda média estimada aumentou. Desta forma, o estudo feito parece poder concluir que a atividade realizada com os trabalhadores no grupo de teste é efetiva no aumento salarial após um certo período de tempo. O [artigo](https://www.uh.edu/~adkugler/Dehejia&Wahba_JASA.pdf) que realiza o estudo explica melhor o que foi feito no grupo de teste e corrobora a conclusão.
+
+
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::nsw74demo %>%
+  mutate(group = ifelse(trt == 0,"control","teste")) %>% 
+  select(group,
+         re78) %>% 
+  ggplot(aes(x = re78, fill = group))+
+  geom_histogram(alpha = .4)+
+  scale_x_log10(label = scales::comma)+
+  theme(legend.title = element_blank())+
+  labs(title = "Income distribution between groups (1978)",
+       x = "Income, log10 scale",
+       y = "")
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::nsw74demo %>%
+  select(trt,
+         re78) %>% 
+  filter(re78 != 0) %>% 
+  group_by(trt) %>% 
+  summarise(mean = round(mean(re78),digits = 2),
+            sd = round(sd(re78),digits = 2),
+            n = n(),
+            sqrt_n = n()^0.5,
+            sem = round(sd/sqrt_n,digits = 2),
+            t_value = qt(0.975,n()-1),
+            lower_limit = mean - (sem*t_value),
+            upper_limit = mean + (sem*t_value))
+```
+
+**(iv) Diferença de renda entre o grupo de controle e teste para o ano de 1978**
+
+Para esta questão, pede-se uma estimativa com nível de confiança de 95% para a diferença de renda entre os grupos de controle e teste, para o ano de 1978. De acordo com o livro, a fórmula para inferir sobre esta diferença é dada por:
+
+$SED = \sqrt{SEM_1^2 + SEM_2^2}$
+
+Onde:
+
+SED = *standard error of the difference*
+
+$SEM_1$ = *standard error of the mean* para o grupo 1 (controle, trt = 0)
+
+$SEM_2$ = *standard error of the mean* para o grupo 2 (teste, trt = 1)
+
+Usando os valores da tabela anterior, que calculou o SEM para cada grupo, basta inserir na fórmula e analisar se o resultado faz sentido.
+
+$SED = \sqrt{415^2+680^2}$
+
+$SED = \sqrt{172.225+462.400}$
+
+$SED = 796,6$
+
+Conclusão: A diferença de renda estimada entre os grupos, com 95% de confiança, é de 796,6 (dólares provavelmente).
+
+**2) Plote um gráfico que mostre, para graus de liberdade de 1 até 100, a mudança no valor da estatística t, com nível de confiança de 95%. Compare dois gráficos com esta visualização, onde um apresente os valores dos eixos sem transformação e o outro transforme o eixo x em log(estatística-t) e y em log(graus de liberdade). Verifique qual gráfico apresenta melhor a mudança no valor da estatística t por conta da mudança nos graus de liberdade.**
+
+```{r}
+t_value <- data.frame(
+  df = seq(1,100,by = 1)
+)
+
+graph_1 <- t_value %>% 
+  mutate(
+    t_value = qt(0.975,df = row_number())
+  ) %>% 
+  ggplot(aes(x = df,y = t_value,group = 1))+
+  geom_line(color = graph_color)+
+  scale_x_log10()+
+  scale_y_log10()+
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size =  axis_size))+
+  labs(title = "Change in t-statistics by change in df",
+       subtitle = "log transformation applied",
+       x = "log_10 of Degrees of freedom",
+       y = "log_10 of t-statistics")
+
+graph_2 <- t_value %>% 
+  mutate(
+    t_value = qt(0.975,df = row_number())
+  ) %>% 
+  ggplot(aes(x = df,y = t_value,group = 1))+
+  geom_line(color = graph_color)+
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size =  axis_size))+
+  labs(title = "Change in t-statistics by change in df",
+       subtitle = "log transformation not applied",
+       x = "Degrees of freedom",
+       y = "t-statistics")
+
+gridExtra::grid.arrange(graph_1,graph_2)
+```
+
 
 #### **Capítulo 5 - Regression with a single predictor**
 
