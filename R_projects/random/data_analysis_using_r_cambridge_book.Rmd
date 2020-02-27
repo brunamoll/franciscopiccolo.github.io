@@ -488,17 +488,7 @@ DAAG::nsw74demo %>%
 
 ```{r}
 # T-test usa qt, dt, pt, rt; Para valor crítico, usa-se qt.
-t_value <- data.frame(
-  df = seq(1,100,by = 1)
-)
 
-t_value %>% 
-  mutate(
-    t_value = qt(0.975,df = row_number())      # 0.975 pq é um teste dos dois lados da curva, ai tem-se 5/2 = 2.5 >> 100 = 97.5%
-  ) %>% 
-  ggplot(aes(x=df,y=t_value,group=1))+
-  geom_line()+
-  scale_x_log10()
 ```
 
 3) Gere um dataset com 10 números aleatórios com base em uma distribuição normal (média 0 e desvio 2). Use t.test() para verificar a hipótese nula de que a média é 0.
