@@ -55,7 +55,7 @@ Neste capítulo, é fornecido uma visão geral do R, visando deixar o leitor fam
 
 ##### **Exercícios**
 
-###### **3) Aplique a função str() no data set *possum* do pacote DAAG e verifique se há valores nulos presentes.**
+##### **3) Aplique a função str() no data set *possum* do pacote DAAG e verifique se há valores nulos presentes.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>% str()
@@ -65,7 +65,7 @@ DAAG::possum %>% str()
 DAAG::possum %>% Amelia::missmap(main = "Valores nulos vs não nulos")
 ```
 
-###### **4) Verifique no data set *ais* do pacote DAAG se há desequilíbrio entre homens e mulheres nos esportes analisados.**
+##### **4) Verifique no data set *ais* do pacote DAAG se há desequilíbrio entre homens e mulheres nos esportes analisados.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::ais %>% 
@@ -87,7 +87,7 @@ DAAG::ais %>%
   coord_flip()
 ```
 
-###### **5) Verifique no data set *rainforest* os valores nulos.**
+##### **5) Verifique no data set *rainforest* os valores nulos.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::rainforest %>% 
@@ -108,7 +108,7 @@ Também é tratado sobre outliers e dados distribuídos de maneira não normal (
 
 ##### **Exercícios**
 
-###### **1) Apresente a distribuição de idade para cada combinação de *site* e *sex* do data set *possum* do pacote DAAG.**
+##### **1) Apresente a distribuição de idade para cada combinação de *site* e *sex* do data set *possum* do pacote DAAG.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>%
@@ -127,7 +127,7 @@ DAAG::possum %>%
   facet_grid(site~sex,scales = "free")
 ```
 
-###### **3) Plote um histograma para o campo *earchonch* do data set *possum*. A distribuição deverá parecer bimodal (dois picos). Este é um exemplo de clusterização dos dados, neste caso por conta de que o data set contém informação de homens e mulheres. Plote um gráfico de box plot para homens e mulheres para o campo *earconch*.**
+##### **3) Plote um histograma para o campo *earchonch* do data set *possum*. A distribuição deverá parecer bimodal (dois picos). Este é um exemplo de clusterização dos dados, neste caso por conta de que o data set contém informação de homens e mulheres. Plote um gráfico de box plot para homens e mulheres para o campo *earconch*.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>% 
@@ -153,7 +153,7 @@ DAAG::possum %>%
        y = "")
 ```
 
-###### **4) Usando o data set *ais* do pacote DAAG, crie gráficos que mostre como os valores de medidas hematológicas (quantidade de células vermelhas, concentração de hemoglobina, hematrócito, células brancas e concentração de plasma) variam por esporte e gênero do atleta.**
+##### **4) Usando o data set *ais* do pacote DAAG, crie gráficos que mostre como os valores de medidas hematológicas (quantidade de células vermelhas, concentração de hemoglobina, hematrócito, células brancas e concentração de plasma) variam por esporte e gênero do atleta.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::ais %>% 
@@ -241,7 +241,7 @@ Para a premissa de normalidade dos dados, os autores indicam técnicas para vali
 
 ##### **Exercícios**
 
-###### **2) Use *y <- rnorm(100)* para gerar 100 números aleatórios de uma distribuição normal (mean = 0 e sd = 1). Calcule a média e o desvio padrão de y. Em seguida, crie um loop e repita esta função 25 vezes e depois insira as 25 médias em uma variável e depois calcule a média e o desvio padrão desta variável.**
+##### **2) Use *y <- rnorm(100)* para gerar 100 números aleatórios de uma distribuição normal (mean = 0 e sd = 1). Calcule a média e o desvio padrão de y. Em seguida, crie um loop e repita esta função 25 vezes e depois insira as 25 médias em uma variável e depois calcule a média e o desvio padrão desta variável.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 y <- rnorm(100)
@@ -269,7 +269,7 @@ tibble(mean = mean(df[,1]),
            sd = sd(df[,1]))
 ```
 
-###### **3) Crie uma função para gerar o resultado do exercício 2. Rode esta função várias vezes e plote o resultado em um gráfico de densidade.**
+##### **3) Crie uma função para gerar o resultado do exercício 2. Rode esta função várias vezes e plote o resultado em um gráfico de densidade.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Criando a função, x = repetições, y = amostras aleatórias
@@ -290,7 +290,7 @@ fun(25,100) %>%
   geom_density(fill = graph_color, alpha = .4)
 ```
 
-###### **5) Plote uma matriz 3 x 4, apresentando em cada célula um histograma baseado em uma distribuição normal (média = 100 e desvio padrão = 10). Na 1º linha, utilize uma amostra com n = 10, na 2ª n = 100 e na 3ª n = 1000.**
+##### **5) Plote uma matriz 3 x 4, apresentando em cada célula um histograma baseado em uma distribuição normal (média = 100 e desvio padrão = 10). Na 1º linha, utilize uma amostra com n = 10, na 2ª n = 100 e na 3ª n = 1000.**
 
 ```{r, echo=F, include=T, message=F,warning=F}
 g_1000_1 <- 
@@ -395,7 +395,7 @@ gridExtra::grid.arrange(g_1000_1,g_1000_2,g_1000_3,g_1000_4,
                         nrow = 3, ncol = 4)
 ```
 
-###### **7) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.**
+##### **7) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 pexp(q = 21,rate = 0.05) # usando a fórmula pronta do R
@@ -419,9 +419,9 @@ Os autores indicam que há um movimento na direção de intervalos de confiança
 
 ##### **Exercícios**
 
-###### **1) Usando o data set *nsw74demo* do pacote DAAG, determine com 95% de confiança o intervalo dos seguintes parâmetros:**
+##### **1) Usando o data set *nsw74demo* do pacote DAAG, determine com 95% de confiança o intervalo dos seguintes parâmetros:**
 
-###### **(i) Renda média dos grupos de controle e teste em 1974**
+##### **(i) Renda média dos grupos de controle e teste em 1974**
 
 A ideia por traz destas questões é que o data set apresenta uma amostra de dados referente a cada grupo. Com base nestas amostras é preciso inferir qual o valor do parâmetro populacional (no caso a média de cada grupo), com um nível de confiança de 95%. Desta forma, será usada uma amostra para inferir o valor populacional.
 
@@ -481,7 +481,7 @@ Com base na tabela acima pode-se inferir, com grau de confiança de 95%, que a r
 
 Obs: Importante notar que esta confiança de 95% não indica que há 95% de chance ou probabilidade de que a média populacional esteja neste intervalo (até por que não sabemos qual o valor desta média). Porém a confiança é em relação ao processo de geração dos intervalos e esta confiança indica que, se caso forem gerados diversos intervalos (e.g. 100), 95% deles conteriam o verdadeiro parâmetro populacional, que neste caso é a média da população.
 
-###### **(ii) Renda média dos grupos de controle e teste em 1975**
+##### **(ii) Renda média dos grupos de controle e teste em 1975**
 
 Esta questão pede o mesmo cálculo acima, porém para os dados de 1975. A conclusão seguirá a mesma lógica da conclusão anterior.
 
@@ -501,7 +501,7 @@ DAAG::nsw74demo %>%
             upper_limit = mean + (sem*t_value))
 ```
 
-###### **(iii) Renda média dos grupos de controle e teste em 1978**
+##### **(iii) Renda média dos grupos de controle e teste em 1978**
 
 Este questão também pede uma análise igual aos itens (i) e (ii), portanto, basta replicar os cálculos acima, mudando apenas de **re75** para **re78**. Veja que para o grupo de teste, a renda média estimada aumentou. Desta forma, o estudo feito parece poder concluir que a atividade realizada com os trabalhadores no grupo de teste é efetiva no aumento salarial após um certo período de tempo. O [artigo](https://www.uh.edu/~adkugler/Dehejia&Wahba_JASA.pdf) que realiza o estudo explica melhor o que foi feito no grupo de teste e corrobora a conclusão.
 
@@ -523,7 +523,7 @@ DAAG::nsw74demo %>%
 
 Veja que para os dados de 1978 os intervalos se inverteram entre os grupos. Agora o intervalo do grupo de controle está mais baixo que o intervalo do grupo de teste. Talves fosse esta a ideia do exercício, mostrar que o grupo de teste conseguiu aumentar sua renda média ao longo do tratamento realizado.
 
-###### **(iv) Diferença de renda entre o grupo de controle e teste para o ano de 1978**
+##### **(iv) Diferença de renda entre o grupo de controle e teste para o ano de 1978**
 
 Para esta questão, pede-se uma estimativa com nível de confiança de 95% para a diferença de renda entre os grupos de controle e teste, para o ano de 1978. De acordo com o livro, a fórmula para inferir sobre esta diferença é dada por:
 
@@ -547,7 +547,7 @@ $SED = 796,6$
 
 Conclusão: A diferença de renda estimada entre os grupos, com 95% de confiança, é de 796,6 (dólares provavelmente).
 
-###### **2) Plote um gráfico que mostre, para graus de liberdade de 1 até 100, a mudança no valor da estatística t, com nível de confiança de 95%. Compare dois gráficos com esta visualização, onde um apresente os valores dos eixos sem transformação e o outro transforme o eixo x em log(estatística-t) e y em log(graus de liberdade). Verifique qual gráfico apresenta melhor a mudança no valor da estatística t por conta da mudança nos graus de liberdade.**
+##### **2) Plote um gráfico que mostre, para graus de liberdade de 1 até 100, a mudança no valor da estatística t, com nível de confiança de 95%. Compare dois gráficos com esta visualização, onde um apresente os valores dos eixos sem transformação e o outro transforme o eixo x em log(estatística-t) e y em log(graus de liberdade). Verifique qual gráfico apresenta melhor a mudança no valor da estatística t por conta da mudança nos graus de liberdade.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 t_value <- data.frame(
@@ -587,7 +587,7 @@ graph_2 <- t_value %>%
 gridExtra::grid.arrange(graph_1,graph_2, ncol = 2)
 ```
 
-###### **3) Gere uma amostra aleatória de 10 valores com base em uma distribuição normal com média 0 e desvio padrão 2. Use a função *t.test()* para testar a hipótese nula de que a média é 0. Depois gere novamente uma amostra aleatória de 10 valores com média de 1.5 e desvio padrão 2, usando a função *t.test()* para testar a hipótese da média ser 0.**
+##### **3) Gere uma amostra aleatória de 10 valores com base em uma distribuição normal com média 0 e desvio padrão 2. Use a função *t.test()* para testar a hipótese nula de que a média é 0. Depois gere novamente uma amostra aleatória de 10 valores com média de 1.5 e desvio padrão 2, usando a função *t.test()* para testar a hipótese da média ser 0.**
 
 Conforme visto no capítulo, o teste de hipótese irá utilizar o **valor-p** para decidir se a hipótese nula deve ou não ser rejeitada. Há duas formas de se realizar o teste, ou seja, encontrar o **valor-p**, a primeira é usando a fórmula do R **t.test()** e a outra é fazendo o cálculo na mão (apesar de que este modo também usará uma fórmula pronta do R para encontrar a área sobre a curva de distribuição **t**).
 
@@ -631,7 +631,7 @@ a <- rnorm(n = 10, mean = 0, sd = 1.5)
 pander::pander(t.test(a, mu = 0, conf.level = 0.975))
 ```
 
-###### **4) Desenvolva uma função para fazer o cálculo acima do valor-p, com uma amostra de n = 10, média = 0 e sd = 1. Crie um vetor de 50 valores-p com base nesta função e plote em um gráfico este vetor.**
+##### **4) Desenvolva uma função para fazer o cálculo acima do valor-p, com uma amostra de n = 10, média = 0 e sd = 1. Crie um vetor de 50 valores-p com base nesta função e plote em um gráfico este vetor.**
 
 O exercício pede para usar 50 repetições, porém eu preferi fazer com 1.000 para melhorar a visualização. Veja que como o valor-p é uma probabilidade cumulativa, seu valor fica entre 0 e 1.
 
