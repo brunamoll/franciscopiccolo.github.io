@@ -1,9 +1,14 @@
 ---
-title: "Livro - Econometria Básica, Gujarati"
-date: 2019-11-24
+title: ""
+date: 2020-01-09
 output:
-  prettydoc::html_pretty:
-    theme: architect
+  html_document:
+    df_print: paged
+    theme: cerulean
+    highlight: zenburn
+    fig_width: 8.5
+    fig_height: 4
+    code_folding: hide
 ---
 
 ```{r}

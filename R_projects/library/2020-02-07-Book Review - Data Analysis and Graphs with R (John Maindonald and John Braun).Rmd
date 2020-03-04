@@ -27,7 +27,9 @@ axis_size <- 7.5
 graph_color <- "#006666"
 ```
 
-## Considerações Gerais {.tabset .tabset-fade .tabset-pills}
+## {.tabset .tabset-fade .tabset-pills}
+
+### **Overview**
 
 Este livro faz parte de uma coleção da Universidade de Cambridge - *Cambridge Series in Statistics and Probabilistic Mathematics*, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística. 
 
