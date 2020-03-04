@@ -606,11 +606,11 @@ pander::pander(t.test(a, mu = 0, conf.level = 0.975))
 Agora vamos calcular na "mão". Para isso, basta usar a fórmula $t.value = \frac{\bar{x}}{SEM}$ ou $t.value = \frac{\bar{x}}{\frac{s}{\sqrt{n}}}$. Esta fórmula irá fornecer um valor crítico de **t**, que poderá ser inserido na função do R **qt(nível de confiança, graus de liberdade)** que irá fornecer a probabilidade cumulativa até o valor crítico de **t**. Após isso, o **valor-p** será **1-qt(nível de confiança, graus de liberdade)**.
 
 ```{r, echo=T, include=T, message=F,warning=F}
-mean <- round(mean(a),digits = 4)
+mean <- round(abs(mean(a)),digits = 4)
 sd <- round(sd(a),digits = 4)
 n_sqrt <- round(length(a)^0.5,digits = 4)
 sem <- round(sd(a)/length(a)^0.5,digits = 4)
-t_value <- round(mean(a)/(sem),digits = 4)
+t_value <- round(abs(mean(a))/(sem),digits = 4)
 p_value <- (1-pt(t_value,10-1))*2 # Multiplica por dois pq é um teste bicaudal (H0 = 0)
 
 data.frame(mean = mean,
@@ -623,7 +623,7 @@ data.frame(mean = mean,
 
 Veja que o **valor-p** obtido é igual nos dois métodos e ficou alto a ponto de não ser possível rejeitar H0. Um **valor-p** elevado indica que o parâmetro encontrado (neste caso a média da amostra dos 10 valores com valor 1.3783) não foi encontrado por conta do acaso, mas sim por outros motivos (que não é o objetivo do teste indicar quais são). Desta forma, não se pode rejeitar H0, que indica que a média populacional é zero. Isto é satisfatório, pois os números aleatórios foram de fato gerados de uma "população" com média 0 e desvio padrão 2.
 
-Na segunda parte do exercício, é pedido para fazer o mesmo processo, porém agora com desvio padrão de 1.5. Evidentemente o **valor-p** ficará mais alto, pois a média estará ainda mais concentrada em torno de 0.
+Na segunda parte do exercício, é pedido para fazer o mesmo processo, porém agora com desvio padrão de 1.5.
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Vetor com 10 valores.
