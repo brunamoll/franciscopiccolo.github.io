@@ -18,7 +18,6 @@ library(Amelia)
 library(ggthemes)
 library(pander)
 
-
 theme_set(theme_bw())
 
 # Parâmetros dos gráficos para facilitar a padronização
@@ -657,5 +656,58 @@ ggplot(data = df, aes(x = a))+
   geom_histogram(fill = graph_color, binwidth = .1)+
   expand_limits(x = 1)
 ```
+
+### **5**
+
+#### **Regression with a single predictor**
+
+##### **Resumo**
+
+O foco deste capítulo será em modelos de regressão linear. As premissas dos modelos deste capítulo serão: **(i) modelo com apenas uma variável**, **(ii) valores de y independentes** e **(iii) dado um valor de x, o valor de y se distribuirá normalmente com uma média dada pela função linear de x**.
+
+Neste capítulo, os autores mostram como se controí um modelo de regressão linear simples no R, usando a função **lm(y~x)**. Além da geração do modelo, são apresentadas as formas de se extrair os resultados específicos do modelo, usando a função **predict()** e **resid()**. 
+
+Duas validações básicas sobre os resíduos são apresentadas, uma irá validar se os resíduos se distribuem normalmente e a outra irá validar se existe algum padrão no comportamento dos resíduos (a ideia é que não exista). A primeira validação pode ser obtida através de um **qq-plot** e a segunda através de um gráfico que compare o valor do resíduo com o valor previsto pelo modelo.
+
+Aprofundando mais a explicação do modelo linear, é apresentada a **Análise de Variância** (a.k.a **ANOVA**), que irá gerar informações sobre o nivel de variabilidade de um modelo de regressão e fundamentar o teste de significância. A fórmula básica da **ANOVA** é:
+
+$y_i - \bar{y} = (\hat{y} - \bar{y})+(y_i-\hat{y})$
+
+Onde:
+
+$y_i - \bar{y}$: Variabilidade total do modelo gerado
+
+$\hat{y} - \bar{y}$: Variabilidade explicada pela variável independente (a.k.a variável explicativa), que é o **x**, ou seja, a variabilidade explicada pelo modelo
+
+$y_i-\hat{y}$: Variabilidade não explicada pelo modelo, ou seja, o termo de erro.
+
+A equação acima também pode ser escrita da seguinte forma: 
+**SST = SSM + SSE**
+
+Que será lida como: Variabilidade total (SST) é igual a soma da variabilidade do modelo (SSM) com a soma dos erros (SSE), lembrando que é a soma do quadrado das diferenças, gerando a fórmula final:
+
+$\sum{(y_i - \bar{y})^2} = \sum{(\hat{y} - \bar{y})}^2+\sum{(y_i-\hat{y})}^2$
+
+Obs: Primeiro se calcula a diferença, depois eleva ao quadrado e depois realiza o somatório.
+
+Com isso, os autores deixam claro que a **ANOVA** é uma forma de se analisar o poder de explicação do modelo gerado. Ainda no âmbito da **ANOVA**, os autores mostram como se calcular o **R²** e o **Adjusted R²**, através das fórmulas:
+
+$R^2 = \frac{SSM}{SST}$
+
+Asjusted R² = $1-\frac{\frac{SSE}{n-2}}{\frac{SST}{n-1}}$
+
+Os autores indicam que o **Adjsuted R²** é preferível ao **R²** por conta de que ele leva em consideração os graus de liberdade do modelo. Porém ambos são insatisfatórios para gerar conclusões sobre o quanto o modelo poderá prever novos resultados.
+
+Após explicarem sobre **ANOVA** os autores abordam a questão de outliers presentes nos dados e seu impacto no modelo de regressão. Primeiro é apresentado o conceito de **Cook's distance**, que mede a influência de outliers no modelo através da medição da mudança na linha de regressão com a retirada de um ou mais registros (i.e. registros outliers).
+
+Ainda sobre a tratativa de outliers, os autores apresentam uma técnica chamada de **Regressão Robusta**, que atua sobre os outliers não retirando-os do modelo, mas sim reduzindo sua relevância, enquanto outras observações recebem maior peso para geração das estimativas dos parâmetros ($\beta$).
+
+Após explicarem sobre outliers e como tratar este aspecto dos dados, os autores abordam a acuracidade dos parâmetros do modelo.  Esta acuracidade é medida pelo **erro padrão**, que é usada para criar intervalos de confinaça e teste de significância do parâmetro **intercepto** e **slope**. Um teste fundamental é a validação se o intervalo de confiança do intercepto irá conter o valor 0, se caso conter, isso indicará que ele não deve ser incluído no modelo.
+
+Ao finalizarem a explicação sobre acuracidade dos parâmetros, os autores apresentam a técnica de **cross-validation**, usada também para reforçar o resultado do modelo criado. Esta técnica irá segmentar os registros em **teste** e **treino** de forma que o modelo criado nos registros de **treino** serão testados com os registros no **teste**. Junto com esta técnica, há o **boostraping**, que faz repetições do processo de amostragem (com reposição ou sem), sendo usada junto com o **cross-validation** para repetir várias versões do modelo para analisar variações da acuracidade e aumentar a confiança da conclusão gerada.
+
+##### **Exercícios**
+
+
 
 

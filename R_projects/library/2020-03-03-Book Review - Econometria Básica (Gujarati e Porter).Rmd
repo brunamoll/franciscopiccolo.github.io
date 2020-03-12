@@ -1,6 +1,6 @@
 ---
 title: ""
-date: 2020-01-09
+date: 2020-03-03
 output:
   html_document:
     df_print: paged
@@ -11,44 +11,57 @@ output:
     code_folding: hide
 ---
 
-```{r}
-# Pacotes necessários para exercução dos exercícios
+```{r,echo=F,include=F,warning=F,message=F}
 library(tidyverse)
-library(gridExtra)
+library(DAAG)
+library(Amelia)
+library(ggthemes)
+library(pander)
 
+
+theme_set(theme_bw())
+
+# Parâmetros dos gráficos para facilitar a padronização
+title_size <- 9
+axis_size <- 7.5
+graph_color <- "#006666"
+
+# Caminho para a pasta que contém os data sets para cada exercício
 path <- "C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/base_de_dados/livro-econometria-basica-gujarati/"
 ```
 
+## {.tabset .tabset-fade .tabset-pills}
 
-## Liro do Gujarati - Econometria Básica
-
-Este post é basicamente um resumo do livro Econometria Básica dos professores Damodar N. Gujarati e Dawn C. Porter. Fiz ele por conta dos exercícios que estão contidos no livro, que precisei fazer usando o R.
-
-Irei destacar as partes mais importantes de cada capítulo para poder ler de tempos em tempos.
-
-### Introdução
+### **Overview**
 
 Econometria é a medição econômica; aplicação de estatística a dados econômicos; análise quantitativa de fenômenos econômicos.
 
 A metodologia econométrica se baseia em uma hipótese, especificação de um modelo matemático, obtenção de dados, estimação de parâmetros, teste de hipóteses e validção do modelo.
 
-### Capítulo 1 - A natureza da análise de regressão
+```{r pressure, echo=FALSE,fig.align='center',fig.cap="Capa do livro", out.width="200px", out.height="250px"}
+knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-03-03_econometria_basica.png")
+```
+
+### **Cap.1**
+
+#### **A natureza da análise de regressão**
+
+##### **Resumo**
 
 Regressão diz respeito ao estudo da dependência de uma variável em relação a uma ou mais variáveis explanatórias, visando estimar o valor médio da dependente usando os valores conhecidos das explanatórias.
 
+##### **Exercícios**
 
-### Exercícios do capítulo 1
+##### **1.1) Traga os dados da tabela 1.3 sobre o índice de preço ao consumidor (IPC) para responder as alternativas.**
 
-1.1) Traga os dados da tabela 1.3 sobre o índice de preço ao consumidor (IPC) para responder as alternativas.
-
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",sep = ""),
                       sep = " ",
                       header = T, 
                       dec = ",")
 ```
 
-a) Com base nos dados forneceidos, calcule a taxa de inflação de cada país:
+##### **a) Com base nos dados forneceidos, calcule a taxa de inflação de cada país:**
 
 ```{r}
 # Taxa de inflação (1985 = 100, até 2005)
@@ -60,20 +73,20 @@ ipc_total <- ipc_total[2,2:8]-ipc_total[1,2:8]
 knitr::kable(ipc_total,align = "c")
 ```
 
-b) Represente graficamente a taxa de inflação de cada país:
+##### **b) Represente graficamente a taxa de inflação de cada país:**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.3 %>%
   tidyr::gather("campo","valor",2:8) %>% 
   ggplot(aes(x=Ano,y=valor,group=campo,color=campo))+
   geom_line()
 ```
 
-1.2) 
+##### **1.2) **
 
-a) Usando a tabela 1.3, represente as taxas de inflação do Canará, França, Alemanha e Itália, Japão e Reino Unido em relação à taxa do EUA
+##### **a) Usando a tabela 1.3, represente as taxas de inflação do Canará, França, Alemanha e Itália, Japão e Reino Unido em relação à taxa do EUA.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 can <- tbl_1.3 %>% 
   ggplot(aes(x=EUA,y=Canada))+
   geom_point()+
@@ -108,9 +121,9 @@ rei <- tbl_1.3 %>%
 gridExtra::grid.arrange(can,fra,ale,ita,jap,rei,nrow = 2,ncol=3)
 ```
 
-1.3) A tabela abaixo apresenta as taxas de câmbio em sete países industrializados, entre 1985 e 2006.
+##### **1.3) A tabela abaixo apresenta as taxas de câmbio em sete países industrializados, entre 1985 e 2006.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.4 <- read.table(file = paste(path,"tabela_1.4_cambio.txt",sep = ""),
                       sep = " ",
                       header = T, 
@@ -123,9 +136,9 @@ tbl_1.4 <-
   mutate(Reino.unido = 1/Reino.unido)
 ```
 
-a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:
+##### **a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.4 %>% 
   tidyr::gather("campo","valor",2:10) %>% 
   filter(campo != "Coreia.sul",
@@ -151,9 +164,9 @@ tbl_1.4 %>%
   geom_line()
 ```
 
-1.7) A tabela abaixo apresenta o orçamento de publicidade com as impressões retidas (através de uma pesquisa feita com 4 mil adultos).
+##### **1.7) A tabela abaixo apresenta o orçamento de publicidade com as impressões retidas (através de uma pesquisa feita com 4 mil adultos).**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.6 <- read.table(file = paste(path,"tabela_1.6_publicidade.txt",sep = ""),
                       sep = " ",
                       header = T, 
@@ -161,22 +174,26 @@ tbl_1.6 <- read.table(file = paste(path,"tabela_1.6_publicidade.txt",sep = ""),
                       )
 ```
 
-a) Mostre a relação entre impressões e o investimento em publicidade.
+##### **a) Mostre a relação entre impressões e o investimento em publicidade.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.6 %>% 
   ggplot(aes(x=investment,y=impressions))+
   geom_point()+
   geom_smooth(method = "lm")
 ```
 
-### Capítulo 2 - Análise de regressão com duas variáveis: Algumas ideias básicas
+### **2**
 
-Exercícios aplicados
+#### **Análise de regressão com duas variáveis: Algumas ideias básicas**
 
-2.14) Use a tabela abaixo com dados do EUA sobre o mercado de trabalho para responder as seguinter alternativas.
+##### **Resumo**
 
-```{r}
+##### **Exercícios**
+
+##### **2.14) Use a tabela abaixo com dados do EUA sobre o mercado de trabalho para responder as seguinter alternativas.**
+
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.7 <- read.table(file = paste(path,"tabela_2.7_labour_market.txt",sep = ""),
                       sep = " ",
                       header = T, 
@@ -184,10 +201,9 @@ tbl_2.7 <- read.table(file = paste(path,"tabela_2.7_labour_market.txt",sep = "")
                       )
 ```
 
+##### **a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.**
 
-a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.
-
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 women_df <- 
   tbl_2.7 %>% 
   select(share_women_work_force,unemployment_women) %>% 
@@ -209,9 +225,9 @@ tbl_2.7 %>%
   geom_point()
 ```
 
-c) Represente graficamente a taxa de participação de homens e mulheres em relação ao ganho médio por hora.
+##### **c) Represente graficamente a taxa de participação de homens e mulheres em relação ao ganho médio por hora.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 women_df <- 
   tbl_2.7 %>% 
   select(share_women_work_force,avg_hourly_earning_women) %>% 
@@ -229,35 +245,37 @@ tbl_2.7 %>%
   ) %>% 
   mutate(type = "men") %>% 
   union_all(women_df) %>% 
-  View()
-  
   ggplot(aes(x=share_work_force,y=avg_hourly_earning,color=type))+
   geom_point()
 ```
 
-2.15) Use os dados da tabela 2.8, sobre despesas com alimentação e despesas totais, em rupias, para uma amostra de 55 domicílios da Índia, para responder as alternativas abaixo.
+##### **2.15) Use os dados da tabela 2.8, sobre despesas com alimentação e despesas totais, em rupias, para uma amostra de 55 domicílios da Índia, para responder as alternativas abaixo.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.8 <- read.table(file = paste(path,"tabela_2.8_despesa_india.txt",sep = ""),
                       sep = " ",
                       header = T,
                       dec = ",")
 ```
 
-a) Represente graficamente os dados colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais. Insira uma linha de regressão
+##### **a) Represente graficamente os dados colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais. Insira uma linha de regressão.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.8 %>% 
   ggplot(aes(x=total,y=alimento))+
   geom_point()+
   geom_smooth(method = "lm")
 ```
 
-### Capítulo 3 - Modelo de regressão de duas variáveis: o problema da estimação
+### **3**
+
+#### **Modelo de regressão de duas variáveis: o problema da estimação**
+
+#### **Resumo**
 
 O objetivo neste capítulo será estimar a função de regressão populacional (FRP) com base na função de regressão amostral (FRA), da maneira mais precisa possível. Os métodos disponíveis para isso são (i) mpinimos quadrados ordinários e (ii) máxima verossimilhança. O método (i) é o mais usado, por ser mais simples, porém ambos geram resultados semelhantes.
 
-3.1 Método dos mínimos quadrados ordinários:
+**3.1 Método dos mínimos quadrados ordinários:**
 
 Este método foi criado por Carl Friedrich Gauss, um matemático alemão. A ideia deste método é escolher uma FRA de tal forma que a soma dos resíduos seja a menor possível. Porém, se fosse apenas a soma dos resíduos, o resultado gerado (reta de regressão) poderia não ser apropriado, pois o que se deve usar é a soma dos quadrados dos resíduos para ser minimizada. O método dos mínimos quadrados se baseia no cálculo diferencial que gera os parâmetros ($\beta$) que minimizam a soma dos quadrados dos resíduos. A diferenciação gera as seguintes equações para estimar $\beta_1$ e $\beta_2$:
 
@@ -273,7 +291,7 @@ $\beta_1 = Y - \beta_2 X$
 
 Existem propriedades estatísticas dos estimadores de MQO, ou seja, as propriedades que existem apenas quando algumas hipóteses sobre a geração dos dados se confirmam. 
 
-3.2 As hipóteses do método dos mínimos quadrados:
+**3.2 As hipóteses do método dos mínimos quadrados:**
 
 Como o objetivo não é só obter os parâmetros ($\beta_1$ e $\beta_2$) com base em uma amostra, mas sim o de obtê-los e realizar inferências sobre os parâmetros populacionais, se faz neessário estabelecer certas hipóteses a respeito de como a variável explicada / dependente é gerada. 
 
@@ -307,11 +325,11 @@ Este coeficiente é uma medida resumida que diz quanto a linha de regressão amo
 
 Conforme mencionado, os coeficientes gerados através do método MQO apresentam características desejáveis, porém como pode-se saber que o método MQO realmente gerou um coeficiente com estas características? Isto pode ser confirmado por experimentos de Monte Carlo que são simulações de computador através de números aleatórios.
 
-### Exercícios do capítulo 3
+#### **Exercícios* do capítulo 3**
 
-3.18) Na tabela abaixo consta a classificação de dez estudantes nas provas parcial e final de estatística. Calcule o coeficiente de correlação de ranking de Spearman e interprete os resultados.
+##### **3.18) Na tabela abaixo consta a classificação de dez estudantes nas provas parcial e final de estatística. Calcule o coeficiente de correlação de ranking de Spearman e interprete os resultados.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 df_318 <- data.frame(
   prova_parcial = c(1,3,7,10,9,5,4,8,2,6),
   prova_final = c(3,2,8,7,9,6,5,10,1,4)
@@ -325,7 +343,7 @@ df_318 %>%
 ```
 
 
-3.19) A relação entre taxa de câmbio e a inflação do Canadá e Estados Unidos: Entre 1985 e 2005 obteve-se a seguinte regressão:
+##### **3.19) A relação entre taxa de câmbio e a inflação do Canadá e Estados Unidos: Entre 1985 e 2005 obteve-se a seguinte regressão:**
 
 $\widehat{Y_t} = 0.912 + 2.25X_t$ 
 
@@ -335,11 +353,11 @@ $\widehat{Y_t}$ = DC/US$ (moeda do canadá / dólar)
 
 $X_t$ = inflação americana / inflação do canadá
 
-a) Interprete a regressão: A regressão indica que conforme a inflação é maior nos EUA do que no Canadá, a moeda canadense irá se valorizar com relação ao dólar. O que faz sentido teoricamente, pois a inflação corroi o poder de compra de uma modea.
+##### **a) Interprete a regressão: A regressão indica que conforme a inflação é maior nos EUA do que no Canadá, a moeda canadense irá se valorizar com relação ao dólar. O que faz sentido teoricamente, pois a inflação corroi o poder de compra de uma modea.**
 
-3.20) A tabela abaixo apresenta dados do índice de produção por hora (X) e remuneração real por hora (Y) para os setores empresarial e empresarial não agrícola, entre 1960 e 2005. O ano base é 1992 = 100.
+##### **3.20) A tabela abaixo apresenta dados do índice de produção por hora (X) e remuneração real por hora (Y) para os setores empresarial e empresarial não agrícola, entre 1960 e 2005. O ano base é 1992 = 100.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.6 <- read.table(file = paste(path,"tabela_3.6_produtividade_e_salario.txt",sep = ""),
                       sep = " ",
                       header = T, 
@@ -347,9 +365,9 @@ tbl_3.6 <- read.table(file = paste(path,"tabela_3.6_produtividade_e_salario.txt"
                       )
 ```
 
-a) Represente graficamente Y contra X para os dois setores da economia separadamente.
+##### **a) Represente graficamente Y contra X para os dois setores da economia separadamente.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.6 %>% 
   tidyr::gather("production","X",2:3) %>% 
   tidyr::gather("wage","Y",2:3) %>% 
@@ -358,9 +376,9 @@ tbl_3.6 %>%
   geom_smooth(method = "lm",se = F)
 ```
 
-c) Estime uma regressão de MQO de Y contra X.
+##### **c) Estime uma regressão de MQO de Y contra X.**
 
-```{r}
+```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.6 %>% 
   tidyr::gather("production","X",2:3) %>% 
   tidyr::gather("wage","Y",2:3) -> df_tbl_3.6
@@ -370,7 +388,11 @@ lm(Y~X, data = df_tbl_3.6)
 summary(lm(Y~X, data = df_tbl_3.6))
 ```
 
-### Capítulo 4: Modelo clássico de regressão linear normal
+### **4**
+
+#### **Modelo clássico de regressão linear normal**
+
+##### **Resumo**
 
 Por que usar a hipótese de normalidade dos resíduos? Sabendo que u representa a influência combinada sobre a variável Y de um grande número de variáveis, espera-se que a influência destas variáveis seja independente e aleatória. O teorema do limite central indica que um grande número de variáveis aleatórias independentes e com distribuição idêntica, gera, através da soma de suas distribuições, uma distribuição que tende a ser normal. Desta forma, a hipótese da normalidade é baseada no teorema do limite central (TLC).
 
@@ -379,7 +401,11 @@ Esta hipótese é importante pois sua derivação indica que os parâmetros (ou 
 Caso se queira construir um modelo de regressão sem usar o método dos mínimos quadrados ordinários, pode-se optar pelo método da máxima verossimilhança, onde este método dependerá da normalidade dos resíduos gerados.
 
 
-### Capítulo 5: A regressão de duas variáveis. Estimação de intervalo e teste de hipóteses
+### **5**
+
+#### **A regressão de duas variáveis. Estimação de intervalo e teste de hipóteses**
+
+##### **Resumo**
 
 A estimação de intervalos e o teste de hipótese são os dois ramos principais na estatística clássica. 
 
@@ -430,12 +456,8 @@ Ao finalizar o modelo de regressão, é necessário analisar se o modelo é bom 
 
 A normalidade dos resíduos pode ser validada de várias formas. Algumas são histogramas dos resíduos, representação de probabilidade normal (artifício gráfico) e teste Jarque-Bera. 
 
-### Exercícios do capítulo 5
+##### **Exercícios**
 
-5.1) Analise as afirmações abaixo e indique se é verdadeira ou falsa.
+##### **5.1) Analise as afirmações abaixo e indique se é verdadeira ou falsa.**
 
-a) O teste t de significância discutido no capítulo requer que as distribuições amostrais dos estimadores $\widehat\beta_1$ e $\widehat\beta_2$ sigam a distribuição normal: O teste t se baseia na hipótese de normalidade do estimador.
-
-b) 
-
-
+##### **a) O teste t de significância discutido no capítulo requer que as distribuições amostrais dos estimadores $\widehat\beta_1$ e $\widehat\beta_2$ sigam a distribuição normal: O teste t se baseia na hipótese de normalidade do estimador.**

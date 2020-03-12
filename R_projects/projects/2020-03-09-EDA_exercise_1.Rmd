@@ -1,0 +1,599 @@
+---
+title: ""
+output:
+  html_document:
+    df_print: paged
+    theme: cerulean
+    highlight: zenburn
+    fig_width: 8.5
+    fig_height: 4.0
+    code_folding: hide
+---
+
+A análise exploratória de dados (a.k.a EDA) é uma técnica que foi desenvolvida por John Tukey por volta de 1960 e entre seus objetivos estão à formulação de hipóteses, geração de gráficos e entendimento de padrões dos dados. O desenvolvimento da EDA teve como consequência a criação de ferramentas estatísticas como a linguagem de programação S e posteriormente o R.
+
+A análise exploratória de dados é uma atividade recorrente de muitos profissionais nos dias de hoje, que precisam lidar cada vez mais com dados (estruturados e não estruturados) para responder questões de negócio cada vez mais variadas. Neste post, irei utilizar um data set público que apresenta dados de venda de uma empresa fictícia, visando realizar um procedimento de análise exploratória de dados. O objetivo desta análise será a geração de recomendações para os supostos diretores desta empresa.
+
+Antes de iniciair, irei importar os pacotes abaixo, que serão usados ao longo da atividade.
+  
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+# Pacotes para importar
+library(tidyverse)
+library(gridExtra)
+library(grid)
+library(zoo)
+library(knitr)
+library(scales)
+library(ggthemes)
+library(zoo)
+library(readxl)
+library(Amelia)
+
+# Tema padrão dos gráficos
+theme_set(theme_bw())
+
+# Parãmetros dos gráficos
+title_size <- 10
+legend.text_size <- 9
+axis.size <- 8
+graph_color <- "#006666"
+```
+
+O data set já está na minha máquina, por isso farei a importação para o R através do pacote "readxl", usado para ler arquivos de Excel.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df <- readxl::read_xls("C:/Users/francisco.piccolo/Desktop/R/02.Data_bases/Global Superstore.xls")
+```
+
+Vamos ver a estrutura dos dados em termos de quantidade de linhas e colunas e também entender a estrutura dos campos. Para isso, vou usar a função **dim** que mostra a quantidade de linhas e colunas e a função **sample**, que irá retirar uma amostra aleatória (no caso indiquei n = 10) do data.frame.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+dim(df)
+
+df[sample(nrow(df),10), ]
+```
+
+Vamos ver também se há valores nulos presentes no data set através do pacote **Amelia**, que contém a função **missmap** que apresenta um gráfico com os valores nulos e preenchidos.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+Amelia::missmap(df)
+```
+
+Pode-se perceber que alguns campos estão separados por espaço (o que não é bom), por isso irei fazer um ajuste para renomeá-los e ficar mais fácil de executar a análise.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+# Alterando nome dos campos
+df_adj <- df %>% 
+  transmute(
+    order_date = `Order Date`,
+    customer = `Customer ID`,
+    segment = Segment,
+    category = Category,
+    sub_category = `Sub-Category`,
+    city = City,
+    ship_date = `Ship Date`,
+    ship_mode = `Ship Mode`,
+    product_id = `Product ID`,
+    order_priority = `Order Priority`,
+    product_name = `Product Name`,
+    market = Market,
+    region = Region,
+    qty = Quantity,
+    sales = Sales,
+    profit = Profit,
+    shipping_cost = `Shipping Cost`,
+    discount = Discount
+  )
+```
+
+Agora com os campos do data set ajustados, podemos iniciar a atividade de análise exploratória dos dados, lembrando do objetivo inicial, que é recomendar aos gestores da empresa melhorias para a área comercial. Antes de iniciar a análise, é interessante estabelecer uma linha de raciocínio para abordar o data set e seguir nesta linha. Caso a linha de raciocínio escolhida não esteja gerando resultados interessantes, altere para outra e recomece o processo. 
+
+Outro ponto importante se de ter em mente é de que se o analista "torturar" demasiadamente os dados, em um dado momento ele irá confessar qualquer coisa, mesmo que não seja verdade. John Tukey menciona isso com frequência em seus livros e artigos, buscando passar a mensagem de que algumas manipulações estatísticas nos dados podem gerar conclusões falsas.
+
+Neste data set que irei analisar, constam informações da área comercial, onde a empresa vende, para o mundo inteiro, produtos de escritório e produtos tecnológicos. O data set apresenta os dados de receita, lucro, desconto e custo com transporte, que chamarei de informações financeiras. Além das informações financeiras, são apresentados dados sobre o cliente, características do produto e prioridade do pedido e tipo de entrega (e.g. d0, padrão e agendada).
+
+A linha de raciocínio que defini para analisar os dados será (i) analisar os dados financeiros ao longo do período, para verificar sazonalidades e tendência no negócio e no setor de atuação da empresa; (ii) analisar as regiões e mercados de atuação que precisam ser ajustadas, em termos de precificação, desconto e custo de entrega; (iii) analisar o portfólio de produtos, verificando se há produtos que precisam ser descontinuados ou ter a estratégia de venda reavaliada; (iv) analisar o aspecto operacional do negócio, em termos de prioridade do produto e tipo de entrega. Estes pontos serão analisados sempre com foco nos indicadores financeiros. Ao final, irei cruzar os dados de áreas diferentes para tentar encontrar alguns insigh não visto na análise específica de cada área de negócio (i.e. produto, região e operação).
+
+#### **Comportamento dos indicadores financeiros**
+
+Vamos iniciar analisando os indicadores financeiros ao longo do tempo. O gráfico abaixo mostra a receita ao longo do período (2011 até 2015). Como a oscilação da receita é muito alta eu preferi fazer uma média móvel de 30 dias para suavizar a linha.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>% 
+  mutate(year = as.numeric(substr(order_date,1,4))) %>% 
+  group_by(order_date) %>% 
+  summarise(sales = sum(sales)) %>% 
+  mutate(roll_avg_sales = zoo::rollmean(sales, 30, na.pad = T, align = "right")) %>% 
+  ggplot()+
+  geom_line(aes(x = order_date, y = roll_avg_sales, color = "roll_avg_sales"))+
+  geom_line(aes(x = order_date, y = sales, color = "sales"),alpha = .1)+
+  geom_smooth(aes(x = order_date, y = roll_avg_sales, color = "trend"), method = "lm")+
+  scale_y_continuous(labels = scales::comma)+ 
+  scale_color_manual(values = c("sales" = "black",
+                                "roll_avg_sales" = graph_color,
+                                "trend" = "red"),
+                     labs(color = ""))+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size))+
+  labs(title = "Receita diária ao longo do período analisado",
+       subtitle = "Sazonalidade e tendência de crescimento",
+       x = "",
+       y = "",
+       caption = "Média móvel de 30 dias")
+```
+
+No gráfico acima, nota-se que as vendas apresentam certa sazonalidade (baixa no início do ano e crescimento no segundo semestre) e também que a empresa está em expansão. Abaixo vamos ver como o lucro se comportou.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>% 
+  mutate(year = as.numeric(substr(order_date,1,4))) %>% 
+  group_by(order_date) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit)) %>% 
+  mutate(roll_avg_profit = zoo::rollmean(profit, 30, na.pad = T, align = "right")) %>% 
+  ggplot()+
+  geom_line(aes(x = order_date, y = roll_avg_profit, color = "roll_avg_profit"))+
+  geom_line(aes(x = order_date, y = profit, color = "profit"), alpha = .1)+
+  geom_smooth(aes(x = order_date, y = roll_avg_profit, color = "trend"), method = "lm")+
+  scale_y_continuous(labels = scales::comma)+
+  scale_color_manual(values = c("profit" = "black",
+                                "roll_avg_profit" = graph_color,
+                                "trend" = "red"),
+                     labs(color = ""))+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size))+
+  labs(title = "Lucro diário ao longo do período",
+       x = "",
+       y = "",
+       caption = "Média móvel de 30 dias")
+```
+
+O gráfico acima mostra que o lucro está com a mesma tendência das vendas, porém a visualização ficou distorcida por conta de que em alguns dias a empresa auferiu prejuízo nas vendas. Porém é mais interessante normalizar (relativizar) o lucro pelo volume de receita e obter a margem de lucro. Vamos ver abaixo este indicador para entender a estratégia da empresa em termos de aumento de margem de lucro ou aumento de market share.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  group_by(order_date) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit)) %>% 
+  mutate(roll_sum_sales = zoo::rollsum(sales, 30, na.pad = T, align = "right"),
+         roll_sum_profit = zoo::rollsum(profit, 30, na.pad = T, align = "right")) %>% 
+  mutate(profit_p = round(roll_sum_profit/roll_sum_sales,digits = 4),
+         profit_mg = round(profit/sales, digits = 4)) %>% 
+  ggplot()+
+  geom_line(aes(x = order_date, y = profit_p, color = "roll_avg_profit"))+
+  #geom_line(aes(x = order_date, y = profit_mg, color = "profit"), alpha = .2)+
+  scale_y_continuous(labels = scales::percent)+
+  scale_color_manual(values = c("roll_avg_profit" = graph_color,
+                                "profit" = "black"),
+                     labs(color = ""))+
+  theme(title = element_text(size = title_size),
+        legend.position = "none")+
+  labs(title = "Lucro (%) ao longo do período",
+       x = "",
+       y = "",
+       caption = "Média móvel de 30 dias")
+```
+
+Além do lucro, é importante ver se os custos com entrega ficaram estáveis ao longo do período. De acordo com o gráfico abaixo, aparentemente a empresa não obteve melhoria operacional mesmo com aumento das vendas, o que já pode ser uma sugestão de melhoria para ser indicada aos gestores.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  group_by(order_date) %>% 
+  summarise(sales = sum(sales),
+            shipping_cost = sum(shipping_cost)) %>% 
+  mutate(roll_sum_sales = zoo::rollsum(sales, 30, na.pad = T, align = "right"),
+         roll_sum_shipping_cost = zoo::rollsum(shipping_cost, 30, na.pad = T, align = "right")) %>% 
+  mutate(shipping_cost = round(roll_sum_shipping_cost/roll_sum_sales,digits = 4)) %>% 
+  ggplot()+
+  geom_line(aes(x = order_date, y = shipping_cost, group = 1), color = graph_color)+
+  scale_y_continuous(labels = scales::percent)+
+  theme(title = element_text(size = title_size))+
+  labs(title = "Custo com entrega (%) ao longo do período",
+       x = "",
+       y = "",
+       caption = "Média móvel de 30 dias")
+```
+
+Por fim, vamos ver como se comportou o desconto dado nas vendas ao longo do período. O gráfico abaixo irá mostrar o desconto médio em percentual da venda.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  mutate(discount_amount = discount * sales) %>% 
+  group_by(order_date) %>% 
+  summarise(sales = sum(sales),
+            shipping_cost = sum(shipping_cost),
+            discount = sum(discount_amount)) %>% 
+  mutate(roll_sum_sales = zoo::rollsum(sales, 30, na.pad = T, align = "right"),
+         roll_sum_shipping_cost = zoo::rollsum(shipping_cost, 30, na.pad = T, align = "right"),
+         roll_sum_discount = zoo::rollsum(discount, 30, na.pad = T, align = "right")) %>%
+  mutate(discount = round(roll_sum_discount/roll_sum_sales,digits = 4)) %>% 
+  ggplot()+
+  geom_line(aes(x = order_date, y = discount, group = 1), color = graph_color)+
+  scale_y_continuous(labels = scales::percent)+
+  theme(title = element_text(size = title_size))+
+  labs(title = "Desconto (%) ao longo do período",
+       x = "",
+       y = "",
+       caption = "Média móvel de 30 dias")
+```
+
+Após entender os indicadores financeiros ao longo do período, podemos seguir em frente para verificar quais mercados, produtos e clientes impactam na lucratividade e receita da empresa.
+
+#### **Região**
+
+Nos gráficos abaixo, vamos ver a região que gera maior lucratividade para o negócio. Também vamos analisar se o custo de transporte em relação à receita é diferente para cada região (visto que o custo de transporte é influenciado diretamente pela distância do cliente).
+
+```{r,eval=T,echo=T,warning=F,message=F}
+graph_1 <- df_adj %>% 
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(region) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            shp_cost = sum(shipping_cost)) %>% 
+  ungroup() %>% 
+  mutate(region = fct_reorder(region, sales)) %>% 
+  ggplot()+
+  geom_col(aes(x = region, y = sales, fill = sales))+
+  scale_y_continuous(labels = scales::comma)+ 
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = 6.2),
+        legend.title = element_blank(),
+        legend.position = "none")+
+  coord_flip()+
+  labs(y = "Vendas",
+       x = "")
+
+graph_2 <- df_adj %>% 
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(region) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            shp_cost = sum(shipping_cost)) %>% 
+  mutate(profit_mg = round(profit/sales, digits = 4)) %>% 
+  ungroup() %>% 
+  mutate(region = fct_reorder(region, sales)) %>% 
+  ggplot()+
+  geom_col(aes(x = region, y = profit_mg, fill = profit_mg))+
+  scale_y_continuous(labels = scales::percent)+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = 6.2),
+        legend.title = element_blank(),
+        legend.position = "none")+
+  coord_flip()+
+  labs(y = "Margem de lucro",
+       x = "",
+       caption = "")
+
+graph_3 <- df_adj %>% 
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(region) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            shp_cost = sum(shipping_cost)) %>% 
+  mutate(profit_mg = round(profit/sales, digits = 4),
+         ship_cost_mg = round(shp_cost/sales, digits = 4)) %>% 
+  ungroup() %>% 
+  mutate(region = fct_reorder(region, sales)) %>% 
+  ggplot()+
+  geom_col(aes(x = region, y = ship_cost_mg, fill = ship_cost_mg))+
+  scale_y_continuous(labels = scales::percent)+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = 6.2),
+        legend.title = element_blank(),
+        legend.position = "none")+
+  coord_flip()+
+  labs(y = "Custo (%)",
+       x = "",
+       caption = "Período: 2014 e 2015")
+
+graph_4 <- df_adj %>% 
+  mutate(discount_amount = discount * sales) %>% 
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(region) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            shp_cost = sum(shipping_cost),
+            discount = sum(discount_amount)) %>% 
+  mutate(profit_mg = round(profit/sales, digits = 4),
+         ship_cost_mg = round(shp_cost/sales, digits = 4),
+         discount_mg = round(discount/sales, digits = 4)) %>% 
+  ungroup() %>% 
+  mutate(region = fct_reorder(region, sales)) %>% 
+  ggplot()+
+  geom_col(aes(x = region, y = discount_mg, fill = discount_mg))+
+  scale_y_continuous(labels = scales::percent)+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = 6.2),
+        legend.title = element_blank(),
+        legend.position = "none")+
+  coord_flip()+
+  labs(y = "Disconto (%)",
+       x = "",
+       caption = "Período: 2014 e 2015")
+
+gridExtra::grid.arrange(graph_1,graph_2, graph_3,graph_4, ncol = 2, nrow = 2, top = textGrob("Receita, lucro, custo e disconto por região"))
+```
+
+Aparentemente o Canadá é uma região para se dar mais atenção, pois possui uma margem de lucro acima da média (talvez por conta de que não se oferecem descontos nos produtos vendidos lá). Por outro lado a região do Sudoeste Asiático também precisa de atenção para alcançar as outras regiões em termos de lucratividade (a parcela média de desconto lá está muito alta). O custo de transporte estranhamente é igual para as regiões.
+
+#### **Categoria e Sub-Categoria do produto**
+
+A empresa trabalha com 3 categorias de produtos: Tecnológicos, Mobiliários e Materiais de Escritório. Abaixo vamos ver qual categoria vem gerando o crescimento da receita ao longo do período, bem como o lucro e custos de cada uma.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  group_by(category, order_date) %>% 
+  summarise(sales = sum(sales)) %>% 
+  ggplot()+
+  geom_smooth(aes(x = order_date, y = sales, group = category, color = category), se = F)+
+  scale_y_continuous(labels = scales::comma)+ 
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size),
+        legend.title = element_blank())+
+  labs(title = "Vendas por categoria ao longo do período",
+       subtitle = "Categorias com mesma parcela ao longo do tempo",
+       x = "",
+       y = "")
+```
+
+Aparentemente as 3 categorias apresentam comportamento semelhante ao longo do tempo, tendo a categoria tecnológica como mais vendida. Abaixo vamos ver qual categoria traz maior margem de lucro.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(category) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            shp_cost = sum(shipping_cost)) %>% 
+  mutate(profit_mg = round(profit/sales, digits = 4)) %>% 
+  ggplot()+
+  geom_col(aes(x = category, y = profit_mg), fill = graph_color)+
+  scale_y_continuous(labels = scales::percent)+ 
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size),
+        legend.title = element_blank())+
+  labs(title = "Margem de lucro por categoria do produto",
+       x = "",
+       y = "",
+       caption = "Período: 2014 e 2015")
+```
+
+Os produtos tecnológicos apresentam maior margem de lucro (o que faz sentido) e por isso a empresa está no caminho certo no foco das vendas. Agora vamos analisar as categorias sob a perspectiva de desconto e custo de transporte.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>% 
+  mutate(discount = discount * sales) %>% 
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(category) %>% 
+  summarise(sales = sum(sales),
+            discount = sum(discount),
+            shipping_cost = sum(shipping_cost)) %>% 
+  mutate(discount_mg = round(discount/sales, digits = 4),
+         shipping_cost_mg = round(shipping_cost/sales, digits = 4)) %>% 
+  select(category, discount_mg, shipping_cost_mg) %>% 
+  tidyr::gather("campo","valor",2:3) %>% 
+  ggplot(aes(x = category, y = valor, fill = campo))+
+  geom_col(position = "dodge",alpha = .6)+
+  scale_fill_manual(values = c("discount_mg" = "red",
+                               "shipping_cost_mg" = "blue"),
+                    labs(color = ""))+
+  scale_y_continuous(labels = scales::percent)+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size))+
+  labs(title = "Desconto e custo por categoria",
+       x = "",
+       y = "")
+```
+
+O gráfico acima indica que o desconto para a categoria "Technology" é menor e o custo de transporte é estável para as 3 categorias. Encerrando o foco na categoria do produto, vemos que não há uma recomendação urgente a ser feita aos gestores da empresa, o foco na categoria de produtos tecnológicos está correto, bem como o percentual de desconto reduzido (indicando que não é um ofensor ao volume de venda).
+
+Abaixo vamos segmentar a análise por sub-categoria, olhando primeiro a margem de lucro.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(sub_category) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            shp_cost = sum(shipping_cost)) %>% 
+  mutate(profit_mg = round(profit/sales, digits = 4)) %>% 
+  ungroup() %>% 
+  mutate(sub_category = fct_reorder(sub_category, profit_mg)) %>% 
+  ggplot()+
+  geom_col(aes(x = sub_category, y = profit_mg), fill = graph_color)+
+  scale_y_continuous(labels = scales::percent)+ 
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = 6.5),
+        legend.title = element_blank())+
+  labs(title = "Margem de lucro por categoria do produto",
+       x = "",
+       y = "",
+       caption = "Período: 2014 e 2015")+
+  coord_flip()
+```
+
+Nota-se que a sub-categoria "Tables" é bem prejudicial para a empresa. Talvez o desconto para esta sub-categoria esteja minando a lucratividade neste mercado. Vamos ver abaixo como está sendo a política de desconto por sub-categoria.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  mutate(discount = discount * sales) %>% 
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(sub_category) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            shp_cost = sum(shipping_cost),
+            discount = sum(discount)) %>% 
+  mutate(discount_mg = round(discount/sales, digits = 4)) %>% 
+  ungroup() %>% 
+  mutate(sub_category = fct_reorder(sub_category, discount_mg)) %>% 
+  ggplot()+
+  geom_col(aes(x = sub_category, y = discount_mg), fill = graph_color)+
+  scale_y_continuous(labels = scales::percent)+ 
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size),
+        legend.title = element_blank())+
+  labs(title = "Desconto médio (%) por categoria do produto",
+       x = "",
+       y = "",
+       caption = "Período: 2014 e 2015")+
+  coord_flip()
+```
+
+Evidentemente a política de desconto para a sub-categoria "Tables" precisará ser revista. A empresa possui 366 produtos diferentes na sub-categoria "Tables", vamos ver quais são os que recebem maior desconto, a margem de lucro de cada um e o volume de receita. O gráfico abaixo apresenta esta visão.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>% 
+  mutate(discount = discount * sales) %>% 
+  filter(sub_category == "Tables") %>% 
+  select(sub_category, sales, product_id, discount, profit) %>% 
+  group_by(product_id) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            discount = sum(discount)) %>% 
+  mutate(profit_mg = round(profit/sales, digits = 4),
+         discount_mg = round(discount/sales, digits = 4),
+         Product_demand = ifelse(sales >= 3000, "high_demand","low_demand")) %>% 
+  filter(profit_mg >= -2) %>% 
+  ggplot()+
+  geom_point(aes(x = profit_mg, y = discount_mg, size = sales, color = Product_demand), shape = 20, alpha = .6)+
+  geom_vline(xintercept = 0, lty = 2, color = "red")+
+  scale_x_continuous(labels = scales::percent)+
+  scale_y_continuous(labels = scales::percent)+
+  scale_color_manual(values = c("high_demand" = "black",
+                                "low_demand" = "dark orange"))+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size))+
+  labs(title = "Relação entre margem de lucro e desconto (%) por produto",
+       x = "Margem de lucro",
+       y = "Desconto (%)")
+```
+
+Pode-se ver que há muitos produtos que vendem uma quantia relevante (acima de 3.000 unidades no período considerado) e com uma parcela de desconto alta, fazendo com que a venda seja prejudicial para a empresa (em termos de lucratividade). É preciso verificar se isso ocorre com as outras sub-categorias também. O gráfico abaixo apresenta esta visão.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>% 
+  mutate(discount = discount * sales) %>% 
+  select(sub_category, sales, product_id, discount, profit) %>% 
+  group_by(product_id, sub_category) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            discount = sum(discount)) %>% 
+  mutate(profit_mg = round(profit/sales, digits = 4),
+         discount_mg = round(discount/sales, digits = 4),
+         Product_demand = ifelse(sales >= 3000, "high_demand","low_demand")) %>% 
+  ungroup() %>% 
+  mutate(sub_category = fct_relevel(sub_category, levels = c("Tables","Machines","Chairs","Supplies","Storage","Furnishings","Bookcases","Phones","Fasteners","Binders","Appliances","Envelopes","Art","Accessories","Copiers","Labels","Paper"))) %>% 
+  filter(profit_mg >= -2) %>% 
+  ggplot()+
+  geom_point(aes(x = profit_mg, y = discount_mg, size = sales, color = Product_demand), shape = 20, alpha = .5)+
+  geom_vline(xintercept = 0, lty = 2, color = "red")+
+  scale_x_continuous(labels = scales::percent)+
+  scale_y_continuous(labels = scales::percent)+
+  scale_color_manual(values = c("high_demand" = "black",
+                                "low_demand" = "dark orange"))+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = 6.5))+
+  facet_wrap(~sub_category)
+```
+
+Parece que os outros produtos, das outras sub-categorias, não possuem uma política de desconto tão agressiva. Veja que "Tables" e "Machines" apresentam muitos pontos escuros a esquerda da linha pontilhada. Conclui-se que os gestores precisam revisar a política de desconto de alguns produtos destas sub-categorias, principalemte para "Tables", para que deixe de ser prejudicial para o negócio. 
+
+Antes de seguir para o próximo tópico, vamos ver se existe algum vetor que gera descontos mais altos ou mais baixos, como por exemplo quantidade de itens vendidos.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>% 
+  mutate(discount = discount * sales) %>% 
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(qty) %>% 
+  summarise(sales = sum(sales),
+            discount = sum(discount)) %>% 
+  mutate(discount_mg = round(discount/sales, digits = 4)) %>% 
+  ggplot()+
+  geom_col(aes(x = qty, y = discount_mg), fill = graph_color)+
+  scale_y_continuous(labels = scales::percent)+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size))+
+  labs(title = "Desconto médio por quantidade vendida",
+       x = "Qtd vendida",
+       y = "Desconto médio")
+```
+
+O gráfico acima indica que a política de desconto não tem relação com a quantidade vendida. Vamos verificar se há alguma relação com os clientes que fazem a compra. No gráfico abaixo, irei apresentar as vendas e o desconto médio dado ao cliente.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  filter(order_date >= "2014-01-01") %>% 
+  mutate(discount = discount * sales) %>% 
+  group_by(customer) %>% 
+  summarise(sales = sum(sales),
+            discount = sum(discount)) %>%
+  mutate(discount_mg = round(discount/sales, digits = 4)) %>% 
+  ggplot(aes(x = sales, y = discount_mg))+
+  geom_point(shape = 20)+
+  scale_y_continuous(labels = scales::percent)+
+  scale_x_continuous(labels = scales::comma)+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size))+
+  labs(title = "Relação entre vendas e desconto para cada cliente",
+       x = "Venda",
+       y = "Desconto médio (%)",
+       caption = "Cada ponto é um cliente,
+       Período: 2014 e 2015")
+```
+
+Pode-se ver que alguns clientes recebem descontos altos mesmo não comprando tanto. Porém outros recebem descontos baixos comprando uma grande quantidade (no período de 2014 e 2015), o que indica que não há uma estratégia de desconto atrelada à quantidade de pedidos feitos pelo cliente.
+
+#### **Operação e Transporte**
+
+Neste tópico, vamos analisar os indicadores financeiros sob a ótica operacional da empresa, buscando analisar se a criticidade do pedido e o modelo de entrega impactam na lucratividade do negócio. Primeiro, vamos ver em quais cenários as vendas são feitas. O gráfico abaixo irá mostrar as vendas por prioridade do pedido e por modal de frete.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>% 
+  filter(order_date >= "2014-01-01") %>% 
+  group_by(order_priority, ship_mode) %>% 
+  summarise(sales = sum(sales),
+            profit = sum(profit),
+            shipping_cost = sum(shipping_cost)) %>% 
+  ungroup() %>% 
+  mutate(order_priority = fct_relevel(order_priority, levels = c("Low","Medium","High","Critical"))) %>% 
+  ggplot(aes(x = order_priority, y = sales, fill = ship_mode))+
+  geom_col(alpha = .7)+
+  scale_y_continuous(labels = scales::comma)+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size),
+        legend.title = element_blank())+
+  labs(title = "Vendas distribuídas por prioridade e tipo de frete",
+       x = "",
+       y = "")
+```
+
+Abaixo vamos ver se os tipos de entrega afetam a lucratividade da venda.
+
+```{r,eval=T,echo=T,warning=F,message=F}
+df_adj %>%
+  filter(order_date >= "2014-01-01",
+         sub_category != "Tables") %>% 
+  mutate(profit_mg = round(profit/sales, digits = 4)) %>%
+  mutate(order_priority = fct_relevel(order_priority, levels = c("Low","Medium","High","Critical")),
+         ship_mode = fct_relevel(ship_mode, levels = c("Standard Class","Second Class","First Class","Same Day"))) %>% 
+  ggplot(aes(x = profit_mg))+
+  geom_histogram(alpha = .4, binwidth = .1, fill = graph_color)+
+  geom_vline(xintercept = 0, lty = 2, color = "red")+
+  scale_x_continuous(labels = scales::percent)+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis.size))+
+  labs(title = "Cenários operacionais e margem de lucro",
+       x = "",
+       y = "")+
+  facet_grid(order_priority~ship_mode, scales = "free")
+```
+
+Aparentemente os cenários operacionais não são ofensores para a margem de lucro. Pedidos com baixa prioridade só são expedidos no tipo de frete "Standar Class", o que é correto. Por outro lado, pedidos com prioridade crítica não são expedidos pela "Standard Class", o que também está correto. Por fim, a margem de lucro não parece poder ser explicada por questões operacionais.
+
+#### **Conclusão e Recomendações aos gestores**
+
+Com todos os aspectos do negócio sendo analisados, pode-se chegar a algumas recomendações e conclusões. Primeiro, a empresa em questão precisa verificar sua política de desconto, principalmente para a sub-categoria "Tables", visto que muitos descontos geram vendas com prejuízo e o desconto não possuí nenhum motivo justificável no data set. Após isso, se faz necessário dar mais atenção ao Canadá, pois é um mercado com uma excelente lucratividade, porém que ainda está com um volume de vendas baixo. Por fim, a empresa precisa recuperar a margem de lucro no Sudoeste Asiático (talvez isso ocorre com a redução dos descontos para a sub-categoria "Tables").
+
+
+
+
