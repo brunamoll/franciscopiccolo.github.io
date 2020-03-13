@@ -708,6 +708,93 @@ Ao finalizarem a explicação sobre acuracidade dos parâmetros, os autores apre
 
 ##### **Exercícios**
 
+##### **1) Usando os dados abaixo, referente à duas amostras de dados sobre elasticidades de elásticos, plote um gráfico que correlacione a distância e a elasticidade de cada grupo.**
 
+```{r, echo=T, include=T, message=F,warning=F}
+data_set_1 <- data.frame(stretch = c(46,54,48,50,44,42,52),
+                         distance = c(183,217,189,208,178,150,249))
 
+data_set_2 <- data.frame(stretch = c(25,45,35,40,55,50,30,50,60),
+                         distance = c(71,196,127,187,248,217,114,228,291))
+
+# Plotando os dados
+ggplot2::ggplot()+
+  geom_point(data = data_set_1, aes(x = stretch, y = distance), shape = 2, color = "blue")+
+  geom_point(data = data_set_2, aes(x = stretch, y = distance), shape = 3, color = "red")
+```
+
+##### **2) Crie um modelo de regressão linear para stretch ~ distance. Para cada modelo, determine (i) os valores previstos e os erros padrão, (ii) o R² e (ii) indique as principais diferenças entre os data sets. Em seguida, use uma regressão robusta através da fórmula rlm() para ver a diferença com a regressão lienar tradicional.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Modelo linear para o data_set_1
+model_1 <- lm(formula = stretch ~ distance, data = data_set_1)
+
+# Modelo linear para o data_set_2
+model_2 <- lm(formula = stretch ~ distance, data = data_set_2)
+
+# Trazendo os campos de fitted values e resíduos para o data_set_1
+data_set_1 %>% 
+  mutate(fitted_values = predict(model_1),
+         residuals = residuals(model_1))
+
+# Trazendo os campos de fitted values e resíduos para o data_set_2
+data_set_2 %>% 
+  mutate(fitted_values = predict(model_2),
+         residuals = residuals(model_2))
+
+model_1 %>% summary() %>% pander()
+model_2 %>% summary() %>% pander()
+
+# Modelo linear robusto para o data_set_1
+summary(MASS::rlm(formula = stretch ~ distance, data = data_set_1)) %>% pander()
+# Modelo linear robusto para o data_set_2
+summary(MASS::rlm(formula = stretch ~ distance, data = data_set_2)) %>% pander()
+
+```
+
+##### **3) Usando o data set cars, plote a distância (para frenagem) versus a velocidade. Crie uma linha de regressão para esta correlação. Em seguida, crie uma linha quadrática para ver se o modelo irá melhorar.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+cars %>% 
+  ggplot()+
+  geom_point(aes(x = speed, y = dist))+
+  geom_smooth(aes(x = speed, y = dist, color = "linear"), method = "lm", formula = y ~ x, se = F)+
+  geom_smooth(aes(x = speed, y = dist, color = "quadratic"), method = "lm", formula = y ~ x + I(x^2), se = F)+
+  scale_color_manual(values = c("linear" = "blue",
+                                "quadratic" = "red"),
+                     labs(color = ""))+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(axis_size))+
+  labs(title = "Modelo linear e quadrático para as variáveis",
+       subtitle = "Linha quadrática com melhor performance",
+       x = "Speed",
+       y = "Distância de frenagem")
+
+# Validando os dois modelos
+summary(lm(formula = dist ~ speed, data = cars)) %>% pander()
+summary(lm(formula = dist ~ speed + I(speed^2), data = cars)) %>% pander()
+```
+
+##### **4) Use o data set oddbooks do pacote DAAG para as alternativas abaixo:  ** 
+##### **a) Plote log(weight) versus log(volume) e estabeleça uma linha de regressão.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::oddbooks %>% 
+  mutate(volume = round(height * thick * breadth, digits = 1),
+         area = round(height * thick, digits = 1)) %>% 
+  ggplot()+
+  geom_point(aes(x = log(weight), y = log(volume)))+
+  geom_smooth(aes(x = log(weight), y = log(volume)), method = "lm", formula = y ~ x, se = F)
+```
+
+##### **b) Plote log(weight) versus log(area) e estabeleça uma linha de regressão.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+DAAG::oddbooks %>% 
+  mutate(volume = round(height * thick * breadth, digits = 1),
+         area = round(height * thick, digits = 1)) %>% 
+  ggplot()+
+  geom_point(aes(x = log(weight), y = log(area)))+
+  geom_smooth(aes(x = log(weight), y = log(area)), method = "lm", formula = y ~ x, se = F)
+```
 
