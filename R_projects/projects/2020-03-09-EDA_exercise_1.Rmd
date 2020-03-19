@@ -300,14 +300,14 @@ graph_4 <- df_adj %>%
   ungroup() %>% 
   mutate(region = fct_reorder(region, sales)) %>% 
   ggplot()+
-  geom_col(aes(x = region, y = discount_mg, fill = discount_mg))+
+  geom_col(aes(x = region, y = discount_mg))+
   scale_y_continuous(labels = scales::percent)+
   theme(title = element_text(size = title_size),
         axis.text = element_text(size = 6.2),
         legend.title = element_blank(),
         legend.position = "none")+
   coord_flip()+
-  labs(y = "Disconto (%)",
+  labs(y = "Desconto (%)",
        x = "",
        caption = "Período: 2014 e 2015")
 

@@ -37,7 +37,7 @@ knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.g
 
 7) Para obter benefícios do processo imigratório, o governo deve ser eficiente na integração das pessoas ao mercado de trabalho, para que as pessoas não demandem serviços públicos sem estarem contribuindo com a arrecadação e movimentação da economia.
 
-### Dados relevantes sobre o tema {.tabset .tabset-fade .tabset.pills}
+### Dados relevantes sobre o tema
 
 Após entendermos um pouco mais sobre a imigração, podemos analisar alguns dados públicos para gerar insights novos sobre o tema. Irei utilizar a API do Banco Mundial que possui dados bem organizados sobre imigração nos países.
 
@@ -53,7 +53,7 @@ library(rvest)          # pacote para fazer scraping de páginas da internet
 library(xml2)           # pacote para ler nós de HTML de páginas da internet
 
 # Tema do gráfico
-theme_set(theme_economist())
+theme_set(theme_bw())
 
 # Parâmetros dos gráficos para facilitar a padronização
 title_size <- 9

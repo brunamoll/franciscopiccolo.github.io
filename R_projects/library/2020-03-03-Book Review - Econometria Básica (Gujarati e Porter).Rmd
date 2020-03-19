@@ -493,7 +493,23 @@ x <- df_test$x
 y <- df_test$y
 z <- df_test$z
   
-plot3D::scatter3D(x, y, z, colvar = NULL, add = FALSE, col = "blue", pch = 19, phi = 20, theta = 20, cex = .9, bty = "b2", expand = .9, col.grid = "darkblue", col.panel = "steelblue", colkey = T, main = "Table 3.7 data", xlab = "gold_price", ylab = "nyse_index", zlab = "ipc_index")
+plot3D::scatter3D(x, y, z, 
+                  colvar = NULL, 
+                  add = FALSE, 
+                  col = "blue", 
+                  pch = 19, 
+                  phi = 20, 
+                  theta = 20, 
+                  cex = .9, 
+                  bty = "b2", 
+                  expand = .9, 
+                  col.grid = "darkblue", 
+                  col.panel = "steelblue", 
+                  colkey = T, 
+                  main = "Table 3.7 data", 
+                  xlab = "gold_price", 
+                  ylab = "nyse_index", 
+                  zlab = "ipc_index")
 ```
 
 ##### **b) Supõe-se que um investimento funcione como proteção contra a inflação se seu preço ou sua taxa de retorno acompanha, pelo menos, a taxa de inflação. Para testar esta hipótese, ajuste o seguinte modelo, supondo que o diagrama de dispersão elaborado no item (a) seja adequado.**
@@ -565,6 +581,7 @@ A hipótese de normalidade dos resíduos, pode ser fundamentado no **teorema do 
 #### **A regressão de duas variáveis: estimação de intervalo e teste de hipóteses**
 
 ##### **Resumo**
+
 
 
 
