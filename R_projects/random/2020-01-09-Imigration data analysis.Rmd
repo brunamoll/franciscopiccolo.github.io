@@ -11,11 +11,11 @@ output:
     code_folding: hide
 ---
 
-A imigração é um tema central nos debates para eleições presidenciais nos dias de hoje, que gera muitas controvérsias, polêmicas e também esperança para muitas pessoas. Este  fenômeno social está ganhando cada vez mais atenção, principalmente após os conflitos na Síria e o enfraquecimento da economia Venezuelana, talvez por ter pego de surpresa muitos políticos que não se prepararam com antecedência para obter os benefícios que o fluxo de pessoas entrando em seu território pode gerar. 
+Imigration is a central theme on political debates for presidential elections nowadays, creating a lot of controversies and also hope for many people. This social event is increasingly calling more attention, mainly after the Siria conflict and the weakness of the Venezuelan economy, perhaps it's because it surpreended politicians that didn't get ready earlier to obtain the benefits that migration flow can lead.
 
-Por conta da importância deste tópico, em Novembro de 2019 a [The Economist](https://www.economist.com/printedition/2019-11-16) fez uma reportagem especial sobre imigração, visando explicar seu cenário atual, esclarecer questões polêmicas e apresentar casos de sucesso de países que conseguem obter vantagens da imigração em seu território. Eu gostei bastante do tema e das reportagens escritas, por isso neste post eu vou apresentar as principais conclusões das reportagens e também vou acessar a base de dados do Banco Mundial para explorar mais este tema e gerar alguns insights.
+Because of this relevance about the theme, in November 2019 [The Economist](https://www.economist.com/printedition/2019-11-16) made a special report about imigration, with the goal of clarify the current situation and present success cases of countries that are obtaining advantages of the imigration flow. I really enjoyed the theme and the studies that was writen by the correspondents, and then I decided to write a post to present the mainly conclusions of the magazine and access the World Bank Database to explore the theme in depth and generate some insight.
 
-Abaixo, uma foto de um dos artigos. Esta foto ficou fantástica!
+Following is a picture of one of the articles presented in the magazine. This picture is awesome!
 
 ```{r pressure, echo=FALSE,fig.align='center', fig.cap="The Economist"}
 knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-01-09_imigration_post.png")
@@ -23,34 +23,34 @@ knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.g
 
 ### Principais conclusões da reportagem {.tabset .tabset-fade .tabset.pills}
 
-1) Pessoas que conseguem se mudar de um país pobre para um rico aumentam sua renda de 3 a 6 vezes, por conta de que países ricos possuem melhores instituições, melhor alocação de capital e empresas mais modernas.
+### Mainly conclusions of the report {.tabset ;tabset-fade; tabset.pills}
 
-2) Se todas as pessoas que gostariam de mudar de país conseguissem, o PIB mundial poderia aumentar em até 100%.
+1) People that successfully migrate from a poor country to a rich one increase their income between 3 to 6 times, because the rich country has better institutions, capital alocation and modern companies.
 
-3) Imigrantes são mais propensos a abrir seu próprio negócio, pois percebem demandas não atendidas (com mais facilidade) e encontram soluções alternativas para problemas existentes no país em que imigraram.
+2) If everone that which a country migraton was allowed to do it, thw world GDP could double.
 
-4) O principal "problema" com a imigração é a mudança cultural, que ocorre rápidamente em alguns locais, por conta de que os imigrantes se aglomeram em locais específicos. Este é o principal problema e também o mais difícil de ser mensurado, o que o torna difícil de ser contestado.
+3) Imigrants are more tended to open their own business, because they percept unatended demands easier and also they find alternative solutions to existent problems on the country that they enter.
 
-5) As pessoas são mais tolerantes ao processo imigratório em seus países quando sentem que seu país está controlando bem sua fronteira, ou seja, com um processo eficiente que permite a entrada das pessoas apenas pelo processo legal.
+4) The mainly "problem" with imigration is the cultural change, that occurs seedly in specific places, because imigrants tend to cluster in certain locals. This culturar change is the mainly problem with imigration and also the hardest to measure, thus it becomes difficult to be contested by people that favour imigration.
 
-6) Imigrantes geralmente compartilham seu rendimento com seus familiares que ficaram no país e esta fonte de renda (a.k.a [remitances](https://www.ted.com/talks/dilip_ratha_the_hidden_force_in_global_economics_sending_money_home)) já é a principal fonte de financiamento externo em alguns países. Esta é uma fonte de investimento com potencial de impacto muito grande, pois vai direto para a mão daqueles que precisam e não corre o risco de ser drenada por conta da corrupção. Remitances representam mais de 10% do PIB de 28 países atualmente (2019).
+5) People are more tolerant to the imigration flow in their countries when the feel that their government are in charge of the frontier, in other words, with a efficient process that only allows the migration of people by the legal process.
 
-7) Para obter benefícios do processo imigratório, o governo deve ser eficiente na integração das pessoas ao mercado de trabalho, para que as pessoas não demandem serviços públicos sem estarem contribuindo com a arrecadação e movimentação da economia.
+6) Imigratns often share their wages with their families that have stayed on the country and this income fount is called [remitances](https://www.ted.com/talks/dilip_ratha_the_hidden_force_in_global_economics_sending_money_home). Remitances already is the mainly font of external investment in some poor countries. This flow of money has high potential of impacts, because it goes straight to the pocket of people that are in need and also this investment doesn't carry the risk of being misplaced by corruption. Remitances represent more than 10% of GDP of 28 countries currently (2019).
 
-### Dados relevantes sobre o tema
+7) To obtain benefits from the imigration process, the government must be efficient on the integration of people on the labour market, in other to avoid the situation where the imigrant is demanding social care without being contributins to the tax revenue of the government.
+
+### Theme's relevant data
 
 Após entendermos um pouco mais sobre a imigração, podemos analisar alguns dados públicos para gerar insights novos sobre o tema. Irei utilizar a API do Banco Mundial que possui dados bem organizados sobre imigração nos países.
 
-Para esta análise vou usar os pacotes abaixo.
+After we understand a little better of the imigration flow, we can analyse some public data in order to generate some new insights about this theme. For this activity, I'll utilize the World Banck Data API that contain organized data about imigration for almost every country. In this task I'll use the following packages:
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
-library(wbstats)        # pacote para acessar a API do banco mundial
-library(tidyverse)      # pacote que contêm vários pacotes para data science
-library(ggthemes)       # pacote com temas para o ggplot (contém o tema da the economist)
-library(scales)         # pacote para ajustar a escala dos eixos
-library(sqldf)          # pacote para manipular dados usando script sql
-library(rvest)          # pacote para fazer scraping de páginas da internet
-library(xml2)           # pacote para ler nós de HTML de páginas da internet
+library(wbstats)        # accessing the World Banck API
+library(tidyverse)      # data science and data manipulation packages
+library(ggthemes)       # themes for ggplot graphs
+library(scales)         # adjusting axis scales
+library(sqldf)          # SQL script inside R
 
 # Tema do gráfico
 theme_set(theme_bw())
@@ -61,11 +61,9 @@ axis_size <- 8
 graph_color <- "#509533"
 ```
 
-#### Imigrantes ao redor do mundo
+#### Imigrants around the world
 
-Neste tópico, vamos analisar quantos imigrantes o Banco Mundial contabilizou em 2015 (último período de coleta dos dados), bem como a evolução desta população ao longo dos anos e o quanto esta população representa nos países em que imigraram.
-
-Para coletar os dados, basta chamar a API do Banco Mundial através do código abaixo.
+In this topic, we'll analyse how much imigrants the World Banck accounted in 2015 (the last period that the data was collected), as well the evolution of this population throughout the year and how much this population represents of the country that they leave. To collect the data, you just have to call the World Bank API using the following code:
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 migrants_pop <- wbstats::wb(indicator = "SM.POP.TOTL",
@@ -74,9 +72,9 @@ migrants_pop <- wbstats::wb(indicator = "SM.POP.TOTL",
                               enddate = 2019)
 ```
 
-**Imigração ao longo dos anos**
+**Imigrant population time series**
 
-No gráfico abaixo, podemos ver que houve um crescimento contínuo no número de imigrantes ao longo dos anos, porém com picos em períodos específicos, como por exemplo entre 1985 e 1990 (provavelmente alguma crise em algum país da África). A crise na Syria não aparece nos dados, pois talvez comece a fazer efeito a partir de 2016. Pode-se ver que a população contabilizada como imigrante pela instituição (em 2015) fica em torno de 250 milhões, acima da população do Brasil.
+On the following graph, we can see that the number of imigrants has increased continuously throughout the years, but with peaks in specific periods, for exemple between 1985 and 1990 (probably there was a civil war in an African country). Syria's turmoil isn't presented on the data, since probably the effect on imigration flow started in 2016. It can be seeing that the accounted population as imigrants by the institution in 2015 is around 250 millions, beyond the Brazilian population.
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 migrants_pop %>% 
@@ -97,9 +95,9 @@ migrants_pop %>%
   )
 ```
 
-**Participação dos imigrantes na população local**
+**Imigration participation on the local population**
 
-No seguinte gráfico, vamos ver o quanto estas pessoas representam no país em que entraram, em 2015, considerando apenas países com mais de 10 milhóes de habitantes. Como a base possuí muitos países (215), vou selecionar apenas os 20 que possuem a maior participação. Para isso, vou precisar trazer o indicador de população dos países, também contabilizado pelo Banco Mundial e em seguida, fazer um join com o indicador de imigrantes, para então criar a métrica de parcela de imigrantes para cada país.
+On the following visualization, we'll see how much these people that imigrate represents on the country that they step in, considering 2015 and only countries with more than 10 million of people living in. Since this data set has too many countries (215), I'll select just 20 that have the greatest share of imigrants on their population. 
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 # Coletando dados da população do país
@@ -111,7 +109,6 @@ population_2015 <- population %>%
   mutate(population = value) %>% 
   select(country,population)
 ```
-
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 # Fazendo o join com o data set de imigrantes
 migrants_pop %>% 
@@ -127,17 +124,16 @@ migrants_pop %>%
   geom_col(fill = graph_color)+
   scale_y_continuous(labels = scales::percent)+
   labs(
-    title = "Rank de países por parcela de imigrantes",
-    subtitle = "Apenas os 20 primeiros com mais de 10 milhões de habitantes",
+    title = "County rank by imigration share over population",
     x = "",
-    y = "% de imigrantes sobre a população residente"
+    y = "% of imigrants over the population"
   )+
   coord_flip()
 ```
 
-#### Países que mais perderam pessoas nos últimos anos
+#### Countries that lost more people during the last years
 
-Na análise abaixo, vou utilizar um indicador do Banco Mundial que mostra a saída líquida de pessoas de um país, que representa a saída menos a entrada de pessoas no país num dado ano. Nesta análise, vou pegar os dados a partir do ano 2000 até o último ano de coleta (2017), fazer a somatória do indicador 'saída_líquida' e depois filtrar os países que tiveram a soma abaixo de 0, que representará os países que tiveram perda de pessoas no acumulado do período analisado. Por fim, irei classificar do menor para o maior, escolhendo os 20 primeiros.
+In the following analysis, I'll use an indicator of the World Bank that shows the net output of people from a country (i.e. imigration less migration) in a given year. In this analysis, I'll take the data from 2010 to 2017 (the last year of the collect), make the sum of this indicator (net_output) and then filter the countries that have the sum below 0, that will be the countries that had lost people in the considered period. Finnaly, I'll classify the remaining countries to take the first 20 with more people leaving the country.
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 net_migration <- wbstats::wb(indicator = "SM.POP.NETM",
@@ -172,15 +168,15 @@ net_migration %>%
     legend.title = element_blank()
   )+
   labs(
-    title = "Países com maior Nº de pessoas que saíram",
-    subtitle = "Saída líquida (entrada menos saída)",
+    title = "Countries with the greatest output of people from their country",
+    subtitle = "Net output",
     x = "",
     y = "Net migration",
-    caption = "De 2010 até atual"
+    caption = "From 2010 until 2017"
   )
 ```
 
-A saída bruta de pessoas é interessante, porém a saída relativa (%) pode trazer informações mais relevantes. Índia, China e Bangladesh obviamente estão no grupo anterior, pois possuem uma população bastante grande. No gráfico abaixo vou replicar o gráfico anterior, porém selecionando os países com base na saída de pessoas relativa, ou seja, pelo percentual de migrantes sobre a população total. Irei selecionar os 20 países que mais tiveram saída relativa de pessoas, considerando apenas países com mais de 5 milhões de habitantes. A saída relativa será a quantidade de pessoas que saíram ao longo do período analisado (i.e. 200 até 2017) dividido pela população contabilizada em 2018.
+The net output is interesting but the relative net output (%) can bring more clarity to the problem the country is facing. Índice, China and Bangladesh obviously are in the preceding graph because they have large population. On the following visualization I'll re do the preceding graph, however I'll sellect the countries considering the net output relative to the population. 
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 net_migration %>% 
@@ -203,19 +199,18 @@ net_migration %>%
   geom_col(fill = graph_color)+
   scale_y_continuous(labels = scales::percent)+
   labs(
-    title = "% de saída de pessoas do país",
-    subtitle = "Apenas os 20 países com maior saída %",
+    title = "Share of population leaving the country",
     x = "",
-    y = "% de saída do país"
+    y = ""
   )+
   coord_flip()
 ```
 
-Como este indicador possui dados mais recentes (diferente do indicador de população imigrantes que está atualizado até 2015), a Syria aparece com seu êxodo de pessoas bem representativo, por conta da guerra civil que vem passado desde 2012. A Venezuela também, em segundo lugar, por conta de sua crise econômica.
+As this indicator has more recent data, Syria is presented with its outflow well represented on the graph, because its civil war that is occuring since 2012. Venezuela also is well represented because of its economic crisis.
 
-#### Remitances (remessas) enviadas aos países
+#### Remitances sent to the countries
 
-As *remitances*, conforme descrito na reportagem, são os valores monetários enviados por pessoas que estão em um país, para seus familiares em outro país. Vamos ver quanto este fluxo representa do total do PIB. Segundo um dos artigos da reportagem da The Economist, 28 países possuem um percentual de remitances acima de 10% do PIB. De acordo com a base de dados do Banco Mundial, em 2018, foram 29 países que atingiram este marco. Veja o código abaixo para comprovação (eu filtrei o país Lesotho pois estava com valores incosistentes):
+Remitances, as showed on the articles, are the monetary values sent by people that migrated to their families that stayed on the country. Let's see how much this investment represents on the country's GDP. According with one of the articles from the Magazine, 28 countries have a share o remitances greater than 10% of their GDP. The World Bank data presents 29 countries with this mark. The following code show this output:
 
 ```{r,include=T,echo=T,warning=F,message=F}
 remitances_over_gdp <- wbstats::wb(indicator = "BX.TRF.PWKR.DT.GD.ZS",
@@ -234,6 +229,8 @@ Além do valor de remitances sobre o PIB, acho importante analisar se este fluxo
 
 Para analisar esta hipótese, vou selecionar alguns países e plotar uma série temporal para o PIB per capita e outra série temporal para o valor de remitances enviado ao país, também per capita. Os países selecionados para o teste foram: Yemen, Tanzania, Uganda, Tunisia, Chad, Syria, Suriname, Somalia, Serra Leoa, Senegal, Sudão, Rwanda, Nepal, Nigeria, Malawi, Mali, Libya, Kenya, Etiópia, Eritrea, Congo.
 
+As well as the remitances share over GDP, it's important to see if this capital inflow is acyclic (an assumption commented in one of the articles of the special report). This characteristic indicates that the flow isn't correlated with the GDP variation (or GDP per capita variation). The hipothesis is that the persons that send they money, will send more when the economic situation on his/her familiy cuntry deteriorate. To validate this hipothesis I'll select some countries and plot a temporal serie for the GDP per capita and another temporal serie for the remitances per capita sent to the selected countries. The selected countries are: Suriname, Somalia, Sierra Leone, Senegal, Sudan, Rwanda, Nepal, Niger, Malawy, Mali, Lybia, Kenya, Ethiopia, Eritrea and Congo. 
+
 ```{r,include=F,echo=F,warning=F,message=F}
 country_view <- c("Yemen, Rep.","Tanzania","Uganda",
                   "Tunisia","Chad","Syrian Arab Republic",
@@ -244,7 +241,7 @@ country_view <- c("Yemen, Rep.","Tanzania","Uganda",
                   "Congo, Rep.")
 ```
 
-Coletandos os indicadores necessários para a análise:
+Collecting the neeeded indicators for this analysis:
 
 ```{r,include=F,echo=T,warning=F,message=F}
 # Coletando os dados de Remitances enviadas e PIB per capita
@@ -258,6 +255,8 @@ gdp_pc <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",
 ```
 
 Agora vamos verificar como se comportam as duas variáveis ao longo dos anos (a partir de 2010). Para criar o indicador de 'Remitances per Capita', eu trouxe os dados de população e fiz o join com os dados de remitances recebidas pelos países selecionados. Em seguida, fiz a divisão (remitances_received / population).
+
+Now lets investigate how the two variables perform throughout the years (since 2010). In order to create the 'remitances per capita' indicator, I brought the population data and made a join with the remitances data. Next, I made de division (remitances received/population).
 
 ```{r,include=T,echo=T,warning=F,message=F}
 remitances_received %>% 
@@ -282,7 +281,7 @@ remitances_received %>%
   )+
   labs(
     title = "Remitances per capita (US$)",
-    subtitle = "Crescimento ao longo do período analisado",
+    subtitle = "Growth on the analysed period",
     x = "",
     y = ""
   )
@@ -306,15 +305,18 @@ gdp_pc %>%
     legend.position = "right"
   )+
   labs(
-    title = "PIB per capita (US$)",
-    subtitle = "Decrescimento ao longo do período analisado",
+    title = "GDP per capita (US$)",
+    subtitle = "Drop on the analysed period",
     x = "",
     y = ""
   )
 ```
 
-Pode-se concluir que este fluxo de dinheiro, enviado por imigrantes aos seus familiares que ficarma no país (que provavelmente está passando por um período difícil), é acíclico e deve contribuir bastante para o dia a dia destas famílias.
+It's possible to afirm that this money inflow, sent by imigrants to their families that stay on the country, is acyclic and probably support a lot the poorest that are in need. 
 
-#### Conclusão
+#### Conclusions
 
-Apesar das análises terem sido bem simples, foi possível validar as estatísticas das reportagens da revista e criar alguns insights a mais. Assim que possível, voltarei ao tema com novas análises para aprofundar mais a questão.
+Although the simplicity of these analysed, it was possible to validate the statistics of the magazine reports and generate some insights beyone that. Hope you have enjoyed.
+
+
+
