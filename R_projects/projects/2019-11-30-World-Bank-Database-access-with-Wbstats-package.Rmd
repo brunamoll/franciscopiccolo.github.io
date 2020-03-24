@@ -305,7 +305,7 @@ df_gdp_pc_3 %>%
         legend.position = "right",
         legend.title = element_blank(),
         axis.text.x = element_text(size = 8,angle = 70,vjust = .7))+
-  labs(title = "PIB do Brasil em 4 visões",
+  labs(title = "Brazil GDP in 4 different visions",
        x = "",
        y = "")
 ```
