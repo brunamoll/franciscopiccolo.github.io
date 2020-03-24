@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 
 <head>
@@ -1693,7 +1695,7 @@ summary {
 
 <div id="introduction" class="section level5">
 <h5>Introduction</h5>
-<p>In this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer use R intead on the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.</p>
+<p>In this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.</p>
 </div>
 <div id="step-1" class="section level5">
 <h5>Step 1</h5>
@@ -1753,7 +1755,6 @@ summary {
 </div>
 <div id="step-7" class="section level5">
 <h5>Step 7</h5>
-<p>Para explorar de maneira completa esta funcionalidade, é interessante que, ao invés de escrever a query no console do R, a query seja salva em um arquivo (.sql) e o R acesse este arquivo e salve-o em uma variável. Para isso, é necessário instalar e chamar o pacote readr. Após isso, o código do passo 6 será:</p>
 <p>To explore the feature in depth, it’s interesting that, intead of writing the query on the R Studio console, you save your query in a file (.sql) and make R access this file and save it as a variable (i.e. “sql_file”). To do this, it’s necessary to install and call the “readr” package.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;readr&quot;</span>)</a>
 <a class="sourceLine" id="cb6-2" title="2"></a>
