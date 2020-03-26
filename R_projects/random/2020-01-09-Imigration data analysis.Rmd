@@ -40,8 +40,6 @@ knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.g
 
 ## **Theme's relevant data**
 
-Após entendermos um pouco mais sobre a imigração, podemos analisar alguns dados públicos para gerar insights novos sobre o tema. Irei utilizar a API do Banco Mundial que possui dados bem organizados sobre imigração nos países.
-
 After we understand a little better of the imigration flow, we can analyse some public data in order to generate some new insights about this theme. For this activity, I'll utilize the World Banck Data API that contain organized data about imigration for almost every country. In this task I'll use the following packages:
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
@@ -222,10 +220,6 @@ remitances_over_gdp %>%
   select(date,country,remitance_over_gdp)
 ```
 
-Além do valor de remitances sobre o PIB, acho importante analisar se este fluxo de capital é acíclico (algo que foi comentado em uma das reportagens da The Economist), ou seja, se a remitance enviada possui correlação inversa com a variação do PIB (ou PIB per capita). A hipótese é de que a pessoa envie mais dinheiro caso a situação no país em que seus familiares estão piore.
-
-Para analisar esta hipótese, vou selecionar alguns países e plotar uma série temporal para o PIB per capita e outra série temporal para o valor de remitances enviado ao país, também per capita. Os países selecionados para o teste foram: Yemen, Tanzania, Uganda, Tunisia, Chad, Syria, Suriname, Somalia, Serra Leoa, Senegal, Sudão, Rwanda, Nepal, Nigeria, Malawi, Mali, Libya, Kenya, Etiópia, Eritrea, Congo.
-
 As well as the remitances share over GDP, it's important to see if this capital inflow is acyclic (an assumption commented in one of the articles of the special report). This characteristic indicates that the flow isn't correlated with the GDP variation (or GDP per capita variation). The hipothesis is that the persons that send they money, will send more when the economic situation on his/her familiy cuntry deteriorate. To validate this hipothesis I'll select some countries and plot a temporal serie for the GDP per capita and another temporal serie for the remitances per capita sent to the selected countries. The selected countries are: Suriname, Somalia, Sierra Leone, Senegal, Sudan, Rwanda, Nepal, Niger, Malawy, Mali, Lybia, Kenya, Ethiopia, Eritrea and Congo. 
 
 ```{r,include=F,echo=F,warning=F,message=F}
@@ -250,8 +244,6 @@ gdp_pc <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",
                       country = "countries_only")
 
 ```
-
-Agora vamos verificar como se comportam as duas variáveis ao longo dos anos (a partir de 2010). Para criar o indicador de 'Remitances per Capita', eu trouxe os dados de população e fiz o join com os dados de remitances recebidas pelos países selecionados. Em seguida, fiz a divisão (remitances_received / population).
 
 Now lets investigate how the two variables perform throughout the years (since 2010). In order to create the 'remitances per capita' indicator, I brought the population data and made a join with the remitances data. Next, I made de division (remitances received/population).
 
