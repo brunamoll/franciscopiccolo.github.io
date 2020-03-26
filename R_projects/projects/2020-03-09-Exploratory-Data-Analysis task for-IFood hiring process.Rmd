@@ -37,11 +37,11 @@ theme_graph <- function(){
     # background color
     panel.background = element_rect(fill = "white"),
     panel.grid.minor = element_blank(),
-    plot.title = element_text(size = 18),
+    plot.title = element_text(size = 16),
     plot.subtitle = element_text(size = 12),
     plot.caption = element_text(face = "italic", size = 9),
-    axis.text = element_text(size = 9.5),
-    axis.title = element_text(face = "italic", size = 9.5),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
     text = element_text(family = "Times New Roman"),
     strip.background = element_rect(fill = "grey"),
     strip.text = element_text(face = "bold"),
@@ -105,7 +105,7 @@ The reasoning that I'll follow to approach this task will be (i) visualize the f
 
 In this dataset, there're commercial informations, where the company sells for the whole world office products and technologic products. The dataset presents revenue, profit, discount and delivery cost, that I'll call financial data. As well as this information, the dataset contain customer, product and operational data.
 
-#### **Time series of financial data**
+## **Time series of financial data**
 
 To begin, lets dive in on the financial indicators of the company. The following graph presents revenue throughout 2011-2015 period. As the revenue variation is too high I opted to smooth the line with a moving average of 30 days to ease de visualization.
 
@@ -227,7 +227,7 @@ df_adj %>%
 
 After we get the time series of financial metrics, we can walk in on onther aspects of the business to generate some business recommendations.
 
-#### **Region**
+## **Region**
 
 On the following graphs, we'll see the region that generates more profit for the company. Also, we'll analyse if the delivery cost in relation to the revenue varies between regions.
 
@@ -312,7 +312,7 @@ gridExtra::grid.arrange(graph_1,graph_2, graph_3,graph_4, ncol = 2, nrow = 2, to
 
 Apparently, Canada is the region to receive more attention, since it has a profit margin higher than the average, maybe it's because the discount policy is different atthere. On the other hand, South East Asia needs some strategy change in order to reach the other countries in profit margins. The delivery cost is the same between reagions.
 
-#### **Product Category and Sub-category**
+## **Product Category and Sub-category**
 
 The company works with three product categories: Technologic, Furniture and Office supplies. In the next visualization, we'll see which category has gained traction along the period as well as the profit margin of each of them
 
@@ -480,7 +480,7 @@ df_adj %>%
 
 Seems that products from other sub-categories don't have the same aggressive discount policy. Thus, the sub-category "Tablets" and "Machines" present a lot of black points at the left part of the graph (separeted by the red line). We can conclude that the company's directors will need some adjustments on this discount policy.
 
-#### **Operations**
+## **Operations**
 
 In this topic we'll analyse the financial metrics by the operational perspective, aiming to analyse if the order criticality and the delivery contract cause some financial impact.
 
@@ -523,6 +523,6 @@ df_adj %>%
 
 Apparently the operational scenario isn't a culprit of profit margin. Orders with low priority are shipped within the "Standard Class" delivery contract (and it's correct). On the other hand, orders with the highest priority aren't sent by the "Standard Class" delivery contract. Finally, we conclude for this topic that the operational perspective can't explain much of the profit margin variation, neither generate some recommendation for the company's directors.
 
-#### **Conclusions and recommendations**
+## **Conclusions and recommendations**
 
 Considering the business aspects being analysed I come with some recommendations. First, the company has to verify its discount policy, urgently for its "Tablets" sub-category, since a lot of sales turns out to be prejudicial given the discount allowed. Second, it's important to pay more attention for the Canadian operations, because it's a prosperous market for the company. Third, the South East Asian market will need some attention in order to catch up with other regions on profit margin.
