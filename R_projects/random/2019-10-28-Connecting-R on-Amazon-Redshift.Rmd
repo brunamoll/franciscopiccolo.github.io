@@ -3,6 +3,7 @@ title: ""
 date: 2019-10-20
 output:
   html_document:
+    css: style.css
     df_print: paged
     theme: cerulean
     highlight: zenburn
@@ -10,17 +11,17 @@ output:
     fig_height: 4
 ---
 
-##### Introduction
+## **Introduction**
 
 In this tutorial I'll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.
 
-##### Step 1
+## **Step 1**
 
 Dowload the JDBC driver from Amazon. This file will be needed to allow the connection of one tool (i.e. R Studio) to the Amazon cluster that you have access. In this [link](https://docs.aws.amazon.com/pt_br/redshift/latest/mgmt/configure-jdbc-connection.html#obtain-jdbc-url) there's the files indicated for each version of the JDBC.
 
 Ps: If at the end of the role process the database access fail, take a look on the above file that you dowloaded to see if it came corrupted. This can be caused (not likely but it can) when the dowload is made directly from R.
 
-##### Step 2
+## **Step 2**
 
 Inside R Studio, install and call the following packages: "rJava" and "RJDBC".
 
@@ -32,7 +33,7 @@ library(rJava)
 library(RJDBC)
 ```
 
-##### Step 3
+## **Step 3**
 
 Create a variable (i.e. "driver") that will contain the JDBC file that was dowloaded on the Step 1. Use the following code for this step:
 
@@ -42,7 +43,7 @@ driver <- JDBC(driverClass = "com.amazon.redshift.jdbc41.Driver",
                identifier.quote="`")
 ```
 
-##### Step 4
+## **Step 4**
 
 Create a variable (i.e. "db_connection") that will indicate the information of the database to be accessed by R Studio. Use the following code for this step:
 
@@ -53,7 +54,7 @@ db_connection <- sprintf("jdbc:redshift://%s:%s/%s?tcpKeepAlive=true&ssl=true&ss
                          "database name")
 ```
 
-##### Step 5
+## **Step 5**
 
 Create a variable (i.e. "access") that will contain the information of the database and also the user that will access the database. Use the following code for this step:
 
@@ -63,7 +64,7 @@ access <- dbConnect(driver, db_end, "user", "password")
 
 Ps: Note that the funcion "dbConnect" used the database access file driver, the information of the database that will be accessed and the information of the user that will access the database.
 
-##### Step 6
+## **Step 6**
 
 After the creation of the necessary variables, to access the database it'll be necessary the last one created (at step 5). To access the database, the package RJDBC will be used. Some examples can be seeing on the code chunck that follows:
 
@@ -88,7 +89,7 @@ RJDBC::dbGetQuery(jconn,
                   limit 10")
 ```
 
-##### Step 7
+## **Step 7**
 
 To explore the feature in depth, it's interesting that, intead of writing the query on the R Studio console, you save your query in a file (.sql) and make R access this file and save it as a variable (i.e. "sql_file"). To do this, it's necessary to install and call the "readr" package.
 
@@ -104,7 +105,7 @@ sql_file <- readr::read_file("path_of_the_file/script.sql")
 query_redshift <- RJDBC::dbGetQuery(jconn, sql_file)
 ```
 
-##### Final step (plus)
+## **Final step (plus)**
 
 Sometimes you can have projects that demand more than one query, thus you will need many .sql files in order to run each query. But there's a solution to make things simpler. You can save many queries on the same .sql file and separate each query by a string (i.e. --query_1_being, --query_1_end, --query_2_begin, --query_2_end, and so on). Then, you can use regexp to split your file and create variables for each query. The regexp will access the defined query and execute the split to create the variable with just one query code. For this step, you will need to install and call the "stringr" package.
 
@@ -136,11 +137,11 @@ query_3 <-
                            max(stringr::str_locate(string = sql_syntax, '-- query.3.end'))))
 ```
 
-##### Conclusion
+## **Conclusion**
 
 This tutorial was aimed to show how simple it is to access Amazon Redshift database throughout R Studio. It's an excellent alternative when you want to perform robust exploratory data analysis (where Excel will let you down).
 
-##### More tutorials on the subject
+## **More tutorials on the subject**
 
 [Connecting to Amazon Redshift from R](https://www.progress.com/tutorials/jdbc/connecting-to-amazon-redshift-from-r-via-jdbc-driver)
 

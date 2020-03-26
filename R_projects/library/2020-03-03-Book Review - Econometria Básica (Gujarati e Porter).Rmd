@@ -24,33 +24,18 @@ library(plot3D)
 
 theme_set(theme_bw())
 
-theme_graph <- function(){
-  theme(
-    # background color
-    panel.background = element_rect(fill = "white"),
-    panel.grid.minor = element_blank(),
-    plot.title = element_text(size = 16),
-    plot.subtitle = element_text(size = 12),
-    plot.caption = element_text(face = "italic", size = 9),
-    axis.text = element_text(size = 9),
-    axis.title = element_text(face = "italic", size = 9),
-    text = element_text(family = "Times New Roman"),
-    strip.background = element_rect(fill = "grey"),
-    strip.text = element_text(face = "bold"),
-    legend.title = element_blank(),
-    legend.position = "bottom"
-  )
-}
-
+# Parâmetros dos gráficos para facilitar a padronização
+title_size <- 9
+axis_size <- 7.5
 graph_color <- "#006666"
 
 # Caminho para a pasta que contém os data sets para cada exercício
 path <- "C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/base_de_dados/livro-econometria-basica-gujarati/"
 ```
 
-## {.tabset .tabset-fade .tabset-pills}
+# {.tabset .tabset-fade .tabset-pills}
 
-### **Overview**
+## **Overview**
 
 Este livro é a típica "Bíblia" sobre um determinado assunto (i.e. Econometria). Não que não existam outros que também possam ser considerados da mesma forma, porém este é o que vejo com frequência sendo recomendado na parte de bibliografias da matéria de econometria de diversos cursos. Neste livro, os autores buscam explicar a modelagem econométrica de maneira simples e completa, partindo da definição dos termos inerentes à área até os modelos um pouco mais complexos. Ao meu ver, este é um livro de nível básico e intermediário, podendo ser lido por quem ainda não conhece nada sobre econometria.
 
@@ -68,11 +53,11 @@ Neste post (como em todos os posts que estão na categoria **library**), irei re
 knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-03-03_econometria_basica.png")
 ```
 
-### **Cap.1**
+## **Cap.1**
 
-#### **A natureza da análise de regressão**
+### **A natureza da análise de regressão**
 
-##### **Resumo**
+### **Resumo**
 
 Este é um capítulo introdutório que mostra estabelece alguns pilares da análise de regressão. Primeiro é feito uma definição para o termo regressão, que segundo os autores é *o estudo da dependência de uma variável em relação a uma ou mais variáveis explicativas.* Também tem-se estabelecido o objetivo da regressão, que é estimar o valor médio da variável dependente usando os valores conhecidos da variável explicativa.
 
@@ -80,9 +65,9 @@ Na sequência, os autores mostram a diferença de relações estatísticas e rel
 
 Por fim, os autores comentam sobre os tipos de dados normalmente presentes nos modelos econométricos. Estes dados são **séries temporais** e **corte transversal**.
 
-##### **Exercícios**
+### **Exercícios**
 
-##### **1.1) Traga os dados da tabela 1.3 sobre o índice de preço ao consumidor (IPC) para responder as alternativas.**
+### **1.1) Traga os dados da tabela 1.3 sobre o índice de preço ao consumidor (IPC) para responder as alternativas.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",sep = ""),
@@ -94,7 +79,7 @@ tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",sep = ""),
 tbl_1.3[sample(nrow(tbl_1.3),10), ]
 ```
 
-##### **a) Com base nos dados forneceidos, calcule a taxa de inflação de cada país:**
+### **a) Com base nos dados forneceidos, calcule a taxa de inflação de cada país:**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Taxa de inflação (1985 = 100, até 2005)
@@ -106,63 +91,71 @@ ipc_total <- ipc_total[2,2:8]-ipc_total[1,2:8]
 knitr::kable(ipc_total, align = "c")
 ```
 
-##### **b) Represente graficamente a taxa de inflação de cada país:**
+### **b) Represente graficamente a taxa de inflação de cada país:**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.3 %>%
   tidyr::gather("campo", "valor", 2:8) %>% 
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line()+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(axis_size),
+        legend.title = element_blank())+
   labs(title = "Anual inflation for selected countries",
        x = "",
        y = "")
 ```
 
-##### **1.2) a) Usando a tabela 1.3, represente as taxas de inflação do Canará, França, Alemanha e Itália, Japão e Reino Unido em relação à taxa do EUA.**
+### **1.2) a) Usando a tabela 1.3, represente as taxas de inflação do Canará, França, Alemanha e Itália, Japão e Reino Unido em relação à taxa do EUA.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 can <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Canada))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme_graph()
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))
 
 fra <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = França))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme_graph()
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))
 
 ale <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Alemanha))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme_graph()
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))
 
 ita <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Italia))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme_graph()
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))
 
 jap <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Japão))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme_graph()
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))
 
 rei <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Reino.Unido))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme_graph()
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))
 
 
 gridExtra::grid.arrange(can,fra,ale,ita,jap,rei,nrow = 2,ncol=3, top = textGrob("Inflation rate, country vs USA"))
 ```
 
-##### **1.3) A tabela abaixo apresenta as taxas de câmbio em sete países industrializados, entre 1985 e 2006.**
+### **1.3) A tabela abaixo apresenta as taxas de câmbio em sete países industrializados, entre 1985 e 2006.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.4 <- read.table(file = paste(path,"tabela_1.4_cambio.txt",sep = ""),
@@ -180,7 +173,7 @@ tbl_1.4 <-
 tbl_1.4[sample(nrow(tbl_1.4),10), ]
 ```
 
-##### **a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:**
+### **a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.4 %>% 
@@ -195,7 +188,9 @@ tbl_1.4 %>%
   mutate(campo = fct_relevel(campo, levels = c("Mexico", "China", "Suecia"))) %>% 
   ggplot(aes(x = Ano, y = valor,group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size),
+        legend.title = element_blank())+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
@@ -205,7 +200,9 @@ tbl_1.4 %>%
   filter(campo %in% c("Coreia.sul","Japao")) %>%
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size),
+        legend.title = element_blank())+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
@@ -216,13 +213,15 @@ tbl_1.4 %>%
   mutate(campo = fct_relevel(campo, levels = c("Suica", "Canada", "Australia", "Reino.unido"))) %>% 
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size),
+        legend.title = element_blank())+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
 ```
 
-##### **1.7) A tabela abaixo apresenta o orçamento de publicidade com as impressões retidas (através de uma pesquisa feita com 4 mil adultos).**
+### **1.7) A tabela abaixo apresenta o orçamento de publicidade com as impressões retidas (através de uma pesquisa feita com 4 mil adultos).**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.6 <- read.table(file = paste(path,"tabela_1.6_publicidade.txt",sep = ""),
@@ -235,24 +234,25 @@ tbl_1.6 <- read.table(file = paste(path,"tabela_1.6_publicidade.txt",sep = ""),
 tbl_1.6[sample(nrow(tbl_1.6),10), ]
 ```
 
-##### **a) Mostre a relação entre impressões e o investimento em publicidade.**
+### **a) Mostre a relação entre impressões e o investimento em publicidade.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.6 %>% 
   ggplot(aes(x = investment, y = impressions))+
   geom_point(color = graph_color)+
   geom_smooth(method = "lm", formula = y ~ x, se = F, lty = 20, color = "dark orange")+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))+
   labs(title = "Investment and Impressions relation",
        x = "Investmnet",
        y = "Impressions")
 ```
 
-### **2**
+## **2**
 
-#### **Análise de regressão com duas variáveis: Algumas ideias básicas**
+### **Análise de regressão com duas variáveis: Algumas ideias básicas**
 
-##### **Resumo**
+### **Resumo**
 
 Neste capítulo, os autores abordam de maneira mais aprofundada o modelo de regressão linear, introduzindo o coneito de **valor esperado de Y** condicional e incondicional. Indica-se que a essência do modelo de regressão é fornecer condições para o valor médio esperado da variável (Y) estudada, ou seja, o modelo de regressão irá gerar uma equação que explicará o valor médio desta variável Y.
 
@@ -262,9 +262,9 @@ Os modelos lineares deste livro, segundo os autores, serão lineares nas variáv
 
 Por fim, os autores comentam sobre os erros estocásticos, que estão sempre presentes no modelo de regressão para representar todas variáveis não incluídas no modelo e ruídos aleatórios que não podem ser mapeados. A não inclusão de algumas variáveis no modelo é explicada no sentido de que isso é algo de certa forma positivo, pois é muito custoso coletar todas as variáveis e o aumento da complexidade do modelo não irá gerar aumento de performance de mesma magnitude. Outra ideia mencionada pelos autores referente aos erros estocásticos se refere à natureza aleatória do ser humano, que impacta a variável estudada **Y** e esta aleatoriedade será descrita nestes erros (**$\mu$**).
 
-##### **Exercícios**
+### **Exercícios**
 
-##### **2.14) Use a tabela abaixo com dados do EUA sobre o mercado de trabalho para responder as seguinter alternativas.**
+### **2.14) Use a tabela abaixo com dados do EUA sobre o mercado de trabalho para responder as seguinter alternativas.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.7 <- read.table(file = paste(path,"tabela_2.7_labour_market.txt",sep = ""),
@@ -277,7 +277,7 @@ tbl_2.7 <- read.table(file = paste(path,"tabela_2.7_labour_market.txt",sep = "")
 tbl_2.7[sample(nrow(tbl_2.7),10), ]
 ```
 
-##### **a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.**
+### **a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 women_df <- 
@@ -298,7 +298,10 @@ tbl_2.7 %>%
   mutate(type = "men") %>% 
   ggplot(aes(x=share_work_force,y=unemployment,color=type))+
   geom_point(color = graph_color)+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size),
+        legend.title = element_blank(),
+        legend.position = "none")+
   labs(title = "Men's unemployment and participation rate",
        x = "Participation rate (%)",
        y = "Unemployment rate (%)")
@@ -326,7 +329,9 @@ tbl_2.7 %>%
   union_all(women_df) %>% 
   ggplot(aes(x=share_work_force,y=avg_hourly_earning,color=type))+
   geom_point()+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size),
+        legend.title = element_blank())+
   labs(title = "Average hourly wage and participation rate",
        x = "Participation rate",
        y = "Hourly wage")
@@ -351,7 +356,8 @@ tbl_2.8 %>%
   ggplot(aes(x = total, y = alimento))+
   geom_point(color = graph_color, shape = 20)+
   geom_smooth(method = "lm", se = F)+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))+
   labs(title = "Food expenditures and total expenditures",
        x = "Total expenditures",
        y = "Food expenditures")
@@ -444,7 +450,9 @@ tbl_3.6 %>%
   geom_point(aes(x = prod, y = wag, color = production))+
   scale_color_brewer(palette = "Dark2")+
   geom_smooth(aes(x = prod, y = wag), method = "lm",se = F)+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size),
+        legend.title = element_blank())+
   labs(title = "Production index and hourly wages",
        x = "Production",
        y = "Wage")
@@ -530,7 +538,8 @@ tbl_3.7_df_adj %>%
   expand_limits(x = 0, y = 0)+
   scale_x_continuous(labels = scales::percent)+
   scale_y_continuous(labels = scales::percent)+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))+
   labs(title = "Gold price and IPC index year variation",
        x = "IPC index variation",
        y = "Gold price variation")
@@ -547,7 +556,8 @@ tbl_3.7_df_adj %>%
   expand_limits(x = 0, y = 0)+
   scale_x_continuous(labels = scales::percent)+
   scale_y_continuous(labels = scales::percent)+
-  theme_graph()+
+  theme(title = element_text(size = title_size),
+        axis.text = element_text(size = axis_size))+
   labs(title = "NYSE index and IPC index year variation",
        x = "IPC index variation",
        y = "NYSE index variation")

@@ -30,7 +30,7 @@ library(zoo)
 library(readxl)
 library(Amelia)
 
-theme_set(theme_minimal())
+theme_set(theme_bw())
 
 theme_graph <- function(){
   theme(
