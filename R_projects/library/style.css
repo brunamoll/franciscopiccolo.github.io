@@ -1,0 +1,26 @@
+/* Whole document: */
+body{
+  font-family: Georgia;
+  font-size: 14pt;
+}
+/* Headers */
+h1{
+	font-family: Arial;
+	font-size: 25
+	color: black;
+}
+h2{
+	font-family: Arial;
+	font-size: 22
+	color: black;
+}
+h3{
+	font-family: Arial;
+	font-size: 19
+	color: black;
+}
+h4{
+	font-family: Arial;
+	font-size: 16
+	color: black;
+}

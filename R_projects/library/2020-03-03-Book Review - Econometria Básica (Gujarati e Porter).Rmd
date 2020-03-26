@@ -3,6 +3,7 @@ title: ""
 date: 2020-03-03
 output:
   html_document:
+    css: style.css
     df_print: paged
     theme: cerulean
     highlight: zenburn
@@ -23,9 +24,24 @@ library(plot3D)
 
 theme_set(theme_bw())
 
-# Parâmetros dos gráficos para facilitar a padronização
-title_size <- 9
-axis_size <- 7.5
+theme_graph <- function(){
+  theme(
+    # background color
+    panel.background = element_rect(fill = "white"),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    text = element_text(family = "Times New Roman"),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+}
+
 graph_color <- "#006666"
 
 # Caminho para a pasta que contém os data sets para cada exercício
@@ -97,9 +113,7 @@ tbl_1.3 %>%
   tidyr::gather("campo", "valor", 2:8) %>% 
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line()+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Anual inflation for selected countries",
        x = "",
        y = "")
@@ -112,43 +126,37 @@ can <- tbl_1.3 %>%
   ggplot(aes(x = EUA, y = Canada))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 fra <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = França))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 ale <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Alemanha))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 ita <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Italia))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 jap <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Japão))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 rei <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Reino.Unido))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 
 gridExtra::grid.arrange(can,fra,ale,ita,jap,rei,nrow = 2,ncol=3, top = textGrob("Inflation rate, country vs USA"))
@@ -187,9 +195,7 @@ tbl_1.4 %>%
   mutate(campo = fct_relevel(campo, levels = c("Mexico", "China", "Suecia"))) %>% 
   ggplot(aes(x = Ano, y = valor,group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
@@ -199,9 +205,7 @@ tbl_1.4 %>%
   filter(campo %in% c("Coreia.sul","Japao")) %>%
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
@@ -212,9 +216,7 @@ tbl_1.4 %>%
   mutate(campo = fct_relevel(campo, levels = c("Suica", "Canada", "Australia", "Reino.unido"))) %>% 
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
@@ -240,8 +242,7 @@ tbl_1.6 %>%
   ggplot(aes(x = investment, y = impressions))+
   geom_point(color = graph_color)+
   geom_smooth(method = "lm", formula = y ~ x, se = F, lty = 20, color = "dark orange")+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Investment and Impressions relation",
        x = "Investmnet",
        y = "Impressions")
@@ -297,10 +298,7 @@ tbl_2.7 %>%
   mutate(type = "men") %>% 
   ggplot(aes(x=share_work_force,y=unemployment,color=type))+
   geom_point(color = graph_color)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank(),
-        legend.position = "none")+
+  theme_graph()+
   labs(title = "Men's unemployment and participation rate",
        x = "Participation rate (%)",
        y = "Unemployment rate (%)")
@@ -328,9 +326,7 @@ tbl_2.7 %>%
   union_all(women_df) %>% 
   ggplot(aes(x=share_work_force,y=avg_hourly_earning,color=type))+
   geom_point()+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Average hourly wage and participation rate",
        x = "Participation rate",
        y = "Hourly wage")
@@ -355,8 +351,7 @@ tbl_2.8 %>%
   ggplot(aes(x = total, y = alimento))+
   geom_point(color = graph_color, shape = 20)+
   geom_smooth(method = "lm", se = F)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Food expenditures and total expenditures",
        x = "Total expenditures",
        y = "Food expenditures")
@@ -449,9 +444,7 @@ tbl_3.6 %>%
   geom_point(aes(x = prod, y = wag, color = production))+
   scale_color_brewer(palette = "Dark2")+
   geom_smooth(aes(x = prod, y = wag), method = "lm",se = F)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Production index and hourly wages",
        x = "Production",
        y = "Wage")
@@ -537,8 +530,7 @@ tbl_3.7_df_adj %>%
   expand_limits(x = 0, y = 0)+
   scale_x_continuous(labels = scales::percent)+
   scale_y_continuous(labels = scales::percent)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Gold price and IPC index year variation",
        x = "IPC index variation",
        y = "Gold price variation")
@@ -555,8 +547,7 @@ tbl_3.7_df_adj %>%
   expand_limits(x = 0, y = 0)+
   scale_x_continuous(labels = scales::percent)+
   scale_y_continuous(labels = scales::percent)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "NYSE index and IPC index year variation",
        x = "IPC index variation",
        y = "NYSE index variation")

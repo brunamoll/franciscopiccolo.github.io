@@ -3,6 +3,7 @@ title: ""
 date: 2020-02-07
 output:
   html_document:
+    css: style.css
     df_print: paged
     theme: cerulean
     highlight: zenburn
@@ -20,15 +21,30 @@ library(pander)
 
 theme_set(theme_bw())
 
-# Parâmetros dos gráficos para facilitar a padronização
-title_size <- 9
-axis_size <- 7.5
+theme_graph <- function(){
+  theme(
+    # background color
+    panel.background = element_rect(fill = "white"),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    text = element_text(family = "Times New Roman"),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+}
+
 graph_color <- "#006666"
 ```
 
-## {.tabset .tabset-fade .tabset-pills}
+# {.tabset .tabset-fade .tabset-pills}
 
-### **Overview**
+## **Overview**
 
 Este livro faz parte de uma coleção da Universidade de Cambridge - *Cambridge Series in Statistics and Probabilistic Mathematics*, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística. 
 
@@ -44,19 +60,19 @@ Após 2 meses (sem muita pressa), consegui finalizar este livro. Alguns capítul
 knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-02-07_data analysis with R.png")
 ```
 
-### **Cap. 1**
+## **Cap. 1**
 
-#### **A brief introduction to R**
+### **A brief introduction to R**
 
-##### **Resumo**
+### **Resumo**
 
 Conseguir absorver o conteúdo deste livro usando uma ferramenta estatística de ponta e gratuita, com este objetivo em mente o primeiro capítulo apresenta o R. Uma ferramenta desenvolvida por uma comunidade engajada que é uma mão na roda para a modelagem estatística e análise de dados. 
 
 Neste capítulo, é fornecido uma visão geral do R, visando deixar o leitor familiarizado com suas funcionalidades. Além disso, tem-se a explicação dos tipos de dados usados na ferramenta (e.g. factors, vectors, data.frames, list e strings), formas de se plotar gráficos (incluindo algumas dicas sobre como se apresentar os dados nos gráficos), instalação e requisição de pacotes no ambiente, modos de acesso à ajuda do sistema (documentação dos pacotes), construção de funções (de maneira bem resumida) e importação de arquivos para o sistema.
 
-##### **Exercícios**
+### **Exercícios**
 
-##### **3) Aplique a função str() no data set *possum* do pacote DAAG e verifique se há valores nulos presentes.**
+### **3) Aplique a função str() no data set *possum* do pacote DAAG e verifique se há valores nulos presentes.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>% str()
@@ -66,7 +82,7 @@ DAAG::possum %>% str()
 DAAG::possum %>% Amelia::missmap(main = "Valores nulos vs não nulos")
 ```
 
-##### **4) Verifique no data set *ais* do pacote DAAG se há desequilíbrio entre homens e mulheres nos esportes analisados.**
+### **4) Verifique no data set *ais* do pacote DAAG se há desequilíbrio entre homens e mulheres nos esportes analisados.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::ais %>% 
@@ -79,27 +95,25 @@ DAAG::ais %>%
   ggplot(aes(x = sport, y = m_proportion))+
   geom_col(fill = graph_color)+
   scale_y_continuous(labels = scales::percent)+
-  theme(title = element_text(title_size),
-        axis.text = element_text(axis_size),
-        axis.title = element_text(axis_size))+
+  theme_graph()+
   labs(title = "Sports balance btw men and women participation",
        x = "",
        y = "Male % participation")+
   coord_flip()
 ```
 
-##### **5) Verifique no data set *rainforest* os valores nulos.**
+### **5) Verifique no data set *rainforest* os valores nulos.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::rainforest %>% 
   Amelia::missmap(main = "Valores nulos vs não nulos")
 ```
 
-### **2**
+## **2**
 
-#### **Styles of data analysis**
+### **Styles of data analysis**
 
-##### **Resumo**
+### **Resumo**
 
 A análise exploratória de dados é uma atividade do dia a dia de muitos profissionais (a cada dia esta habilidade se torna mais importante) e o capítulo 2 irá abordar esta técnica, apresentando uma conceituação para o termo e mostrando formas de se realizar uma análise exploratória com rigor técnico.
 
@@ -107,20 +121,15 @@ Neste capítulo, são explorados os principais gráficos que são usados na ativ
 
 Também é tratado sobre outliers e dados distribuídos de maneira não normal (e.g. com caldas alongadas ) e como lidar com estes dados, seja retirando os outliers ou realizando transformação em log para normalizar a distribuição.
 
-##### **Exercícios**
+### **Exercícios**
 
-##### **1) Apresente a distribuição de idade para cada combinação de *site* e *sex* do data set *possum* do pacote DAAG.**
+### **1) Apresente a distribuição de idade para cada combinação de *site* e *sex* do data set *possum* do pacote DAAG.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>%
   ggplot(aes(x = age))+
   geom_density(fill = graph_color, alpha = .9)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        axis.title = element_text(size = axis_size),
-        axis.text.y = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())+
+  theme_graph()+
   labs(title = "Age distribution",
        subtitle = "Site and Sex segmentation",
        x = "Age",
@@ -128,15 +137,13 @@ DAAG::possum %>%
   facet_grid(site~sex,scales = "free")
 ```
 
-##### **3) Plote um histograma para o campo *earchonch* do data set *possum*. A distribuição deverá parecer bimodal (dois picos). Este é um exemplo de clusterização dos dados, neste caso por conta de que o data set contém informação de homens e mulheres. Plote um gráfico de box plot para homens e mulheres para o campo *earconch*.**
+### **3) Plote um histograma para o campo *earchonch* do data set *possum*. A distribuição deverá parecer bimodal (dois picos). Este é um exemplo de clusterização dos dados, neste caso por conta de que o data set contém informação de homens e mulheres. Plote um gráfico de box plot para homens e mulheres para o campo *earconch*.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::possum %>% 
   ggplot(aes(x = earconch))+
   geom_density(fill = graph_color, alpha = .8)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        axis.title = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Earconch distribution",
        x = "",
        y = "")
@@ -144,17 +151,13 @@ DAAG::possum %>%
 DAAG::possum %>% 
   ggplot(aes(y = earconch, fill = sex))+
   geom_boxplot()+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        axis.title = element_text(size = axis_size),
-        legend.title = element_blank(),
-        legend.position = "top")+
+  theme_graph()+
   labs(title = "Earconch box plot distribution",
        x = "",
        y = "")
 ```
 
-##### **4) Usando o data set *ais* do pacote DAAG, crie gráficos que mostre como os valores de medidas hematológicas (quantidade de células vermelhas, concentração de hemoglobina, hematrócito, células brancas e concentração de plasma) variam por esporte e gênero do atleta.**
+### **4) Usando o data set *ais* do pacote DAAG, crie gráficos que mostre como os valores de medidas hematológicas (quantidade de células vermelhas, concentração de hemoglobina, hematrócito, células brancas e concentração de plasma) variam por esporte e gênero do atleta.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::ais %>% 
@@ -178,12 +181,7 @@ DAAG::ais %>%
   mutate(sport = fct_reorder(sport, valor, .desc = F)) %>% 
   ggplot(aes(y = valor, fill = sport))+
   geom_boxplot(alpha = .6)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        axis.title = element_text(size = axis_size),
-        legend.title = element_blank(),
-        legend.text = element_text(size = axis_size),
-        legend.position = "top")+
+  theme_graph()+
   labs(
     title = "Metrics variations accross sport and genre",
     subtitle = "Genre = Male",
@@ -215,12 +213,7 @@ DAAG::ais %>%
   mutate(sport = fct_reorder(sport, valor, .desc = F)) %>% 
   ggplot(aes(y = valor, fill = sport))+
   geom_boxplot(alpha = .6)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        axis.title = element_text(size = axis_size),
-        legend.title = element_blank(),
-        legend.text = element_text(size = axis_size),
-        legend.position = "top")+
+  theme_graph()+
   labs(
     title = "Metrics variations accross sport and genre",
     subtitle = "Genre = Female",
@@ -230,19 +223,19 @@ DAAG::ais %>%
   facet_wrap(~campo,scales = "free")
 ```
 
-### **3**
+## **3**
 
-#### **Statistical models**
+### **Statistical models**
 
-##### **Resumo**
+### **Resumo**
 
 No capítulo 3, ocorre uma breve explicação sobre o que são e para que servem modelos estatísticos. É feita a explicação sobre os *resíduos*, métodos para escolha de modelos, distribuições dos dados (Bernoulli, Binomial, Poisson e Normal), utilização de números aleatórios na construção de modelos, técnicas de amostragem e principais premissas adotadas na construção de modelos (e.g. normalidade dos dados, amostragem aleatória).
 
 Para a premissa de normalidade dos dados, os autores indicam técnicas para validar isso. A principal é o histograma, porém necessitando ser reforçada pelo qq-plot e também por testes formais (e.g. Jarque-Beta, Anderson-Darling e Shapiro-Wilk).
 
-##### **Exercícios**
+### **Exercícios**
 
-##### **2) Use *y <- rnorm(100)* para gerar 100 números aleatórios de uma distribuição normal (mean = 0 e sd = 1). Calcule a média e o desvio padrão de y. Em seguida, crie um loop e repita esta função 25 vezes e depois insira as 25 médias em uma variável e depois calcule a média e o desvio padrão desta variável.**
+### **2) Use *y <- rnorm(100)* para gerar 100 números aleatórios de uma distribuição normal (mean = 0 e sd = 1). Calcule a média e o desvio padrão de y. Em seguida, crie um loop e repita esta função 25 vezes e depois insira as 25 médias em uma variável e depois calcule a média e o desvio padrão desta variável.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 y <- rnorm(100)
@@ -270,7 +263,7 @@ tibble(mean = mean(df[,1]),
            sd = sd(df[,1]))
 ```
 
-##### **3) Crie uma função para gerar o resultado do exercício 2. Rode esta função várias vezes e plote o resultado em um gráfico de densidade.**
+### **3) Crie uma função para gerar o resultado do exercício 2. Rode esta função várias vezes e plote o resultado em um gráfico de densidade.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Criando a função, x = repetições, y = amostras aleatórias
@@ -288,105 +281,94 @@ fun <- function(x,y){
 # Rodando a função, 25 repetições com 100 amostras cada
 fun(25,100) %>% 
   ggplot(aes(x = a))+
-  geom_density(fill = graph_color, alpha = .4)
+  geom_density(fill = graph_color, alpha = .4)+
+  theme_graph()
 ```
 
-##### **5) Plote uma matriz 3 x 4, apresentando em cada célula um histograma baseado em uma distribuição normal (média = 100 e desvio padrão = 10). Na 1º linha, utilize uma amostra com n = 10, na 2ª n = 100 e na 3ª n = 1000.**
+### **5) Plote uma matriz 3 x 4, apresentando em cada célula um histograma baseado em uma distribuição normal (média = 100 e desvio padrão = 10). Na 1º linha, utilize uma amostra com n = 10, na 2ª n = 100 e na 3ª n = 1000.**
 
 ```{r, echo=F, include=T, message=F,warning=F}
 g_1000_1 <- 
   ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_1000_2 <- 
   ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_1000_3 <- 
   ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_1000_4 <- 
   ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_100_1 <- 
   ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_100_2 <- 
   ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_100_3 <- 
   ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_100_4 <- 
   ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_10_1 <- 
   ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_10_2 <- 
   ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_10_3 <- 
   ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
 g_10_4 <- 
   ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
   geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme(axis.text.x = element_text(size = 8),
-        axis.text.y = element_text(size = 8))+
+  theme_graph()+
   labs(x = "",
        y = "")
 
@@ -396,17 +378,17 @@ gridExtra::grid.arrange(g_1000_1,g_1000_2,g_1000_3,g_1000_4,
                         nrow = 3, ncol = 4)
 ```
 
-##### **7) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.**
+### **7) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 pexp(q = 21,rate = 0.05) # usando a fórmula pronta do R
 ```
 
-### **4**
+## **4**
 
-#### **An introduction to formal inference**
+### **An introduction to formal inference**
 
-##### **Resumo**
+### **Resumo**
 
 Inferência é um pilar importante da estatística, visto que muitas vezes não se pode acessar os dados de uma população toda para se construir um modelo ou gerar conclusões, por questões de custo e tempo. Desta forma, a capacidade de se fazer inferências com base em uma amostra da população é indispensável no processo científico. 
 
@@ -418,11 +400,11 @@ Ao explicarem sobre a construção dos intervalos de confiança, os autores come
 
 Os autores indicam que há um movimento na direção de intervalos de confiança em detrimento do teste de hipótese nas atividades de inferência, por conta da simplicidade dos intervalos e do mau uso do teste de hipótese.
 
-##### **Exercícios**
+### **Exercícios**
 
-##### **1) Usando o data set *nsw74demo* do pacote DAAG, determine com 95% de confiança o intervalo dos seguintes parâmetros:**
+### **1) Usando o data set *nsw74demo* do pacote DAAG, determine com 95% de confiança o intervalo dos seguintes parâmetros:**
 
-##### **(i) Renda média dos grupos de controle e teste em 1974**
+### **(i) Renda média dos grupos de controle e teste em 1974**
 
 A ideia por traz destas questões é que o data set apresenta uma amostra de dados referente a cada grupo. Com base nestas amostras é preciso inferir qual o valor do parâmetro populacional (no caso a média de cada grupo), com um nível de confiança de 95%. Desta forma, será usada uma amostra para inferir o valor populacional.
 
@@ -436,7 +418,7 @@ DAAG::nsw74demo %>%
   ggplot(aes(x = re74, fill = group))+
   geom_histogram(alpha = .4)+
   scale_x_log10(label = scales::comma)+
-  theme(legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Income distribution between groups (1974)",
        x = "Income, log10 scale",
        y = "")
@@ -482,7 +464,7 @@ Com base na tabela acima pode-se inferir, com grau de confiança de 95%, que a r
 
 Obs: Importante notar que esta confiança de 95% não indica que há 95% de chance ou probabilidade de que a média populacional esteja neste intervalo (até por que não sabemos qual o valor desta média). Porém a confiança é em relação ao processo de geração dos intervalos e esta confiança indica que, se caso forem gerados diversos intervalos (e.g. 100), 95% deles conteriam o verdadeiro parâmetro populacional, que neste caso é a média da população.
 
-##### **(ii) Renda média dos grupos de controle e teste em 1975**
+### **(ii) Renda média dos grupos de controle e teste em 1975**
 
 Esta questão pede o mesmo cálculo acima, porém para os dados de 1975. A conclusão seguirá a mesma lógica da conclusão anterior.
 
@@ -502,7 +484,7 @@ DAAG::nsw74demo %>%
             upper_limit = mean + (sem*t_value))
 ```
 
-##### **(iii) Renda média dos grupos de controle e teste em 1978**
+### **(iii) Renda média dos grupos de controle e teste em 1978**
 
 Este questão também pede uma análise igual aos itens (i) e (ii), portanto, basta replicar os cálculos acima, mudando apenas de **re75** para **re78**. Veja que para o grupo de teste, a renda média estimada aumentou. Desta forma, o estudo feito parece poder concluir que a atividade realizada com os trabalhadores no grupo de teste é efetiva no aumento salarial após um certo período de tempo. O [artigo](https://www.uh.edu/~adkugler/Dehejia&Wahba_JASA.pdf) que realiza o estudo explica melhor o que foi feito no grupo de teste e corrobora a conclusão.
 
@@ -524,7 +506,7 @@ DAAG::nsw74demo %>%
 
 Veja que para os dados de 1978 os intervalos se inverteram entre os grupos. Agora o intervalo do grupo de controle está mais baixo que o intervalo do grupo de teste. Talves fosse esta a ideia do exercício, mostrar que o grupo de teste conseguiu aumentar sua renda média ao longo do tratamento realizado.
 
-##### **(iv) Diferença de renda entre o grupo de controle e teste para o ano de 1978**
+### **(iv) Diferença de renda entre o grupo de controle e teste para o ano de 1978**
 
 Para esta questão, pede-se uma estimativa com nível de confiança de 95% para a diferença de renda entre os grupos de controle e teste, para o ano de 1978. De acordo com o livro, a fórmula para inferir sobre esta diferença é dada por:
 
@@ -548,7 +530,7 @@ $SED = 796,6$
 
 Conclusão: A diferença de renda estimada entre os grupos, com 95% de confiança, é de 796,6 (dólares provavelmente).
 
-##### **2) Plote um gráfico que mostre, para graus de liberdade de 1 até 100, a mudança no valor da estatística t, com nível de confiança de 95%. Compare dois gráficos com esta visualização, onde um apresente os valores dos eixos sem transformação e o outro transforme o eixo x em log(estatística-t) e y em log(graus de liberdade). Verifique qual gráfico apresenta melhor a mudança no valor da estatística t por conta da mudança nos graus de liberdade.**
+### **2) Plote um gráfico que mostre, para graus de liberdade de 1 até 100, a mudança no valor da estatística t, com nível de confiança de 95%. Compare dois gráficos com esta visualização, onde um apresente os valores dos eixos sem transformação e o outro transforme o eixo x em log(estatística-t) e y em log(graus de liberdade). Verifique qual gráfico apresenta melhor a mudança no valor da estatística t por conta da mudança nos graus de liberdade.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 t_value <- data.frame(
@@ -563,10 +545,7 @@ graph_1 <- t_value %>%
   geom_line(color = graph_color)+
   scale_x_log10()+
   scale_y_log10()+
-  theme(title = element_text(size = title_size),
-        panel.grid = element_blank(),
-        axis.text = element_text(size =  axis_size),
-        axis.title = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Log transformation applied",
        x = "log_10 of Degrees of freedom",
        y = "log_10 of t-statistics")
@@ -577,10 +556,7 @@ graph_2 <- t_value %>%
   ) %>% 
   ggplot(aes(x = df,y = t_value,group = 1))+
   geom_line(color = graph_color)+
-  theme(title = element_text(size = title_size),
-        panel.grid = element_blank(),
-        axis.text = element_text(size =  axis_size),
-        axis.title = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Log transformation not applied",
        x = "Degrees of freedom",
        y = "t-statistics")
@@ -588,7 +564,7 @@ graph_2 <- t_value %>%
 gridExtra::grid.arrange(graph_1,graph_2, ncol = 2)
 ```
 
-##### **3) Gere uma amostra aleatória de 10 valores com base em uma distribuição normal com média 0 e desvio padrão 2. Use a função *t.test()* para testar a hipótese nula de que a média é 0. Depois gere novamente uma amostra aleatória de 10 valores com média de 1.5 e desvio padrão 2, usando a função *t.test()* para testar a hipótese da média ser 0.**
+### **3) Gere uma amostra aleatória de 10 valores com base em uma distribuição normal com média 0 e desvio padrão 2. Use a função *t.test()* para testar a hipótese nula de que a média é 0. Depois gere novamente uma amostra aleatória de 10 valores com média de 1.5 e desvio padrão 2, usando a função *t.test()* para testar a hipótese da média ser 0.**
 
 Conforme visto no capítulo, o teste de hipótese irá utilizar o **valor-p** para decidir se a hipótese nula deve ou não ser rejeitada. Há duas formas de se realizar o teste, ou seja, encontrar o **valor-p**, a primeira é usando a fórmula do R **t.test()** e a outra é fazendo o cálculo na mão (apesar de que este modo também usará uma fórmula pronta do R para encontrar a área sobre a curva de distribuição **t**).
 
@@ -632,7 +608,7 @@ a <- rnorm(n = 10, mean = 0, sd = 1.5)
 pander::pander(t.test(a, mu = 0, conf.level = 0.975))
 ```
 
-##### **4) Desenvolva uma função para fazer o cálculo acima do valor-p, com uma amostra de n = 10, média = 0 e sd = 1. Crie um vetor de 50 valores-p com base nesta função e plote em um gráfico este vetor.**
+### **4) Desenvolva uma função para fazer o cálculo acima do valor-p, com uma amostra de n = 10, média = 0 e sd = 1. Crie um vetor de 50 valores-p com base nesta função e plote em um gráfico este vetor.**
 
 O exercício pede para usar 50 repetições, porém eu preferi fazer com 1.000 para melhorar a visualização. Veja que como o valor-p é uma probabilidade cumulativa, seu valor fica entre 0 e 1.
 
@@ -654,14 +630,15 @@ df <- data.frame(
 
 ggplot(data = df, aes(x = a))+
   geom_histogram(fill = graph_color, binwidth = .1)+
-  expand_limits(x = 1)
+  expand_limits(x = 1)+
+  theme_graph()
 ```
 
-### **5**
+## **5**
 
-#### **Regression with a single predictor**
+### **Regression with a single predictor**
 
-##### **Resumo**
+### **Resumo**
 
 O foco deste capítulo será em modelos de regressão linear. As premissas dos modelos deste capítulo serão: **(i) modelo com apenas uma variável**, **(ii) valores de y independentes** e **(iii) dado um valor de x, o valor de y se distribuirá normalmente com uma média dada pela função linear de x**.
 
@@ -706,9 +683,9 @@ Após explicarem sobre outliers e como tratar este aspecto dos dados, os autores
 
 Ao finalizarem a explicação sobre acuracidade dos parâmetros, os autores apresentam a técnica de **cross-validation**, usada também para reforçar o resultado do modelo criado. Esta técnica irá segmentar os registros em **teste** e **treino** de forma que o modelo criado nos registros de **treino** serão testados com os registros no **teste**. Junto com esta técnica, há o **boostraping**, que faz repetições do processo de amostragem (com reposição ou sem), sendo usada junto com o **cross-validation** para repetir várias versões do modelo para analisar variações da acuracidade e aumentar a confiança da conclusão gerada.
 
-##### **Exercícios**
+### **Exercícios**
 
-##### **1) Usando os dados abaixo, referente à duas amostras de dados sobre elasticidades de elásticos, plote um gráfico que correlacione a distância e a elasticidade de cada grupo.**
+### **1) Usando os dados abaixo, referente à duas amostras de dados sobre elasticidades de elásticos, plote um gráfico que correlacione a distância e a elasticidade de cada grupo.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 data_set_1 <- data.frame(stretch = c(46,54,48,50,44,42,52),
@@ -720,10 +697,11 @@ data_set_2 <- data.frame(stretch = c(25,45,35,40,55,50,30,50,60),
 # Plotando os dados
 ggplot2::ggplot()+
   geom_point(data = data_set_1, aes(x = stretch, y = distance), shape = 2, color = "blue")+
-  geom_point(data = data_set_2, aes(x = stretch, y = distance), shape = 3, color = "red")
+  geom_point(data = data_set_2, aes(x = stretch, y = distance), shape = 3, color = "red")+
+  theme_graph()
 ```
 
-##### **2) Crie um modelo de regressão linear para stretch ~ distance. Para cada modelo, determine (i) os valores previstos e os erros padrão, (ii) o R² e (ii) indique as principais diferenças entre os data sets. Em seguida, use uma regressão robusta através da fórmula rlm() para ver a diferença com a regressão lienar tradicional.**
+### **2) Crie um modelo de regressão linear para stretch ~ distance. Para cada modelo, determine (i) os valores previstos e os erros padrão, (ii) o R² e (ii) indique as principais diferenças entre os data sets. Em seguida, use uma regressão robusta através da fórmula rlm() para ver a diferença com a regressão lienar tradicional.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Modelo linear para o data_set_1
@@ -752,7 +730,7 @@ summary(MASS::rlm(formula = stretch ~ distance, data = data_set_2)) %>% pander()
 
 ```
 
-##### **3) Usando o data set cars, plote a distância (para frenagem) versus a velocidade. Crie uma linha de regressão para esta correlação. Em seguida, crie uma linha quadrática para ver se o modelo irá melhorar.**
+### **3) Usando o data set cars, plote a distância (para frenagem) versus a velocidade. Crie uma linha de regressão para esta correlação. Em seguida, crie uma linha quadrática para ver se o modelo irá melhorar.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 cars %>% 
@@ -763,8 +741,7 @@ cars %>%
   scale_color_manual(values = c("linear" = "blue",
                                 "quadratic" = "red"),
                      labs(color = ""))+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(axis_size))+
+  theme_graph()+
   labs(title = "Modelo linear e quadrático para as variáveis",
        subtitle = "Linha quadrática com melhor performance",
        x = "Speed",
@@ -775,8 +752,8 @@ summary(lm(formula = dist ~ speed, data = cars)) %>% pander()
 summary(lm(formula = dist ~ speed + I(speed^2), data = cars)) %>% pander()
 ```
 
-##### **4) Use o data set oddbooks do pacote DAAG para as alternativas abaixo:  ** 
-##### **a) Plote log(weight) versus log(volume) e estabeleça uma linha de regressão.**
+### **4) Use o data set oddbooks do pacote DAAG para as alternativas abaixo:** 
+### **a) Plote log(weight) versus log(volume) e estabeleça uma linha de regressão.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::oddbooks %>% 
@@ -784,10 +761,11 @@ DAAG::oddbooks %>%
          area = round(height * thick, digits = 1)) %>% 
   ggplot()+
   geom_point(aes(x = log(weight), y = log(volume)))+
-  geom_smooth(aes(x = log(weight), y = log(volume)), method = "lm", formula = y ~ x, se = F)
+  geom_smooth(aes(x = log(weight), y = log(volume)), method = "lm", formula = y ~ x, se = F)+
+  theme_graph()
 ```
 
-##### **b) Plote log(weight) versus log(area) e estabeleça uma linha de regressão.**
+### **b) Plote log(weight) versus log(area) e estabeleça uma linha de regressão.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 DAAG::oddbooks %>% 
@@ -795,6 +773,7 @@ DAAG::oddbooks %>%
          area = round(height * thick, digits = 1)) %>% 
   ggplot()+
   geom_point(aes(x = log(weight), y = log(area)))+
-  geom_smooth(aes(x = log(weight), y = log(area)), method = "lm", formula = y ~ x, se = F)
+  geom_smooth(aes(x = log(weight), y = log(area)), method = "lm", formula = y ~ x, se = F)+
+  theme_graph()
 ```
 
