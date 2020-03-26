@@ -3,6 +3,7 @@ title: ""
 date: 2019-11-30
 output:
   html_document:
+    css: style.css
     df_print: paged
     theme: cerulean
     highlight: zenburn
@@ -26,9 +27,24 @@ library(scales)
 
 theme_set(theme_bw())
 
-title_size <- 10
-legend.text_size <- 9
-axis.size <- 8
+theme_graph <- function(){
+  theme(
+    # background color
+    panel.background = element_rect(fill = "white"),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    text = element_text(family = "Times New Roman"),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+}
+  
 graph_color <- "#006666"
 ```
 
@@ -51,7 +67,7 @@ df_gdp_pc %>%
                         "Peru","Argentina","Bolivia",
                         "Uruguay","Paraguay")) %>% 
   arrange(date) %>% 
-  head(20)
+  head(10)
 ```
 
 Having the data organized as a data.frame, lets see the GDP per capita of the selected countries between 1990 and 2010.
@@ -67,10 +83,7 @@ df_gdp_pc %>%
   ggplot(aes(x=country,y=value))+
   geom_col(fill="dark orange")+
   coord_flip()+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        legend.position = "none",
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "GDP per Capita",
        subtitle = "2010 US$ conversion",
        x = "",
@@ -114,10 +127,7 @@ df_gdp_pc_2 %>%
   colour = "#3E39CD", size = 1,
   colour_x = "#BD274A", colour_xend = "#60AF1A")+
   scale_x_continuous(labels = scales::comma)+ # separando por vírgula ('000)
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank())+
+  theme_graph()+
   labs(title = "20 countries with the highest per capita GDP variation",
        subtitle = "Group: Low income (GDP per capita <= 5.000 US$ (2010))")
 ```
@@ -153,10 +163,7 @@ df_gdp_pc_2 %>%
   colour = "#3E39CD", size = 1,
   colour_x = "#BD274A", colour_xend = "#60AF1A")+
   scale_x_continuous(labels = comma)+ # separando por vírgula ('000)
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank())+
+  theme_graph()+
   labs(title = "20 countries with the highest per capita GDP variation",
        subtitle = "Group: Middle income (GDP per capita <= 15.000 US$ (2010))")
 ```
@@ -190,10 +197,7 @@ df_gdp_pc_2 %>%
   colour = "#3E39CD", size = 1,
   colour_x = "#BD274A", colour_xend = "#60AF1A")+
   scale_x_continuous(labels = comma)+ # separando por vírgula ('000)
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank())+
+  theme_graph()+
   labs(title = "20 countries with the highest per capita GDP variation",
        subtitle = "Group: Up Middle income (GDP per capita <= 45.000 US$ (2010))")
 ```
@@ -227,10 +231,7 @@ df_gdp_pc_2 %>%
   colour = "#3E39CD", size = 1,
   colour_x = "#BD274A", colour_xend = "#60AF1A")+
   scale_x_continuous(labels = comma)+ # separando por vírgula ('000)
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank())+
+  theme_graph()+
   labs(title = "20 countries with the highest per capita GDP variation",
        subtitle = "Group: High (GDP per capita <= 60.000 US$ (2010))")
 ```
@@ -264,10 +265,7 @@ df_gdp_pc_2 %>%
   colour = "#3E39CD", size = 1,
   colour_x = "#BD274A", colour_xend = "#60AF1A")+
   scale_x_continuous(labels = comma)+ # separando por vírgula ('000)
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank())+
+  theme_graph()+
   labs(title = "20 countries with the highest per capita GDP variation",
        subtitle = "Group: Up High income (GDP per capita <= 90.000 US$ (2010))")
 ```
@@ -300,11 +298,7 @@ df_gdp_pc_3 %>%
   geom_line(size=1)+
   geom_point()+
   scale_y_continuous(labels = scales::comma)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        legend.position = "right",
-        legend.title = element_blank(),
-        axis.text.x = element_text(size = 8,angle = 70,vjust = .7))+
+  theme_graph()+
   labs(title = "Brazil GDP in 4 different visions",
        x = "",
        y = "")
@@ -337,12 +331,7 @@ df_gov_debt %>%
   ggplot(aes(x=date,y=value,group=country,color=country))+
   geom_line(size=1)+
   geom_point()+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        legend.position = "right",
-        legend.title = element_blank(),
-        axis.text.x = element_text(size = 8,angle = 70,vjust = 0.6),
-        axis.title.x = element_blank())+
+  theme_graph()+
   labs(title = "Share of debt over GDP",
        subtitle = "",
        x = "",
@@ -363,11 +352,8 @@ wbstats::wb(indicator = "NE.TRD.GNFS.ZS",country = "countries_only") %>%
   ggplot(aes(x=date,y=value,group=country,color=country))+
   geom_line(size=1,alpha=.6)+
   geom_point()+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        legend.position = "right",
-        legend.title = element_blank(),
-        axis.text.x = element_text(size=7,angle = 70,vjust = .8))+ # ajustando o eixo x
+  scale_x_discrete(breaks = c(seq(1970,2020,by = 10)))+
+  theme_graph()+
   labs(title = "% Exp + Imp over GDP",
        x = "",
        y = "")
@@ -386,11 +372,7 @@ wbstats::wb(indicator = "SI.POV.GINI",country = "countries_only",mrv = 10) %>%
   mutate(country = fct_reorder(country,value,.desc = T)) %>% 
   ggplot(aes(x=date,y=value,group=country,color=country))+
   geom_line(size=1)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis.size),
-        legend.position = "right",
-        legend.title = element_blank(),
-        axis.text.x = element_text(size=8,angle = 70,vjust = .8))+ # ajustando o eixo x
+  theme_graph()+
   labs(title = "Latin America Gini index",
        x = "",
        y = "")
