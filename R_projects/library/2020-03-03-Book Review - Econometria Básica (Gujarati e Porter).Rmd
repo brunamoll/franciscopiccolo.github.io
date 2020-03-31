@@ -57,7 +57,7 @@ knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.g
 
 ### **A natureza da análise de regressão**
 
-### **Resumo**
+#### **Resumo**
 
 Este é um capítulo introdutório que mostra estabelece alguns pilares da análise de regressão. Primeiro é feito uma definição para o termo regressão, que segundo os autores é *o estudo da dependência de uma variável em relação a uma ou mais variáveis explicativas.* Também tem-se estabelecido o objetivo da regressão, que é estimar o valor médio da variável dependente usando os valores conhecidos da variável explicativa.
 
@@ -65,9 +65,9 @@ Na sequência, os autores mostram a diferença de relações estatísticas e rel
 
 Por fim, os autores comentam sobre os tipos de dados normalmente presentes nos modelos econométricos. Estes dados são **séries temporais** e **corte transversal**.
 
-### **Exercícios**
+#### **Exercícios**
 
-### **1.1) Traga os dados da tabela 1.3 sobre o índice de preço ao consumidor (IPC) para responder as alternativas.**
+#### **1.1) Traga os dados da tabela 1.3 sobre o índice de preço ao consumidor (IPC) para responder as alternativas.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",sep = ""),
@@ -79,7 +79,7 @@ tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",sep = ""),
 tbl_1.3[sample(nrow(tbl_1.3),10), ]
 ```
 
-### **a) Com base nos dados forneceidos, calcule a taxa de inflação de cada país:**
+#### **a) Com base nos dados forneceidos, calcule a taxa de inflação de cada país:**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Taxa de inflação (1985 = 100, até 2005)
@@ -91,7 +91,7 @@ ipc_total <- ipc_total[2,2:8]-ipc_total[1,2:8]
 knitr::kable(ipc_total, align = "c")
 ```
 
-### **b) Represente graficamente a taxa de inflação de cada país:**
+#### **b) Represente graficamente a taxa de inflação de cada país:**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.3 %>%
@@ -106,7 +106,7 @@ tbl_1.3 %>%
        y = "")
 ```
 
-### **1.2) a) Usando a tabela 1.3, represente as taxas de inflação do Canará, França, Alemanha e Itália, Japão e Reino Unido em relação à taxa do EUA.**
+#### **1.2) a) Usando a tabela 1.3, represente as taxas de inflação do Canará, França, Alemanha e Itália, Japão e Reino Unido em relação à taxa do EUA.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 can <- tbl_1.3 %>% 
@@ -155,7 +155,7 @@ rei <- tbl_1.3 %>%
 gridExtra::grid.arrange(can,fra,ale,ita,jap,rei,nrow = 2,ncol=3, top = textGrob("Inflation rate, country vs USA"))
 ```
 
-### **1.3) A tabela abaixo apresenta as taxas de câmbio em sete países industrializados, entre 1985 e 2006.**
+#### **1.3) A tabela abaixo apresenta as taxas de câmbio em sete países industrializados, entre 1985 e 2006.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.4 <- read.table(file = paste(path,"tabela_1.4_cambio.txt",sep = ""),
@@ -173,7 +173,7 @@ tbl_1.4 <-
 tbl_1.4[sample(nrow(tbl_1.4),10), ]
 ```
 
-### **a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:**
+#### **a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.4 %>% 
@@ -221,7 +221,7 @@ tbl_1.4 %>%
        y = "Currency per 1 US$")
 ```
 
-### **1.7) A tabela abaixo apresenta o orçamento de publicidade com as impressões retidas (através de uma pesquisa feita com 4 mil adultos).**
+#### **1.7) A tabela abaixo apresenta o orçamento de publicidade com as impressões retidas (através de uma pesquisa feita com 4 mil adultos).**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.6 <- read.table(file = paste(path,"tabela_1.6_publicidade.txt",sep = ""),
@@ -234,7 +234,7 @@ tbl_1.6 <- read.table(file = paste(path,"tabela_1.6_publicidade.txt",sep = ""),
 tbl_1.6[sample(nrow(tbl_1.6),10), ]
 ```
 
-### **a) Mostre a relação entre impressões e o investimento em publicidade.**
+#### **a) Mostre a relação entre impressões e o investimento em publicidade.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.6 %>% 
@@ -252,7 +252,7 @@ tbl_1.6 %>%
 
 ### **Análise de regressão com duas variáveis: Algumas ideias básicas**
 
-### **Resumo**
+#### **Resumo**
 
 Neste capítulo, os autores abordam de maneira mais aprofundada o modelo de regressão linear, introduzindo o coneito de **valor esperado de Y** condicional e incondicional. Indica-se que a essência do modelo de regressão é fornecer condições para o valor médio esperado da variável (Y) estudada, ou seja, o modelo de regressão irá gerar uma equação que explicará o valor médio desta variável Y.
 
@@ -262,9 +262,9 @@ Os modelos lineares deste livro, segundo os autores, serão lineares nas variáv
 
 Por fim, os autores comentam sobre os erros estocásticos, que estão sempre presentes no modelo de regressão para representar todas variáveis não incluídas no modelo e ruídos aleatórios que não podem ser mapeados. A não inclusão de algumas variáveis no modelo é explicada no sentido de que isso é algo de certa forma positivo, pois é muito custoso coletar todas as variáveis e o aumento da complexidade do modelo não irá gerar aumento de performance de mesma magnitude. Outra ideia mencionada pelos autores referente aos erros estocásticos se refere à natureza aleatória do ser humano, que impacta a variável estudada **Y** e esta aleatoriedade será descrita nestes erros (**$\mu$**).
 
-### **Exercícios**
+#### **Exercícios**
 
-### **2.14) Use a tabela abaixo com dados do EUA sobre o mercado de trabalho para responder as seguinter alternativas.**
+#### **2.14) Use a tabela abaixo com dados do EUA sobre o mercado de trabalho para responder as seguinter alternativas.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.7 <- read.table(file = paste(path,"tabela_2.7_labour_market.txt",sep = ""),
@@ -277,7 +277,7 @@ tbl_2.7 <- read.table(file = paste(path,"tabela_2.7_labour_market.txt",sep = "")
 tbl_2.7[sample(nrow(tbl_2.7),10), ]
 ```
 
-### **a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.**
+#### **a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 women_df <- 
@@ -307,7 +307,7 @@ tbl_2.7 %>%
        y = "Unemployment rate (%)")
 ```
 
-##### **c) Represente graficamente a taxa de participação de homens e mulheres em relação ao ganho médio por hora.**
+#### **c) Represente graficamente a taxa de participação de homens e mulheres em relação ao ganho médio por hora.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 women_df <- 
@@ -337,7 +337,7 @@ tbl_2.7 %>%
        y = "Hourly wage")
 ```
 
-##### **2.15) Use os dados da tabela 2.8, sobre despesa com alimentação e despesa total (em rupias), de uma amostra de 55 domicílios da Índia, para responder as alternativas abaixo.**
+#### **2.15) Use os dados da tabela 2.8, sobre despesa com alimentação e despesa total (em rupias), de uma amostra de 55 domicílios da Índia, para responder as alternativas abaixo.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.8 <- read.table(file = paste(path,"tabela_2.8_despesa_india.txt",sep = ""),
@@ -349,7 +349,7 @@ tbl_2.8 <- read.table(file = paste(path,"tabela_2.8_despesa_india.txt",sep = "")
 tbl_2.8[sample(nrow(tbl_2.8),10), ]
 ```
 
-##### **a) Represente graficamente os dados, colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais e em seguida, insira uma linha de regressão.**
+#### **a) Represente graficamente os dados, colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais e em seguida, insira uma linha de regressão.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.8 %>% 
@@ -363,9 +363,9 @@ tbl_2.8 %>%
        y = "Food expenditures")
 ```
 
-### **3**
+## **3**
 
-#### **Modelo de regressão de duas variáveis: o problema da estimação**
+### **Modelo de regressão de duas variáveis: o problema da estimação**
 
 #### **Resumo**
 
@@ -395,7 +395,7 @@ Por fim, há uma explicação sobre as medidas de precisão do modelo de regress
 
 #### **Exercícios**
 
-##### **3.18) Na tabela abaixo consta a classificação de dez estudantes nas provas parcial e final de estatística. Calcule o coeficiente de correlação de ranking de Spearman e interprete os resultados.**
+#### **3.18) Na tabela abaixo consta a classificação de dez estudantes nas provas parcial e final de estatística. Calcule o coeficiente de correlação de ranking de Spearman e interprete os resultados.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 df_3.18 <- data.frame(
@@ -410,7 +410,7 @@ df_3.18[sample(nrow(df_3.18),10), ]
 cor.test(df_3.18$prova_parcial,df_3.18$prova_final,method = "spearman") %>% pander()
 ```
 
-##### **3.19) A equação abaixo mostra a relação entre a taxa de câmbio e a inflação para o Canadá e Estados Unidos para o período de 1985 e 2005**
+#### **3.19) A equação abaixo mostra a relação entre a taxa de câmbio e a inflação para o Canadá e Estados Unidos para o período de 1985 e 2005**
 
 $\widehat{Y_t} = 0.912 + 2.25X_t$ 
 
@@ -420,15 +420,15 @@ $\widehat{Y_t}$ = DC/US$ (taxa de câmbio do Canadá em relação ao Dólar)
 
 $X_t$ = inflação americana / inflação do canadá
 
-##### **a) Interprete a regressão:**
+#### **a) Interprete a regressão:**
 
 R: A regressão indica que conforme a inflação é maior nos EUA do que no Canadá, a moeda canadense irá se desvalorizar com relação ao dólar, pois a taxa de câmbio (Y) irá aumentar, precisando de mais DC para adquiri um US$. A regressão indica que, dado um período inicial com inflação zero, a taxa de câmbio será de 0.912, ou seja, será necessário DC 0.912 dólar canadense para adquirir 1 dólar americano. O valor de r² de 44% indica que o modelo possui outras variáveis que poderiam auxiliar na explicação desta variação na taxa de câmbio.
 
-##### **b) O valor positivo de X faz sentido econômico?** 
+#### **b) O valor positivo de X faz sentido econômico?** 
 
 R: Acredito que não, pois a inflação maior no EUA deveria reduzir a taxa de câmbio do Canadá e não aumentá-la. Desta forma, o valor de X deveria ser negativo.
 
-##### **3.20) A tabela abaixo apresenta dados do índice de produção por hora (X) e remuneração real por hora (Y) para os setores empresarial e empresarial não agrícola, entre 1960 e 2005. O ano base é 1992 = 100.**
+#### **3.20) A tabela abaixo apresenta dados do índice de produção por hora (X) e remuneração real por hora (Y) para os setores empresarial e empresarial não agrícola, entre 1960 e 2005. O ano base é 1992 = 100.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.6 <- read.table(file = paste(path,"tabela_3.6_produtividade_e_salario.txt",sep = ""),
@@ -440,7 +440,7 @@ tbl_3.6 <- read.table(file = paste(path,"tabela_3.6_produtividade_e_salario.txt"
 tbl_3.6[sample(nrow(tbl_3.6),10), ]
 ```
 
-##### **a) Represente graficamente Y contra X para os dois setores da economia separadamente.**
+#### **a) Represente graficamente Y contra X para os dois setores da economia separadamente.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.6 %>% 
@@ -458,7 +458,7 @@ tbl_3.6 %>%
        y = "Wage")
 ```
 
-##### **c) Estime uma regressão de MQO de Y contra X.**
+#### **c) Estime uma regressão de MQO de Y contra X.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.6 %>% 
@@ -468,7 +468,7 @@ tbl_3.6 %>%
 summary(lm(Y~X, data = df_tbl_3.6)) %>% pander()
 ```
 
-##### **3.22) A tabela abaixo mostra o preço do ouro, o índice NYSE e o índice IPC entre 1974 e 2006. Use-a para responder as alternativas abaixo:**
+#### **3.22) A tabela abaixo mostra o preço do ouro, o índice NYSE e o índice IPC entre 1974 e 2006. Use-a para responder as alternativas abaixo:**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.7 <- read.table(file = 
@@ -482,7 +482,7 @@ tbl_3.7 <- read.table(file =
 tbl_3.7[sample(nrow(tbl_3.7),10), ]
 ```
 
-##### **a) Assinale, em um mesmo diagrama de dispersão, os preços do ouro, o IPC e o índice NYSE.**
+#### **a) Assinale, em um mesmo diagrama de dispersão, os preços do ouro, o IPC e o índice NYSE.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.7 %>% 
@@ -513,7 +513,7 @@ plot3D::scatter3D(x, y, z,
                   zlab = "ipc_index")
 ```
 
-##### **b) Supõe-se que um investimento funcione como proteção contra a inflação se seu preço ou sua taxa de retorno acompanha, pelo menos, a taxa de inflação. Para testar esta hipótese, ajuste o seguinte modelo, supondo que o diagrama de dispersão elaborado no item (a) seja adequado.**
+#### **b) Supõe-se que um investimento funcione como proteção contra a inflação se seu preço ou sua taxa de retorno acompanha, pelo menos, a taxa de inflação. Para testar esta hipótese, ajuste o seguinte modelo, supondo que o diagrama de dispersão elaborado no item (a) seja adequado.**
 
 $$gold.price = \beta_1 + \beta_2 + IPC + \mu$$
 $$NYSE.index = \beta_1 + \beta_2 + IPC + \mu$$
@@ -565,11 +565,11 @@ tbl_3.7_df_adj %>%
 
 Aparentemente, o ouro é um ativo mais interessante para edge do que o índice NYSE, porém há dois outliers do preço do ouro que está fazendo a regressão gerar um parâmetro positivo.
 
-### **4**
+## **4**
 
-#### **Modelo clássico de regressão linear normal**
+### **Modelo clássico de regressão linear normal**
 
-##### **Resumo**
+#### **Resumo**
 
 Este capítulo é focado no modelo clássico de regressão linear normal que introduz o conceito de distribuição normal dos termos de erro. A ideia é que, como dito anteriormente, o objetivo do modelo de regressão é gerar estimadores ($\hat{\beta}$) para o parâmetro populacional ($\beta$) e como se está falando sobre estimadores, conclui-se que eles irão variar de amostra para amostra, ou seja, são variáveis aleatórias que deverão seguir alguma distribuição de probabilidade. 
 
@@ -577,21 +577,69 @@ Quando se indica que os estimadores devem seguir uma distribuição de probabili
 
 A hipótese de normalidade dos resíduos, pode ser fundamentado no **teorema do limite central**. Pelo fato de que os resíduos representam diversas variáveis não inclusas no modelo, há a ideia de que quando diversas variáveis são representadas por uma únida e suas distribuições de probabilidade consolidadas (somadas), o resultado será uma distribuição normal. Ao formar esta hipótese do modelo, pode-se realizar testes estatísticos (t, F, x²) dos estimadores para inferir sobre o verdadeiro valor dos parâmetros populacionais. 
 
-### **5**
+## **5**
 
-#### **A regressão de duas variáveis: estimação de intervalo e teste de hipóteses**
+### **A regressão de duas variáveis: estimação de intervalo e teste de hipóteses**
 
-##### **Resumo**
+#### **Resumo**
 
+Após entender as premissas do modelo clássico de regressão linear no capítulo anterior os autores neste capítulo desenvolvem o modelo de regressão completo para realizar estimativas e inferências sobre os estimadores estudados ($\hat{\beta_1}$ e $\hat{\beta_2}$). 
 
+Antes de iniciar no desenvolvimento das estimativas e validação de sua acertividade, os autores indicam a premissa de que o valor esperado dos estimadores são o verdadeiro parâmetro populacional, ou seja $e(\hat{\beta}) = \beta$. Outro ponto indicado é que a medida de confiabilidade para um estimdor é seu erro padrão. Conhecendo estas premissas, pode-se executar o modelo e validar as estimativas. A validação das estimativas é apresentada das seguintes formas:
 
+**1. Intervalo de confiança:** Neste método, é feita a construção de intervalos de confiança, podendo ocorrer de duas formas. Uma quando se conhece a variância populacional, usando a distribuição normal para gerar os valores críticos e outra quando não se conhece a variância populacional, devendo neste caso usar a distribuição t. Em ambos os casos, a amplitude do intervalo será proporcional ao erro padrão dos estimadores.
 
+A fórmula abaixo mostra o cálculo do intervalo para cada cenário:
 
+**Variância conhecida, usa-se tabela z:** $\hat{\beta} + ou - (z_\frac{\alpha}{2} \times ep(\hat{\beta}))$
 
+**Variância desconhecida, usa-se tabela t:** $\hat{\beta} + ou - (t_\frac{\alpha}{2} \times ep(\hat{\beta}))$
 
+A proposta deste método é que, ao se construírem vários intervalos (usando diferentes amostras de dados, que gerarão diferentes estimatores e diferentes erros padrão), o parâmetro populacional estará contido em ($1-\alpha$) dos casos. A variável $\alpha$ é chamada de nível de significância e o valor $1-\alpha$ é o coeficiente de confiança. Por exemplo, se $\alpha$ for 5%, o coeficiente de confiança será de 95%, neste caso, se forem construídos 100 intervalos, o parâmetro populacional $\beta$ estará contido em 95 intervalos. Não dá pra saber em qual intervalo o parâmetro estará, pois é uma variável desconhecida, porém a confiança (de 95%) é dada ao processo de criação dos intervalos.
 
+**2. Teste de hipóteses:** Este modo pode usar o intervalo de confiança visto anteriormente ou usar o teste de significância, que virá junto com o uso do **valor-p**. O ponto inicial deste método é estabelecer uma hipótese nula e uma alternativa. A hipótese nula, para modelos de regressão, é indicar que o estimador ($\hat{\beta}$) é igual a zero e a alternativa é de que o estimador é diferente de zero. 
 
+No caso de se usar o intervalo de confiança, se o intervalo não conter a hipótese nula, ela poderá ser rejeitada. Por exemplo, se H0: $\beta_2 = 0$ e H1: $\beta_2 \neq 0$ e o intervalo gerado seja [$2\leq \beta_2 \leq 4$], pode-se rejeitar H0.
 
+Ao se optar pelo teste de significância, o objetivo será encontrar o valor crítico de **z** ou **t** (caso se conheça ou não a variância populacional). Ao encontrar o valor crítico, basta usar a tabela destas distribuições (tabela **z** ou **t**) e ver a probabilidade de se conseguir o valor crítico encontrado. Caso a probabilidade seja abaixo do nível de significância escolhido (e.g. 5%), será possível rejeitar H0. A probabilidade de se chegar neste valor crítico é o **valor-p**, que indica a probabilidade de se rejeitar H0 incorretamente, que também é chamado de probabilidade de se cometer o **erro tipo I**.
+
+A proposta do teste de hipótese é buscar rejeitar H0, esta hipótese não poderá ser aceita, pois o parâmetro populacional não é conhecido. Se não for possível rejeitar H0, apenas pode-se concluir que os resultados foram inconclusivos e que se falhou em rejeitar H0.
+
+Ao finalizarem a explicação sobre inferência e estimativas, os autores dão sequência com a explicação da análise de variância (a.k.a ANOVA). Esta análise, quando aplicada ao modelo de regressão, buscará mostrar a variabilidade de cada estimador do modelo e ver o quanto estas variabilidades explicam a variabilidade total da variável dependente ($\hat{y}$). A ANOVA também apresentará a variável **F**, que será útil em modelos de regressão múltiplos. 
+
+Após explicarem sobre a análise de variância, os autores indicam uma forma de apresentar o resultado final do modelo de regressão. A indicação é de que deve-se primeiro mostrar a equação desenvolvida, em seguida os erros padrão e o R², na sequência mostra-se os valores críticos t (ou z) e por fim a variável F (em modelos de apenas duas variáveis (intercepto e inclinação) esta estatística não é relevante).
+
+Tendo apresentado os resultados do modelo, é importante mostrar que a premissa de normalidade dos resíduos se confirma. Para isso, os autores indicam o histograma, o gráfico qq-plot e o teste Jarque-Bera.
+
+#### **Exercícios**
+
+#### **5.3) Consulte a regressão da demanda por telefones celulares na Equação (3.7.3)**
+
+#### **a) O coeficiente de intercepto estimado é significativo no nível de 5% de significância? Qual é a hipótese nula subjacente?**
+
+A regressão indicada pelo problema é: $\hat{Y} = 14.47+0.0022X$ onde ep($\beta_1$) = 6.1523 ep($\beta_2$) = 0.00032 e r² = 0.6023
+
+Como a questão visa avaliar se o intercepto é significativo, deve-se analisar se ele é diferente de zero. Neste caso H0: $\beta_1$ = 0 e H1: $\beta_1 \neq 0$. Para testar esta hipótese, será optado pelo valor-p, que será obtido através do cálculo do valor crítico t.
+
+valor-t = $\frac{\hat{\beta_1}-\beta_1}{ep(\hat{\beta_1})}$ = $\frac{14,47-0}{6.1523} = 2.35$
+
+Dado um nível de significância de 5% e 34 gl, o valor-p para este valor crítico t é de 2.8%, abaixo do limite estimado. Desta forma, pode-se rejeitar H0 e concluir que o intercepto é significativo.
+
+```{r, echo=T, include=T, message=F,warning=F}
+dt(2.35, 36)
+```
+
+#### **b) O coeficiente angular estimado é significativo no nível de 5% de significância? Qual a hipótese nula subjacente?**
+
+Nesta questão, a solução segue a mesma abordagem da anterior. Busca-se saber se o coeficiente é significativo, desta forma a hipótese nula (H0) será H0: $\beta_2 = 0$ e H1: $\beta_2 \neq 0$. Refazendo os cálculos, alterando os valores, temos:
+
+valor-t: $\frac{0.0022}{0.00032} = 6.88$
+
+É um valor-t bastante alto, provavelmente H0 será rejeitada apenas pela magnitude do valor. O valor-p deste valor-t é muito baixo, portanto pode-se de fato rejeitar H0 e concluir que o coeficiente angular também é significativo.
+
+```{r, echo=T, include=T, message=F,warning=F}
+dt(6.88,36)
+```
 
 
 
