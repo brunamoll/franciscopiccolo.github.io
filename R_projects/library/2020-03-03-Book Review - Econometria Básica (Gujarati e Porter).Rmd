@@ -799,6 +799,12 @@ A hipótese nula de que não há relação entre salário e produtividade pode s
 
 #### **5.12) Volte ao exercício 1.1 (para usar os dados dele)**
 
+```{r, echo=T, include=T, message=F,warning=F}
+# Amostra dos dados
+tbl_1.3[sample(nrow(tbl_1.3),10), ]
+```
+
+
 #### **a) Trace um gráfico com os dados do IPC dos Estados Unidos em um eixo e os do IPC canandense em outro.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
@@ -814,7 +820,163 @@ tbl_1.3 %>%
 
 #### **b) Suponha que você queira prever o IPC dos Estados Unidos com base no IPC do Canadá. Desenvolva um modelo adequado.**
 
+Com base no gráfico, pode-se desenvolver um modelo de regressão linear simples para fazer esta previsão. A regressão será:
+
+$Ipc_u = \beta_0+\beta_1 \times Ipc_c$
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Executando o modelo de regressão
+tbl_1.3 %>% 
+  lm(formula = EUA~Canada) %>% summary() %>% pander::pander()
+```
+
+Com base no output do R, obtém-se a seguinte regressão:
+
+$\hat{Ipc_u} = -8.54164 + 1.07205 \times Ipc_c$
+
+Desta forma, com base na variação do IPC do Canadá, pode-se prever uma variação na mesma direção e de mesma magnitude nos Estados Unidos. O intercepto não é relevante no modelo, pois seu valor-p não é tão baixo. Sabendo que o valor-p mostra a probabilidade de se cometer um erro tipo I, é preferível não incluí-lo na equação. Portanto, ajustando a regressão acima, tem-se:
+
+$\hat{Ipc_u} = 1.07205 \times Ipc_c$
+
+Com r² em 97.96% e uma estatística t para $\beta_1$ bastante alta (33.959), permitindo aceitá-la como estatísticamente significativa.
+
 #### **c) Teste a hipótese de que não há relação entre os IPCs dos dois países. Use um nível de confiança de 95%. Se H0 for rejeitada, isso significará que o IPC canadense "causa" o IPC dos Estados Unidos?**
+
+Com base nos resultados acima, para testar a hipótese nula de que não há relação entre os IPCs dos dois países, basta analisar o valor-p ou a estatística t, ambos corroboram que há relação forte entre IPC canadense e americano. Portanto, pode-se rejeitar H0 pois os testes são estatisticamente significativos.
+
+Porém isto não significa que o IPC canadense causa o IPC americano. O que ocorre é que ambos são afetados por outras variáveis econômicas que não estão representadas nos dados, por exemplo, taxa de juros, mercado acionário, ciclo econômico, demanda, confiança dos consumidores e empresas, taxa de desemprego, entre outras.
+
+#### **5.13) Volte ao exercício 3.22 para fazer uso dos dados.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Amostra dos dados
+tbl_3.7[sample(nrow(tbl_1.3),10), ]
+```
+
+#### **a) Estime as duas regressões dadas neste exercício, calculando os erros padrão e os demais resultados habituais.**
+
+As duas regressões se referem a (i) regressão IPC com o preço do ouro e (ii) IPC com o índice NYSE. Cada regressão buscando avaliar se a variável independente consegue proteger o investidor contra oscilações na inflação.
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Regressão do preço do ouro e inflação (IPC)
+tbl_3.7 %>%
+  lm(formula = ipc_index~gold_price) %>% summary() %>% pander::pander()
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Regressão do índice NYSE e inflação (IPC)
+tbl_3.7 %>%
+  lm(formula = ipc_index~nyse_index) %>% summary() %>% pander::pander()
+```
+
+O erro padrão para o ouro é de 0.06624 e para o índice NYSE é de 0.001313.
+
+#### **b) Teste a hipótese de que os termos de erro dos dois modelos de regressão distribuem-se normalmente.**
+
+Primeiro é necessário extrair os resíduos e depois eles serão plotados em um histograma para validar a normalidade de sua distribuição.
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Resíduos da regressão 1
+tbl_3.7 %>%
+  lm(formula = ipc_index~gold_price) %>%
+  residuals() %>% data.frame(a = .) -> res_1
+  
+res_1 %>%
+  ggplot()+
+  geom_histogram(mapping = aes(x = a), fill = graph_color)+
+  theme_graph()+
+  labs(title = "Regression model's residuals distribution",
+       subtitle = "IPC and gold price relation")
+
+# Resíduos da regressão 2
+tbl_3.7 %>%
+  lm(formula = ipc_index~nyse_index) %>%
+  residuals() %>% data.frame(a = .) -> res_2
+  
+res_2 %>%
+  ggplot()+
+  geom_histogram(mapping = aes(x = a), fill = graph_color)+
+  theme_graph()+
+  labs(title = "Regression model's residuals distribution",
+       subtitle = "IPC and NYSE index relation")
+```
+
+#### **c) Na regressão do preço do ouro, teste a hipótese de que beta 2 é igual a 1, ou seja, de que há uma relação de um para um entre os preços do ouro e o IPC (o ouro é um hedge perfeito). Qual o valor p da estatística t estimada?**
+
+Com base nos resultados da regressão estimada, $\beta_2$ ficou em 0.1693, com um erro padrçao de 0.06624, gerando uma estatística t de 2.556 e um valor p de 0.0157. 
+
+Para testar H0 com $\beta_2 = 1$ e H1 com $\beta_2 \neq 1$, é preciso utilizar a fórmula:
+
+$valor_t = \frac{|\hat{\beta_2} - \beta_2|}{SEM}$
+
+$valor_t = \frac{|0.1693 - 1|}{0.06624} = 12.54076$
+
+Este valor t de 12.54076 resulta em um valor p extremamente pequeno (pode ser validado abaixo)
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Valor p para um valor t de 12.54076
+(1-pt(12.54076, 31))*2
+```
+
+Desta forma, pode-se rejeitar a hipótese nula de que $\beta_2$ é igual a 1 e consequentemente a ideia de que o ouro é um hedge perfeito contra inflação.
+
+#### **d) Repita o item (c), agora com a regressão do índice NYSE. O investimento no mercado de ações é um hedge perfeito contra a inflação? Que hipótese nula você está testando? Qual seu valor p?**
+
+Com base nos resultados da regressão, tem-se $\beta_2 = 0.01668$ com erro padrão em 0.001313, valor t de 12.71 e valor p bastante pequeno. Estes valores t e p são obtidos com base na hipótese nula de $\beta_2 = 0$, desta forma, tem-se $valor_t = \frac{\hat{\beta_2}}{SEM}$ e o valor p obtido com auxílio do R e usando o valor t obtido.
+
+Porém, no exercício pede-se para testar H0: $\beta_2 = 1$ e H1: $\beta_2 \neq 1$. Com esta hipótese estabelecida, pode-se alterar a equação do valor t.
+
+$valor_t = \frac{|\hat{\beta_2}-\beta_2|}{SEM}$
+
+$valor_t = \frac{|0.01668-1|}{0.001313} = 748.91$
+
+Este valor t é muito alto, obtiamente o valor p será extremamente pequeno. Desta forma pode-se rejeitar H0 com $\beta_2 = 0$ e consequentemente rejeitar a ideia de que o índice NYSE é um hedge perfeito contra inflação.
+
+#### **e) Entre o ouro e as ações, qual investimento você escolheria? Em que se baseia sua decisão?**
+
+Utilizando como parâmetro o investimento que mais irá proteger contra inflação, a melhor escolha é o investimento com variação mais próxima da variação do IPC, ou seja, $\beta_2$ mais próximo de 1 com baixo erro padrão. Desta forma, o ouro parece ser a melhor opção.
+
+#### **5.14) A tabela 5.6 apresenta dados sobre PNB e quatro definições de estoque de moeda dos Estados Unidos no período 1970-1983. Fazendo as regressões do PNB contra as várias definições de moeda, obtemos os resultados apresentados na tabela 5.7.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_5.6 <- read.table(file = paste(path,"tabela_5.6_PNB_e_moedas.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ",")
+
+# Amostra dos dados
+tbl_5.6[sample(nrow(tbl_5.6),10), ]
+```
+
+#### **a) Que definição de moeda parece apresentar relação mais estreita com PNB nominal?**
+
+Para responder esta questão, basta verificar qual é a relação mais forte entre as 4 variáveis disponíveis.
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_5.6 %>% 
+  tidyr::gather("campo","valor",3:6) %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = valor, y = pnb))+
+  facet_wrap(~campo, scales = "free")+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_continuous(labels = scales::comma)+
+  theme_graph()+
+  labs(title = "PNB and Currency stock relation",
+       x = "Currency stock",
+       y = "PNB")
+```
+
+Aparentemente o estoquede moeda "M3" possui ligação mais forte com o valor do produto nacional bruto. Isso pode ser visto também pelo R² de cada variável, onde todas ficam acima de 99%, porém o maior valor é encontrado na relação entre PNB e Estoque de M3 (99.43%).
+
+## **6**
+
+### **Extensões do modelo de regressão linear de duas variáveis**
+
+#### **Resumo**
+
+
+
+
 
 
 
