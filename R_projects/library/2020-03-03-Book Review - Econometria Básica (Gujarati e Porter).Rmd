@@ -24,9 +24,24 @@ library(plot3D)
 
 theme_set(theme_bw())
 
-# Parâmetros dos gráficos para facilitar a padronização
-title_size <- 9
-axis_size <- 7.5
+theme_graph <- function(){
+  theme(
+    # background color
+    panel.background = element_rect(fill = "white"),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    text = element_text(family = "Times New Roman"),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+}
+
 graph_color <- "#006666"
 
 # Caminho para a pasta que contém os data sets para cada exercício
@@ -98,9 +113,7 @@ tbl_1.3 %>%
   tidyr::gather("campo", "valor", 2:8) %>% 
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line()+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Anual inflation for selected countries",
        x = "",
        y = "")
@@ -113,43 +126,37 @@ can <- tbl_1.3 %>%
   ggplot(aes(x = EUA, y = Canada))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 fra <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = França))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 ale <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Alemanha))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 ita <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Italia))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 jap <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Japão))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 rei <- tbl_1.3 %>% 
   ggplot(aes(x = EUA, y = Reino.Unido))+
   geom_point(color = graph_color)+
   geom_abline(intercept = 0, color = "red", lty = 2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))
+  theme_graph()
 
 
 gridExtra::grid.arrange(can,fra,ale,ita,jap,rei,nrow = 2,ncol=3, top = textGrob("Inflation rate, country vs USA"))
@@ -188,9 +195,7 @@ tbl_1.4 %>%
   mutate(campo = fct_relevel(campo, levels = c("Mexico", "China", "Suecia"))) %>% 
   ggplot(aes(x = Ano, y = valor,group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
@@ -200,9 +205,7 @@ tbl_1.4 %>%
   filter(campo %in% c("Coreia.sul","Japao")) %>%
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
@@ -213,9 +216,7 @@ tbl_1.4 %>%
   mutate(campo = fct_relevel(campo, levels = c("Suica", "Canada", "Australia", "Reino.unido"))) %>% 
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line(size = 1.2)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Exchange rate times serie",
        x = "",
        y = "Currency per 1 US$")
@@ -241,8 +242,7 @@ tbl_1.6 %>%
   ggplot(aes(x = investment, y = impressions))+
   geom_point(color = graph_color)+
   geom_smooth(method = "lm", formula = y ~ x, se = F, lty = 20, color = "dark orange")+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Investment and Impressions relation",
        x = "Investmnet",
        y = "Impressions")
@@ -298,10 +298,7 @@ tbl_2.7 %>%
   mutate(type = "men") %>% 
   ggplot(aes(x=share_work_force,y=unemployment,color=type))+
   geom_point(color = graph_color)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank(),
-        legend.position = "none")+
+  theme_graph()+
   labs(title = "Men's unemployment and participation rate",
        x = "Participation rate (%)",
        y = "Unemployment rate (%)")
@@ -329,9 +326,7 @@ tbl_2.7 %>%
   union_all(women_df) %>% 
   ggplot(aes(x=share_work_force,y=avg_hourly_earning,color=type))+
   geom_point()+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Average hourly wage and participation rate",
        x = "Participation rate",
        y = "Hourly wage")
@@ -356,8 +351,7 @@ tbl_2.8 %>%
   ggplot(aes(x = total, y = alimento))+
   geom_point(color = graph_color, shape = 20)+
   geom_smooth(method = "lm", se = F)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Food expenditures and total expenditures",
        x = "Total expenditures",
        y = "Food expenditures")
@@ -450,9 +444,7 @@ tbl_3.6 %>%
   geom_point(aes(x = prod, y = wag, color = production))+
   scale_color_brewer(palette = "Dark2")+
   geom_smooth(aes(x = prod, y = wag), method = "lm",se = F)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size),
-        legend.title = element_blank())+
+  theme_graph()+
   labs(title = "Production index and hourly wages",
        x = "Production",
        y = "Wage")
@@ -538,8 +530,7 @@ tbl_3.7_df_adj %>%
   expand_limits(x = 0, y = 0)+
   scale_x_continuous(labels = scales::percent)+
   scale_y_continuous(labels = scales::percent)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "Gold price and IPC index year variation",
        x = "IPC index variation",
        y = "Gold price variation")
@@ -556,8 +547,7 @@ tbl_3.7_df_adj %>%
   expand_limits(x = 0, y = 0)+
   scale_x_continuous(labels = scales::percent)+
   scale_y_continuous(labels = scales::percent)+
-  theme(title = element_text(size = title_size),
-        axis.text = element_text(size = axis_size))+
+  theme_graph()+
   labs(title = "NYSE index and IPC index year variation",
        x = "IPC index variation",
        y = "NYSE index variation")
@@ -623,10 +613,11 @@ Como a questão visa avaliar se o intercepto é significativo, deve-se analisar 
 
 valor-t = $\frac{\hat{\beta_1}-\beta_1}{ep(\hat{\beta_1})}$ = $\frac{14,47-0}{6.1523} = 2.35$
 
-Dado um nível de significância de 5% e 34 gl, o valor-p para este valor crítico t é de 2.8%, abaixo do limite estimado. Desta forma, pode-se rejeitar H0 e concluir que o intercepto é significativo.
+Dado um nível de significância de 5% e 34 gl, o valor-p para este valor crítico t é de 2.4%, abaixo do limite estimado. Desta forma, pode-se rejeitar H0 e concluir que o intercepto é significativo.
 
 ```{r, echo=T, include=T, message=F,warning=F}
-dt(2.35, 36)
+# Valor-p calculado com o valor t obtido anteriormente
+(1-pt(2.35, 36))*2
 ```
 
 #### **b) O coeficiente angular estimado é significativo no nível de 5% de significância? Qual a hipótese nula subjacente?**
@@ -638,8 +629,193 @@ valor-t: $\frac{0.0022}{0.00032} = 6.88$
 É um valor-t bastante alto, provavelmente H0 será rejeitada apenas pela magnitude do valor. O valor-p deste valor-t é muito baixo, portanto pode-se de fato rejeitar H0 e concluir que o coeficiente angular também é significativo.
 
 ```{r, echo=T, include=T, message=F,warning=F}
-dt(6.88,36)
+# Valor-p calculado com o valor t obtido anteriormente
+(1-pt(6.88,36))*2
 ```
+
+#### **5.5) O que se conhece por linha característica na análise moderna de investimentos nada mais é do que a regressão obtida por meio do seguinte modelo:**
+
+$r_t = \alpha+\beta\times r_m+\mu_t$
+
+Onde: 
+
+$r_t =$ taxa de retorno do ativo no período t
+
+$r_m = $ taxa de retorno do portfólio de mercado no período t
+
+$\mu_t = $ termo de erro estocástico
+
+Neste modelo, $\beta$ é conhecido como coeficiente beta do ativo, representando uma medida de risco. Com este modelo, dois autores estudaram a taxa de retorno mensal para as ações da IBM e chegaram ao seguinte modelo.
+
+$\hat{r_t} = 0.7264+1.0598r_m$ com ep(0.3001) e ep(0.0728) respectivamente.
+
+#### **a) Diz-se que um ativo cujo coeficiente beta é maior que um é um papel volátil. As ações da IBM foram voláteis no estudo realizado?**
+
+Sim, visto que o coeficiente beta ficou em 1.0598.
+
+#### **b) O coeficiente do intercepto é significativamente diferente de zero? Se for, qual o significado prático disso?**
+
+O intercepto estimado é de 0.7264, com um erro padrão de 0.3001. Para ver se este valor é significativo, deve-se estabelecer um nível de confiança e uma hipótese nula. Para este caso, H0 será $\beta_1 = 0$ e H1 $\beta_1 \neq 0$. Tendo o nível de significância e os graus de liberdade, pode-se chegar ao valor-p após calcular o valor crítico t.
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Valor crítico t
+# Intercepto estimado dividido pelo erro padrão
+valor_t <- 0.7264/0.3001
+
+# Como o teste é bilateral, deve-se multiplicar o valor-p por 2
+(1-pt(valor_t, 238))*2
+```
+
+O valor-p para o intercepto ficou em 1.62%, abaixo do limite de confiança, indicando que este estimador é estatísticamente significativo a 5% de nível de confiança.
+
+#### **5.9) A tabela 5.5 apresenta dados sobre a remuneração anual (salário médio em dólares) dos professores e as despesas por aluno das escolas (em dólares) no ano de 1985 em 50 estados e no distrito de Columbia. Para verificar se há alguma relação entre a remuneração dos professores e as despesas por aluno nas escolas públicas, sugeriu-se o seguinte modelo:**
+
+$r = \beta_1+\beta_2\times g + \mu$ 
+
+r = renda dos professores
+g = despesas por aluno
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Tabela 5.5
+tbl_5.5 <- read.table(file = 
+                      paste(path,"tabela_5.5_salario_medio_anual_e_despesa_por_aluno.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ".",
+                      )
+
+# Amostra aleatória dos dados
+tbl_5.5[sample(nrow(tbl_5.5),10), ]
+```
+
+
+#### **a) Represente graficamente os dados e trace uma linha de regressão**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_5.5 %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = expense, y = wage), color = graph_color)+
+  geom_smooth(mapping = aes(x = expense, y = wage), method = "lm", formula = y~x, se = F, lty = 2, color = "dark orange")+
+  theme_graph()+
+  labs(title = "Teachers income and students expenditures relation",
+       x = "Students expenses",
+       y = "Teachers income")
+```
+
+#### **b) Suponha que, com base em (a), você decida estimar o modelo de regressão anterior. Obtenha as estimativas dos parâmetros, os erro padrão, r², SQR e SQE.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_5.5 %>%
+  lm(formula = wage~expense) %>% summary() %>% 
+  pander::pander()
+```
+
+Com base no output do modelo, pode-se criar a equação estimada para os parâmetros populacionais:
+
+$\hat{r} = \hat{\beta_1}+\hat{\beta_2}\times g+\mu$
+
+$\hat{r} = 12.13+0.003308\times g+\mu$
+
+Com a equação acima, pode-se ver a estimativa dos parâmetros ($\hat{\beta_1}$ e $\hat{\beta_2}$). O R² ficou em 69.68% e SQR e SQE serão obtidos com o output da ANOVA demonstrada abaixo.
+
+```{r, echo=T, include=T, message=F,warning=F}
+#Anova do modelo de regressão
+anova(tbl_5.5 %>%
+  lm(formula = wage~expense)) %>% pander::pander()
+```
+
+#### **c) Interprete os resultados da regressão. Faz sentido do ponto de vista econômico?**
+
+A regressão faz sentido, visto que o salário dos professores está diretamente atrelado ao gasto com estudo dos alunos e também o intercepto é relevante visto que há um salário mínimo dado pelo governo ao professores que não irá depender do gasto dos alunos. 
+
+#### **d) Estabeleça um intervalo de confiança de 95% para o estimador beta 2. Você rejeitaria a hipótese de que o verdadeiro coeficiente angular é 3?**
+
+Para testar a hipótese, deve estabelecer uma hipótese nula e uma alternativa. H0 será o valor de $\beta_2$ proposto pela questão, ou seja, H0: $\beta_2 = 3$ e H1: $\beta_2 \neq 3$. Ao contruir o intervalo, caso o valor 3 esteja dentro dele, não será possível rejeitar H0. Caso fique fora do intervalo, H0 poderá ser rejeitada. O intervalo será construído com o uso do erro padrão e da distribuiçaõ t, que irá fornecer um valor crítico de t para construção dos limites do intervalo.
+
+Conforme visto anteriormente, os limites são construídos através da fórmula:
+
+$\hat{\beta_2} + t_\frac{\alpha}{2} \times ep(\hat{\beta_2})$
+
+Lembrando que se faz $\frac{\alpha}{2}$ por ser um teste bicaudal, ou seja $H0 = X$ e $H1 \neq X$. Se caso fosse algo do tipi $H0 \leq X$ e $H1 > X$, seria um teste unicaudal e $\alpha$ não seria dividido por 2.
+
+Para resolver a equação acima, é necessário obter o valor do estimador de $\beta_2$ (dado no resultado do modelo de regressão da equação do item (b)), o erro padrão deste estimador (também fornecido no output anterior) e o valor crítico t, que pode ser obtido através do R pela fórmula abaixo.
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Valor crítico de t para criar o intervalo
+qt(0.975, df = 49)
+```
+
+Desta forma, tem-se:
+
+$\hat{\beta_2} = 0.003308$
+
+$ep(\hat{\beta_2}) = 0.0003117$
+
+Valor t = 2.009575
+
+Colocando na equação: 0.003308 +/- (2.009575(0.0003117)). Que gera o intervalo (0.00268 e 0.00393). Um intervalo bem distante de 3, portanto pode-se rejeitar H0 pois os resultados foram estatísticamente significativos para isso.
+
+#### **f) Como você testaria a hipótese de normalidade do termo de erro? Mostre os testes que usou.**
+
+Para testar a normalidade dos resíduos, pode-se usar o histograma e o qq-plot.
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Histograma dos resíduos
+tbl_5.5 %>%
+  lm(formula = wage~expense) %>% 
+  residuals() %>% data.frame(a = .) %>%
+  ggplot()+
+  geom_histogram(mapping = aes(x = a), binwidth = .5, fill = graph_color, alpha = .5)+
+  theme_graph()+
+  labs(title = "Residuals distribution",
+       x = "",
+       y = "")
+
+tbl_5.5 %>%
+  lm(formula = wage~expense) %>% 
+  residuals() %>% 
+  data.frame(a = .) -> res
+
+
+# QQ plot
+qqnorm(res$a, pch = 20)
+qqline(res$a, pch = 1, col = "dark orange", lty = 2)
+```
+
+#### **5.10) Consulte os dados da tabela 3.20 e monte as tabelas ANOVA e teste a hipótese de que não há relação entre produtividade e salário real. Faça isso para o setor empresarial e para o setor empresarial não agrícola.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.6 %>% 
+  head()
+
+anova(tbl_3.6 %>%
+  lm(formula = prod_setor_empresarial~sal_setor_empresarial)) %>% pander::pander()
+
+anova(tbl_3.6 %>%
+  lm(formula = prod_setor_n_agricola~sal_setor_n_agricola)) %>% pander::pander()
+```
+
+A hipótese nula de que não há relação entre salário e produtividade pode ser rejeitada para os dois setors, visto que ambos geraram um valor f bastante pequeno.
+
+#### **5.12) Volte ao exercício 1.1 (para usar os dados dele)**
+
+#### **a) Trace um gráfico com os dados do IPC dos Estados Unidos em um eixo e os do IPC canandense em outro.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_1.3 %>%
+  ggplot()+
+  geom_point(mapping = aes(x = EUA, y = Canada), color = graph_color)+
+  geom_abline(lty = 2, color = "dark orange")+
+  theme_graph()+
+  labs(title = "Canada and USA IPC correlation",
+       x = "EUA",
+       y = "Canada")
+```
+
+#### **b) Suponha que você queira prever o IPC dos Estados Unidos com base no IPC do Canadá. Desenvolva um modelo adequado.**
+
+#### **c) Teste a hipótese de que não há relação entre os IPCs dos dois países. Use um nível de confiança de 95%. Se H0 for rejeitada, isso significará que o IPC canadense "causa" o IPC dos Estados Unidos?**
+
 
 
 
