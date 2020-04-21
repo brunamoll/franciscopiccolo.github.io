@@ -5,7 +5,8 @@ body{
       font-size: 15px;
       font-weight: 500;
       padding-left: 40px;
-      font-family: $global-font-family;
+      font-family: Georgia;
+      color: black;
 }
 /* Headers */
 h1 {

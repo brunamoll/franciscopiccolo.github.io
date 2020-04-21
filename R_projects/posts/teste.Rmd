@@ -1,5 +1,5 @@
 ---
-title: "Título do documento"
+title: ""
 output:
   html_document:
     css: style.css
