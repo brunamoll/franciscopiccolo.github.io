@@ -1,7 +1,9 @@
 /* Whole document: */
 body{
-  font-family: Georgia;
-  font-size: 14pt;
+  font-family: Arial;
+  font-size: 12pt;
+  color: black;
+  line-height: 1.7em;
 }
 /* Headers */
 h1{
