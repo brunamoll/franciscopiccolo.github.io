@@ -59,6 +59,10 @@
 
       </header>
 
+<link rel="stylesheet" href="/css/highlight_style.css" rel="stylesheet" id="theme-stylesheet"> 
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 
 <main class="content" role="main">
 
@@ -86,13 +90,8 @@ library(ggthemes)
 library(ggalt)
 library(scales)
 
-theme_set(theme_bw())
-
 theme_graph &lt;- function(){
   theme(
-    # background color
-    panel.background = element_rect(fill = &quot;white&quot;),
-    panel.grid.minor = element_blank(),
     plot.title = element_text(size = 16),
     plot.subtitle = element_text(size = 12),
     plot.caption = element_text(face = &quot;italic&quot;, size = 9),

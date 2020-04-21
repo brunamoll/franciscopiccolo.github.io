@@ -21,13 +21,8 @@ library(ggthemes)
 library(ggalt)
 library(scales)
 
-theme_set(theme_bw())
-
 theme_graph <- function(){
   theme(
-    # background color
-    panel.background = element_rect(fill = "white"),
-    panel.grid.minor = element_blank(),
     plot.title = element_text(size = 16),
     plot.subtitle = element_text(size = 12),
     plot.caption = element_text(face = "italic", size = 9),

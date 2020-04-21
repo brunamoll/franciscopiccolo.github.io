@@ -59,6 +59,10 @@
 
       </header>
 
+<link rel="stylesheet" href="/css/highlight_style.css" rel="stylesheet" id="theme-stylesheet"> 
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 
 <main class="content" role="main">
 
@@ -92,13 +96,8 @@ library(zoo)
 library(readxl)
 library(Amelia)
 
-theme_set(theme_bw())
-
 theme_graph &lt;- function(){
   theme(
-    # background color
-    panel.background = element_rect(fill = &quot;white&quot;),
-    panel.grid.minor = element_blank(),
     plot.title = element_text(size = 16),
     plot.subtitle = element_text(size = 12),
     plot.caption = element_text(face = &quot;italic&quot;, size = 9),
@@ -122,16 +121,16 @@ graph_color &lt;- &quot;#006666&quot;</code></pre>
 <pre><code>## # A tibble: 10 x 24
 ##    `Row ID` `Order ID` `Order Date`        `Ship Date`         `Ship Mode`
 ##       &lt;dbl&gt; &lt;chr&gt;      &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;      
-##  1    24012 IN-2012-1~ 2012-06-01 00:00:00 2012-06-05 00:00:00 Second Cla~
-##  2    19772 ES-2013-3~ 2013-02-19 00:00:00 2013-02-25 00:00:00 Standard C~
-##  3    15902 ES-2012-5~ 2012-04-24 00:00:00 2012-04-29 00:00:00 Standard C~
-##  4    48108 NI-2011-6~ 2011-06-27 00:00:00 2011-07-01 00:00:00 Standard C~
-##  5    49995 NI-2013-2~ 2013-11-13 00:00:00 2013-11-16 00:00:00 Second Cla~
-##  6    40318 CA-2012-1~ 2012-11-15 00:00:00 2012-11-20 00:00:00 Standard C~
-##  7    29152 IN-2014-5~ 2014-08-07 00:00:00 2014-08-12 00:00:00 Standard C~
-##  8    39571 CA-2014-1~ 2014-07-01 00:00:00 2014-07-05 00:00:00 Standard C~
-##  9    38320 CA-2011-1~ 2011-08-23 00:00:00 2011-08-27 00:00:00 Standard C~
-## 10    33417 US-2014-1~ 2014-01-08 00:00:00 2014-01-14 00:00:00 Standard C~
+##  1    13716 ES-2012-4~ 2012-12-05 00:00:00 2012-12-09 00:00:00 Standard C~
+##  2     6473 US-2012-1~ 2012-02-06 00:00:00 2012-02-08 00:00:00 First Class
+##  3    17140 ES-2012-5~ 2012-10-12 00:00:00 2012-10-14 00:00:00 Second Cla~
+##  4    38463 CA-2011-1~ 2011-07-22 00:00:00 2011-07-24 00:00:00 Second Cla~
+##  5     9869 US-2014-1~ 2014-06-03 00:00:00 2014-06-07 00:00:00 Standard C~
+##  6     5384 MX-2013-1~ 2013-11-11 00:00:00 2013-11-17 00:00:00 Standard C~
+##  7    15545 ES-2011-5~ 2011-04-07 00:00:00 2011-04-11 00:00:00 Second Cla~
+##  8     6752 MX-2011-1~ 2011-03-25 00:00:00 2011-03-31 00:00:00 Standard C~
+##  9     3046 MX-2013-1~ 2013-09-06 00:00:00 2013-09-06 00:00:00 Same Day   
+## 10      259 MX-2011-1~ 2011-06-21 00:00:00 2011-06-23 00:00:00 Second Cla~
 ## # ... with 19 more variables: `Customer ID` &lt;chr&gt;, `Customer Name` &lt;chr&gt;,
 ## #   Segment &lt;chr&gt;, City &lt;chr&gt;, State &lt;chr&gt;, Country &lt;chr&gt;, `Postal Code` &lt;chr&gt;,
 ## #   Market &lt;chr&gt;, Region &lt;chr&gt;, `Product ID` &lt;chr&gt;, Category &lt;chr&gt;,

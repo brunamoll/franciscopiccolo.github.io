@@ -28,13 +28,8 @@ library(gridExtra)
 library(ggthemes)
 library(pander)
 
-theme_set(theme_bw())
-
 theme_graph &lt;- function(){
   theme(
-    # background color
-    panel.background = element_rect(fill = &quot;white&quot;),
-    panel.grid.minor = element_blank(),
     plot.title = element_text(size = 16),
     plot.subtitle = element_text(size = 12),
     plot.caption = element_text(face = &quot;italic&quot;, size = 9),
@@ -71,16 +66,16 @@ dados %&gt;%
 <pre><code>## # A tibble: 10 x 11
 ##    periodo  area valor log_area log_valor delta_area delta_log_area delta_valor
 ##      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;
-##  1      26   124  28.8     4.82      3.36       0.43           0.35       -0.04
-##  2      12    80  14.6     4.38      2.68      -0.09          -0.1        -0.36
-##  3       7    44  14.2     3.78      2.65      -0.23          -0.26        0.07
-##  4      22   138  28.5     4.93      3.35      -0.03          -0.04       -0.23
-##  5      19   121  26.7     4.80      3.29       0.33           0.28        0.3 
-##  6      27    97  40.1     4.57      3.69      -0.22          -0.25        0.39
-##  7      14   232  27.0     5.45      3.30       0.86           0.62        0.39
-##  8       6    57  13.2     4.04      2.58      -0.21          -0.23        0.21
-##  9      15   125  23.6     4.83      3.16      -0.46          -0.62       -0.13
-## 10      17   250  38.1     5.52      3.64       1.53           0.93        0.73
+##  1       2    71 11.5      4.26      2.44       1.45           0.9         0.53
+##  2       5    72 11.0      4.28      2.39      -0.2           -0.22       -0.01
+##  3      23   230 36.0      5.44      3.58       0.67           0.51        0.26
+##  4       1    29  7.53     3.37      2.02      NA             NA          NA   
+##  5      10    70 19.6      4.25      2.98       0.17           0.15        0.04
+##  6      31   171 36.0      5.14      3.58      -0.22          -0.25       -0.12
+##  7      27    97 40.1      4.57      3.69      -0.22          -0.25        0.39
+##  8      16    99 22.1      4.60      3.09      -0.21          -0.23       -0.06
+##  9      21   143 36.9      4.96      3.61      -0.12          -0.12        0.6 
+## 10      32   208 46.3      5.34      3.84       0.22           0.2         0.28
 ## # ... with 3 more variables: delta_log_valor &lt;dbl&gt;, log_area_precicion &lt;dbl&gt;,
 ## #   log_valor_precision &lt;dbl&gt;</code></pre>
 <p>The linear regression model proposed for this problem is defined by the following equation:</p>

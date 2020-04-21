@@ -1,4 +1,4 @@
-Ano EUA Canada Japão França Alemanha Italia Reino.Unido
+Ano EUA Canada Japan France Germany Italy United.Kingdon
 1980 82,4 76,1 91,0 72,2 86,7 63,9 78,5
 1981 90,9 85,6 95,3 81,8 92,2 75,5 87,9
 1982 96,5 94,9 98,1 91,7 97,0 87,8 95,4
