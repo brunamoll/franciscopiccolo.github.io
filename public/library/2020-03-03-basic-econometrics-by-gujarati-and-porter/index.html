@@ -89,10 +89,7 @@
 </ul>
 <p>Também afirmam que a metodologia econométrica se baseia em (i) estabelecimento de uma hipótese; (ii) especificação de um modelo matemático; (iii) obtenção de dados; (iv) estimativa de parâmetros; (v) teste de hipótese; (vi) validção do modelo.</p>
 <p>Neste post (como em todos os posts que estão na categoria <strong>library</strong>), irei resumir os capítulos deste livro e resolver alguns exercícios, visando auxiliar pessoas que estejam lendo ele também, pois poderão encontrar a resolução dos exercícios e também a base de dados usadas no meu repositório do git hub.</p>
-<div class="figure">
-<img src="/images/2020-03-03_econometria_basica.png" alt="My picture" />
-<p class="caption">My picture</p>
-</div>
+<p><img src="/images/2020-03-03_econometria_basica.png" /></p>
 </div>
 <div id="cap.1-a-natureza-da-análise-de-regressão" class="section level2">
 <h2><strong>Cap.1 A natureza da análise de regressão</strong></h2>
@@ -141,81 +138,15 @@ tbl_1.3[sample(nrow(tbl_1.3),10), ] %&gt;% pander::pander()</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>13</strong></td>
-<td align="center">1992</td>
-<td align="center">140.3</td>
-<td align="center">145.3</td>
-<td align="center">117</td>
-<td align="center">140.4</td>
-<td align="center">122.2</td>
-<td align="center">179.5</td>
-<td align="center">162.7</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2</strong></td>
-<td align="center">1981</td>
-<td align="center">90.9</td>
-<td align="center">85.6</td>
-<td align="center">95.3</td>
-<td align="center">81.8</td>
-<td align="center">92.2</td>
-<td align="center">75.5</td>
-<td align="center">87.9</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>5</strong></td>
-<td align="center">1984</td>
-<td align="center">103.9</td>
-<td align="center">104.7</td>
-<td align="center">102.1</td>
-<td align="center">108</td>
-<td align="center">102.7</td>
-<td align="center">111.4</td>
-<td align="center">104.8</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>19</strong></td>
-<td align="center">1998</td>
-<td align="center">163</td>
-<td align="center">157.8</td>
-<td align="center">122.2</td>
-<td align="center">154.2</td>
-<td align="center">139.1</td>
-<td align="center">222.5</td>
-<td align="center">191.4</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>12</strong></td>
-<td align="center">1991</td>
-<td align="center">136.2</td>
-<td align="center">143.1</td>
-<td align="center">115</td>
-<td align="center">137.2</td>
-<td align="center">116.3</td>
-<td align="center">170.5</td>
-<td align="center">156.9</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>3</strong></td>
-<td align="center">1982</td>
-<td align="center">96.5</td>
-<td align="center">94.9</td>
-<td align="center">98.1</td>
-<td align="center">91.7</td>
-<td align="center">97</td>
-<td align="center">87.8</td>
-<td align="center">95.4</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>11</strong></td>
-<td align="center">1990</td>
-<td align="center">130.7</td>
-<td align="center">135.5</td>
-<td align="center">111.4</td>
-<td align="center">132.9</td>
-<td align="center">112.2</td>
-<td align="center">160.4</td>
-<td align="center">148.2</td>
+<td align="center"><strong>26</strong></td>
+<td align="center">2005</td>
+<td align="center">195.3</td>
+<td align="center">184.9</td>
+<td align="center">118.3</td>
+<td align="center">173.2</td>
+<td align="center">153.7</td>
+<td align="center">261.3</td>
+<td align="center">225.6</td>
 </tr>
 <tr class="even">
 <td align="center"><strong>16</strong></td>
@@ -229,26 +160,92 @@ tbl_1.3[sample(nrow(tbl_1.3),10), ] %&gt;% pander::pander()</code></pre>
 <td align="center">175.2</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>23</strong></td>
-<td align="center">2002</td>
-<td align="center">179.9</td>
-<td align="center">172.9</td>
-<td align="center">119</td>
-<td align="center">163.3</td>
-<td align="center">146.7</td>
-<td align="center">244.3</td>
-<td align="center">207</td>
+<td align="center"><strong>17</strong></td>
+<td align="center">1996</td>
+<td align="center">156.9</td>
+<td align="center">153.8</td>
+<td align="center">119.3</td>
+<td align="center">151.4</td>
+<td align="center">135.3</td>
+<td align="center">213.8</td>
+<td align="center">179.4</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>20</strong></td>
-<td align="center">1999</td>
-<td align="center">166.6</td>
+<td align="center"><strong>8</strong></td>
+<td align="center">1987</td>
+<td align="center">113.6</td>
+<td align="center">118.4</td>
+<td align="center">104.9</td>
+<td align="center">121.1</td>
+<td align="center">104.9</td>
+<td align="center">135.1</td>
+<td align="center">119.7</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>6</strong></td>
+<td align="center">1985</td>
+<td align="center">107.6</td>
+<td align="center">109</td>
+<td align="center">104.2</td>
+<td align="center">114.3</td>
+<td align="center">104.8</td>
+<td align="center">121.7</td>
+<td align="center">111.1</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>22</strong></td>
+<td align="center">2001</td>
+<td align="center">177.1</td>
+<td align="center">169.1</td>
+<td align="center">120.1</td>
+<td align="center">160.2</td>
+<td align="center">144.8</td>
+<td align="center">238.3</td>
+<td align="center">203.6</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>14</strong></td>
+<td align="center">1993</td>
+<td align="center">144.5</td>
+<td align="center">147.9</td>
+<td align="center">118.5</td>
+<td align="center">143.4</td>
+<td align="center">127.6</td>
+<td align="center">187.7</td>
+<td align="center">165.3</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>18</strong></td>
+<td align="center">1997</td>
 <td align="center">160.5</td>
-<td align="center">121.8</td>
-<td align="center">155</td>
-<td align="center">140</td>
-<td align="center">226.2</td>
-<td align="center">194.3</td>
+<td align="center">156.3</td>
+<td align="center">121.5</td>
+<td align="center">153.2</td>
+<td align="center">137.8</td>
+<td align="center">218.2</td>
+<td align="center">185.1</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2</strong></td>
+<td align="center">1981</td>
+<td align="center">90.9</td>
+<td align="center">85.6</td>
+<td align="center">95.3</td>
+<td align="center">81.8</td>
+<td align="center">92.2</td>
+<td align="center">75.5</td>
+<td align="center">87.9</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>10</strong></td>
+<td align="center">1989</td>
+<td align="center">124</td>
+<td align="center">129.3</td>
+<td align="center">108</td>
+<td align="center">128.7</td>
+<td align="center">109.2</td>
+<td align="center">150.7</td>
+<td align="center">135.4</td>
 </tr>
 </tbody>
 </table>
@@ -359,27 +356,27 @@ tbl_1.4 &lt;-
 # Amostra aleatório de 10 valores da tabela
 tbl_1.4[sample(nrow(tbl_1.4),10), ]</code></pre>
 <pre><code>##     Ano Australia Canada  China  Japao Mexico Coreia.sul Suecia  Suica
+## 12 1996    0.7828 1.3638 8.3389 108.78  7.600     805.00 6.7082 1.2361
+## 4  1988    0.7841 1.2306 3.7314 128.17  2.273     734.52 6.1370 1.4643
+## 11 1995    0.7407 1.3725 8.3700  93.96  6.447     772.69 7.1406 1.1812
+## 3  1987    0.7014 1.3259 3.7314 144.60  1.378     826.16 6.3469 1.4918
 ## 15 1999    0.6454 1.4858 8.2783 113.73  9.553    1189.84 8.2740 1.5045
-## 19 2003    0.6524 1.4008 8.2772 115.94 10.793    1192.08 8.0787 1.3450
-## 21 2005    0.7627 1.2115 8.1936 110.11 10.894    1023.75 7.4710 1.2459
-## 8  1992    0.7352 1.2085 5.5206 126.78  3.095     784.66 5.8258 1.4064
-## 16 2000    0.5815 1.4855 8.2784 107.80  9.459    1130.90 9.1735 1.6904
+## 13 1997    0.7437 1.3849 8.3193 121.06  7.918     953.19 7.6446 1.4514
+## 10 1994    0.7316 1.3664 8.6397 102.18  3.385     806.93 7.7161 1.3667
+## 2  1986    0.6709 1.3896 3.4616 168.35  0.612     884.60 7.1273 1.7979
 ## 5  1989    0.7919 1.1842 3.7673 138.07  2.461     674.13 6.4559 1.6369
 ## 6  1990    0.7807 1.1668 4.7921 145.00  2.813     710.64 5.9231 1.3901
-## 12 1996    0.7828 1.3638 8.3389 108.78  7.600     805.00 6.7082 1.2361
-## 18 2002    0.5437 1.5704 8.2771 125.22  9.663    1250.31 9.7233 1.5567
-## 14 1998    0.6291 1.4836 8.3008 130.99  9.152    1400.40 7.9522 1.4506
 ##    Reino.unido
-## 15   0.6183527
-## 19   0.6117330
-## 21   0.5493298
-## 8    0.5661552
-## 16   0.6598047
-## 5    0.6104261
-## 6    0.5605067
 ## 12   0.6407381
-## 18   0.6655574
-## 14   0.6033911</code></pre>
+## 4    0.5613878
+## 11   0.6335128
+## 3    0.6098305
+## 15   0.6183527
+## 13   0.6106497
+## 10   0.6527841
+## 2    0.6813381
+## 5    0.6104261
+## 6    0.5605067</code></pre>
 </div>
 <div id="a-represente-graficamente-a-evolução-das-taxas-de-câmbio-ao-longo-do-tempo" class="section level3">
 <h3><strong>a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:</strong></h3>
@@ -432,17 +429,17 @@ tbl_1.4[sample(nrow(tbl_1.4),10), ]</code></pre>
 
 # Amostra aleatória dos dados
 tbl_1.6[sample(nrow(tbl_1.6),10), ]</code></pre>
-<pre><code>##        empresa impressions investment
-## 7     McDonald        92.4      185.9
-## 16    Polaroid        38.0       26.9
-## 12    Bud_Lite        10.4       45.6
-## 4  Fed_Express        21.9       22.9
-## 19 Oscar_Meyer        23.4        9.2
-## 3        Stroh        11.7       19.3
-## 2        Pepsi        99.6       74.1
-## 15      Wendys        29.2       49.7
-## 10        Ford        40.1      166.2
-## 8          MCI        50.7       26.9</code></pre>
+<pre><code>##         empresa impressions investment
+## 18     Meow_Mix        12.3        7.6
+## 20        Crest        71.1       32.4
+## 8           MCI        50.7       26.9
+## 15       Wendys        29.2       49.7
+## 17       Shasta        10.0        5.7
+## 11        Levis        40.8       27.0
+## 14 Calvin_Klein        12.0        5.0
+## 10         Ford        40.1      166.2
+## 16     Polaroid        38.0       26.9
+## 5   Burger_King        60.8       82.4</code></pre>
 </div>
 <div id="a-mostre-a-relação-entre-impressões-e-o-investimento-em-publicidade." class="section level3">
 <h3><strong>a) Mostre a relação entre impressões e o investimento em publicidade.</strong></h3>
@@ -480,27 +477,27 @@ tbl_1.6[sample(nrow(tbl_1.6),10), ]</code></pre>
 # Amostra dos dados
 tbl_2.7[sample(nrow(tbl_2.7),10), ]</code></pre>
 <pre><code>##     ano share_men_work_force share_women_work_force unemployment_men
-## 15 1994                 75.1                   58.8              6.2
-## 8  1987                 76.2                   56.0              6.2
-## 2  1981                 77.0                   52.1              7.4
-## 12 1991                 75.8                   57.4              7.2
 ## 18 1997                 75.0                   59.8              4.9
-## 6  1985                 76.3                   54.5              7.0
-## 16 1995                 75.0                   58.9              5.6
+## 5  1984                 76.4                   53.6              7.4
 ## 21 2000                 74.8                   59.9              3.9
-## 11 1990                 76.4                   57.5              5.7
-## 27 2006                 73.5                   59.4              4.6
+## 9  1988                 76.2                   56.6              5.5
+## 12 1991                 75.8                   57.4              7.2
+## 15 1994                 75.1                   58.8              6.2
+## 1  1980                 77.4                   51.5              6.9
+## 16 1995                 75.0                   58.9              5.6
+## 10 1989                 76.4                   57.4              5.2
+## 3  1982                 76.6                   52.6              9.9
 ##    unemployment_women avg_hourly_earning_men avg_hourly_earning_women
-## 15                6.0                   7.53                    11.32
-## 8                 6.2                   7.86                     9.13
-## 2                 7.9                   7.88                     7.43
-## 12                6.4                   7.58                    10.50
 ## 18                5.0                   7.68                    12.49
-## 6                 7.4                   7.91                     8.73
-## 16                5.6                   7.53                    11.64
+## 5                 7.6                   7.95                     8.48
 ## 21                4.1                   8.03                    14.00
-## 11                5.5                   7.66                    10.19
-## 27                4.6                   8.23                    16.73</code></pre>
+## 9                 5.6                   7.81                     9.43
+## 12                6.4                   7.58                    10.50
+## 15                6.0                   7.53                    11.32
+## 1                 7.4                   7.99                     6.84
+## 16                5.6                   7.53                    11.64
+## 10                5.4                   7.75                     9.80
+## 3                 9.4                   7.86                     7.86</code></pre>
 </div>
 <div id="a-represente-graficamente-a-relação-entre-a-taxa-de-participação-dos-homens-na-força-de-trabalho-e-a-taxa-de-desemprego-dos-homens." class="section level3">
 <h3><strong>a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.</strong></h3>
@@ -565,16 +562,16 @@ tbl_2.7 %&gt;%
 # Amostra dos dados
 tbl_2.8[sample(nrow(tbl_2.8),10), ]</code></pre>
 <pre><code>##    alimento total
-## 47      395   745
-## 6       260   460
-## 30      385   662
-## 29      390   655
+## 19      410   610
 ## 27      403   648
-## 34      433   690
-## 3       303   391
-## 53      500   695
-## 39      380   785
-## 38      610   788</code></pre>
+## 32      322   677
+## 28      350   650
+## 20      383   616
+## 8       325   478
+## 18      420   608
+## 16      370   586
+## 21      315   618
+## 46      430   751</code></pre>
 </div>
 <div id="a-represente-graficamente-os-dados-colocando-no-eixo-vertical-as-despesas-com-alimentação-e-no-eixo-horizontal-os-gastos-totais-e-em-seguida-insira-uma-linha-de-regressão." class="section level3">
 <h3><strong>a) Represente graficamente os dados, colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais e em seguida, insira uma linha de regressão.</strong></h3>
@@ -619,16 +616,16 @@ Hipótese 6: O número de observações n deve ser maior que o número de parâm
 #Amostra aleatória dos dados
 df_3.18[sample(nrow(df_3.18),10), ]</code></pre>
 <pre><code>##    prova_parcial prova_final
-## 10             6           4
-## 4             10           7
-## 9              2           1
-## 8              8          10
-## 2              3           2
 ## 1              1           3
 ## 7              4           5
-## 3              7           8
+## 10             6           4
 ## 6              5           6
-## 5              9           9</code></pre>
+## 4             10           7
+## 5              9           9
+## 8              8          10
+## 3              7           8
+## 9              2           1
+## 2              3           2</code></pre>
 <pre class="r"><code># Coeficiente de correlação de spearman
 cor.test(df_3.18$prova_parcial,df_3.18$prova_final,method = &quot;spearman&quot;) %&gt;% pander()</code></pre>
 <table style="width:92%;">
@@ -682,27 +679,27 @@ cor.test(df_3.18$prova_parcial,df_3.18$prova_final,method = &quot;spearman&quot;
 
 tbl_3.6[sample(nrow(tbl_3.6),10), ]</code></pre>
 <pre><code>##     ano prod_setor_empresarial prod_setor_n_agricola sal_setor_empresarial
-## 36 1995                  101.5                 102.0                  98.7
-## 31 1990                   94.4                  94.5                  96.2
-## 39 1998                  109.5                 109.4                 105.2
-## 40 1999                  112.8                 112.5                 108.0
-## 22 1981                   80.8                  81.7                  89.3
+## 26 1985                   87.1                  87.5                  92.0
+## 16 1975                   74.8                  76.2                  84.1
 ## 32 1991                   95.9                  96.1                  97.4
-## 23 1982                   80.1                  80.8                  90.4
-## 34 1993                  100.4                 100.4                  99.7
-## 12 1971                   69.0                  70.7                  80.2
-## 21 1980                   79.2                  80.6                  89.1
+## 39 1998                  109.5                 109.4                 105.2
+## 19 1978                   79.3                  81.0                  89.1
+## 33 1992                  100.0                 100.0                 100.0
+## 28 1987                   90.1                  90.6                  95.2
+## 18 1977                   78.5                  80.0                  87.6
+## 46 2005                  135.7                 134.9                 120.2
+## 38 1997                  106.5                 106.4                 100.5
 ##    sal_setor_n_agricola
-## 36                 98.8
-## 31                 96.1
-## 39                104.9
-## 40                107.5
-## 22                 89.8
+## 26                 92.2
+## 16                 84.5
 ## 32                 97.4
-## 23                 90.8
-## 34                 99.5
-## 12                 80.7
-## 21                 89.6</code></pre>
+## 39                104.9
+## 19                 89.6
+## 33                100.0
+## 28                 95.5
+## 18                 88.0
+## 46                119.3
+## 38                100.3</code></pre>
 </div>
 <div id="a-represente-graficamente-y-contra-x-para-os-dois-setores-da-economia-separadamente." class="section level3">
 <h3><strong>a) Represente graficamente Y contra X para os dois setores da economia separadamente.</strong></h3>
@@ -798,16 +795,16 @@ summary(lm(Y~X, data = df_tbl_3.6)) %&gt;% pander()</code></pre>
 # Amostra aleatória dos dados
 tbl_3.7[sample(nrow(tbl_3.7),10), ]</code></pre>
 <pre><code>##     ano gold_price nyse_index ipc_index
+## 20 1993     359.77    2638.96     144.5
 ## 24 1997     331.02    4827.35     160.5
-## 31 2004     409.72    6612.62     188.9
-## 9  1982     375.67     728.84      96.5
-## 1  1974     159.26     463.54      49.3
-## 16 1989     381.44    1903.36     124.0
-## 21 1994     384.00    2687.02     148.2
-## 14 1987     446.46    1709.79     113.6
-## 11 1984     360.48     977.33     103.9
+## 13 1986     367.66    1438.02     109.6
+## 33 2006     603.46    8357.99     201.6
+## 22 1995     384.17    3078.56     152.4
+## 10 1983     424.35     979.52      99.6
 ## 23 1996     387.77    3787.20     156.9
-## 15 1988     436.94    1585.14     118.3</code></pre>
+## 30 2003     363.38    5447.46     184.0
+## 12 1985     317.26    1142.97     107.6
+## 18 1991     362.11    2181.72     136.2</code></pre>
 </div>
 <div id="a-assinale-em-um-mesmo-diagrama-de-dispersão-os-preços-do-ouro-o-ipc-e-o-índice-nyse." class="section level3">
 <h3><strong>a) Assinale, em um mesmo diagrama de dispersão, os preços do ouro, o IPC e o índice NYSE.</strong></h3>
@@ -1050,16 +1047,16 @@ tbl_5.5 &lt;- read.table(file =
 # Amostra aleatória dos dados
 tbl_5.5[sample(nrow(tbl_5.5),10), ]</code></pre>
 <pre><code>##    obs   wage expense
-## 15  15 27.360    3982
-## 39  39 22.482    3947
-## 42  42 25.892    4042
-## 22  22 24.624    4517
+## 31  31 20.940    2853
+## 19  19 18.095    2967
+## 10  10 24.500    3547
+## 7    7 30.678    5710
+## 40  40 20.969    2509
+## 26  26 20.627    2821
+## 36  36 20.460    3124
+## 48  48 25.788    4123
 ## 46  46 25.610    2932
-## 34  34 18.443    2305
-## 12  12 27.170    3621
-## 51  51 25.845    3766
-## 16  16 21.690    3568
-## 19  19 18.095    2967</code></pre>
+## 45  45 22.341    2297</code></pre>
 </div>
 <div id="a-represente-graficamente-os-dados-e-trace-uma-linha-de-regressão" class="section level3">
 <h3><strong>a) Represente graficamente os dados e trace uma linha de regressão</strong></h3>
@@ -1336,15 +1333,15 @@ qqline(res$a, pch = 1, col = &quot;dark orange&quot;, lty = 2)</code></pre>
 <pre class="r"><code># Amostra dos dados
 tbl_1.3[sample(nrow(tbl_1.3),10), ]</code></pre>
 <pre><code>##     Ano   EUA Canada Japan France Germany Italy United.Kingdon
+## 17 1996 156.9  153.8 119.3  151.4   135.3 213.8          179.4
+## 1  1980  82.4   76.1  91.0   72.2    86.7  63.9           78.5
+## 14 1993 144.5  147.9 118.5  143.4   127.6 187.7          165.3
 ## 24 2003 184.0  177.7 118.7  166.7   148.3 250.8          213.0
-## 8  1987 113.6  118.4 104.9  121.1   104.9 135.1          119.7
-## 9  1988 118.3  123.2 105.6  124.3   106.3 141.9          125.6
-## 7  1986 109.6  113.5 104.9  117.2   104.6 128.9          114.9
+## 15 1994 148.2  148.2 119.3  145.8   131.1 195.3          169.3
+## 13 1992 140.3  145.3 117.0  140.4   122.2 179.5          162.7
 ## 19 1998 163.0  157.8 122.2  154.2   139.1 222.5          191.4
 ## 10 1989 124.0  129.3 108.0  128.7   109.2 150.7          135.4
-## 15 1994 148.2  148.2 119.3  145.8   131.1 195.3          169.3
-## 4  1983  99.6  100.4  99.8  100.3   100.3 100.8           99.8
-## 22 2001 177.1  169.1 120.1  160.2   144.8 238.3          203.6
+## 8  1987 113.6  118.4 104.9  121.1   104.9 135.1          119.7
 ## 20 1999 166.6  160.5 121.8  155.0   140.0 226.2          194.3</code></pre>
 </div>
 <div id="a-trace-um-gráfico-com-os-dados-do-ipc-dos-estados-unidos-em-um-eixo-e-os-do-ipc-canandense-em-outro." class="section level3">
@@ -1441,16 +1438,16 @@ tbl_1.3 %&gt;%
 <pre class="r"><code># Amostra dos dados
 tbl_3.7[sample(nrow(tbl_1.3),10), ]</code></pre>
 <pre><code>##     ano gold_price nyse_index ipc_index
-## 19 1992     343.82    2421.51     140.3
-## 26 1999     278.88    6546.81     166.6
-## 10 1983     424.35     979.52      99.6
-## 15 1988     436.94    1585.14     118.3
-## 22 1995     384.17    3078.56     152.4
-## 8  1981     460.03     782.62      90.9
-## 9  1982     375.67     728.84      96.5
-## 11 1984     360.48     977.33     103.9
+## 18 1991     362.11    2181.72     136.2
 ## 14 1987     446.46    1709.79     113.6
-## 17 1990     383.51    1939.47     130.7</code></pre>
+## 4  1977     157.71     567.66      60.6
+## 23 1996     387.77    3787.20     156.9
+## 17 1990     383.51    1939.47     130.7
+## 9  1982     375.67     728.84      96.5
+## 7  1980     612.56     720.15      82.4
+## 25 1998     294.24    5818.26     163.0
+## 10 1983     424.35     979.52      99.6
+## 12 1985     317.26    1142.97     107.6</code></pre>
 </div>
 <div id="a-estime-as-duas-regressões-dadas-neste-exercício-calculando-os-erros-padrão-e-os-demais-resultados-habituais." class="section level3">
 <h3><strong>a) Estime as duas regressões dadas neste exercício, calculando os erros padrão e os demais resultados habituais.</strong></h3>
@@ -1643,16 +1640,16 @@ res_2 %&gt;%
 # Amostra dos dados
 tbl_5.6[sample(nrow(tbl_5.6),10), ]</code></pre>
 <pre><code>##     ano    pnb    m1     m2     m3      l
-## 11 1980 2631.7 414.9 1632.6 1990.0 2326.2
-## 5  1974 1434.2 277.6  908.5 1070.5 1249.3
 ## 6  1975 1549.2 291.2 1023.3 1174.2 1367.9
-## 14 1983 3304.8 525.4 2196.3 2710.4 3183.1
-## 9  1978 2163.9 363.1 1389.1 1647.1 1910.6
+## 5  1974 1434.2 277.6  908.5 1070.5 1249.3
+## 8  1977 1918.3 335.4 1286.7 1472.9 1704.7
+## 1  1970  992.7 216.6  628.2  677.5  816.3
 ## 10 1979 2417.8 389.1 1498.5 1804.8 2117.1
-## 7  1976 1718.0 310.4 1163.6 1311.9 1516.6
-## 12 1981 2957.8 441.9 1796.6 2238.2 2599.8
-## 3  1972 1185.9 252.0  805.2  886.0 1023.0
-## 13 1982 3069.3 480.5 1965.4 2462.5 2870.8</code></pre>
+## 9  1978 2163.9 363.1 1389.1 1647.1 1910.6
+## 13 1982 3069.3 480.5 1965.4 2462.5 2870.8
+## 14 1983 3304.8 525.4 2196.3 2710.4 3183.1
+## 2  1971 1077.6 230.8  712.8  776.2  903.1
+## 12 1981 2957.8 441.9 1796.6 2238.2 2599.8</code></pre>
 </div>
 <div id="a-que-definição-de-moeda-parece-apresentar-relação-mais-estreita-com-pnb-nominal" class="section level3">
 <h3><strong>a) Que definição de moeda parece apresentar relação mais estreita com PNB nominal?</strong></h3>

@@ -53,7 +53,7 @@ Também afirmam que a metodologia econométrica se baseia em (i) estabelecimento
 
 Neste post (como em todos os posts que estão na categoria **library**), irei resumir os capítulos deste livro e resolver alguns exercícios, visando auxiliar pessoas que estejam lendo ele também, pois poderão encontrar a resolução dos exercícios e também a base de dados usadas no meu repositório do git hub.
 
-![My picture](/images/2020-03-03_econometria_basica.png)
+![](/images/2020-03-03_econometria_basica.png)
 
 ## **Cap.1 A natureza da análise de regressão**
 

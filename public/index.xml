@@ -6,10 +6,20 @@
     <description>Recent content on Francisco Piccolo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Book Review: The Machine that Changed the World</title>
+      <link>/library/2020-04-21-the-machine-that-changed-the-world/</link>
+      <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/library/2020-04-21-the-machine-that-changed-the-world/</guid>
+      <description>OverviewThe Machine that Changed the World is a complete guide in the Lean Methodology, covering every aspect of this practice in the automotive industry. This book was developed as a result of a deep research made by researchers at MIT and industries specialists trying to find the main differences between mass production and lean production.
+The drivers for this research was the increasingly market share gained by Japanese companies at that time.</description>
+    </item>
     
     <item>
       <title>Book Review: Basic Econometrics by Gujarati and Porter</title>
@@ -37,17 +47,8 @@ The EDA is an activity frequently made by many different professionals, that hav
       
       <guid>/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</guid>
       <description>OverviewEste livro faz parte de uma coleção da Universidade de Cambridge - Cambridge Series in Statistics and Probabilistic Mathematics, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística.
-O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse.</description>
-    </item>
-    
-    <item>
-      <title>Book Review: The Machine that Changed the World</title>
-      <link>/library/2020-04-20-the-machine-that-changed-the-world/</link>
-      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/library/2020-04-20-the-machine-that-changed-the-world/</guid>
-      <description>OverviewThe Machine that Changed the World is a complete guide in the Lean Methodology, covering every aspect of this practice in the automotive industry. This book was developed as a result of a deep research made by researchers at MIT and industries specialists trying to find the main differences between mass production and lean production.
-The drivers for this research was the increasingly market share gained by Japanese companies at that time.</description>
+O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse.
+A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento.</description>
     </item>
     
     <item>

@@ -3,20 +3,25 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/library/2020-03-03-basic-econometrics-by-gujarati-and-porter/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
+    <loc>/library/2020-04-21-the-machine-that-changed-the-world/</loc>
+    <lastmod>2020-04-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
+    <lastmod>2020-04-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/library/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
+    <lastmod>2020-04-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/library/2020-03-03-basic-econometrics-by-gujarati-and-porter/</loc>
+    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -32,11 +37,6 @@
   
   <url>
     <loc>/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</loc>
-    <lastmod>2020-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/library/2020-04-20-the-machine-that-changed-the-world/</loc>
     <lastmod>2020-02-07T00:00:00+00:00</lastmod>
   </url>
   
