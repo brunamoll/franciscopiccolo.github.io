@@ -1,5 +1,5 @@
 locale                   : "pt-BR"
-title                    : "Glass Frog_1"
+title                    : "Glass Frog_3"
 title_separator          : " "
 subtitle                 : "Data Science Projects"
 name                     : "Francisco Piccolo"
@@ -22,13 +22,6 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/FranciscoPiccolo"
-
-category_archive:
-  type: liquid
-  path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/
 
 # Defaults
 defaults:
