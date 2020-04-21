@@ -33,7 +33,7 @@ a {
 .header {
   padding: 20px 0;
   position: relative;
-  background: #E8DFDF;
+  background: #A5B0D4;
   border-bottom: 1px solid #eaeaea;
 }
 
@@ -103,7 +103,7 @@ a {
 }
 
 .article-date {
-  color: #ccc;
+  color: #A5B0D4;
 }
 
 .article-duration {
@@ -164,7 +164,7 @@ a {
 }
 
 .archive-item-date {
-  color: #ccc;
+  color: #A5B0D4;
   font-size: 14px;
   padding: 5px 0;
   margin-top: 5px;
