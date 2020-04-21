@@ -14,7 +14,6 @@ h1 {
       text-transform: uppercase;
       font-size: 15px;
       font-weight: 700;
-      padding-left: 30px;
 }
 
 h2{
@@ -23,14 +22,12 @@ h2{
       text-transform: uppercase;
       font-size: 15px;
       font-weight: 700;
-      padding-left: 30px;
 }
 
 h3{
   width: 220px;
   line-height: 55px;
   height: 60px;
-  padding-left: 9px;
   border-bottom: 5px solid rgb(42, 42, 42);
   text-transform: uppercase;
   font-size: 15px;
@@ -41,7 +38,6 @@ h4{
   width: 220px;
   line-height: 55px;
   height: 60px;
-  padding-left: 9px;
   border-bottom: 5px solid rgb(42, 42, 42);
   text-transform: uppercase;
   font-size: 16px;
