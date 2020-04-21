@@ -32,8 +32,6 @@ knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.g
 
 ### **The industry of industries in transition**
 
-
-
 ## **2**
 
 ### **The rise and fall of mass production**

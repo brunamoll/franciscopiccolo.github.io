@@ -1,14 +1,14 @@
 /* Whole document: */
 body{
   font-family: Arial;
-  font-size: 12pt;
+  font-size: 14pt;
   color: black;
   line-height: 1.7em;
 }
 /* Headers */
 h1{
 	font-family: Arial;
-	font-size: 25;
+	font-size: 24;
 }
 h2{
 	font-family: Arial;
