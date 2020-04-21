@@ -5,7 +5,6 @@ output:
     df_print: paged
     fig_width: 8.5
     fig_height: 4.0
-    code_folding: hide
 ---
 
 Exploratory Data Analysis (EDA) is a technique developed by John Tukey in 1960 that aims the following goals: formulate hipothesis, generate graphs e understand patterns on the data. All these goals envision to make people aware of insights that they hadn't thought before. With this technique being created, also became alive the program language S, the predecessor of R. 
