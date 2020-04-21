@@ -1,26 +1,50 @@
 /* Whole document: */
 body{
-  font-family: Georgia;
-  font-size: 14pt;
+      height: 55px;
+      line-height: 25px;
+      font-size: 15px;
+      font-weight: 500;
+      padding-left: 40px;
+      font-family: arial;
 }
 /* Headers */
-h1{
-	font-family: Arial;
-	font-size: 25
-	color: black;
+h1 {
+      height: 55px;
+      line-height: 55px;
+      text-transform: uppercase;
+      font-size: 15px;
+      font-weight: 700;
+      padding-left: 30px;
 }
+
 h2{
-	font-family: Arial;
-	font-size: 22
-	color: black;
+      height: 55px;
+      line-height: 55px;
+      text-transform: uppercase;
+      font-size: 15px;
+      font-weight: 700;
+      padding-left: 30px;
 }
+
 h3{
-	font-family: Arial;
-	font-size: 19
-	color: black;
+  width: 220px;
+  line-height: 55px;
+  height: 60px;
+  padding-left: 9px;
+  border-bottom: 5px solid rgb(42, 42, 42);
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 700;
+  color: black;
 }
 h4{
-	font-family: Arial;
-	font-size: 16
-	color: black;
+  width: 220px;
+  line-height: 55px;
+  height: 60px;
+  padding-left: 9px;
+  border-bottom: 5px solid rgb(42, 42, 42);
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 700;
+  color: black;
 }
