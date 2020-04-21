@@ -20,6 +20,17 @@
   </url>
   
   <url>
+    <loc>/2020/02/13/exploratory-data-analysis-project-i/</loc>
+    <lastmod>2020-02-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-02-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</loc>
     <lastmod>2020-02-07T00:00:00+00:00</lastmod>
   </url>
@@ -30,19 +41,8 @@
   </url>
   
   <url>
-    <loc>/2020/01/09/immigration-data-analysis/</loc>
-    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/2020/01/09/residual-analysis-in-econometric-models/</loc>
-    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
+    <loc>/2020/01/20/immigration-data-analysis/</loc>
+    <lastmod>2020-01-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -51,8 +51,13 @@
   </url>
   
   <url>
-    <loc>/2019/10/20/connecting-r-on-amazon-redshift-database/</loc>
-    <lastmod>2019-10-20T00:00:00+00:00</lastmod>
+    <loc>/2019/11/20/residual-analysis-in-econometric-models/</loc>
+    <lastmod>2019-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2019/10/28/connecting-r-on-amazon-redshift-database/</loc>
+    <lastmod>2019-10-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -66,17 +71,8 @@
   </url>
   
   <url>
-    <loc>/1/01/01/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/</loc>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/1/01/01/exploratory-data-analysis-project-i/</loc>
   </url>
   
   <url>

@@ -188,7 +188,7 @@ tibble(mean = mean(y),
 <pre><code>## # A tibble: 1 x 2
 ##     mean    sd
 ##    &lt;dbl&gt; &lt;dbl&gt;
-## 1 0.0811  1.04</code></pre>
+## 1 -0.170  1.16</code></pre>
 <pre class="r"><code># Criando um vetor com 25 entradas vazias
 saida &lt;- rep(NA,25)
 
@@ -206,9 +206,9 @@ df &lt;- data.frame(
 tibble(mean = mean(df[,1]),
            sd = sd(df[,1]))</code></pre>
 <pre><code>## # A tibble: 1 x 2
-##      mean    sd
-##     &lt;dbl&gt; &lt;dbl&gt;
-## 1 -0.0285 0.103</code></pre>
+##       mean    sd
+##      &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.000297 0.104</code></pre>
 </div>
 <div id="crie-uma-função-para-gerar-o-resultado-do-exercício-2.-rode-esta-função-várias-vezes-e-plote-o-resultado-em-um-gráfico-de-densidade." class="section level4">
 <h4><strong>3) Crie uma função para gerar o resultado do exercício 2. Rode esta função várias vezes e plote o resultado em um gráfico de densidade.</strong></h4>
@@ -435,11 +435,11 @@ pander::pander(t.test(a, mu = 0, conf.level = 0.975))</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">0.4749</td>
+<td align="center">-0.3178</td>
 <td align="center">9</td>
-<td align="center">0.6461</td>
+<td align="center">0.7579</td>
 <td align="center">two.sided</td>
-<td align="center">0.3113</td>
+<td align="center">-0.2348</td>
 </tr>
 </tbody>
 </table>
@@ -458,7 +458,7 @@ data.frame(mean = mean,
            t_value = t_value,
            p_value = p_value)</code></pre>
 <pre><code>##     mean     sd n_sqrt    sem t_value   p_value
-## 1 0.3113 2.0724 3.1623 0.6553   0.475 0.6461021</code></pre>
+## 1 0.2348 2.3359 3.1623 0.7387  0.3178 0.7578864</code></pre>
 <p>Veja que o <strong>valor-p</strong> obtido é igual nos dois métodos e ficou alto a ponto de não ser possível rejeitar H0. Um <strong>valor-p</strong> elevado indica que o parâmetro encontrado (neste caso a média da amostra dos 10 valores com valor 1.3783) não foi encontrado por conta do acaso, mas sim por outros motivos (que não é o objetivo do teste indicar quais são). Desta forma, não se pode rejeitar H0, que indica que a média populacional é zero. Isto é satisfatório, pois os números aleatórios foram de fato gerados de uma “população” com média 0 e desvio padrão 2.</p>
 <p>Na segunda parte do exercício, é pedido para fazer o mesmo processo, porém agora com desvio padrão de 1.5.</p>
 <pre class="r"><code># Vetor com 10 valores.
@@ -466,13 +466,13 @@ a &lt;- rnorm(n = 10, mean = 0, sd = 1.5)
 
 # Gerando um teste t
 pander::pander(t.test(a, mu = 0, conf.level = 0.975))</code></pre>
-<table style="width:96%;">
+<table>
 <caption>One Sample t-test: <code>a</code></caption>
 <colgroup>
-<col width="23%" />
+<col width="22%" />
 <col width="6%" />
-<col width="13%" />
-<col width="34%" />
+<col width="20%" />
+<col width="33%" />
 <col width="16%" />
 </colgroup>
 <thead>
@@ -486,11 +486,11 @@ pander::pander(t.test(a, mu = 0, conf.level = 0.975))</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">-0.312</td>
+<td align="center">-4.67</td>
 <td align="center">9</td>
-<td align="center">0.7621</td>
+<td align="center">0.001168 * *</td>
 <td align="center">two.sided</td>
-<td align="center">-0.1458</td>
+<td align="center">-1.174</td>
 </tr>
 </tbody>
 </table>

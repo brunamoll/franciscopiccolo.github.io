@@ -6,28 +6,29 @@
     <description>Recent content in Posts on Francisco Piccolo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Immigration Data Analysis</title>
-      <link>/2020/01/09/immigration-data-analysis/</link>
-      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      <title>Exploratory Data Analysis Project I</title>
+      <link>/2020/02/13/exploratory-data-analysis-project-i/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/01/09/immigration-data-analysis/</guid>
-      <description>Imigration is a central theme on political debates for presidential elections nowadays, creating a lot of controversies and also hope for many people. This social event is increasingly calling more attention, mainly after the Siria conflict and the weakness of the Venezuelan economy, perhaps it’s because it surpreended politicians that didn’t get ready earlier to obtain the benefits that migration flow can lead.
-Because of this relevance about the theme, in November 2019 The Economist made a special report about imigration, with the goal of clarify the current situation and present success cases of countries that are obtaining advantages of the imigration flow.</description>
+      <guid>/2020/02/13/exploratory-data-analysis-project-i/</guid>
+      <description>Exploratory Data Analysis (EDA) is a technique developed by John Tukey in 1960 that aims the following goals: formulate hipothesis, generate graphs e understand patterns on the data. All these goals envision to make people aware of insights that they hadn’t thought before. With this technique being created, also became alive the program language S, the predecessor of R.
+The EDA is an activity frequently made by many different professionals, that have to handle with increasingly data volumes (structured and unstructured) to answer business questions in a fastly pace.</description>
     </item>
     
     <item>
-      <title>Residual analysis in Econometric models</title>
-      <link>/2020/01/09/residual-analysis-in-econometric-models/</link>
-      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      <title>Immigration Data Analysis</title>
+      <link>/2020/01/20/immigration-data-analysis/</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/01/09/residual-analysis-in-econometric-models/</guid>
-      <description>The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hipothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:</description>
+      <guid>/2020/01/20/immigration-data-analysis/</guid>
+      <description>Imigration is a central theme on political debates for presidential elections nowadays, creating a lot of controversies and also hope for many people. This social event is increasingly calling more attention, mainly after the Siria conflict and the weakness of the Venezuelan economy, perhaps it’s because it surpreended politicians that didn’t get ready earlier to obtain the benefits that migration flow can lead.
+Because of this relevance about the theme, in November 2019 The Economist made a special report about imigration, with the goal of clarify the current situation and present success cases of countries that are obtaining advantages of the imigration flow.</description>
     </item>
     
     <item>
@@ -40,32 +41,22 @@ Because of this relevance about the theme, in November 2019 The Economist made a
     </item>
     
     <item>
-      <title>Connecting R on Amazon Redshift Database</title>
-      <link>/2019/10/20/connecting-r-on-amazon-redshift-database/</link>
-      <pubDate>Sun, 20 Oct 2019 00:00:00 +0000</pubDate>
+      <title>Residual analysis in Econometric models</title>
+      <link>/2019/11/20/residual-analysis-in-econometric-models/</link>
+      <pubDate>Wed, 20 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/10/20/connecting-r-on-amazon-redshift-database/</guid>
+      <guid>/2019/11/20/residual-analysis-in-econometric-models/</guid>
+      <description>The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hipothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:</description>
+    </item>
+    
+    <item>
+      <title>Connecting R on Amazon Redshift Database</title>
+      <link>/2019/10/28/connecting-r-on-amazon-redshift-database/</link>
+      <pubDate>Mon, 28 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/10/28/connecting-r-on-amazon-redshift-database/</guid>
       <description>IntroductionIn this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.
 Step 1Dowload the JDBC driver from Amazon.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/</guid>
-      <description>The World Bank was created in 1944 at the Bretton Woords Conferences and its goal is to fight poverty and inequality, throughout investments and support for developing countries. The institution’s mission can be found on its webpage and the first target seeing at the is reduce to 3% the share of people living on extreme poverty until 2030. When the World Bank was created, one of its first responsibilities was to support Europe’s infrastructure reconstrution that had been devastated by the second world war 1.</description>
-    </item>
-    
-    <item>
-      <title>Exploratory Data Analysis Project I</title>
-      <link>/1/01/01/exploratory-data-analysis-project-i/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/exploratory-data-analysis-project-i/</guid>
-      <description>Exploratory Data Analysis (EDA) is a technique developed by John Tukey in 1960 that aims the following goals: formulate hipothesis, generate graphs e understand patterns on the data. All these goals envision to make people aware of insights that they hadn’t thought before. With this technique being created, also became alive the program language S, the predecessor of R.
-The EDA is an activity frequently made by many different professionals, that have to handle with increasingly data volumes (structured and unstructured) to answer business questions in a fastly pace.</description>
     </item>
     
   </channel>
