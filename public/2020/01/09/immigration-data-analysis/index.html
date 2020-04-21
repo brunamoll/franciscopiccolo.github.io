@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.56.3" />
+
+
+<title>Immigration Data Analysis - Francisco Piccolo</title>
+<meta property="og:title" content="Immigration Data Analysis - Francisco Piccolo">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="/contact/">Contact</a></li>
+    
+    <li><a href="/library/">Library</a></li>
+    
+    <li><a href="/post/">Posts</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">10 min read</span>
+    
+
+    <h1 class="article-title">Immigration Data Analysis</h1>
+
+    
+    <span class="article-date">2020-01-09</span>
+    
+
+    <div class="article-content">
+      
+
+
+<p>Imigration is a central theme on political debates for presidential elections nowadays, creating a lot of controversies and also hope for many people. This social event is increasingly calling more attention, mainly after the Siria conflict and the weakness of the Venezuelan economy, perhaps it’s because it surpreended politicians that didn’t get ready earlier to obtain the benefits that migration flow can lead.</p>
+<p>Because of this relevance about the theme, in November 2019 <a href="https://www.economist.com/printedition/2019-11-16">The Economist</a> made a special report about imigration, with the goal of clarify the current situation and present success cases of countries that are obtaining advantages of the imigration flow. I really enjoyed the theme and the studies that was writen by the correspondents, and then I decided to write a post to present the mainly conclusions of the magazine and access the World Bank Database to explore the theme in depth and generate some insight.</p>
+<p>Following is a picture of one of the articles presented in the magazine. This picture is awesome!</p>
+<div class="figure" style="text-align: center"><span id="fig:pressure"></span>
+<img src="C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-01-09_imigration_post.png" alt="The Economist" width="476" />
+<p class="caption">
+Figure 1: The Economist
+</p>
+</div>
+<div id="mainly-conclusions-of-the-report" class="section level2">
+<h2><strong>Mainly conclusions of the report</strong></h2>
+<ol style="list-style-type: decimal">
+<li><p>People that successfully migrate from a poor country to a rich one increase their income between 3 to 6 times, because the rich country has better institutions, capital alocation and modern companies.</p></li>
+<li><p>If everone that which a country migraton was allowed to do it, thw world GDP could double.</p></li>
+<li><p>Imigrants are more tended to open their own business, because they percept unatended demands easier and also they find alternative solutions to existent problems on the country that they enter.</p></li>
+<li><p>The mainly “problem” with imigration is the cultural change, that occurs seedly in specific places, because imigrants tend to cluster in certain locals. This culturar change is the mainly problem with imigration and also the hardest to measure, thus it becomes difficult to be contested by people that favour imigration.</p></li>
+<li><p>People are more tolerant to the imigration flow in their countries when the feel that their government are in charge of the frontier, in other words, with a efficient process that only allows the migration of people by the legal process.</p></li>
+<li><p>Imigratns often share their wages with their families that have stayed on the country and this income fount is called <a href="https://www.ted.com/talks/dilip_ratha_the_hidden_force_in_global_economics_sending_money_home">remitances</a>. Remitances already is the mainly font of external investment in some poor countries. This flow of money has high potential of impacts, because it goes straight to the pocket of people that are in need and also this investment doesn’t carry the risk of being misplaced by corruption. Remitances represent more than 10% of GDP of 28 countries currently (2019).</p></li>
+<li><p>To obtain benefits from the imigration process, the government must be efficient on the integration of people on the labour market, in other to avoid the situation where the imigrant is demanding social care without being contributins to the tax revenue of the government.</p></li>
+</ol>
+</div>
+<div id="themes-relevant-data" class="section level2">
+<h2><strong>Theme’s relevant data</strong></h2>
+<p>After we understand a little better of the imigration flow, we can analyse some public data in order to generate some new insights about this theme. For this activity, I’ll utilize the World Banck Data API that contain organized data about imigration for almost every country. In this task I’ll use the following packages:</p>
+<pre class="r"><code>library(wbstats)        # accessing the World Banck API
+library(tidyverse)      # data science and data manipulation packages
+library(ggthemes)       # themes for ggplot graphs
+library(scales)         # adjusting axis scales
+library(sqldf)          # SQL script inside R
+
+theme_graph &lt;- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = &quot;italic&quot;, size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = &quot;italic&quot;, size = 9),
+    text = element_text(family = &quot;Times New Roman&quot;),
+    strip.background = element_rect(fill = &quot;grey&quot;),
+    strip.text = element_text(face = &quot;bold&quot;),
+    legend.title = element_blank(),
+    legend.position = &quot;bottom&quot;
+  )
+}
+  
+graph_color &lt;- &quot;#006666&quot;</code></pre>
+</div>
+<div id="imigrants-around-the-world" class="section level2">
+<h2><strong>Imigrants around the world</strong></h2>
+<p>In this topic, we’ll analyse how much imigrants the World Banck accounted in 2015 (the last period that the data was collected), as well the evolution of this population throughout the year and how much this population represents of the country that they leave. To collect the data, you just have to call the World Bank API using the following code:</p>
+<pre class="r"><code>migrants_pop &lt;- wbstats::wb(indicator = &quot;SM.POP.TOTL&quot;,
+                              country = &quot;countries_only&quot;,
+                              startdate = 1980,
+                              enddate = 2019)</code></pre>
+<p>On the following graph, we can see that the number of imigrants has increased continuously throughout the years, but with peaks in specific periods, for exemple between 1985 and 1990 (probably there was a civil war in an African country). Syria’s turmoil isn’t presented on the data, since probably the effect on imigration flow started in 2016. It can be seeing that the accounted population as imigrants by the institution in 2015 is around 250 millions, beyond the Brazilian population.</p>
+<pre class="r"><code>migrants_pop %&gt;% 
+  group_by(date) %&gt;% 
+  summarise(total_migrants = sum(value)) %&gt;% 
+  ggplot(aes(x = date, y = total_migrants, group = 1))+
+  geom_line(color = graph_color, size = 1)+
+  scale_y_continuous(labels = scales::comma)+
+  theme_graph()+
+  labs(title = &quot;Continuously growth of imigrant population&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;)</code></pre>
+<p><img src="/post/2020-01-09-imigration-data-analysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>On the following visualization, we’ll see how much these people that imigrate represents on the country that they step in, considering 2015 and only countries with more than 10 million of people living in. Since this data set has too many countries (215), I’ll select just 20 that have the greatest share of imigrants on their population.</p>
+<pre class="r"><code># Coletando dados da população do país
+population &lt;- wbstats::wb(indicator = &quot;SP.POP.TOTL&quot;,
+                          country = &quot;countries_only&quot;)
+
+population_2015 &lt;- population %&gt;% 
+  filter(date == &quot;2015&quot;) %&gt;% 
+  mutate(population = value) %&gt;% 
+  select(country,population)</code></pre>
+<pre class="r"><code># Fazendo o join com o data set de imigrantes
+migrants_pop %&gt;% 
+  filter(date == &quot;2015&quot;) %&gt;% 
+  select(country,value) %&gt;% 
+  inner_join(population_2015,by = c(&quot;country&quot; = &quot;country&quot;)) %&gt;% 
+  mutate(share_over_population = round(value/population,digits = 4)) %&gt;% 
+  filter(population &gt;= 10000000) %&gt;% 
+  arrange(desc(share_over_population)) %&gt;% 
+  head(20) %&gt;% 
+  mutate(country = fct_reorder(country,share_over_population)) %&gt;% 
+  ggplot(aes(x = country, y = share_over_population))+
+  geom_col(fill = graph_color)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  labs(title = &quot;County rank by imigration share over population&quot;,
+       x = &quot;&quot;,
+       y = &quot;% of imigrants over the population&quot;)+
+  coord_flip()</code></pre>
+<p><img src="/post/2020-01-09-imigration-data-analysis_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="countries-that-lost-more-people-during-the-last-years" class="section level2">
+<h2><strong>Countries that lost more people during the last years</strong></h2>
+<p>In the following analysis, I’ll use an indicator of the World Bank that shows the net output of people from a country (i.e. imigration less migration) in a given year. In this analysis, I’ll take the data from 2010 to 2017 (the last year of the collect), make the sum of this indicator (net_output) and then filter the countries that have the sum below 0, that will be the countries that had lost people in the considered period. Finnaly, I’ll classify the remaining countries to take the first 20 with more people leaving the country.</p>
+<pre class="r"><code>net_migration &lt;- wbstats::wb(indicator = &quot;SM.POP.NETM&quot;,
+                         country = &quot;countries_only&quot;,
+                         startdate = 2010,
+                         enddate = 2019) %&gt;% 
+  filter(date &gt; &quot;2000&quot;) %&gt;% 
+  select(country,value,date)
+
+# Selecionando os países que tiveram saída de pessoas no período
+net_migration %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(
+    total_net_migration = sum(value)
+  ) %&gt;% 
+  filter(total_net_migration &lt; 0) %&gt;% 
+  select(country,total_net_migration) %&gt;% 
+  arrange(total_net_migration) %&gt;% 
+  head(20) -&gt; country_with_neg_net_migration
+
+net_migration %&gt;% 
+  inner_join(country_with_neg_net_migration, by = c(&quot;country&quot; = &quot;country&quot;)) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(net_migration = sum(value)) %&gt;% 
+  mutate(country = fct_reorder(country,net_migration,.desc = T)) %&gt;% 
+  ggplot(aes(x = country, y = net_migration))+
+  geom_col(fill = graph_color)+
+  scale_y_continuous(labels = scales::comma)+
+  coord_flip()+
+  theme_graph()+
+  labs(title = &quot;Countries with the greatest output of people from their country&quot;,
+       subtitle = &quot;Net output&quot;,
+       x = &quot;&quot;,
+       y = &quot;Net migration&quot;,
+       caption = &quot;From 2010 until 2017&quot;)</code></pre>
+<p><img src="/post/2020-01-09-imigration-data-analysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>The net output is interesting but the relative net output (%) can bring more clarity to the problem the country is facing. Índice, China and Bangladesh obviously are in the preceding graph because they have large population. On the following visualization I’ll re do the preceding graph, however I’ll sellect the countries considering the net output relative to the population.</p>
+<pre class="r"><code>net_migration %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(
+    total_net_migration = sum(value)
+  ) %&gt;% 
+  filter(total_net_migration &lt; 0) %&gt;% 
+  select(country,total_net_migration) %&gt;% 
+  inner_join(population %&gt;% 
+  filter(date == &quot;2018&quot;,
+         value &gt; 5000000) %&gt;% 
+  mutate(population = value) %&gt;% 
+  select(country,population),by = c(&quot;country&quot; = &quot;country&quot;)) %&gt;% 
+  mutate(share_over_population = round(total_net_migration/population,digits = 4)) %&gt;% 
+  arrange(share_over_population) %&gt;% 
+  head(20) %&gt;%
+  mutate(country = fct_reorder(country,share_over_population,.desc = T)) %&gt;% 
+  ggplot(aes(x = country, y = share_over_population))+
+  geom_col(fill = graph_color)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  labs(title = &quot;Share of population leaving the country&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;)+
+  coord_flip()</code></pre>
+<p><img src="/post/2020-01-09-imigration-data-analysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>As this indicator has more recent data, Syria is presented with its outflow well represented on the graph, because its civil war that is occuring since 2012. Venezuela also is well represented because of its economic crisis.</p>
+</div>
+<div id="remitances-sent-to-the-countries" class="section level2">
+<h2><strong>Remitances sent to the countries</strong></h2>
+<p>Remitances, as showed on the articles, are the monetary values sent by people that migrated to their families that stayed on the country. Let’s see how much this investment represents on the country’s GDP. According with one of the articles from the Magazine, 28 countries have a share o remitances greater than 10% of their GDP. The World Bank data presents 29 countries with this mark. The following code show this output:</p>
+<pre class="r"><code>remitances_over_gdp &lt;- wbstats::wb(indicator = &quot;BX.TRF.PWKR.DT.GD.ZS&quot;,
+                         country = &quot;countries_only&quot;)
+
+remitances_over_gdp %&gt;% 
+  filter(date == &quot;2018&quot;,
+         country != &quot;Lesotho&quot;,
+         value &gt; 10) %&gt;%
+  mutate(remitance_over_gdp = paste(round(value,digits = 0),&quot;%&quot;,sep = &quot;&quot;)) %&gt;% 
+  arrange(desc(value)) %&gt;% 
+  select(date,country,remitance_over_gdp)</code></pre>
+<pre><code>##    date                country remitance_over_gdp
+## 1  2018                  Tonga                41%
+## 2  2018        Kyrgyz Republic                33%
+## 3  2018                  Haiti                33%
+## 4  2018             Tajikistan                29%
+## 5  2018                  Nepal                29%
+## 6  2018            El Salvador                21%
+## 7  2018               Honduras                20%
+## 8  2018                  Samoa                18%
+## 9  2018     West Bank and Gaza                17%
+## 10 2018                Moldova                16%
+## 11 2018                Jamaica                16%
+## 12 2018                 Kosovo                16%
+## 13 2018             Uzbekistan                15%
+## 14 2018       Marshall Islands                14%
+## 15 2018                Liberia                14%
+## 16 2018                Comoros                14%
+## 17 2018            Gambia, The                12%
+## 18 2018            Yemen, Rep.                12%
+## 19 2018                Lebanon                12%
+## 20 2018              Guatemala                12%
+## 21 2018                Armenia                12%
+## 22 2018             Cabo Verde                12%
+## 23 2018                Georgia                12%
+## 24 2018              Nicaragua                11%
+## 25 2018                Ukraine                11%
+## 26 2018             Montenegro                11%
+## 27 2018                 Jordan                11%
+## 28 2018 Bosnia and Herzegovina                11%
+## 29 2018            Philippines                10%
+## 30 2018       Egypt, Arab Rep.                10%
+## 31 2018                Senegal                10%</code></pre>
+<p>As well as the remitances share over GDP, it’s important to see if this capital inflow is acyclic (an assumption commented in one of the articles of the special report). This characteristic indicates that the flow isn’t correlated with the GDP variation (or GDP per capita variation). The hipothesis is that the persons that send they money, will send more when the economic situation on his/her familiy cuntry deteriorate. To validate this hipothesis I’ll select some countries and plot a temporal serie for the GDP per capita and another temporal serie for the remitances per capita sent to the selected countries. The selected countries are: Suriname, Somalia, Sierra Leone, Senegal, Sudan, Rwanda, Nepal, Niger, Malawy, Mali, Lybia, Kenya, Ethiopia, Eritrea and Congo.</p>
+<p>Collecting the neeeded indicators for this analysis:</p>
+<p>Now lets investigate how the two variables perform throughout the years (since 2010). In order to create the ‘remitances per capita’ indicator, I brought the population data and made a join with the remitances data. Next, I made de division (remitances received/population).</p>
+<pre class="r"><code>remitances_received %&gt;% 
+  mutate(remitances_received = value) %&gt;% 
+  select(date,country,remitances_received) %&gt;% 
+  filter(country %in% country_view,
+         date &gt; 2010) %&gt;% 
+  inner_join(population %&gt;% mutate(population = value) %&gt;% 
+               select(date,
+                      country,
+                      population), by = c(&quot;date&quot; = &quot;date&quot;, &quot;country&quot; = &quot;country&quot;)) %&gt;% 
+  mutate(remitance_pc = round(remitances_received/population,digits = 4)) %&gt;% 
+  group_by(date) %&gt;%
+  summarise(remitances_received_pc = sum(remitance_pc)) %&gt;% 
+  ggplot(aes(x = date, y = remitances_received_pc, group = 1))+
+  geom_line(color = graph_color, size = 1)+
+  scale_y_continuous(labels = scales::comma)+
+  theme_graph()+
+  labs(title = &quot;Remitances per capita (US$)&quot;,
+       subtitle = &quot;Growth on the analysed period&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;)</code></pre>
+<p><img src="/post/2020-01-09-imigration-data-analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>gdp_pc %&gt;% 
+  mutate(gdp_pc = value) %&gt;% 
+  select(date,country,gdp_pc) %&gt;% 
+  group_by(date) %&gt;% 
+  summarise(gdp_pc = sum(gdp_pc)) %&gt;% 
+  inner_join(remitances_received %&gt;% select(date,country), by = c(&quot;date&quot; = &quot;date&quot;)) %&gt;% 
+  filter(country %in% country_view,
+         date &gt; 2010) %&gt;% 
+  ggplot(aes(x = date, y = gdp_pc, group = 1))+
+  geom_line(color = graph_color, size = 1)+
+  scale_y_continuous(labels = scales::comma)+
+  theme_graph()+
+  labs(title = &quot;GDP per capita (US$)&quot;,
+       subtitle = &quot;Drop on the analysed period&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;)</code></pre>
+<p><img src="/post/2020-01-09-imigration-data-analysis_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>It’s possible to afirm that this money inflow, sent by imigrants to their families that stay on the country, is acyclic and probably support a lot the poorest that are in need.</p>
+</div>
+<div id="conclusions" class="section level2">
+<h2><strong>Conclusions</strong></h2>
+<p>Although the simplicity of these analysed, it was possible to validate the statistics of the magazine reports and generate some insights beyone that. Hope you have enjoyed.</p>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.56.3" />
+
+
+<title>Residual analysis in Econometric models - Francisco Piccolo</title>
+<meta property="og:title" content="Residual analysis in Econometric models - Francisco Piccolo">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="/contact/">Contact</a></li>
+    
+    <li><a href="/library/">Library</a></li>
+    
+    <li><a href="/post/">Posts</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">9 min read</span>
+    
+
+    <h1 class="article-title">Residual analysis in Econometric models</h1>
+
+    
+    <span class="article-date">2020-01-09</span>
+    
+
+    <div class="article-content">
+      
+
+
+<p>The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hipothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:</p>
+<ol style="list-style-type: lower-roman">
+<li><p>Absence of multicolineatiry between independent variables</p></li>
+<li><p>Absence of autocorrelation on the dependent variable</p></li>
+<li><p>Absence of pattern on the behavior of the model residuals, in other words, absence of heteroscedasticity</p></li>
+<li><p>Normal distribution of residuals</p></li>
+</ol>
+<p>Having this assumptions satisfied, the model can be executed and the generated conclusions will be reliable to allow decision making. In this post, I’ll analyse the behavior of the residuals from a linear regression model in order to validate the assumptions (iii) and (iv). For this, I’ll use a data set that presents the price of suggarcane as independent variable and the planted area of this product, that will be the dependent variable.</p>
+<p>The goal of this example is to analyse, through a simple linear regression model, the suggarcane supply elasticity as a function of the suggarcane price. The hipothesis is that there’s elasticity on the supply, thus the planted area increases in responde to a price increase. But, in order to validade this existence, it’s necessary to check, using a regression model, that these two variables have correlation. Then, the assumptions (iii) and (iv) will support this conclusion.</p>
+<p>For this example, I’ll utilize the following R packages:</p>
+<pre class="r"><code>library(tidyverse)
+library(lmtest)
+library(corrplot)
+library(readxl)
+library(gridExtra)
+library(ggthemes)
+library(pander)
+
+theme_set(theme_bw())
+
+theme_graph &lt;- function(){
+  theme(
+    # background color
+    panel.background = element_rect(fill = &quot;white&quot;),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = &quot;italic&quot;, size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = &quot;italic&quot;, size = 9),
+    text = element_text(family = &quot;Times New Roman&quot;),
+    strip.background = element_rect(fill = &quot;grey&quot;),
+    strip.text = element_text(face = &quot;bold&quot;),
+    legend.title = element_blank(),
+    legend.position = &quot;bottom&quot;
+  )
+}
+  
+graph_color &lt;- &quot;#006666&quot;</code></pre>
+<pre class="r"><code>dados &lt;- readxl::read_excel(&quot;C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/base_de_dados/Econometria_exercicios/autocorrelacao_cana_de_acucar.xlsx&quot;)
+
+# Chaging the name of the field to remove blanck spaces
+dados %&gt;% 
+  transmute(
+    periodo = Período,
+    area = Área,
+    valor = `Preço da Cana de Açúcar`*100,
+    log_area = log(area),
+    log_valor = log(valor),
+    delta_area = round((area/lag(area,1))-1,digits = 2),
+    delta_log_area = round(log_area-lag(log_area,1),digits = 2),
+    delta_valor = round((valor/lag(valor,1))-1,digits=2),
+    delta_log_valor = round(log_valor-lag(log_valor),digits = 2),
+    log_area_precicion = delta_area - delta_log_area,
+    log_valor_precision = delta_valor - delta_log_valor
+  ) -&gt; dados_2</code></pre>
+<p>The data set of this example has 34 rows, with planted area and suggarcane price data. Both fields with log transformation (natural) included. Folliwing there’s a sample of the data set:</p>
+<pre class="r"><code>dados_2[sample(nrow(dados_2),10), ]</code></pre>
+<pre><code>## # A tibble: 10 x 11
+##    periodo  area valor log_area log_valor delta_area delta_log_area delta_valor
+##      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;
+##  1      27    97  40.1     4.57      3.69      -0.22          -0.25        0.39
+##  2       6    57  13.2     4.04      2.58      -0.21          -0.23        0.21
+##  3      18    91  20.5     4.51      3.02      -0.64          -1.01       -0.46
+##  4      30   220  41.0     5.39      3.71       0.12           0.11        0.16
+##  5       2    71  11.5     4.26      2.44       1.45           0.9         0.53
+##  6       3    42  10.1     3.74      2.31      -0.41          -0.53       -0.12
+##  7       5    72  11.0     4.28      2.39      -0.2           -0.22       -0.01
+##  8      33   237  40.2     5.47      3.69       0.14           0.13       -0.13
+##  9       4    90  11.0     4.50      2.40       1.14           0.76        0.09
+## 10      32   208  46.3     5.34      3.84       0.22           0.2         0.28
+## # ... with 3 more variables: delta_log_valor &lt;dbl&gt;, log_area_precicion &lt;dbl&gt;,
+## #   log_valor_precision &lt;dbl&gt;</code></pre>
+<p>The linear regression model proposed for this problem is defined by the following equation:</p>
+<p><span class="math display">\[ lnY_t = \beta_0+\beta_1 (lnX_t) + U_t \]</span></p>
+<p>Where:</p>
+<p><span class="math inline">\(Y_t\)</span> = planted area on year t, natural log transformed</p>
+<p><span class="math inline">\(X_t\)</span> = suggarcane price on year t, natural log transformed</p>
+<p><span class="math inline">\(\beta_0\)</span> = Intercept</p>
+<p><span class="math inline">\(\beta_1\)</span> = slope</p>
+<p><span class="math inline">\(U_t\)</span> = Model residuals</p>
+<p>The natural log is used to in order to have variations between periods interpreted as percentual variation. This assumption is made possible only for natural log transformations and this adjustment is needed in problems invonving elasticity, because elasticity is interpreted as a percentual variation in one variable given a percentual variation in another variable.</p>
+<p>Following is an example of this property of natural log transformations. You can see that the total variation can be seen as percentual variation after the natural log transformation. For more explanations on this topic you can see <a href="https://people.duke.edu/~rnau/411log.htm">article 1</a> <a href="https://dev.to/rokaandy/logarithmic-transformation-in-linear-regression-models-why-when-3a7c">article 2</a>.</p>
+<pre class="r"><code>data.frame(
+    &quot;Valor&quot; = c(100,105,112,120),
+    &quot;Crescimento&quot; = c(&quot;-&quot;,&quot;5.00%&quot;,&quot;6.67%&quot;,&quot;7.14%&quot;),
+    &quot;Log natural&quot; = c(log(100),log(105),log(112),log(120)),
+    &quot;Delta&quot; = c(&quot;-&quot;,
+                  paste(round(log(105)-log(100),4)*100,&quot;%&quot;,sep = &quot;&quot;),
+                  paste(round(log(112)-log(105),4)*100,&quot;%&quot;,sep = &quot;&quot;),
+                  paste(round(log(120)-log(112),4)*100,&quot;%&quot;,sep = &quot;&quot;))
+) %&gt;% pander()</code></pre>
+<table style="width:61%;">
+<colgroup>
+<col width="11%" />
+<col width="19%" />
+<col width="19%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Valor</th>
+<th align="center">Crescimento</th>
+<th align="center">Log.natural</th>
+<th align="center">Delta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">100</td>
+<td align="center">-</td>
+<td align="center">4.605</td>
+<td align="center">-</td>
+</tr>
+<tr class="even">
+<td align="center">105</td>
+<td align="center">5.00%</td>
+<td align="center">4.654</td>
+<td align="center">4.88%</td>
+</tr>
+<tr class="odd">
+<td align="center">112</td>
+<td align="center">6.67%</td>
+<td align="center">4.718</td>
+<td align="center">6.45%</td>
+</tr>
+<tr class="even">
+<td align="center">120</td>
+<td align="center">7.14%</td>
+<td align="center">4.787</td>
+<td align="center">6.9%</td>
+</tr>
+</tbody>
+</table>
+<p>Veja como o crescimento percentual dos valores (5.00%, 6.67% e 7.14%) ficam bem próximos do respectivo delta, que é a diferença entre o log natural do número com relação ao log natural do número anterior (e.g. 4.654 - 4.605 = 0.0488). Desta forma, se a equação estiver em logarítmo natural em ambos os lados, pode-se interpretar que a variação percentual na variável explicativa irá gerar uma variação percentual de <span class="math inline">\(\beta_1\)</span> na variável dependente.</p>
+<p>It becomes clear that the percentual values of 5.00%, 6.67% and 7.14% are pretty close to the value of the delta field, that represents the differente between the natural log of the number and the natural log of the predecessor value (e.g. 4.654 - 4.605 = 0.0488).</p>
+<p>Ao tentar criar esta mesma tabela com outros logarítmos (e.g. base 2 ou base 10), não se alcança os mesmos resultados. Portanto, esta interpretação e transformação só faz sentido com logaritmo natural. When we try to create this same view with others log transformations (e.g. base 2 or 10), we can’t reach the same results. Therefore, this interpretation and transformation make sense only for natural log.</p>
+<pre class="r"><code>data.frame(
+    &quot;Valor&quot; = c(100,105,112,120),
+    &quot;Crescimento&quot; = c(&quot;-&quot;,&quot;5.00%&quot;,&quot;6.67%&quot;,&quot;7.14%&quot;),
+    &quot;Log natural&quot; = c(log(100,2),log(105,2),log(112,2),log(120,2)),
+    &quot;Delta&quot; = c(&quot;-&quot;,
+                  paste(round(log(105,2)-log(100,2),4)*100,&quot;%&quot;,sep = &quot;&quot;),
+                  paste(round(log(112,2)-log(105,2),4)*100,&quot;%&quot;,sep = &quot;&quot;),
+                  paste(round(log(120,2)-log(112,2),4)*100,&quot;%&quot;,sep = &quot;&quot;))
+) %&gt;% pander::pander()</code></pre>
+<table style="width:61%;">
+<colgroup>
+<col width="11%" />
+<col width="19%" />
+<col width="19%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Valor</th>
+<th align="center">Crescimento</th>
+<th align="center">Log.natural</th>
+<th align="center">Delta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">100</td>
+<td align="center">-</td>
+<td align="center">6.644</td>
+<td align="center">-</td>
+</tr>
+<tr class="even">
+<td align="center">105</td>
+<td align="center">5.00%</td>
+<td align="center">6.714</td>
+<td align="center">7.04%</td>
+</tr>
+<tr class="odd">
+<td align="center">112</td>
+<td align="center">6.67%</td>
+<td align="center">6.807</td>
+<td align="center">9.31%</td>
+</tr>
+<tr class="even">
+<td align="center">120</td>
+<td align="center">7.14%</td>
+<td align="center">6.907</td>
+<td align="center">9.95%</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>data.frame(
+    &quot;Valor&quot; = c(100,105,112,120),
+    &quot;Crescimento&quot; = c(&quot;-&quot;,&quot;5.00%&quot;,&quot;6.67%&quot;,&quot;7.14%&quot;),
+    &quot;Log natural&quot; = c(log(100,10),log(105,10),log(112,10),log(120,10)),
+    &quot;Delta&quot; = c(&quot;-&quot;,
+                  paste(round(log(105,10)-log(100,10),4)*100,&quot;%&quot;,sep = &quot;&quot;),
+                  paste(round(log(112,10)-log(105,10),4)*100,&quot;%&quot;,sep = &quot;&quot;),
+                  paste(round(log(120,10)-log(112,10),4)*100,&quot;%&quot;,sep = &quot;&quot;))
+) %&gt;% pander::pander()</code></pre>
+<table style="width:61%;">
+<colgroup>
+<col width="11%" />
+<col width="19%" />
+<col width="19%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Valor</th>
+<th align="center">Crescimento</th>
+<th align="center">Log.natural</th>
+<th align="center">Delta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">100</td>
+<td align="center">-</td>
+<td align="center">2</td>
+<td align="center">-</td>
+</tr>
+<tr class="even">
+<td align="center">105</td>
+<td align="center">5.00%</td>
+<td align="center">2.021</td>
+<td align="center">2.12%</td>
+</tr>
+<tr class="odd">
+<td align="center">112</td>
+<td align="center">6.67%</td>
+<td align="center">2.049</td>
+<td align="center">2.8%</td>
+</tr>
+<tr class="even">
+<td align="center">120</td>
+<td align="center">7.14%</td>
+<td align="center">2.079</td>
+<td align="center">3%</td>
+</tr>
+</tbody>
+</table>
+<p>Now that we understand this property of natural log, it’s possible to validate this property on the data set that will be used on the regression model proposed, for the suggarcane price and suggarcane area planted. The delta_area and delta_value fields presents the percentual variation of one period to the preceding. At delta_log_value and delta_log_area fields is calculated the difference between one period with the preceding and the fields log_area_precision and log_value_precision calculate the difference between delta_area with delta_log_area and delta_value with delta_log_value. The lower these two values, stronger is the property of the natural log transformation explained before. The following table will show the results:</p>
+<pre class="r"><code>dados_2</code></pre>
+<pre><code>## # A tibble: 34 x 11
+##    periodo  area valor log_area log_valor delta_area delta_log_area delta_valor
+##      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;
+##  1       1    29  7.53     3.37      2.02      NA             NA          NA   
+##  2       2    71 11.5      4.26      2.44       1.45           0.9         0.53
+##  3       3    42 10.1      3.74      2.31      -0.41          -0.53       -0.12
+##  4       4    90 11.0      4.50      2.40       1.14           0.76        0.09
+##  5       5    72 11.0      4.28      2.39      -0.2           -0.22       -0.01
+##  6       6    57 13.2      4.04      2.58      -0.21          -0.23        0.21
+##  7       7    44 14.2      3.78      2.65      -0.23          -0.26        0.07
+##  8       8    61 21.0      4.11      3.04       0.39           0.33        0.48
+##  9       9    60 18.8      4.09      2.94      -0.02          -0.02       -0.1 
+## 10      10    70 19.6      4.25      2.98       0.17           0.15        0.04
+## # ... with 24 more rows, and 3 more variables: delta_log_valor &lt;dbl&gt;,
+## #   log_area_precicion &lt;dbl&gt;, log_valor_precision &lt;dbl&gt;</code></pre>
+<p>After this explanation, we can continue with the regression model development. The variables will always be presented with the natural log transformation applied. The following graph shows the behavior of the studied variables and the regression line.</p>
+<pre class="r"><code>dados_2 %&gt;% 
+  ggplot(aes(x=log_area,y=log_valor))+
+  geom_point()+
+  geom_smooth(method = &quot;lm&quot;,se = T)+
+  theme_graph()+
+  labs(
+    title = &quot;Area planted and suggarcane price relation&quot;,
+    subtitle= &quot;There&#39;s an elasticity &quot;,
+    x = &quot;Planted area (ln)&quot;,
+    y = &quot;Market price (ln)&quot;
+  )</code></pre>
+<p><img src="/post/2019-11-20-residual-analysis-in-econometric-models_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>The variable shows linear correlation, meaning that there’s supply elasticity. Following is the summary of the regression model:</p>
+<pre class="r"><code>model &lt;- lm(log_area~log_valor,data = dados_2)
+
+summary(model) %&gt;% pander()</code></pre>
+<table style="width:89%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">1.642</td>
+<td align="center">0.3534</td>
+<td align="center">4.645</td>
+<td align="center">5.559e-05</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>log_valor</strong></td>
+<td align="center">0.9706</td>
+<td align="center">0.1106</td>
+<td align="center">8.773</td>
+<td align="center">5.031e-10</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: log_area ~ log_valor</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">34</td>
+<td align="center">0.3088</td>
+<td align="center">0.7063</td>
+<td align="center">0.6972</td>
+</tr>
+</tbody>
+</table>
+<p>The regression equation generated by the model is defined as: <span class="math inline">\(lnY_t = 1.64 + 0.97 (lnX_t) + U_t\)</span></p>
+<p>This equation indicates that the planted area of suggarcane would be of <span class="math inline">\(e^{1.64} = 5.15\)</span> (ha) if the price was 0. As the price increase in 1%, the impact on the planted area will be of 0.97%.</p>
+<p>The r² reach 70.6%, but this isn’t enough to make conclusions about the model. Its necessary to analyse the model premissed about the residuals to ensure that the model is reliable.</p>
+<pre class="r"><code>residual &lt;- residuals(model)</code></pre>
+<pre class="r"><code>df &lt;- cbind(dados_2, residual)</code></pre>
+<p>The next graph shows the residuals distribution in order to validate if they’re normally distributed. Both histogram and quantil-quantil plot are good choices to validate this assumption.</p>
+<pre class="r"><code>df %&gt;% 
+  ggplot(aes(x=residual))+
+  geom_histogram(binwidth = .05,alpha=.4,fill=&quot;dark orange&quot;)+
+  theme_graph()+
+  labs(
+    title = &quot;Histograma dos resíduos&quot;,
+    subtitle = &quot;Aparente normalidade dos dados&quot;,
+    x = &quot;&quot;,
+    y = &quot;&quot;
+  )</code></pre>
+<p><img src="/post/2019-11-20-residual-analysis-in-econometric-models_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>df %&gt;% 
+  ggplot(aes(sample=residual))+
+  geom_qq()+
+  theme_graph()+
+  labs(title = &quot;QQ-Plot dos resíduos&quot;,
+       subtitle = &quot;Corrobora a suposta normalidade dos dados&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;)</code></pre>
+<p><img src="/post/2019-11-20-residual-analysis-in-econometric-models_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Despite the graph visualization being a good bet to analyse departure from normality, it’s also important to perform formal tests like Durbin-Watson, Breusch-Godfrey and Ljung-Box Qtest. The Durbin-Watson (DW) will be the first performed:</p>
+<pre class="r"><code>lmtest::dwtest(model) %&gt;% pander::pander()</code></pre>
+<table style="width:81%;">
+<caption>Durbin-Watson test: <code>model</code></caption>
+<colgroup>
+<col width="23%" />
+<col width="20%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Test statistic</th>
+<th align="center">P value</th>
+<th align="center">Alternative hypothesis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1.291</td>
+<td align="center">0.009801 * *</td>
+<td align="center">true autocorrelation is
+greater than 0</td>
+</tr>
+</tbody>
+</table>
+<p>The DW value was of 1.2912 and this value will be used to generate conclusions for the test. As well as the DW value, its necessary to have the DL and DU intervals that will be compared with the DW value. The DL and DU values can be found at this <a href="http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia">table</a>. To find DL and DU values at this table, take the number of points of your data set (n = 33), the significance level (i.e. 0.05) and the degrees of freedom (i.e. 1), then we have:</p>
+<p><strong>DL</strong> = 1.35</p>
+<p><strong>DU</strong> = 1.49</p>
+<p>With a DW of 1.2912, above 0 and under the DL value, we can conclude that the residuals are independent. Thus, we can ensure that residuals are both normally distributed and independent, then the model is reliable on what it shows (there’s elasticity on the suggarcane supply given a price variation).</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

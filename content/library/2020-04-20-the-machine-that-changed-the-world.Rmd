@@ -1,0 +1,65 @@
+---
+title: "Book Review: The Machine that Changed the World"
+date: 2020-02-07
+output:
+  html_document:
+    df_print: paged
+    fig_width: 8.5
+    fig_height: 4
+---
+
+# {.tabset .tabset-fade .tabset-pills}
+
+## **Overview**
+
+The Machine that Changed the World is a complete guide in the Lean Methodology, covering every aspect of this practice in the automotive industry. This book was developed as a result of a deep research made by researchers at MIT and industries specialists trying to find the main differences between mass production and lean production. 
+
+The drivers for this research was the increasingly market share gained by Japanese companies at that time. The research project was named International Motor Vehicle Program (IMVP) and it received government and enterprise fund to support the work that took 5 years to be completed.
+
+The book, contains the agreed uppon findings that set the differences, advantages and disadvantages of both manufacturing methods. Also, it tells the story of these methods and how the companies are making the change to a lean methodology.
+
+In summary, the autors agree that the lean method can be spread to any industry in any part of the world and in fact, it should occur in order to society gain the benefits of lean production in many differenct aspects of life.
+
+```{r pressure, echo=FALSE,fig.align='center', out.width="200px", out.height="250px"}
+knitr::include_graphics("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/images/2020-04-20_the_machine_that_changed_the_world.png")
+```
+
+## **Cap. 1**
+
+### **The industry of industries in transition**
+
+## **2**
+
+### **The rise and fall of mass production**
+
+## **3**
+
+### **The rise of lean production**
+
+## **4**
+
+### **Running the factory**
+
+## **5**
+
+### **Designing the car**
+
+## **6**
+
+### **Coordinating the supply chain**
+
+## **7**
+
+### **Dealing with customers**
+
+## **8**
+
+### **Managing the lean enterprise**
+
+## **9**
+
+### **Confusion about diffusion**
+
+## **10**
+
+### **Completing the transition**
