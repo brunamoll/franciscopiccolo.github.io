@@ -144,17 +144,6 @@ a {
   background: #FDFDFD;
 }
 
-.highlight {
-  border-radius: 3px;
-  position: relative;
-  margin: 40px 0;
-  font-size: 14px;
-}
-
-.highlight pre {
-  padding: 10px;
-}
-
 .archive {
   margin: 0;
   padding: 0;
@@ -266,11 +255,6 @@ a {
   .content {
     font-size: 19px;
     line-height: 1.8;
-  }
-
-  .highlight {
-    font-size: 16px;
-    margin: 40px -20px;
   }
 
   .archive {
