@@ -5,7 +5,7 @@ title: "Posts"
 author_profile: true
 ---
 
-  {% if year != written_year %}
+{% if year != written_year %}
     <h2 id="{{ year | slugify }}" class="archive__subtitle"><a href="#{{ year | slugify }}">#{{ year }}</a></h2>
-    {% capture written_year %}{{ year }}{% endcapture %}
-  {% endif %}
+ {% capture written_year %}{{ year }}{% endcapture %}
+{% endif %}
