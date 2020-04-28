@@ -1,5 +1,9 @@
-baseURL = "/""
+baseURL = "/"
 title   = "Glass Frogg"
+baseURL = "https://example.com"
+title   = "Hello Friend NG"
+languageCode = "en-us"
+theme        = "hello-friend-ng"
 
 DefaultContentLanguage = "en"
 
