@@ -1,9 +1,10 @@
-baseURL = "/"
+baseURL = "https://franciscopiccolo.github.io.com"
 title   = "Glass Frogg"
 baseURL = "https://example.com"
 title   = "Hello Friend NG"
 languageCode = "en-us"
 theme        = "hello-friend-ng"
+
 
 DefaultContentLanguage = "en"
 
