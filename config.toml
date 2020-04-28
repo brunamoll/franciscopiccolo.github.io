@@ -1,53 +1,7 @@
 baseURL = "https://franciscopiccolo.github.io.com"
-title   = "Glass Frogg"
+title        = "My Blog"
 languageCode = "en-us"
 theme        = "hello-friend-ng"
-
-
-DefaultContentLanguage = "en"
-
-theme = "hugo-theme-hello-friend-ng"
-
-PygmentsCodeFences = true
-PygmentsStyle = "monokai"
-
-rssLimit  = 10  # Maximum number of items in the RSS feed.
-
-# googleAnalytics = ""
-# disqusShortname = ""
-
-archetypeDir = "archetypes"
-contentDir   = "content"
-dataDir      = "data"
-layoutDir    = "layouts"
-publishDir   = "public"
-
-buildDrafts  = false
-buildFuture  = false
-buildExpored = false
-canonifyURLs = true
-
-enableRobotsTXT = true
-enableGitInfo   = false
-enableEmoji     = true
-enableMissingTranslationPlaceholders = false
-disableRSS     = false
-disableSitemap = false
-disable404     = false
-disableHugoGeneratorInject = false
-
-[permalinks]
-  posts = "/posts/:year/:month/:title/"
-
-[author]
-  name = "Franciso Piccolo"
-
-[blackfriday]
-  hrefTargetBlank = false
-
-[taxonomies]
-  tag      = "tags"
-  category = "categories"
 
 [params]
   dateform        = "Jan 2, 2006"
@@ -55,79 +9,46 @@ disableHugoGeneratorInject = false
   dateformNum     = "2006-01-02"
   dateformNumTime = "2006-01-02 15:04 -0700"
 
-  # Metadata mostly used in document's head
-  description = "Nice theme for homepages and blogs"
-  keywords = ""
-  images = [""]
-
-  homeSubtitle = "Statistics Review"
-
-  # Prefix of link to the git commit detail page. GitInfo must be enabled.
-  # gitUrl = ""
+  # Subtitle for home
+  homeSubtitle = "A simple and beautiful blog"
 
   # Set disableReadOtherPosts to true in order to hide the links to other posts.
   disableReadOtherPosts = false
 
-  # Integrate Javascript files or stylesheets by adding the url to the external assets or by
-  # linking local files with their path relative to the static folder, e.g. "css/styles.css"
-  customCSS = []
-  customJS  = []
-
-  # Toggle this option need to rebuild SCSS, requires extended version of Hugo
-  justifyContent = false  # Set "text-align: justify" to .content.
+  # Metadata mostly used in document's head
+  description = "My new homepage or blog"
+  keywords = "homepage, blog"
+  images = [""]
 
   # Directory name of your blog content (default is `content/posts`)
   contentTypeName = "posts"
 
   # Default theme "light" or "dark"
   defaultTheme = "dark"
-  themeColor = "#252627"
 
-  # Colors for favicons
-  [params.favicon.color]
-    mask = "#252627"
-    msapplication = "#252627"
-    theme = "#252627"
-
-    [params.logo]
-    logoText  = "Home"
-    # logoCursorColor    = "#67a2c9"
-    logoCursorAnimate  = "1.3s"
-
-  # Social icons
-  [[params.social]]
-    name = "twitter"
-    url  = "https://twitter.com/FranciscoPicco1"
-
-  [[params.social]]
-    name = "email"
-    url  = "tobias.piccolo@gmail.com"
-
-  [[params.social]]
-    name = "github"
-    url  = "https://github.com/FranciscoPiccolo"
-
-  [[params.social]]
-    name = "linkedin"
-    url  = "https://www.linkedin.com/in/franciscopiccolo/"
+[taxonomies]
+    category = "blog"
+    tag      = "tags"
+    series   = "series"
 
 [languages]
   [languages.en]
-    subtitle  = "Hello Friend NG Theme"
-    weight    = 1
+    title = "Hello Friend NG"
+    subtitle = "A simple theme for Hugo"
+    keywords = ""
+    copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+    readOtherPosts = "Read other posts"
 
-[menu]
-  [[menu.main]]
-    identifier = "about"
-    name       = "About"
-    url        = "about/"
-  [[menu.main]]
-    identifier = "posts"
-    name       = "Posts"
-    url        = "posts/"
-  [[menu.main]]
-    identifier = "book_review"
-    name       = "Book Review"
-    url        = "books/"
+    [languages.en.params.logo]
+      logoText = "hello friend ng"
+      logoHomeLink = "/"
+    # or
+    #
+    # path = "/img/your-example-logo.svg"
+    # alt = "Your example logo alt text"
 
-
+  # And you can even create generic menu
+  [[menu.main]]
+    identifier = "blog"
+    name       = "Blog"
+    url        = "/posts"
