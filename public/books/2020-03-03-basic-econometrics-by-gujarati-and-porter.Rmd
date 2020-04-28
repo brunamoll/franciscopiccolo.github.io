@@ -3,7 +3,6 @@ title: "Book Review: Basic Econometrics by Gujarati and Porter"
 date: 2020-03-03
 output:
   html_document:
-    df_print: paged
     fig_width: 8.5
     fig_height: 4
 ---
