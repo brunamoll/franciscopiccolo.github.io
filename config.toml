@@ -1,11 +1,9 @@
 baseURL = "https://franciscopiccolo.github.io.com"
 title   = "Hello Friend NG"
 languageCode = "en-us"
-theme        = "hello-friend-ng"
+theme = "hugo-theme-hello-friend-ng"
 
 DefaultContentLanguage = "en"
-
-theme = "hugo-theme-hello-friend-ng"
 
 PygmentsCodeFences = true
 PygmentsStyle = "monokai"
