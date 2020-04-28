@@ -1,6 +1,6 @@
 ---
 aliases:
-- about-us
+- about
 - about-hugo
 - contact
 author:
