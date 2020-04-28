@@ -1,4 +1,4 @@
-baseURL = "https://franciscopiccolo.github.io.com"
+baseurl = "/"
 title        = "My Blog"
 languageCode = "en-us"
 theme        = "hello-friend-ng"
