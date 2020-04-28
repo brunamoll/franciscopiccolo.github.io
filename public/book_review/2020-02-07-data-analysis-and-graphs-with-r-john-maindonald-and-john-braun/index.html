@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Franciso Piccolo ">
+<meta name="description" content="OverviewEste livro faz parte de uma coleção da Universidade de Cambridge - Cambridge Series in Statistics and Probabilistic Mathematics, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística.
+O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse.
+A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="/book_review/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/" />
+
+
+    <title>
+        
+            Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun :: Glass Frog  — Hello Friend NG Theme
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.753fac8f03736f0edc9be411eb20cee875dd7bb8e73c8155fbf6a629c863f4ca.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+
+
+<meta itemprop="name" content="Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun">
+<meta itemprop="description" content="OverviewEste livro faz parte de uma coleção da Universidade de Cambridge - Cambridge Series in Statistics and Probabilistic Mathematics, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística.
+O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse.
+A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento.">
+<meta itemprop="datePublished" content="2020-02-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-02-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="5510">
+<meta itemprop="image" content="/"/>
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/"/>
+
+<meta name="twitter:title" content="Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun"/>
+<meta name="twitter:description" content="OverviewEste livro faz parte de uma coleção da Universidade de Cambridge - Cambridge Series in Statistics and Probabilistic Mathematics, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística.
+O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse.
+A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento."/>
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2020-02-07 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">Home</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about/">About</a></li><li><a href="/books/">Book Review</a></li><li><a href="/posts/">Posts</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="/book_review/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/">Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun</a></h2>
+
+            
+
+            <div class="post-content">
+                
+
+
+<div id="overview" class="section level2">
+<h2><strong>Overview</strong></h2>
+<p>Este livro faz parte de uma coleção da Universidade de Cambridge - <em>Cambridge Series in Statistics and Probabilistic Mathematics</em>, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística.</p>
+<p>O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse.</p>
+<p>A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento. Para a aplicação dos exemplos e resolução dos exercícios, foram usadas bibliotecas que contêm os data sets necessários para cada situação, o que facilitou bastante, pois não foi preciso copiar a tabela do livro e salvar em um arquivo para depois importar para o R.</p>
+<p>Apenas senti falta da resolução dos exercícios propostos, ou de pelo menos alguns deles. Por mais que haja exemplos ao longo do capítulo, na hora de resolver o exercício proposto a pessoa pode se deparar com outro cenário não explorado nos exemplos.</p>
+<p>Após 2 meses (sem muita pressa), consegui finalizar este livro. Alguns capítulos estavam em um (ou vários) patamares acima do meu nível de conhecimento, por isso não consegui absorver o conteúdo o suficiente para comentá-lo aqui. Por isso, neste post vou falar resumidamente sobre os capítulos que consegui entender e colocar as respostas dos exercícios que resolvi.</p>
+<p><img src="/images/2020-02-07_data_analysis_with_r.png" /></p>
+</div>
+<div id="cap.1-a-brief-introduction-to-r" class="section level2">
+<h2><strong>Cap.1 A brief introduction to R</strong></h2>
+<div id="resumo" class="section level3">
+<h3><strong>Resumo</strong></h3>
+<p>Conseguir absorver o conteúdo deste livro usando uma ferramenta estatística de ponta e gratuita, com este objetivo em mente o primeiro capítulo apresenta o R. Uma ferramenta desenvolvida por uma comunidade engajada que é uma mão na roda para a modelagem estatística e análise de dados.</p>
+<p>Neste capítulo, é fornecido uma visão geral do R, visando deixar o leitor familiarizado com suas funcionalidades. Além disso, tem-se a explicação dos tipos de dados usados na ferramenta (e.g. factors, vectors, data.frames, list e strings), formas de se plotar gráficos (incluindo algumas dicas sobre como se apresentar os dados nos gráficos), instalação e requisição de pacotes no ambiente, modos de acesso à ajuda do sistema (documentação dos pacotes), construção de funções (de maneira bem resumida) e importação de arquivos para o sistema.</p>
+</div>
+<div id="exercícios" class="section level3">
+<h3><strong>Exercícios</strong></h3>
+</div>
+<div id="aplique-a-função-str-no-data-set-possum-do-pacote-daag-e-verifique-se-há-valores-nulos-presentes." class="section level3">
+<h3><strong>3) Aplique a função str() no data set <em>possum</em> do pacote DAAG e verifique se há valores nulos presentes.</strong></h3>
+<pre class="r"><code>DAAG::possum %&gt;% str()</code></pre>
+<pre><code>## &#39;data.frame&#39;:    104 obs. of  14 variables:
+##  $ case    : num  1 2 3 4 5 6 7 8 9 10 ...
+##  $ site    : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Pop     : Factor w/ 2 levels &quot;Vic&quot;,&quot;other&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ sex     : Factor w/ 2 levels &quot;f&quot;,&quot;m&quot;: 2 1 1 1 1 1 2 1 1 1 ...
+##  $ age     : num  8 6 6 6 2 1 2 6 9 6 ...
+##  $ hdlngth : num  94.1 92.5 94 93.2 91.5 93.1 95.3 94.8 93.4 91.8 ...
+##  $ skullw  : num  60.4 57.6 60 57.1 56.3 54.8 58.2 57.6 56.3 58 ...
+##  $ totlngth: num  89 91.5 95.5 92 85.5 90.5 89.5 91 91.5 89.5 ...
+##  $ taill   : num  36 36.5 39 38 36 35.5 36 37 37 37.5 ...
+##  $ footlgth: num  74.5 72.5 75.4 76.1 71 73.2 71.5 72.7 72.4 70.9 ...
+##  $ earconch: num  54.5 51.2 51.9 52.2 53.2 53.6 52 53.9 52.9 53.4 ...
+##  $ eye     : num  15.2 16 15.5 15.2 15.1 14.2 14.2 14.5 15.5 14.4 ...
+##  $ chest   : num  28 28.5 30 28 28.5 30 30 29 28 27.5 ...
+##  $ belly   : num  36 33 34 34 33 32 34.5 34 33 32 ...</code></pre>
+<pre class="r"><code>DAAG::possum %&gt;% Amelia::missmap(main = &quot;Valores nulos vs não nulos&quot;)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="verifique-no-data-set-ais-do-pacote-daag-se-há-desequilíbrio-entre-homens-e-mulheres-nos-esportes-analisados." class="section level3">
+<h3><strong>4) Verifique no data set <em>ais</em> do pacote DAAG se há desequilíbrio entre homens e mulheres nos esportes analisados.</strong></h3>
+<pre class="r"><code>DAAG::ais %&gt;% 
+  group_by(sport,sex) %&gt;% 
+  summarise(qty = n()) %&gt;% 
+  tidyr::spread(sex,qty,fill = 0) %&gt;% 
+  mutate(m_proportion = round(m/(f+m),digits = 2)) %&gt;% 
+  ungroup() %&gt;% 
+  mutate(sport = fct_reorder(sport, m_proportion)) %&gt;% 
+  ggplot(aes(x = sport, y = m_proportion))+
+  geom_col(fill = graph_color)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  labs(title = &quot;Sports balance btw men and women participation&quot;,
+       x = &quot;&quot;,
+       y = &quot;Male % participation&quot;)+
+  coord_flip()</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="verifique-no-data-set-rainforest-os-valores-nulos." class="section level3">
+<h3><strong>5) Verifique no data set <em>rainforest</em> os valores nulos.</strong></h3>
+<pre class="r"><code>DAAG::rainforest %&gt;% 
+  Amelia::missmap(main = &quot;Valores nulos vs não nulos&quot;)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+</div>
+<div id="cap.2-styles-of-data-analysis" class="section level2">
+<h2><strong>Cap.2 Styles of data analysis</strong></h2>
+<div id="resumo-1" class="section level3">
+<h3><strong>Resumo</strong></h3>
+<p>A análise exploratória de dados é uma atividade do dia a dia de muitos profissionais (a cada dia esta habilidade se torna mais importante) e o capítulo 2 irá abordar esta técnica, apresentando uma conceituação para o termo e mostrando formas de se realizar uma análise exploratória com rigor técnico.</p>
+<p>Neste capítulo, são explorados os principais gráficos que são usados na atividade de análise exploratória, sendo eles o histograma (para validação de normalidade), o box plot e o gráfico de dispersão. A ideia é apresentar técnicas que permitam o pesquisador / analista encontrar padrões nos dados para que se possa desenvolver um modelo estatístico em seguida.</p>
+<p>Também é tratado sobre outliers e dados distribuídos de maneira não normal (e.g. com caldas alongadas ) e como lidar com estes dados, seja retirando os outliers ou realizando transformação em log para normalizar a distribuição.</p>
+</div>
+<div id="exercícios-1" class="section level3">
+<h3><strong>Exercícios</strong></h3>
+</div>
+<div id="apresente-a-distribuição-de-idade-para-cada-combinação-de-site-e-sex-do-data-set-possum-do-pacote-daag." class="section level3">
+<h3><strong>1) Apresente a distribuição de idade para cada combinação de <em>site</em> e <em>sex</em> do data set <em>possum</em> do pacote DAAG.</strong></h3>
+<pre class="r"><code>DAAG::possum %&gt;%
+  ggplot(aes(x = age))+
+  geom_density(fill = graph_color, alpha = .9)+
+  theme_graph()+
+  labs(title = &quot;Age distribution&quot;,
+       subtitle = &quot;Site and Sex segmentation&quot;,
+       x = &quot;Age&quot;,
+       y = &quot;&quot;)+
+  facet_grid(site~sex,scales = &quot;free&quot;)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="plote-um-histograma-para-o-campo-earchonch-do-data-set-possum.-a-distribuição-deverá-parecer-bimodal-dois-picos.-este-é-um-exemplo-de-clusterização-dos-dados-neste-caso-por-conta-de-que-o-data-set-contém-informação-de-homens-e-mulheres.-plote-um-gráfico-de-box-plot-para-homens-e-mulheres-para-o-campo-earconch." class="section level3">
+<h3><strong>3) Plote um histograma para o campo <em>earchonch</em> do data set <em>possum</em>. A distribuição deverá parecer bimodal (dois picos). Este é um exemplo de clusterização dos dados, neste caso por conta de que o data set contém informação de homens e mulheres. Plote um gráfico de box plot para homens e mulheres para o campo <em>earconch</em>.</strong></h3>
+<pre class="r"><code>DAAG::possum %&gt;% 
+  ggplot(aes(x = earconch))+
+  geom_density(fill = graph_color, alpha = .8)+
+  theme_graph()+
+  labs(title = &quot;Earconch distribution&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>DAAG::possum %&gt;% 
+  ggplot(aes(y = earconch, fill = sex))+
+  geom_boxplot()+
+  theme_graph()+
+  labs(title = &quot;Earconch box plot distribution&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+</div>
+<div id="usando-o-data-set-ais-do-pacote-daag-crie-gráficos-que-mostre-como-os-valores-de-medidas-hematológicas-quantidade-de-células-vermelhas-concentração-de-hemoglobina-hematrócito-células-brancas-e-concentração-de-plasma-variam-por-esporte-e-gênero-do-atleta." class="section level3">
+<h3><strong>4) Usando o data set <em>ais</em> do pacote DAAG, crie gráficos que mostre como os valores de medidas hematológicas (quantidade de células vermelhas, concentração de hemoglobina, hematrócito, células brancas e concentração de plasma) variam por esporte e gênero do atleta.</strong></h3>
+<pre class="r"><code>DAAG::ais %&gt;% 
+  mutate(red_cell_count = rcc,
+         white_cell_count = wcc,
+         hematrocit_percent = hc,
+         hemaglobin_concentration = hg,
+         plasma_ferritins = ferr,
+         body_mass_index = bmi
+  ) %&gt;% 
+  select(sport,
+         sex,
+         red_cell_count,
+         white_cell_count,
+         hematrocit_percent,
+         hemaglobin_concentration,
+         plasma_ferritins,
+         body_mass_index) %&gt;%
+  filter(sex == &quot;m&quot;) %&gt;% 
+  tidyr::gather(key = &quot;campo&quot;,value = &quot;valor&quot;, 3:8) %&gt;% 
+  mutate(sport = fct_reorder(sport, valor, .desc = F)) %&gt;% 
+  ggplot(aes(y = valor, fill = sport))+
+  geom_boxplot(alpha = .6)+
+  theme_graph()+
+  labs(
+    title = &quot;Metrics variations accross sport and genre&quot;,
+    subtitle = &quot;Genre = Male&quot;,
+    x = &quot;&quot;,
+    y = &quot;&quot;
+  )+
+  facet_wrap(~campo,scales = &quot;free&quot;)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+</div>
+<div id="cap.3-statistical-models" class="section level2">
+<h2><strong>Cap.3 Statistical models</strong></h2>
+<div id="resumo-2" class="section level3">
+<h3><strong>Resumo</strong></h3>
+<p>No capítulo 3, ocorre uma breve explicação sobre o que são e para que servem modelos estatísticos. É feita a explicação sobre os <em>resíduos</em>, métodos para escolha de modelos, distribuições dos dados (Bernoulli, Binomial, Poisson e Normal), utilização de números aleatórios na construção de modelos, técnicas de amostragem e principais premissas adotadas na construção de modelos (e.g. normalidade dos dados, amostragem aleatória).</p>
+<p>Para a premissa de normalidade dos dados, os autores indicam técnicas para validar isso. A principal é o histograma, porém necessitando ser reforçada pelo qq-plot e também por testes formais (e.g. Jarque-Beta, Anderson-Darling e Shapiro-Wilk).</p>
+</div>
+<div id="exercícios-2" class="section level3">
+<h3><strong>Exercícios</strong></h3>
+</div>
+<div id="use-y---rnorm100-para-gerar-100-números-aleatórios-de-uma-distribuição-normal-mean-0-e-sd-1.-calcule-a-média-e-o-desvio-padrão-de-y.-em-seguida-crie-um-loop-e-repita-esta-função-25-vezes-e-depois-insira-as-25-médias-em-uma-variável-e-depois-calcule-a-média-e-o-desvio-padrão-desta-variável." class="section level3">
+<h3><strong>2) Use <em>y &lt;- rnorm(100)</em> para gerar 100 números aleatórios de uma distribuição normal (mean = 0 e sd = 1). Calcule a média e o desvio padrão de y. Em seguida, crie um loop e repita esta função 25 vezes e depois insira as 25 médias em uma variável e depois calcule a média e o desvio padrão desta variável.</strong></h3>
+<pre class="r"><code>y &lt;- rnorm(100)
+
+tibble(mean = mean(y),
+           sd = sd(y))</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##     mean    sd
+##    &lt;dbl&gt; &lt;dbl&gt;
+## 1 -0.209 0.913</code></pre>
+<pre class="r"><code># Criando um vetor com 25 entradas vazias
+saida &lt;- rep(NA,25)
+
+# Criando um loop para gerar no vetor vazio as 25 amostragens
+for(i in 1:25){
+  saida[i] &lt;- data.frame(
+    mean(rnorm(100))
+  )
+}
+
+# Criando um data.frame com o resultado acima
+df &lt;- data.frame(
+  a = matrix(unlist(saida),nrow = 25,byrow = F),stringsAsFactors = F)
+
+tibble(mean = mean(df[,1]),
+           sd = sd(df[,1]))</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##      mean    sd
+##     &lt;dbl&gt; &lt;dbl&gt;
+## 1 -0.0195 0.108</code></pre>
+</div>
+<div id="crie-uma-função-para-gerar-o-resultado-do-exercício-2.-rode-esta-função-várias-vezes-e-plote-o-resultado-em-um-gráfico-de-densidade." class="section level3">
+<h3><strong>3) Crie uma função para gerar o resultado do exercício 2. Rode esta função várias vezes e plote o resultado em um gráfico de densidade.</strong></h3>
+<pre class="r"><code># Criando a função, x = repetições, y = amostras aleatórias
+fun &lt;- function(x,y){
+  saida &lt;- rep(NA,x)
+  for(i in 1:x){
+    saida[i] &lt;- data.frame(
+      round(mean(rnorm(y)),digits = 2)
+    )
+  }
+  df &lt;- data.frame(
+    a = matrix(unlist(saida),nrow = x,byrow = T),stringsAsFactors = F)
+}
+
+# Rodando a função, 25 repetições com 100 amostras cada
+fun(25,100) %&gt;% 
+  ggplot(aes(x = a))+
+  geom_density(fill = graph_color, alpha = .4)+
+  theme_graph()</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="plote-uma-matriz-3-x-4-apresentando-em-cada-célula-um-histograma-baseado-em-uma-distribuição-normal-média-100-e-desvio-padrão-10.-na-1º-linha-utilize-uma-amostra-com-n-10-na-2ª-n-100-e-na-3ª-n-1000." class="section level3">
+<h3><strong>5) Plote uma matriz 3 x 4, apresentando em cada célula um histograma baseado em uma distribuição normal (média = 100 e desvio padrão = 10). Na 1º linha, utilize uma amostra com n = 10, na 2ª n = 100 e na 3ª n = 1000.</strong></h3>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="use-a-função-de-distribuição-exponencial-dexppexpqexprexp-para-calcular-a-probabilidade-de-que-em-21-dias-alguma-pessoa-sofrerá-um-acidente-de-trânsito-em-uma-dado-cruzamento-dado-que-o-intervalo-entre-os-acidentes-podem-ser-modelados-por-uma-distribuição-exponencial-com-taxa-de-0.05-acidentes-por-dia." class="section level3">
+<h3><strong>7) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.</strong></h3>
+<pre class="r"><code>pexp(q = 21,rate = 0.05) # usando a fórmula pronta do R</code></pre>
+<pre><code>## [1] 0.6500623</code></pre>
+</div>
+</div>
+<div id="cap.4-an-introduction-to-formal-inference" class="section level2">
+<h2><strong>Cap.4 An introduction to formal inference</strong></h2>
+<div id="resumo-3" class="section level3">
+<h3><strong>Resumo</strong></h3>
+<p>Inferência é um pilar importante da estatística, visto que muitas vezes não se pode acessar os dados de uma população toda para se construir um modelo ou gerar conclusões, por questões de custo e tempo. Desta forma, a capacidade de se fazer inferências com base em uma amostra da população é indispensável no processo científico.</p>
+<p>Com esta necessidade em mente os autores desenvolvem o capítulo 4, buscando mostrar os princípios do processo de inferência estatística, apresentando os conceitos básicos para se realizá-la corretamente.</p>
+<p>Dentre as explicações e temas deste capítulo, as que merecem mais destaque são os parâmetros populacionais, erro padrão, teorema do limite central e por fim, dando sentido ao aspecto formal da inferência, é apresentada as ideias centrais dos testes de hipótese e do intervalo de confiança.</p>
+<p>Ao explicarem sobre a construção dos intervalos de confiança, os autores comentaram sobre as características da distribuição <strong>t</strong> e fizeram um comparativo com a distribuição <strong>normal</strong>, visto que são distribuições parecidas. Além disso, o capítulo traz também uma explicação sobre o valor-p e alguns comentários adicionais sobre as diferenças entre intervalos de confiança e teste de hipótese.</p>
+<p>Os autores indicam que há um movimento na direção de intervalos de confiança em detrimento do teste de hipótese nas atividades de inferência, por conta da simplicidade dos intervalos e do mau uso do teste de hipótese.</p>
+</div>
+<div id="exercícios-3" class="section level3">
+<h3><strong>Exercícios</strong></h3>
+</div>
+<div id="usando-o-data-set-nsw74demo-do-pacote-daag-determine-com-95-de-confiança-o-intervalo-dos-seguintes-parâmetros" class="section level3">
+<h3><strong>1) Usando o data set <em>nsw74demo</em> do pacote DAAG, determine com 95% de confiança o intervalo dos seguintes parâmetros:</strong></h3>
+</div>
+<div id="i-renda-média-dos-grupos-de-controle-e-teste-em-1974" class="section level3">
+<h3><strong>(i) Renda média dos grupos de controle e teste em 1974</strong></h3>
+<p>A ideia por traz destas questões é que o data set apresenta uma amostra de dados referente a cada grupo. Com base nestas amostras é preciso inferir qual o valor do parâmetro populacional (no caso a média de cada grupo), com um nível de confiança de 95%. Desta forma, será usada uma amostra para inferir o valor populacional.</p>
+<p>Antes de fazer este cálculo, é interessante dar uma olhada na distribuição dos dados. Abaixo encontra-se um histograma com a distribuição de renda dos dois grupos em 1974. É recomendado usar escala logarítma (com base 10) na distribuição de renda, pois geralmente possui cauda alongada.</p>
+<pre class="r"><code>DAAG::nsw74demo %&gt;%
+  mutate(group = ifelse(trt == 0,&quot;control&quot;,&quot;teste&quot;)) %&gt;% 
+  select(group,
+         re74) %&gt;% 
+  ggplot(aes(x = re74, fill = group))+
+  geom_histogram(alpha = .4)+
+  scale_x_log10(label = scales::comma)+
+  theme_graph()+
+  labs(title = &quot;Income distribution between groups (1974)&quot;,
+       x = &quot;Income, log10 scale&quot;,
+       y = &quot;&quot;)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Além da distribuição, é importante ver o desvio padrão e a média das amostras coletadas. A tabela abaixo resume estes parâmetros amostrais.</p>
+<pre class="r"><code>DAAG::nsw74demo %&gt;%
+  select(trt,
+         re74) %&gt;% 
+  filter(re74 != 0) %&gt;% 
+  group_by(trt) %&gt;% 
+  summarise(mean = round(mean(re74),digits = 2),
+            sd = round(sd(re74),digits = 2))</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##     trt  mean    sd
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0 8428. 8765.
+## 2     1 7179. 6761.</code></pre>
+<p>Após entender a distribuição dos dados amostrais e seus parâmetros (média e desvio padrão), pode-se usá-los para inferir sobre a média e desvio padrão populacional, usando a variável <em>standard error of the mean (SEM)</em> e a distribuição <strong>t</strong>.</p>
+<p>A variável <em>SEM</em> será obtida através da fórmula <span class="math inline">\(SEM = \frac{s}{\sqrt{n}}\)</span>, onde <em>s</em> será o desvio padrão da amostra e <em>n</em> será o tamanho da amostra. Seu valor irá indicar uma estimativa da variabilidade da média amostral, ou seja, se caso fossem retiradas várias amostras de uma população e realiza-se o cálculo da média de cada amostra e depois fosse calculado o desvio padrão desta médias, o resultado seria o valor de <em>SEM</em>.</p>
+<p>Tendo uma estimativa da variabilidade da média amostral, se faz necessário usá-la junto com a distribuição <strong>t</strong> para criar um intervalor de confiança para a média populacional. Porém, é importante saber o motivo de se usar a distribuição <strong>t</strong> ao invés da distribuição <strong>normal</strong>. Isso ocorre por conta de que não foi fornecido o Desvio Padrão da população, mas sim o Desvio Padrão da amostra, em que foi usado no cálculo de <strong>SEM</strong>. Para o exercício em questão, será usado o valor crítico de <strong>t</strong> (obtido na distribuição <strong>t</strong>), dado o nível de confiança (95%) e os graus de liberade de cada grupo (n-1).</p>
+<p>Em posse do valor de <strong>SEM</strong> e do valor crítico <strong>t</strong> (a.k.a <em>t.value</em>), pode-se gerar os limites inferiores e superiores através da fórmula: <span class="math inline">\(limites = (\bar{x} +/- SEM) t.value\)</span>. A tabela abaixo realiza estes cálculos e gera os limites de cada grupo.</p>
+<pre class="r"><code>DAAG::nsw74demo %&gt;%
+  select(trt,
+         re74) %&gt;% 
+  filter(re74 != 0) %&gt;% 
+  group_by(trt) %&gt;% 
+  summarise(mean = round(mean(re74),digits = 4),
+            sd = round(sd(re74),digits = 4),
+            n = n(),
+            sqrt_n = n()^0.5,
+            sem = round(sd/sqrt_n,digits = 4),
+            t_value = qt(0.975,n()-1),
+            lower_limit = mean - (sem*t_value),
+            upper_limit = mean + (sem*t_value))</code></pre>
+<pre><code>## # A tibble: 2 x 9
+##     trt  mean    sd     n sqrt_n   sem t_value lower_limit upper_limit
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1     0 8428. 8765.    65   8.06 1087.    2.00       6256.      10600.
+## 2     1 7179. 6761.    54   7.35  920.    2.01       5334.       9025.</code></pre>
+<p>Com base na tabela acima pode-se inferir, com grau de confiança de 95%, que a renda média populacional do grupo de controle fica entre 6.256 e 10.600 e para o grupo de teste fica entre 5.334 e 9.025.</p>
+<p>Obs: Importante notar que esta confiança de 95% não indica que há 95% de chance ou probabilidade de que a média populacional esteja neste intervalo (até por que não sabemos qual o valor desta média). Porém a confiança é em relação ao processo de geração dos intervalos e esta confiança indica que, se caso forem gerados diversos intervalos (e.g. 100), 95% deles conteriam o verdadeiro parâmetro populacional, que neste caso é a média da população.</p>
+</div>
+<div id="ii-renda-média-dos-grupos-de-controle-e-teste-em-1975" class="section level3">
+<h3><strong>(ii) Renda média dos grupos de controle e teste em 1975</strong></h3>
+<p>Esta questão pede o mesmo cálculo acima, porém para os dados de 1975. A conclusão seguirá a mesma lógica da conclusão anterior.</p>
+<pre class="r"><code>DAAG::nsw74demo %&gt;%
+  select(trt,
+         re75) %&gt;% 
+  filter(re75 != 0) %&gt;% 
+  group_by(trt) %&gt;% 
+  summarise(mean = round(mean(re75),digits = 2),
+            sd = round(sd(re75),digits = 2),
+            n = n(),
+            sqrt_n = n()^0.5,
+            sem = round(sd/sqrt_n,digits = 2),
+            t_value = qt(0.975,n()-1),
+            lower_limit = mean - (sem*t_value),
+            upper_limit = mean + (sem*t_value))</code></pre>
+<pre><code>## # A tibble: 2 x 9
+##     trt  mean    sd     n sqrt_n   sem t_value lower_limit upper_limit
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1     0 4017. 4428.    82   9.06  489.    1.99       3044.       4990.
+## 2     1 3830. 4147.    74   8.60  482.    1.99       2869.       4791.</code></pre>
+</div>
+<div id="iii-renda-média-dos-grupos-de-controle-e-teste-em-1978" class="section level3">
+<h3><strong>(iii) Renda média dos grupos de controle e teste em 1978</strong></h3>
+<p>Este questão também pede uma análise igual aos itens (i) e (ii), portanto, basta replicar os cálculos acima, mudando apenas de <strong>re75</strong> para <strong>re78</strong>. Veja que para o grupo de teste, a renda média estimada aumentou. Desta forma, o estudo feito parece poder concluir que a atividade realizada com os trabalhadores no grupo de teste é efetiva no aumento salarial após um certo período de tempo. O <a href="https://www.uh.edu/~adkugler/Dehejia&amp;Wahba_JASA.pdf">artigo</a> que realiza o estudo explica melhor o que foi feito no grupo de teste e corrobora a conclusão.</p>
+<pre class="r"><code>DAAG::nsw74demo %&gt;%
+  select(trt,
+         re78) %&gt;% 
+  filter(re78 != 0) %&gt;% 
+  group_by(trt) %&gt;% 
+  summarise(mean = round(mean(re78),digits = 2),
+            sd = round(sd(re78),digits = 2),
+            n = n(),
+            sqrt_n = n()^0.5,
+            sem = round(sd/sqrt_n,digits = 2),
+            t_value = qt(0.975,n()-1),
+            lower_limit = mean - (sem*t_value),
+            upper_limit = mean + (sem*t_value))</code></pre>
+<pre><code>## # A tibble: 2 x 9
+##     trt  mean    sd     n sqrt_n   sem t_value lower_limit upper_limit
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1     0 7049. 5381.   168   13.0  415.    1.97       6230.       7869.
+## 2     1 8390. 8043.   140   11.8  680.    1.98       7046.       9734.</code></pre>
+<p>Veja que para os dados de 1978 os intervalos se inverteram entre os grupos. Agora o intervalo do grupo de controle está mais baixo que o intervalo do grupo de teste. Talves fosse esta a ideia do exercício, mostrar que o grupo de teste conseguiu aumentar sua renda média ao longo do tratamento realizado.</p>
+</div>
+<div id="iv-diferença-de-renda-entre-o-grupo-de-controle-e-teste-para-o-ano-de-1978" class="section level3">
+<h3><strong>(iv) Diferença de renda entre o grupo de controle e teste para o ano de 1978</strong></h3>
+<p>Para esta questão, pede-se uma estimativa com nível de confiança de 95% para a diferença de renda entre os grupos de controle e teste, para o ano de 1978. De acordo com o livro, a fórmula para inferir sobre esta diferença é dada por:</p>
+<p><span class="math inline">\(SED = \sqrt{SEM_1^2 + SEM_2^2}\)</span></p>
+<p>Onde:</p>
+<p>SED = <em>standard error of the difference</em></p>
+<p><span class="math inline">\(SEM_1\)</span> = <em>standard error of the mean</em> para o grupo 1 (controle, trt = 0)</p>
+<p><span class="math inline">\(SEM_2\)</span> = <em>standard error of the mean</em> para o grupo 2 (teste, trt = 1)</p>
+<p>Usando os valores da tabela anterior, que calculou o SEM para cada grupo, basta inserir na fórmula e analisar se o resultado faz sentido.</p>
+<p><span class="math inline">\(SED = \sqrt{415^2+680^2}\)</span></p>
+<p><span class="math inline">\(SED = \sqrt{172.225+462.400}\)</span></p>
+<p><span class="math inline">\(SED = 796,6\)</span></p>
+<p>Conclusão: A diferença de renda estimada entre os grupos, com 95% de confiança, é de 796,6 (dólares provavelmente).</p>
+</div>
+<div id="plote-um-gráfico-que-mostre-para-graus-de-liberdade-de-1-até-100-a-mudança-no-valor-da-estatística-t-com-nível-de-confiança-de-95.-compare-dois-gráficos-com-esta-visualização-onde-um-apresente-os-valores-dos-eixos-sem-transformação-e-o-outro-transforme-o-eixo-x-em-logestatística-t-e-y-em-loggraus-de-liberdade.-verifique-qual-gráfico-apresenta-melhor-a-mudança-no-valor-da-estatística-t-por-conta-da-mudança-nos-graus-de-liberdade." class="section level3">
+<h3><strong>2) Plote um gráfico que mostre, para graus de liberdade de 1 até 100, a mudança no valor da estatística t, com nível de confiança de 95%. Compare dois gráficos com esta visualização, onde um apresente os valores dos eixos sem transformação e o outro transforme o eixo x em log(estatística-t) e y em log(graus de liberdade). Verifique qual gráfico apresenta melhor a mudança no valor da estatística t por conta da mudança nos graus de liberdade.</strong></h3>
+<pre class="r"><code>t_value &lt;- data.frame(
+  df = seq(1,100,by = 1)
+)
+
+graph_1 &lt;- t_value %&gt;% 
+  mutate(
+    t_value = qt(0.975,df = row_number())
+  ) %&gt;% 
+  ggplot(aes(x = df,y = t_value,group = 1))+
+  geom_line(color = graph_color)+
+  scale_x_log10()+
+  scale_y_log10()+
+  theme_graph()+
+  labs(title = &quot;Log transformation applied&quot;,
+       x = &quot;log_10 of Degrees of freedom&quot;,
+       y = &quot;log_10 of t-statistics&quot;)
+
+graph_2 &lt;- t_value %&gt;% 
+  mutate(
+    t_value = qt(0.975,df = row_number())
+  ) %&gt;% 
+  ggplot(aes(x = df,y = t_value,group = 1))+
+  geom_line(color = graph_color)+
+  theme_graph()+
+  labs(title = &quot;Log transformation not applied&quot;,
+       x = &quot;Degrees of freedom&quot;,
+       y = &quot;t-statistics&quot;)
+
+gridExtra::grid.arrange(graph_1,graph_2, ncol = 2)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="gere-uma-amostra-aleatória-de-10-valores-com-base-em-uma-distribuição-normal-com-média-0-e-desvio-padrão-2.-use-a-função-t.test-para-testar-a-hipótese-nula-de-que-a-média-é-0.-depois-gere-novamente-uma-amostra-aleatória-de-10-valores-com-média-de-1.5-e-desvio-padrão-2-usando-a-função-t.test-para-testar-a-hipótese-da-média-ser-0." class="section level3">
+<h3><strong>3) Gere uma amostra aleatória de 10 valores com base em uma distribuição normal com média 0 e desvio padrão 2. Use a função <em>t.test()</em> para testar a hipótese nula de que a média é 0. Depois gere novamente uma amostra aleatória de 10 valores com média de 1.5 e desvio padrão 2, usando a função <em>t.test()</em> para testar a hipótese da média ser 0.</strong></h3>
+<p>Conforme visto no capítulo, o teste de hipótese irá utilizar o <strong>valor-p</strong> para decidir se a hipótese nula deve ou não ser rejeitada. Há duas formas de se realizar o teste, ou seja, encontrar o <strong>valor-p</strong>, a primeira é usando a fórmula do R <strong>t.test()</strong> e a outra é fazendo o cálculo na mão (apesar de que este modo também usará uma fórmula pronta do R para encontrar a área sobre a curva de distribuição <strong>t</strong>).</p>
+<p>O <strong>valor-p</strong> será a área sobre a curva, também chamada de probabilidade cumulativa, de um determinado parâmetro. Vamos realizar os exercícios para facilitar o entendimento. Primeiro com a utilização do <strong>t.test()</strong>.</p>
+<pre class="r"><code># Vetor com 10 valores.
+a &lt;- rnorm(n = 10, mean = 0, sd = 2)
+
+# Gerando um teste t
+pander::pander(t.test(a, mu = 0, conf.level = 0.975))</code></pre>
+<table style="width:96%;">
+<caption>One Sample t-test: <code>a</code></caption>
+<colgroup>
+<col width="23%" />
+<col width="6%" />
+<col width="13%" />
+<col width="34%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Test statistic</th>
+<th align="center">df</th>
+<th align="center">P value</th>
+<th align="center">Alternative hypothesis</th>
+<th align="center">mean of x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">-1.622</td>
+<td align="center">9</td>
+<td align="center">0.1392</td>
+<td align="center">two.sided</td>
+<td align="center">-0.4494</td>
+</tr>
+</tbody>
+</table>
+<p>Agora vamos calcular na “mão”. Para isso, basta usar a fórmula <span class="math inline">\(t.value = \frac{\bar{x}}{SEM}\)</span> ou <span class="math inline">\(t.value = \frac{\bar{x}}{\frac{s}{\sqrt{n}}}\)</span>. Esta fórmula irá fornecer um valor crítico de <strong>t</strong>, que poderá ser inserido na função do R <strong>qt(nível de confiança, graus de liberdade)</strong> que irá fornecer a probabilidade cumulativa até o valor crítico de <strong>t</strong>. Após isso, o <strong>valor-p</strong> será <strong>1-qt(nível de confiança, graus de liberdade)</strong>.</p>
+<pre class="r"><code>mean &lt;- round(abs(mean(a)),digits = 4)
+sd &lt;- round(sd(a),digits = 4)
+n_sqrt &lt;- round(length(a)^0.5,digits = 4)
+sem &lt;- round(sd(a)/length(a)^0.5,digits = 4)
+t_value &lt;- round(abs(mean(a))/(sem),digits = 4)
+p_value &lt;- (1-pt(t_value,10-1))*2 # Multiplica por dois pq é um teste bicaudal (H0 = 0)
+
+data.frame(mean = mean,
+           sd = sd,
+           n_sqrt = n_sqrt,
+           sem = sem,
+           t_value = t_value,
+           p_value = p_value)</code></pre>
+<pre><code>##     mean    sd n_sqrt   sem t_value   p_value
+## 1 0.4494 0.876 3.1623 0.277  1.6223 0.1391883</code></pre>
+<p>Veja que o <strong>valor-p</strong> obtido é igual nos dois métodos e ficou alto a ponto de não ser possível rejeitar H0. Um <strong>valor-p</strong> elevado indica que o parâmetro encontrado (neste caso a média da amostra dos 10 valores com valor 1.3783) não foi encontrado por conta do acaso, mas sim por outros motivos (que não é o objetivo do teste indicar quais são). Desta forma, não se pode rejeitar H0, que indica que a média populacional é zero. Isto é satisfatório, pois os números aleatórios foram de fato gerados de uma “população” com média 0 e desvio padrão 2.</p>
+<p>Na segunda parte do exercício, é pedido para fazer o mesmo processo, porém agora com desvio padrão de 1.5.</p>
+<pre class="r"><code># Vetor com 10 valores.
+a &lt;- rnorm(n = 10, mean = 0, sd = 1.5)
+
+# Gerando um teste t
+pander::pander(t.test(a, mu = 0, conf.level = 0.975))</code></pre>
+<table style="width:96%;">
+<caption>One Sample t-test: <code>a</code></caption>
+<colgroup>
+<col width="23%" />
+<col width="6%" />
+<col width="13%" />
+<col width="34%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Test statistic</th>
+<th align="center">df</th>
+<th align="center">P value</th>
+<th align="center">Alternative hypothesis</th>
+<th align="center">mean of x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">-1.107</td>
+<td align="center">9</td>
+<td align="center">0.2969</td>
+<td align="center">two.sided</td>
+<td align="center">-0.706</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="desenvolva-uma-função-para-fazer-o-cálculo-acima-do-valor-p-com-uma-amostra-de-n-10-média-0-e-sd-1.-crie-um-vetor-de-50-valores-p-com-base-nesta-função-e-plote-em-um-gráfico-este-vetor." class="section level3">
+<h3><strong>4) Desenvolva uma função para fazer o cálculo acima do valor-p, com uma amostra de n = 10, média = 0 e sd = 1. Crie um vetor de 50 valores-p com base nesta função e plote em um gráfico este vetor.</strong></h3>
+<p>O exercício pede para usar 50 repetições, porém eu preferi fazer com 1.000 para melhorar a visualização. Veja que como o valor-p é uma probabilidade cumulativa, seu valor fica entre 0 e 1.</p>
+<pre class="r"><code>saida &lt;- rep(NA,1000)
+
+for (i in 1:1000){
+  a &lt;- rnorm(n = 10, mean = 0, sd = 1)
+  mean &lt;- mean(a)
+  sd &lt;- sd(a)
+  sem &lt;- sd/sqrt(10)
+  saida[i] &lt;- data.frame(
+    p_value = (1-pt((abs(mean)/sem),9))*2 # Multiplica por dois pq é um teste bicaudal (H0 = 0)
+  )
+}
+
+df &lt;- data.frame(
+  a = matrix(unlist(saida),nrow = 1000, byrow = F),stringsAsFactors = F)
+
+ggplot(data = df, aes(x = a))+
+  geom_histogram(fill = graph_color, binwidth = .1)+
+  expand_limits(x = 1)+
+  theme_graph()</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+</div>
+<div id="cap.5-regression-with-a-single-predictor" class="section level2">
+<h2><strong>Cap.5 Regression with a single predictor</strong></h2>
+<div id="resumo-4" class="section level3">
+<h3><strong>Resumo</strong></h3>
+<p>O foco deste capítulo será em modelos de regressão linear. As premissas dos modelos deste capítulo serão: <strong>(i) modelo com apenas uma variável</strong>, <strong>(ii) valores de y independentes</strong> e <strong>(iii) dado um valor de x, o valor de y se distribuirá normalmente com uma média dada pela função linear de x</strong>.</p>
+<p>Neste capítulo, os autores mostram como se controí um modelo de regressão linear simples no R, usando a função <strong>lm(y~x)</strong>. Além da geração do modelo, são apresentadas as formas de se extrair os resultados específicos do modelo, usando a função <strong>predict()</strong> e <strong>resid()</strong>.</p>
+<p>Duas validações básicas sobre os resíduos são apresentadas, uma irá validar se os resíduos se distribuem normalmente e a outra irá validar se existe algum padrão no comportamento dos resíduos (a ideia é que não exista). A primeira validação pode ser obtida através de um <strong>qq-plot</strong> e a segunda através de um gráfico que compare o valor do resíduo com o valor previsto pelo modelo.</p>
+<p>Aprofundando mais a explicação do modelo linear, é apresentada a <strong>Análise de Variância</strong> (a.k.a <strong>ANOVA</strong>), que irá gerar informações sobre o nivel de variabilidade de um modelo de regressão e fundamentar o teste de significância. A fórmula básica da <strong>ANOVA</strong> é:</p>
+<p><span class="math inline">\(y_i - \bar{y} = (\hat{y} - \bar{y})+(y_i-\hat{y})\)</span></p>
+<p>Onde:</p>
+<p><span class="math inline">\(y_i - \bar{y}\)</span>: Variabilidade total do modelo gerado</p>
+<p><span class="math inline">\(\hat{y} - \bar{y}\)</span>: Variabilidade explicada pela variável independente (a.k.a variável explicativa), que é o <strong>x</strong>, ou seja, a variabilidade explicada pelo modelo</p>
+<p><span class="math inline">\(y_i-\hat{y}\)</span>: Variabilidade não explicada pelo modelo, ou seja, o termo de erro.</p>
+<p>A equação acima também pode ser escrita da seguinte forma:
+<strong>SST = SSM + SSE</strong></p>
+<p>Que será lida como: Variabilidade total (SST) é igual a soma da variabilidade do modelo (SSM) com a soma dos erros (SSE), lembrando que é a soma do quadrado das diferenças, gerando a fórmula final:</p>
+<p><span class="math inline">\(\sum{(y_i - \bar{y})^2} = \sum{(\hat{y} - \bar{y})}^2+\sum{(y_i-\hat{y})}^2\)</span></p>
+<p>Obs: Primeiro se calcula a diferença, depois eleva ao quadrado e depois realiza o somatório.</p>
+<p>Com isso, os autores deixam claro que a <strong>ANOVA</strong> é uma forma de se analisar o poder de explicação do modelo gerado. Ainda no âmbito da <strong>ANOVA</strong>, os autores mostram como se calcular o <strong>R²</strong> e o <strong>Adjusted R²</strong>, através das fórmulas:</p>
+<p><span class="math inline">\(R^2 = \frac{SSM}{SST}\)</span></p>
+<p>Asjusted R² = <span class="math inline">\(1-\frac{\frac{SSE}{n-2}}{\frac{SST}{n-1}}\)</span></p>
+<p>Os autores indicam que o <strong>Adjsuted R²</strong> é preferível ao <strong>R²</strong> por conta de que ele leva em consideração os graus de liberdade do modelo. Porém ambos são insatisfatórios para gerar conclusões sobre o quanto o modelo poderá prever novos resultados.</p>
+<p>Após explicarem sobre <strong>ANOVA</strong> os autores abordam a questão de outliers presentes nos dados e seu impacto no modelo de regressão. Primeiro é apresentado o conceito de <strong>Cook’s distance</strong>, que mede a influência de outliers no modelo através da medição da mudança na linha de regressão com a retirada de um ou mais registros (i.e. registros outliers).</p>
+<p>Ainda sobre a tratativa de outliers, os autores apresentam uma técnica chamada de <strong>Regressão Robusta</strong>, que atua sobre os outliers não retirando-os do modelo, mas sim reduzindo sua relevância, enquanto outras observações recebem maior peso para geração das estimativas dos parâmetros (<span class="math inline">\(\beta\)</span>).</p>
+<p>Após explicarem sobre outliers e como tratar este aspecto dos dados, os autores abordam a acuracidade dos parâmetros do modelo. Esta acuracidade é medida pelo <strong>erro padrão</strong>, que é usada para criar intervalos de confinaça e teste de significância do parâmetro <strong>intercepto</strong> e <strong>slope</strong>. Um teste fundamental é a validação se o intervalo de confiança do intercepto irá conter o valor 0, se caso conter, isso indicará que ele não deve ser incluído no modelo.</p>
+<p>Ao finalizarem a explicação sobre acuracidade dos parâmetros, os autores apresentam a técnica de <strong>cross-validation</strong>, usada também para reforçar o resultado do modelo criado. Esta técnica irá segmentar os registros em <strong>teste</strong> e <strong>treino</strong> de forma que o modelo criado nos registros de <strong>treino</strong> serão testados com os registros no <strong>teste</strong>. Junto com esta técnica, há o <strong>boostraping</strong>, que faz repetições do processo de amostragem (com reposição ou sem), sendo usada junto com o <strong>cross-validation</strong> para repetir várias versões do modelo para analisar variações da acuracidade e aumentar a confiança da conclusão gerada.</p>
+</div>
+<div id="exercícios-4" class="section level3">
+<h3><strong>Exercícios</strong></h3>
+</div>
+<div id="usando-os-dados-abaixo-referente-à-duas-amostras-de-dados-sobre-elasticidades-de-elásticos-plote-um-gráfico-que-correlacione-a-distância-e-a-elasticidade-de-cada-grupo." class="section level3">
+<h3><strong>1) Usando os dados abaixo, referente à duas amostras de dados sobre elasticidades de elásticos, plote um gráfico que correlacione a distância e a elasticidade de cada grupo.</strong></h3>
+<pre class="r"><code>data_set_1 &lt;- data.frame(stretch = c(46,54,48,50,44,42,52),
+                         distance = c(183,217,189,208,178,150,249))
+
+data_set_2 &lt;- data.frame(stretch = c(25,45,35,40,55,50,30,50,60),
+                         distance = c(71,196,127,187,248,217,114,228,291))
+
+# Plotando os dados
+ggplot2::ggplot()+
+  geom_point(data = data_set_1, aes(x = stretch, y = distance), shape = 2, color = &quot;blue&quot;)+
+  geom_point(data = data_set_2, aes(x = stretch, y = distance), shape = 3, color = &quot;red&quot;)+
+  theme_graph()</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+<div id="crie-um-modelo-de-regressão-linear-para-stretch-distance.-para-cada-modelo-determine-i-os-valores-previstos-e-os-erros-padrão-ii-o-r²-e-ii-indique-as-principais-diferenças-entre-os-data-sets.-em-seguida-use-uma-regressão-robusta-através-da-fórmula-rlm-para-ver-a-diferença-com-a-regressão-lienar-tradicional." class="section level3">
+<h3><strong>2) Crie um modelo de regressão linear para stretch ~ distance. Para cada modelo, determine (i) os valores previstos e os erros padrão, (ii) o R² e (ii) indique as principais diferenças entre os data sets. Em seguida, use uma regressão robusta através da fórmula rlm() para ver a diferença com a regressão lienar tradicional.</strong></h3>
+<pre class="r"><code># Modelo linear para o data_set_1
+model_1 &lt;- lm(formula = stretch ~ distance, data = data_set_1)
+
+# Modelo linear para o data_set_2
+model_2 &lt;- lm(formula = stretch ~ distance, data = data_set_2)
+
+# Trazendo os campos de fitted values e resíduos para o data_set_1
+data_set_1 %&gt;% 
+  mutate(fitted_values = predict(model_1),
+         residuals = residuals(model_1))</code></pre>
+<pre><code>##   stretch distance fitted_values  residuals
+## 1      46      183      46.38414 -0.3841360
+## 2      54      217      50.51936  3.4806421
+## 3      48      189      47.11388  0.8861190
+## 4      50      208      49.42474  0.5752597
+## 5      44      178      45.77602 -1.7760151
+## 6      42      150      42.37054 -0.3705382
+## 7      52      249      54.41133 -2.4113314</code></pre>
+<pre class="r"><code># Trazendo os campos de fitted values e resíduos para o data_set_2
+data_set_2 %&gt;% 
+  mutate(fitted_values = predict(model_2),
+         residuals = residuals(model_2))</code></pre>
+<pre><code>##   stretch distance fitted_values  residuals
+## 1      25       71      24.26005  0.7399506
+## 2      45      196      44.89221  0.1077925
+## 3      35      127      33.50326  1.4967438
+## 4      40      187      43.40669 -3.4066921
+## 5      55      248      53.47519  1.5248147
+## 6      50      217      48.35841  1.6415899
+## 7      30      114      31.35751 -1.3575118
+## 8      50      228      50.17404 -0.1740400
+## 9      60      291      60.57265 -0.5726477</code></pre>
+<pre class="r"><code>model_1 %&gt;% summary() %&gt;% pander()</code></pre>
+<table style="width:88%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">24.13</td>
+<td align="center">5.41</td>
+<td align="center">4.459</td>
+<td align="center">0.006645</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>distance</strong></td>
+<td align="center">0.1216</td>
+<td align="center">0.02726</td>
+<td align="center">4.462</td>
+<td align="center">0.006631</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: stretch ~ distance</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">2.121</td>
+<td align="center">0.7992</td>
+<td align="center">0.7591</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>model_2 %&gt;% summary() %&gt;% pander()</code></pre>
+<table style="width:89%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">12.54</td>
+<td align="center">1.749</td>
+<td align="center">7.17</td>
+<td align="center">0.0001822</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>distance</strong></td>
+<td align="center">0.1651</td>
+<td align="center">0.008835</td>
+<td align="center">18.68</td>
+<td align="center">3.125e-07</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: stretch ~ distance</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">1.758</td>
+<td align="center">0.9803</td>
+<td align="center">0.9775</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># Modelo linear robusto para o data_set_1
+summary(MASS::rlm(formula = stretch ~ distance, data = data_set_1)) %&gt;% pander()</code></pre>
+<ul>
+<li><p><strong>call</strong>: <code>rlm(formula = stretch ~ distance, data = data_set_1)</code>
+NA</p></li>
+<li><p><strong>residuals</strong>:</p>
+<table style="width:89%;">
+<colgroup>
+<col width="13%" />
+<col width="11%" />
+<col width="11%" />
+<col width="12%" />
+<col width="12%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+<th align="center">6</th>
+<th align="center">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">-0.2207</td>
+<td align="center">3.839</td>
+<td align="center">1.084</td>
+<td align="center">0.8822</td>
+<td align="center">-1.641</td>
+<td align="center">-0.3967</td>
+<td align="center">-1.869</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>coefficients</strong>:</p>
+<table style="width:69%;">
+<colgroup>
+<col width="25%" />
+<col width="12%" />
+<col width="18%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Value</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">25.01</td>
+<td align="center">5.07</td>
+<td align="center">4.934</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>distance</strong></td>
+<td align="center">0.1159</td>
+<td align="center">0.02554</td>
+<td align="center">4.537</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>sigma</strong>: <em>1.607</em></p></li>
+<li><p><strong>stddev</strong>: <em>1.987</em></p></li>
+<li><p><strong>df</strong>: <em>2</em>, <em>5</em> and <em>2</em></p></li>
+<li><p><strong>r.squared</strong>: <em>NA</em></p></li>
+<li><p><strong>cov.unscaled</strong>:</p>
+<table style="width:64%;">
+<colgroup>
+<col width="25%" />
+<col width="19%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">(Intercept)</th>
+<th align="center">distance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">6.51</td>
+<td align="center">-0.03244</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>distance</strong></td>
+<td align="center">-0.03244</td>
+<td align="center">0.0001653</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>terms</strong>: <em>NA</em></p></li>
+</ul>
+<!-- end of list -->
+<pre class="r"><code># Modelo linear robusto para o data_set_2
+summary(MASS::rlm(formula = stretch ~ distance, data = data_set_2)) %&gt;% pander()</code></pre>
+<ul>
+<li><p><strong>call</strong>: <code>rlm(formula = stretch ~ distance, data = data_set_2)</code>
+NA</p></li>
+<li><p><strong>residuals</strong>:</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="12%" />
+<col width="9%" />
+<col width="11%" />
+<col width="9%" />
+<col width="9%" />
+<col width="11%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+<th align="center">6</th>
+<th align="center">7</th>
+<th align="center">8</th>
+<th align="center">9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0.6706</td>
+<td align="center">0.03756</td>
+<td align="center">1.427</td>
+<td align="center">-3.477</td>
+<td align="center">1.454</td>
+<td align="center">1.571</td>
+<td align="center">-1.427</td>
+<td align="center">-0.2445</td>
+<td align="center">-0.6436</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>coefficients</strong>:</p>
+<table style="width:69%;">
+<colgroup>
+<col width="25%" />
+<col width="12%" />
+<col width="18%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Value</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">12.61</td>
+<td align="center">1.835</td>
+<td align="center">6.873</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>distance</strong></td>
+<td align="center">0.1651</td>
+<td align="center">0.009267</td>
+<td align="center">17.81</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>sigma</strong>: <em>2.116</em></p></li>
+<li><p><strong>stddev</strong>: <em>1.844</em></p></li>
+<li><p><strong>df</strong>: <em>2</em>, <em>7</em> and <em>2</em></p></li>
+<li><p><strong>r.squared</strong>: <em>NA</em></p></li>
+<li><p><strong>cov.unscaled</strong>:</p>
+<table style="width:64%;">
+<colgroup>
+<col width="25%" />
+<col width="19%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">(Intercept)</th>
+<th align="center">distance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">0.9904</td>
+<td align="center">-0.004713</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>distance</strong></td>
+<td align="center">-0.004713</td>
+<td align="center">2.526e-05</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>terms</strong>: <em>NA</em></p></li>
+</ul>
+<!-- end of list -->
+</div>
+<div id="usando-o-data-set-cars-plote-a-distância-para-frenagem-versus-a-velocidade.-crie-uma-linha-de-regressão-para-esta-correlação.-em-seguida-crie-uma-linha-quadrática-para-ver-se-o-modelo-irá-melhorar." class="section level3">
+<h3><strong>3) Usando o data set cars, plote a distância (para frenagem) versus a velocidade. Crie uma linha de regressão para esta correlação. Em seguida, crie uma linha quadrática para ver se o modelo irá melhorar.</strong></h3>
+<pre class="r"><code>cars %&gt;% 
+  ggplot()+
+  geom_point(aes(x = speed, y = dist))+
+  geom_smooth(aes(x = speed, y = dist, color = &quot;linear&quot;), method = &quot;lm&quot;, formula = y ~ x, se = F)+
+  geom_smooth(aes(x = speed, y = dist, color = &quot;quadratic&quot;), method = &quot;lm&quot;, formula = y ~ x + I(x^2), se = F)+
+  scale_color_manual(values = c(&quot;linear&quot; = &quot;blue&quot;,
+                                &quot;quadratic&quot; = &quot;red&quot;),
+                     labs(color = &quot;&quot;))+
+  theme_graph()+
+  labs(title = &quot;Modelo linear e quadrático para as variáveis&quot;,
+       subtitle = &quot;Linha quadrática com melhor performance&quot;,
+       x = &quot;Speed&quot;,
+       y = &quot;Distância de frenagem&quot;)</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre class="r"><code># Validando os dois modelos
+summary(lm(formula = dist ~ speed, data = cars)) %&gt;% pander()</code></pre>
+<table style="width:88%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">-17.58</td>
+<td align="center">6.758</td>
+<td align="center">-2.601</td>
+<td align="center">0.01232</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>speed</strong></td>
+<td align="center">3.932</td>
+<td align="center">0.4155</td>
+<td align="center">9.464</td>
+<td align="center">1.49e-12</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: dist ~ speed</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">50</td>
+<td align="center">15.38</td>
+<td align="center">0.6511</td>
+<td align="center">0.6438</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>summary(lm(formula = dist ~ speed + I(speed^2), data = cars)) %&gt;% pander()</code></pre>
+<table style="width:88%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">2.47</td>
+<td align="center">14.82</td>
+<td align="center">0.1667</td>
+<td align="center">0.8683</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>speed</strong></td>
+<td align="center">0.9133</td>
+<td align="center">2.034</td>
+<td align="center">0.449</td>
+<td align="center">0.6555</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>I(speed^2)</strong></td>
+<td align="center">0.09996</td>
+<td align="center">0.06597</td>
+<td align="center">1.515</td>
+<td align="center">0.1364</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: dist ~ speed + I(speed^2)</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">50</td>
+<td align="center">15.18</td>
+<td align="center">0.6673</td>
+<td align="center">0.6532</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="use-o-data-set-oddbooks-do-pacote-daag-para-as-alternativas-abaixo" class="section level3">
+<h3><strong>4) Use o data set oddbooks do pacote DAAG para as alternativas abaixo:</strong></h3>
+</div>
+<div id="a-plote-logweight-versus-logvolume-e-estabeleça-uma-linha-de-regressão." class="section level3">
+<h3><strong>a) Plote log(weight) versus log(volume) e estabeleça uma linha de regressão.</strong></h3>
+<pre class="r"><code>DAAG::oddbooks %&gt;% 
+  mutate(volume = round(height * thick * breadth, digits = 1),
+         area = round(height * thick, digits = 1)) %&gt;% 
+  ggplot()+
+  geom_point(aes(x = log(weight), y = log(volume)))+
+  geom_smooth(aes(x = log(weight), y = log(volume)), method = &quot;lm&quot;, formula = y ~ x, se = F)+
+  theme_graph()</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="b-plote-logweight-versus-logarea-e-estabeleça-uma-linha-de-regressão." class="section level3">
+<h3><strong>b) Plote log(weight) versus log(area) e estabeleça uma linha de regressão.</strong></h3>
+<pre class="r"><code>DAAG::oddbooks %&gt;% 
+  mutate(volume = round(height * thick * breadth, digits = 1),
+         area = round(height * thick, digits = 1)) %&gt;% 
+  ggplot()+
+  geom_point(aes(x = log(weight), y = log(area)))+
+  geom_smooth(aes(x = log(weight), y = log(area)), method = &quot;lm&quot;, formula = y ~ x, se = F)+
+  theme_graph()</code></pre>
+<p><img src="/library/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+</div>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+  		</div>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="/">Franciso Piccolo</a></span>
+            
+            <span></span>
+            <span> <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.4a69500057d68129e88f497d354afe68422eb56de6d15e45dbe2190858ea5a76bfcb096406f992984b241db45f47388ac57ab0376e3b32125bef7a8a6d0f06c4.js" integrity="sha512-SmlQAFfWgSnoj0l9NUr&#43;aEIutW3m0V5F2&#43;IZCFjqWna/ywlkBvmSmEskHbRfRziKxXqwN247MhJb73qKbQ8GxA=="></script>
+
+
+
+    </body>
+</html>

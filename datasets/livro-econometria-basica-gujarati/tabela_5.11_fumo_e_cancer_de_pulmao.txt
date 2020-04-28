@@ -1,0 +1,26 @@
+Ocupação Fumo Câncer
+Fazendeiro, profissionais de atividades florestais, pescador 77 48
+Minerador, cavouqueiro 731 611
+Operários da produção de combustíveis, coque e produtos químicos 711 321
+Vidraceiro e ceramista 49 821
+Fundidor 611 551
+Operários da fabricação de eletroeletrônicos 201 101
+Profissionais de engenharia e atividades associadas 111 811
+Madereiros, marceneiros 39 311
+Curtidores em confecção de artigos de couro 88 401
+Operários da fabricação de artigos têxtis 8 201 8
+Operários da confecção de vestuário 19 401
+Profissionais da produção de alimentos, bebidas e tabaco 401 921
+Operários da fabricação de papel e atividades gráficas 701 68
+Operários da fabricação de outros produtos 211 69
+Operários da construção civil 311 441
+Pintores e decoradores 110 931
+Operadores de máquinas, guindastes etc. 521 311
+Operários não incluídos nestas categorias 311 641
+Profissionais de transportes e comunicações 115 128
+Estoquistas em armazéns, depósitos e lojas, almoxarifes, etc. 5 501 11
+Escreventes, escriturários, funcionários de escritórios 78 97
+Vendedores 19 58
+Profisisonais de seviços, esportes e recreadores 001 021
+Administradores e gerentes 67 06
+Artistas e proissionais e técnicos em geral 66 51

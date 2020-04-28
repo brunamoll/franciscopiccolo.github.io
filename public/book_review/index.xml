@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Book_reviews on Glass Frog</title>
+    <link>/book_review/</link>
+    <description>Recent content in Book_reviews on Glass Frog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 03 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/book_review/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Book Review: Basic Econometrics by Gujarati and Porter</title>
+      <link>/book_review/2020-03-03-basic-econometrics-by-gujarati-and-porter/</link>
+      <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/book_review/2020-03-03-basic-econometrics-by-gujarati-and-porter/</guid>
+      <description>OverviewThis book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economics grad students. For its importance, in this post I’ll present a brief summary of each chapter and solve some exercises (because the book doesn’t present the answer for the problems). Also, I’ll release the datasets used on the problems on my github account.
+The authors aimed to build a material that would serve all levels of students that want learn econometrics.</description>
+    </item>
+    
+    <item>
+      <title>Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun</title>
+      <link>/book_review/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</link>
+      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/book_review/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</guid>
+      <description>OverviewEste livro faz parte de uma coleção da Universidade de Cambridge - Cambridge Series in Statistics and Probabilistic Mathematics, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística.
+O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse.
+A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento.</description>
+    </item>
+    
+  </channel>
+</rss>

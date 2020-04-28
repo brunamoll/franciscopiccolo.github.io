@@ -1,0 +1,808 @@
+---
+title: "Book Review: Basic Econometrics by Gujarati and Porter"
+date: 2020-03-03
+output:
+  html_document:
+    df_print: paged
+    fig_width: 8.5
+    fig_height: 4
+---
+
+```{r,echo=F,include=F,warning=F,message=F}
+library(tidyverse)
+library(DAAG)
+library(Amelia)
+library(ggthemes)
+library(pander)
+library(gridExtra)
+library(grid)
+library(plot3D)
+
+theme_graph <- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    text = element_text(family = "Times New Roman"),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+}
+
+graph_color <- "#006666"
+
+# Caminho para a pasta que contém os data sets para cada exercício
+path <- "C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/datasets/livro-econometria-basica-gujarati/"
+```
+
+## **Overview**
+
+This book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economics grad students. For its importance, in this post I'll present a brief summary of each chapter and solve some exercises (because the book doesn't present the answer for the problems). Also, I'll release the datasets used on the problems on my [github](https://github.com/FranciscoPiccolo) account.
+
+The authors aimed to build a material that would serve all levels of students that want learn econometrics. The initial chapters describe the main assumptions of econometric models and simple regression equations and problems. All chapters are embedded with examples to illustrate the main findings. To beggin this summary, lets see what the authors say about the subject:
+
+> "Econometry is the application of statistics in economic data".
+
+> "Econometry is the quantiative analysis of economic phenomena".
+
+![](/images/2020-03-03_econometria_basica.png)
+
+## **Cap.1 The nature of regression analysis**
+
+This chapter presents some foundations of regression analysis. First it's defined the concept and then its goals. Accordingly with the authors, regression is the study of the dependence of one variable in relation to one or more independent variables. 
+
+Following, the authors indicate the difference between statistical relations and deterinistic relations, presenting some scenrios for each one. Also, it's explained the difference between regression and causality and between regression and correlation.
+
+Now let's see some exercised presented in this chapter.
+
+### **Exercises**
+
+### **1.1) Bring the dataset from table 1.3 related to consumer price index to answer the following questions**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",
+                                   sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ",")
+
+# Random sample of the dataset
+tbl_1.3[sample(nrow(tbl_1.3),10), ] %>% as.tibble()
+```
+
+### **a) With the dataset, generate the inflation rate for each country.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Inflation rate (1985 = 100)
+cpi_index <- tbl_1.3 %>% 
+  filter(year %in% c(1985,2005))
+
+cpi_index <- cpi_index[2,2:8]-cpi_index[1,2:8]
+
+cpi_index %>% 
+  as.tibble()
+```
+
+### **b) Graphically represent the inflation rate of each country.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_1.3 %>%
+  tidyr::gather("campo", "valor", 2:8) %>% 
+  ggplot(aes(x = year, y = valor, group = campo, color = campo))+
+  geom_line()+
+  theme_graph()+
+  labs(title = "Anual inflation for selected countries",
+       x = "",
+       y = "")
+```
+
+### **1.3) The table 1.4 represent the exchange rate for 7 industrialized countries between 1985 to 2006.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_1.4 <- read.table(file = paste(path,"tabela_1.4_cambio.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ",",
+                      )
+  
+# Adjusting UK variable
+tbl_1.4 <- 
+  tbl_1.4 %>% 
+  mutate(Reino.unido = 1/Reino.unido)
+
+# Random sample of the dataset
+tbl_1.4[sample(nrow(tbl_1.4),10), ] %>% 
+   as.tibble()
+```
+
+### **a) Graphically represent the exchange rate evolution throughout time**
+
+For this exercise, it'll be necessary to split the countries in groups in accordance to the scale of their exchange rate.
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_1.4 %>% 
+  tidyr::gather("campo","valor",2:10) %>% 
+  filter(campo != "Coreia.sul",
+         campo != "Japao",
+         campo != "Suica",
+         campo != "Reino.unido",
+         campo != "Canada",
+         campo != "Australia"
+         ) %>% 
+  mutate(campo = fct_relevel(campo, 
+                             levels = c("Mexico", "China", "Suecia"))) %>% 
+  ggplot(aes(x = Ano, y = valor,group = campo, color = campo))+
+  geom_line(size = 1.2)+
+  theme_graph()+
+  labs(title = "Exchange rate times serie",
+       x = "",
+       y = "Currency per 1 US$")
+
+tbl_1.4 %>% 
+  tidyr::gather("campo","valor",2:10) %>% 
+  filter(campo %in% c("Coreia.sul","Japao")) %>%
+  ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
+  geom_line(size = 1.2)+
+  theme_graph()+
+  labs(title = "Exchange rate times serie",
+       x = "",
+       y = "Currency per 1 US$")
+
+tbl_1.4 %>% 
+  tidyr::gather("campo","valor",2:10) %>% 
+  filter(campo %in% c("Reino.unido",
+                      "Canada",
+                      "Australia",
+                      "Suica")) %>% 
+  mutate(campo = fct_relevel(campo, 
+                             levels = c("Suica", "Canada", "Australia", "Reino.unido"))) %>% 
+  ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
+  geom_line(size = 1.2)+
+  theme_graph()+
+  labs(title = "Exchange rate times serie",
+       x = "",
+       y = "Currency per 1 US$")
+```
+
+### **1.7) The table 1.6 represents the budget used with advertising and the retention of impressions from customers, based in a survey with 4.000 people.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_1.6 <- read.table(file = paste(path,
+                                   "tabela_1.6_publicidade.txt",
+                                   sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ","
+                      )
+
+# Sample from the dataset
+tbl_1.6[sample(nrow(tbl_1.6),10), ] %>% 
+  as.tibble()
+```
+
+### **a) Present the relation between impressions and advertising expenditures.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_1.6 %>% 
+  ggplot(aes(x = investment, y = impressions))+
+  geom_point(color = graph_color)+
+  geom_smooth(method = "lm", 
+              formula = y ~ x, 
+              se = F, 
+              lty = 20, 
+              color = "dark orange")+
+  theme_graph()+
+  labs(title = "Investment and Impressions relation",
+       x = "Investmnet",
+       y = "Impressions")
+```
+
+## **Cap.2 Regression analysis with two variables: Some basic ideas**
+
+In this chapter the authors go a little deep on simple regression models, introducting the concept of **expected value of Y**. One of the key findings of this chapter is...
+
+> "The essence of regression models is to supply conditions to explain the average value of the Y variable throughout one equation."
+
+The authors also affirm that the linear regression model will try to estimate the **population regression function** using economic theories and sample date of the population being studied. With the sample data occur the creation of the regression model for this sample that will be a proxy for the population regression function. Thus, regression models have to deal with inferences and uncertainty.
+
+Also, in this chapter the authors explain that the models of the book are linear on the independent variables (x1, x2, etc), but not on the parameters ($\beta_1$, $\beta_2$, etc). At the end of the chapter, the authors explain about the stochastic erros of the model, that represent all other variables that weren't included in the developed model.
+
+### **Exercises**
+
+### **2.14) Use the dataset of the table 2.7 with data about the USA job market to answer the alternatives.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_2.7 <- read.table(file = paste(path,
+                                   "tabela_2.7_labour_market.txt",
+                                   sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ","
+                      )
+
+# Sample data
+tbl_2.7[sample(nrow(tbl_2.7),10), ] %>% 
+  as.tibble()
+```
+
+### **a) graphically represent the relation between participation rate of men on the work force and its unemployment rate.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+women_df <- 
+  tbl_2.7 %>% 
+  select(share_women_work_force,unemployment_women) %>% 
+  transmute(share_work_force = share_women_work_force,
+            unemployment = unemployment_women) %>% 
+  mutate(type = "women")
+    
+tbl_2.7 %>% 
+  select(share_men_work_force,unemployment_men) %>% 
+  transmute(
+    share_work_force = share_men_work_force,
+    unemployment = unemployment_men
+  ) %>% 
+  mutate(type = "men") %>% 
+  ggplot(aes(x=share_work_force,y=unemployment,color=type))+
+  geom_point(color = graph_color)+
+  theme_graph()+
+  labs(title = "Men's unemployment and participation rate",
+       x = "Participation rate (%)",
+       y = "Unemployment rate (%)")
+```
+
+### **c) Graphically represent the participation rate on men and women in relation to thei average earning per hour.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+women_df <- 
+  tbl_2.7 %>% 
+  select(share_women_work_force,avg_hourly_earning_women) %>% 
+  transmute(
+    share_work_force = share_women_work_force,
+    avg_hourly_earning = avg_hourly_earning_women
+  ) %>% 
+  mutate(type = "women")
+
+tbl_2.7 %>% 
+  select(share_men_work_force,avg_hourly_earning_men) %>% 
+  transmute(
+    share_work_force = share_men_work_force,
+    avg_hourly_earning = avg_hourly_earning_men
+  ) %>% 
+  mutate(type = "men") %>% 
+  union_all(women_df) %>% 
+  ggplot(aes(x=share_work_force,y=avg_hourly_earning,color=type))+
+  geom_point()+
+  scale_color_brewer(type = "qual")+
+  theme_graph()+
+  labs(title = "Average hourly wage and participation rate",
+       x = "Participation rate",
+       y = "Hourly wage")
+```
+
+### **2.15) Use the dataset from table 2.8 with data about food expenses and total expensed from 55 houses in India to answer the following questions.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_2.8 <- read.table(file = paste(path,
+                                   "tabela_2.8_despesa_india.txt",
+                                   sep = ""),
+                      sep = " ",
+                      header = T,
+                      dec = ",")
+
+# Random sample
+tbl_2.8[sample(nrow(tbl_2.8),10), ] %>% 
+  as.tibble()
+```
+
+### **a) Graphically represent the data, drawing the food expensed in the Y axis and total expensed in the X axis and then plot the regression line.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_2.8 %>% 
+  ggplot(aes(x = total, y = alimento))+
+  geom_point(color = graph_color, shape = 20)+
+  geom_smooth(method = "lm", se = F, color = "dark orange", lty = 2)+
+  theme_graph()+
+  labs(title = "Food expenditures and total expenditures",
+       x = "Total expenditures",
+       y = "Food expenditures")
+```
+
+## **Cap.3 Regression model with two variables: The estimation problem**
+
+The goal of this chapter will be the estimation of the populational regression function using a regression model created from a sample data of the population. The authors indicate two possible methods for this task, (i) the ordinary least squares (OLS) and (ii) the maximum likelihood. Both methods lead to the same results but the first one is easier to apply.
+
+As the focus of the chapter is about estimation, the authors explain the hipothesis that support the estimation when using the OLS method. They are summed up below:
+
+* Independency of the X variables and the error term ($\mu$).
+
+* The mean value of $\mu$ should be zero. This hipothesis subjectively afirm that there's not specification mistakes on the model.
+
+* Homoscedasticity of $\mu$. In other words, there's constant variation of the $\mu$ term.
+
+* There's no correlation between $\mu$ values of the model.
+
+### **Exercises**
+
+### **3.18) The following data.frame has the classification of ten students from the final and parcial statistical tests. Determine the Spearman correlation and interpret the results.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+df_3.18 <- data.frame(
+  partial_test = c(1,3,7,10,9,5,4,8,2,6),
+  final_test = c(3,2,8,7,9,6,5,10,1,4)
+)
+
+# Sample data
+df_3.18[sample(nrow(df_3.18),10), ] %>% 
+  knitr::kable(align = "c")
+
+# Spearman correlation
+cor.test(df_3.18$partial_test,
+         df_3.18$final_test, 
+         method = "spearman")
+```
+
+### **3.19) The following equation shows the relation between exchange rate and inflation rate for Canada and US for the period from 1985 to 2005.**
+
+$$\widehat{Y_t} = 0.912 + 2.25X_t$$
+
+Onde: 
+
+$\widehat{Y_t}$ = Canadian Exchange Rate (DC/US$)
+
+$X_t$ = US Inflation Rate/Canada Inflation Rate
+
+### **a) Write the interpretation for this regression model.**
+
+R: This regression model indicates that as US inflation rate is higher than Canadian inflation rate, the Canadian currency will appreciate, thus the denominator of the fraction $DC/US$ will be lower because inflation erodes the purchasing power of the currency. The r² of 44% indicates that ther're other variables that could support the model.
+
+### **b) The positive value of X has economic foundations?** 
+
+R: Yes, it does. As the inflation rate is higher in the US, the Canadian dolar will be swaped by more US dolars.
+
+### **3.20) The next table presents a dataset about hourly production index (X) and hourly real wages (Y) for the industrial sectors and non agricultural sectors, between 1960 and 2005**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.6 <- read.table(file = paste(path,"tabela_3.6_produtividade_e_salario.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ",",
+                      )
+
+tbl_3.6[sample(nrow(tbl_3.6),10), ] %>% 
+  as.tibble()
+```
+
+### **a) Graphically represent separetely Y versus X for the two sectors of the economy.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.6 %>% 
+  tidyr::gather("production","prod",2:3) %>% 
+  tidyr::gather("wage","wag",2:3) %>% 
+  ggplot()+
+  geom_point(aes(x = prod, y = wag, color = production))+
+  scale_color_brewer(palette = "Dark2")+
+  geom_smooth(aes(x = prod, y = wag), 
+              method = "lm",
+              se = F, 
+              lty = 2, 
+              color = "dark orange")+
+  theme_graph()+
+  labs(title = "Production index and hourly wages",
+       x = "Production",
+       y = "Wage")
+```
+
+### **c) Create a regression model usgin OLS method for Y and X.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.6 %>% 
+  tidyr::gather("production","X",2:3) %>% 
+  tidyr::gather("wage","Y",2:3) -> df_tbl_3.6
+
+summary(lm(Y~X, data = df_tbl_3.6))
+```
+
+### **3.22) The following dataset presents the gold price, NYSE index and CPI index between 1974 to 2006. Use this dataset to answer the next questions.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.7 <- read.table(file = 
+                      paste(path,"tabela_3.7_ouro_nyse_IPC.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ",",
+                      )
+
+# Sample from dataset
+tbl_3.7[sample(nrow(tbl_3.7),10), ] %>% 
+  as.tibble()
+```
+
+### **a) Plot the gold price, NYSE index and CPI index in a dispersion graph.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.7 %>% 
+  transmute(x = gold_price,
+         y = nyse_index,
+         z = ipc_index) -> df_test
+
+x <- df_test$x
+y <- df_test$y
+z <- df_test$z
+  
+plot3D::scatter3D(x, y, z, 
+                  colvar = NULL, 
+                  add = FALSE, 
+                  col = "blue", 
+                  pch = 19, 
+                  phi = 20, 
+                  theta = 20, 
+                  cex = .9, 
+                  bty = "b2", 
+                  expand = .9, 
+                  col.grid = "darkblue", 
+                  col.panel = "steelblue", 
+                  colkey = T, 
+                  main = "Table 3.7 data", 
+                  xlab = "gold_price", 
+                  ylab = "nyse_index", 
+                  zlab = "ipc_index")
+```
+
+### **b) Suposing that an investment works as an inflation edge if its profitability follows the inflation rate, test the following regression models using the gold price, NYSE index and CPI index dataset.**
+
+$$gold.price = \beta_1 + \beta_2 + IPC + \mu$$
+$$NYSE.index = \beta_1 + \beta_2 + IPC + \mu$$
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Adjusting the dataset to take the profitability of each asset
+tbl_3.7 %>% 
+  mutate(gold_price_var = round(gold_price/lag(gold_price, 1, default = NA), digits = 8)-1,
+         nyse_index_var = round(nyse_index/lag(nyse_index, 1, default = NA), digits = 8)-1,
+         ipc_index_var = round(ipc_index/lag(ipc_index, 1, default = NA), digits = 8)-1) %>% 
+  filter(!is.na(gold_price_var)) -> tbl_3.7_df_adj
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+g1 <- 
+  tbl_3.7_df_adj %>% 
+  ggplot()+
+  geom_point(aes(x = ipc_index_var, y = nyse_index_var), color = graph_color)+
+  geom_abline(lty = 2, color = "dark orange", alpha = .7)+
+  geom_smooth(aes(x = ipc_index_var, y = nyse_index_var), method = "lm", formula = y ~ x)+
+  geom_hline(yintercept = 0, lty = 2, color = "red", alpha = .8)+
+  expand_limits(x = 0, y = 0)+
+  scale_x_continuous(labels = scales::percent)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  theme(title = element_text(size = 8))+
+  labs(title = "NYSE vs IPC",
+       x = "IPC index variation",
+       y = "NYSE index variation")
+
+g2 <- 
+  tbl_3.7_df_adj %>% 
+  ggplot()+
+  geom_point(aes(x = ipc_index_var, y = gold_price_var), color = graph_color)+
+  geom_abline(lty = 2, color = "dark orange", alpha = .7)+
+  geom_smooth(aes(x = ipc_index_var, y = gold_price_var), method = "lm", formula = y ~ x)+
+  geom_hline(yintercept = 0, lty = 2, color = "red", alpha = .8)+
+  expand_limits(x = 0, y = 0)+
+  scale_x_continuous(labels = scales::percent)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  theme(title = element_text(size = 8))+
+  labs(title = "Gold Price vs IPC",
+       x = "IPC index variation",
+       y = "Gold price variation")
+
+gridExtra::grid.arrange(g1,g2,ncol = 2)
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Modelo 1, gold_price ~ ipc_index
+tbl_3.7_df_adj %>% 
+  lm(formula = gold_price_var ~ ipc_index_var)
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Modelo 2, nyse_index ~ ipc_index
+tbl_3.7_df_adj %>% 
+  lm(formula = nyse_index_var ~ ipc_index_var)
+```
+
+Apparently, gold price is a better asset to edge inflation rate than the NYSE index. Althought there're two outliers on the gold price data that are impacting the model.
+
+## **Cap.4 Classical Normal Linear Regression Model**
+
+In this chapter the author gave attention to the classical normal linear regression model that introduces the concept of normal distrubutions of residuals. As was informed in previus chapter, the goal of the regression model is to estimate parameters ($\hat{\beta}$) for the populational parameter ($\beta$) and because it's an estimation based on samples, the result will vary on each model and the variation of ($\hat{\beta}$) will follow a particular distribution.
+
+Knowing that $\hat{\beta}$ should follow a particular distribution, the most desired one is the normal distribution. To afirm that the parameter follows the normal distribution, the author prove algebrically that $\hat{\beta}$ is a linear function of the residuals $\mu$. Then, having the premise that $\mu$ is normally distributed, the premise that $\hat{\beta}$ is normally distributed will be attended. The premise of $\hat{\beta}$ and $\mu$ being normally distributed will allow inferences about the population's parameters using confident intervals and test of hypothesis, two techniques developed by classical statisticians.
+
+## **Cap.5 Two variables regression model: The confidence interval and hypothesis test**
+
+After explaining the premises of the classical linear regression model on the last chapter, the authors develop in this chapter the hole regression model to draw inferences about the population parameters being studied. Before they start the explanation, they indicate that the expected value of the sample parameter will be the true value of the populational parameter. Mathematically it means that $e(\hat{\beta}) = \beta$. Also, they indicate that the reliability of the parameters created by the regression model will be measured by the **standard error**, and this metric will support the development of the confidence interval and test of hypothesis.
+
+After explaining this initial assumptions, the authors explain how to develop confidence intervals for the parameters and how to conduct the test of hypothesis.
+
+**Confidence Intervals**
+
+In this method, intervals are constructed by two distinct methods. The first is when the populational variance is known and the second is when it isn't known. For the first case, the **t distribution** is used, for the second, the **normal distribution** is used. In both cases, the interval range will be proportional to the standard error.
+
+The following equation present this method:
+
+$$\hat{\beta} +/- (z|t_\frac{\alpha}{2}  ep(\hat{\beta}))$$
+
+**Hypothesis Test**
+
+In this method, the researcher can use the confidence interval explained before or the test of significance that will create the p-value to allow the conclusion about the hypothesis.
+
+### **Exercises**
+
+### **5.3) Consult the regression model of the equation (3.7.3) to answer the following questions.**
+
+$$\hat{Y} = 14.4773 + 0.0022X_i$$
+
+$ep(\hat{\beta_1}) = 6.1523; ep(\hat{\beta_2}) = 0.00032; r² = 0.6023$ 
+
+### **a) The estimated coeficient is statistically significant at 5%? What is the Null hypothesis for this scenario?**
+
+The significance of the intercept $\beta_1$ will be validated by testing the hypothesis that it is zero. Then we have H0: $\beta_1 = 0$ and H1: $\beta_1 \neq 0$. For this test we'll generate the critical value o t (from the student distribution because the population variation is unknown) in order to calculate the p-value and make the conclusion of the hypothesis (reject H0 or fail to reject it).
+
+**critical t value** 
+
+$$\frac{\hat{\beta_1}-\beta_1}{ep(\hat{\beta_1})}$$
+
+$$\frac{14,47-0}{6.1523} = 2.35$$
+
+```{r, echo=T, include=T, message=F,warning=F}
+# p-value calculation in R
+(1-pt(2.35, 36))*2
+```
+
+Using a significance level of 5% and 34 degrees of freedom, the p-value for this critical value of t is 2.4%, lower than the established limit. In this case, the Null hypothesis can be rejected and the intercept can be considered statistically significant for the model.
+
+### **b) The coeficient for the slope is statistically significant at 5% of confidence? What is the Null hypothesis for this test?**
+
+The same approach can be used for this question. The hypothesis are H0: $\beta_2 = 0$ e H1: $\beta_2 \neq 0$. The same equations can be used, adjusting the values of the variables.
+
+**critical t value** 
+
+$$\frac{0.0022}{0.00032} = 6.88$$
+
+This critical t value will generate a pretty low p-value, thus the Null hypothesis can be rejected without concern and the conclusion that the parameter of the slope is statistically significant at 5% of confidence can be made.
+
+```{r, echo=T, include=T, message=F,warning=F}
+# p-value for the critical t value calculated before
+(1-pt(6.88,36))*2
+```
+
+### **5.5) In the theory of portfolio management there's an equation that presents the risk of an asset. This equation is a regression model that compares the return of a specific asset in a given period with the market return in the same period. The regression is presented below:**
+
+$$r_t = \alpha+\beta\times r_m+\mu_t$$
+
+$r_t =$ asset return in the period
+
+$r_m = $ market return in the period
+
+$\mu_t = $ stochastic error
+
+The $\alpha$ on this equation will represent the risk of this asset. After studying the return rate for IBM stocks, the following model was developed.
+
+$$\hat{r_t} = 0.7264+1.0598r_m$$ 
+
+With $ep(\alpha) = 0.3001$ and $ep(\beta) = 0.0728$
+
+### **a) When beta coeficient is greater than 1 the conclusion is that the asset is volatile. IBM's stock was volatile in the period?**
+
+Yes, given that $\beta$ resulted in 1.0598.
+
+### **b) The parameter of the intercept is statistically significant different of 0. What this would mean for potential investors?**
+
+The estimated intercept is 0.7264, with a standard error of 0.3001. To conclude about its significance, it's necessary to establish a Null hypothesis and a confidence level. For this case H0: $\beta_1 = 0$ and H1: $\beta_1 \neq 0$ and the confidence level will be on 5%. Then, having the data and the degrees of freedom, it's possible to calculate the critical t value and p-value to make the inference about the true value of the parameter.
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Critical t value
+t_value <- 0.7264/0.3001
+
+# Como o teste é bilateral, deve-se multiplicar o valor-p por 2
+(1-pt(t_value, 238))*2
+```
+
+The p-value of 1.62% is lower than the limit of 5%. Then, the Null hypothesis can be rejected and affirm that the intercept of the regression model is different of zero. For investors, it means that the return of the asset is 0.7264 in the studied period.
+
+### **5.9) The table 5.5 present data about teachers' earnings and students' expenditures in 1985 for 50 US states. In order to verify the relation between earnings and expenditures, the following model was sugested.**
+
+$r = \beta_1+\beta_2\times g + \mu$ 
+
+r = teachers' earnings
+g = students' expenditures
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_5.5 <- read.table(file = 
+                      paste(path,"tabela_5.5_salario_medio_anual_e_despesa_por_aluno.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ".",
+                      )
+
+# Dataset sample
+tbl_5.5[sample(nrow(tbl_5.5),10), ] %>% 
+  as.tibble()
+```
+
+### **b) Create the regression model to analyze the standard error and r².**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_5.5 %>%
+  lm(formula = wage~expense) %>% summary()
+```
+
+With the output, the following equations are generated:
+
+$$\hat{r} = \hat{\beta_1}+\hat{\beta_2}\times g+\mu$$
+
+$$\hat{r} = 12.13+0.003308\times g+\mu$$
+
+### **d) Create a confidence interval with 95% of confidence level for the second parameter of the model. Test the Null hypothesis that the true parameter is 3.**
+
+For this scenario, we have: H0: $\beta_2 = 3$ and H1: $\beta_2 \neq 3$. The equation to build the limits is:
+
+*Using the t distribution because the population variance is unknown. And $\frac{\alpha}{2}$ because is a two side test (H1: $\beta_2 \neq 3$).
+
+$$\hat{\beta_2} + t_\frac{\alpha}{2} \times ep(\hat{\beta_2})$$
+To solve this equation, it's necessary to get the critical t value obtained with the confidence level of 95% and the degrees of freedom of the model (49).
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Critical t value
+qt(0.975, df = 49)
+```
+
+Using this value with the parameter value and its standard error, it's possible to build the interval.
+
+$\hat{\beta_2} = 0.003308$
+
+$ep(\hat{\beta_2}) = 0.0003117$
+
+Critical t value = 2.009575
+
+Then, the interval is (0.00268 e 0.00393). Allowing the rejection of the Null hypothesis. 
+
+### **5.13) Return to the exercise 3.22 to use the dataset.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Amostra dos dados
+tbl_3.7[sample(nrow(tbl_1.3),10), ] %>% 
+  as.tibble()
+```
+
+### **a) Create the regression model for the two assets separately.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+# cpi ~ gold_price
+tbl_3.7 %>%
+  lm(formula = ipc_index~gold_price) %>% 
+  summary()
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+# cpi ~ NYSE index
+tbl_3.7 %>%
+  lm(formula = ipc_index~nyse_index) %>% 
+  summary()
+```
+
+### **b) The regression's residuals are normally distributed?**
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Extracting the residuals from the model
+tbl_3.7 %>%
+  lm(formula = ipc_index~gold_price) %>%
+  residuals() %>% 
+  data.frame(a = .) -> res_1
+  
+res_1 %>%
+  ggplot()+
+  geom_histogram(mapping = aes(x = a), fill = graph_color)+
+  theme_graph()+
+  labs(title = "Regression model's residuals distribution",
+       subtitle = "IPC and gold price relation")
+```
+
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Extracting the residuals from the model
+tbl_3.7 %>%
+  lm(formula = ipc_index~nyse_index) %>%
+  residuals() %>% 
+  data.frame(a = .) -> res_2
+  
+res_2 %>%
+  ggplot()+
+  geom_histogram(mapping = aes(x = a), fill = graph_color)+
+  theme_graph()+
+  labs(title = "Regression model's residuals distribution",
+       subtitle = "IPC and NYSE index relation")
+```
+
+### **c) In the gold price regression model, test the hypothesis that the second parameter is 1.**
+
+The regression model generated a $\beta_2$ of 0.1693 with a standard error of 0.06624. These values generated a t statistics of 2.556 and a p-value of 0.0157, but considering the Null hypothesis of H0: $\beta_2 = 0$. To answer the question (H0: $\beta_2 = 1$), it's necessary to put these values on the equation below to recalculate the t statistics and the p-value:
+
+$$t.value = \frac{|\hat{\beta_2} - \beta_2|}{SEM}$$
+
+$$t.value = \frac{|0.1693 - 1|}{0.06624} = 12.54076$$
+
+This value of t will generate a lower p-value, as seging below.
+
+```{r, echo=T, include=T, message=F,warning=F}
+(1-pt(12.54076, 31))*2
+```
+
+Then, the Null hypothesis H0: $\beta_2 = 1$ can be rejected, allowing the conclusion that Gold Price is not a perfect edge asset for the inflation rate.
+
+## **Cap.6 Extensions for the Linear Regression Models of two Variables**
+
+Neste capítulo, os autores relembram a ideia de que o modelo de regressão linear deve ser linear nos parâmetros ($\beta_1$ e $\beta_2$), porém não necessáriamente nas variáveis (X e Y). Desta forma, pode-se realizar manipulações em Y e X e gerar novos modelos que conseguem explicar melhor as  relações entre variáveis.
+
+O primeiro modelo tratado é o **modelo que passa pela origem**. Neste modelo, o intercepto não é utilizado e desta forma, tem-se o seguinte modelo:
+
+$$Y_i = \beta_2 X_i + \mu_i$$
+A utilização deste modelo sem intercepto pode ser recomendada pela teoria por traz das variáveis estudadas, como por exemplo no modelo CAPM, há a construção do modelo:
+
+$$ER - rf = \beta_i (ER_m - rf)$$
+Ao utilizar este modelo, os autores indicam que, diferentemente do modelo com intercepto, o valor de $\sum{\mu_i}$ pode ser diferente de zero. Também é indicado que a variável R² pode ser negativa, algo que não ocorre no modelo com intercepto. Este último fator faz com que muitos autores não apresentem o R² em modelos de regressão que passam pela origem.
+
+Por fim, os autores recomendam que só seja utilizado este modelo caso haja fundamentação teórica que o recomende. Caso contrário, mantenha o modelo com uso do intercepto visto que caso esta variável não seja significativa, o resultado dos testes estatísticos irão indicar.
+
+Dando sequência, os autores abordam o tema de **escalas e unidades** nos modelos de regressão. A ideia é identificar se mudanças de escalas irão afetar os resultados do modelo de regressão. Após alguns exemplos demonstrando esta possbilidade, tem-se a confirmação de que mudanças de escala não afetam no resultado final, apenas mudam a interpretação dos dados pelo leitor.
+
+Após explicarem sobre escalas e unidades, os autores abordam a questão das variáveis padronizadas para o modelo de regressão. Variáveis padronizadas são o Y e o X do modelo, porém transformados da seguinte forma:
+
+$$Y* = \frac{Y_j - \bar{Y}}{S_Y}$$
+
+$$X* = \frac{X_j - \bar{X}}{S_X}$$
+
+Esta padronização faz com que a média e o desvio padrão destas variáveis sejam 0 e 1 respectivamente. O uso de variáveis padronizadas no modelo de regressão é recomendado para modelos com mais de uma variável explicativa, pois os parâmetros $\beta$ serão comparados entre si para verificação de qual impacta mais no regressando Y. A interpretação será "se o regressor aumenta em 1 desvio padrão, o regressando padronizado aumenta em $\beta$ unidades de desvio padrão. 
+Após explicarem sobre variáveis padronizadas, os autores abordam o conceito de modelos logarítmicos do tipo log-log, lin-log e log-lin. Nesta etapa, há a explicação sobre o conceito de elasticidade (usada com modelos log-log) e taxa de crescimento (usada com modelos log-lin). 
+
+Por fim, é feita a explicação dos modelos recíprocos, que assumem a forma:
+
+$$Y = \beta_1 + \beta_2 (\frac{1}{X}) + \mu$$
+
+Estes modelos apresentam um valor assíntota para Y, ou seja, um valor que será assumido por Y caso X aumente indefinidamente. Este valor será de $\beta_1$.
+
+Ao final do capítulo, os autores indicam que a escolha do melhor modelo dependerá da teoria que está gerando as variáveis estudadas e do gráfico gerado por estas variáveis.
+
+### **Exercícios**
+
+### **6.14 Com base na tabela 6.7, ajuste o seguinte modelo aos dados e obtenha as estatísticas de regressão habituais. Interprete os resultados.**
+
+$$\frac{100}{100 - Y_i} = \beta_1 + \beta_2(\frac{1}{X_i})$$
+
+```{r, echo=T, include=T, message=F,warning=F}
+df <- data.frame(y = c(86, 79, 76, 69, 65, 62, 52, 51, 51, 48),
+                 x = c(3, 7, 12, 17, 25, 35, 45, 55, 70, 120))
+
+df %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = x, y = y))
+
+# Gerando o modelo de regressão recíproco
+lm <- df %>% 
+  lm(formula = "100/(100-y) ~ I(1/x)") %>% summary() %>% pander::pander()
+```
+
+Com base nos resultados, pode-se concluir que Y tenderá ao valor de 51.64 com base em valores cada vez maiores de X. Ou seja, 51.64 é o valor assintótico de Y no modelo.
+
+## **Cap.7 Multiple Regression Analysis: The Estimation Problem**
+
+### **Exercises**
+
+
+
+
+
