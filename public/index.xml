@@ -33,12 +33,40 @@ A didática do livro é muito boa, os autores conseguiram explicar os conceitos 
     </item>
     
     <item>
+      <title>Accessing World Bank database using R</title>
+      <link>/posts/2019/11/accessing-world-bank-database-using-r/</link>
+      <pubDate>Sat, 30 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/2019/11/accessing-world-bank-database-using-r/</guid>
+      <description>The World Bank was created in 1944 at the Bretton Woords Conferences and its goal is to fight poverty and inequality, throughout investments and support for developing countries. The institution’s mission can be found on its webpage and the first target seeing at the is reduce to 3% the share of people living on extreme poverty until 2030. When the World Bank was created, one of its first responsibilities was to support Europe’s infrastructure reconstrution that had been devastated by the second world war 1.</description>
+    </item>
+    
+    <item>
       <title>About</title>
       <link>/about/</link>
       <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
       <description>Hi! I&amp;rsquo;m Francisco, an Economist that enjoy working with data and statistics. Maybe that&amp;rsquo;s why i&amp;rsquo;m working with Business Intelligence and Data Warehouse since 2015. This field allows me to code (mainly in SQL, R and Python), analyse data using statistics and communicate business research throughout reports and data viz. I try keep learning different tools and models to solve business problems and increase my capacity to generate insights from data in a productive way.</description>
+    </item>
+    
+    <item>
+      <title>Connecting R on Amazon Redshift Database</title>
+      <link>/posts/2019/10/connecting-r-on-amazon-redshift-database/</link>
+      <pubDate>Mon, 28 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/2019/10/connecting-r-on-amazon-redshift-database/</guid>
+      <description>IntroductionIn this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.
+Step 1Dowload the JDBC driver from Amazon.</description>
+    </item>
+    
+    <item>
+      <title>Residual analysis in econometric models</title>
+      <link>/posts/2019/09/residual-analysis-in-econometric-models/</link>
+      <pubDate>Thu, 05 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/2019/09/residual-analysis-in-econometric-models/</guid>
+      <description>The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hipothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:</description>
     </item>
     
   </channel>

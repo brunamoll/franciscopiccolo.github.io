@@ -745,57 +745,46 @@ Then, the Null hypothesis H0: $\beta_2 = 1$ can be rejected, allowing the conclu
 
 ## **Cap.6 Extensions for the Linear Regression Models of two Variables**
 
-Neste capítulo, os autores relembram a ideia de que o modelo de regressão linear deve ser linear nos parâmetros ($\beta_1$ e $\beta_2$), porém não necessáriamente nas variáveis (X e Y). Desta forma, pode-se realizar manipulações em Y e X e gerar novos modelos que conseguem explicar melhor as  relações entre variáveis.
+In this chapter the authors present some additional regression models that will be more appropriated in some circunstances. These models are different, but the premise of linearity of parameters is unbroken.
 
-O primeiro modelo tratado é o **modelo que passa pela origem**. Neste modelo, o intercepto não é utilizado e desta forma, tem-se o seguinte modelo:
+The first model is the **regression model that pass by the origin** that has the form:
 
 $$Y_i = \beta_2 X_i + \mu_i$$
-A utilização deste modelo sem intercepto pode ser recomendada pela teoria por traz das variáveis estudadas, como por exemplo no modelo CAPM, há a construção do modelo:
+This model is recommended when the theory behind it indicates that there's no need for a intercept. Without the theory to indicate it, the authors recommend to always maintain the intercept and let the statistics inform if it will be relevant.
 
-$$ER - rf = \beta_i (ER_m - rf)$$
-Ao utilizar este modelo, os autores indicam que, diferentemente do modelo com intercepto, o valor de $\sum{\mu_i}$ pode ser diferente de zero. Também é indicado que a variável R² pode ser negativa, algo que não ocorre no modelo com intercepto. Este último fator faz com que muitos autores não apresentem o R² em modelos de regressão que passam pela origem.
-
-Por fim, os autores recomendam que só seja utilizado este modelo caso haja fundamentação teórica que o recomende. Caso contrário, mantenha o modelo com uso do intercepto visto que caso esta variável não seja significativa, o resultado dos testes estatísticos irão indicar.
-
-Dando sequência, os autores abordam o tema de **escalas e unidades** nos modelos de regressão. A ideia é identificar se mudanças de escalas irão afetar os resultados do modelo de regressão. Após alguns exemplos demonstrando esta possbilidade, tem-se a confirmação de que mudanças de escala não afetam no resultado final, apenas mudam a interpretação dos dados pelo leitor.
-
-Após explicarem sobre escalas e unidades, os autores abordam a questão das variáveis padronizadas para o modelo de regressão. Variáveis padronizadas são o Y e o X do modelo, porém transformados da seguinte forma:
+Continuing, the authors explain about scales and unities on the models, regarding the difference that can exist in scales between the dependent variables and Y. They show that the conclusion won't change because these differences, but some algebric manipulations will be need. Also, they presented the standard variables on the regression model, used to analyze the impact of each independent variable on Y and obviously indicated to regression models with multiple variables. The standard variable has the form:
 
 $$Y* = \frac{Y_j - \bar{Y}}{S_Y}$$
 
 $$X* = \frac{X_j - \bar{X}}{S_X}$$
 
-Esta padronização faz com que a média e o desvio padrão destas variáveis sejam 0 e 1 respectivamente. O uso de variáveis padronizadas no modelo de regressão é recomendado para modelos com mais de uma variável explicativa, pois os parâmetros $\beta$ serão comparados entre si para verificação de qual impacta mais no regressando Y. A interpretação será "se o regressor aumenta em 1 desvio padrão, o regressando padronizado aumenta em $\beta$ unidades de desvio padrão. 
-Após explicarem sobre variáveis padronizadas, os autores abordam o conceito de modelos logarítmicos do tipo log-log, lin-log e log-lin. Nesta etapa, há a explicação sobre o conceito de elasticidade (usada com modelos log-log) e taxa de crescimento (usada com modelos log-lin). 
-
-Por fim, é feita a explicação dos modelos recíprocos, que assumem a forma:
+The next model presented is the logarithmic regression models, like log-log, lin-log and log-lin. And the last model presented is the reciprocal model, that has the following form:
 
 $$Y = \beta_1 + \beta_2 (\frac{1}{X}) + \mu$$
+### **Exercises**
 
-Estes modelos apresentam um valor assíntota para Y, ou seja, um valor que será assumido por Y caso X aumente indefinidamente. Este valor será de $\beta_1$.
-
-Ao final do capítulo, os autores indicam que a escolha do melhor modelo dependerá da teoria que está gerando as variáveis estudadas e do gráfico gerado por estas variáveis.
-
-### **Exercícios**
-
-### **6.14 Com base na tabela 6.7, ajuste o seguinte modelo aos dados e obtenha as estatísticas de regressão habituais. Interprete os resultados.**
+### **6.14 Using the table 6.7, adjust the following model and obtain the regression statistics of it.**
 
 $$\frac{100}{100 - Y_i} = \beta_1 + \beta_2(\frac{1}{X_i})$$
 
 ```{r, echo=T, include=T, message=F,warning=F}
-df <- data.frame(y = c(86, 79, 76, 69, 65, 62, 52, 51, 51, 48),
-                 x = c(3, 7, 12, 17, 25, 35, 45, 55, 70, 120))
+df <- 
+  data.frame(y = c(86,79,76,69,65,62,52,51,51,48),
+             x = c(3,7,12,17,25,35,45,55,70,120))
 
 df %>% 
   ggplot()+
-  geom_point(mapping = aes(x = x, y = y))
+  geom_point(mapping = aes(x = x, y = y))+
+  theme_graph()+
+  labs(title = "Reciprocal regression model")
 
 # Gerando o modelo de regressão recíproco
-lm <- df %>% 
-  lm(formula = "100/(100-y) ~ I(1/x)") %>% summary() %>% pander::pander()
+df %>% 
+  lm(formula = "100/(100-y) ~ I(1/x)") %>% 
+  summary()
 ```
 
-Com base nos resultados, pode-se concluir que Y tenderá ao valor de 51.64 com base em valores cada vez maiores de X. Ou seja, 51.64 é o valor assintótico de Y no modelo.
+Given the regression output, Y will approach the value of 51.64 as the X value increases.
 
 ## **Cap.7 Multiple Regression Analysis: The Estimation Problem**
 

@@ -42,16 +42,16 @@ tbl_1.3[sample(nrow(tbl_1.3),10), ] %&gt;% as.tibble()</code></pre>
 <pre><code>## # A tibble: 10 x 8
 ##     year   usa canada japan france germany italy    uk
 ##    &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1  1985 108.   109   104.   114.     105. 122.  111. 
-##  2  2003 184    178.  119.   167.     148. 251.  213  
-##  3  1984 104.   105.  102.   108      103. 111.  105. 
-##  4  1986 110.   114.  105.   117.     105. 129.  115. 
-##  5  2000 172.   165.  121    158.     142  232.  200. 
-##  6  2002 180.   173.  119    163.     147. 244.  207  
-##  7  1991 136.   143.  115    137.     116. 170.  157. 
-##  8  1999 167.   160.  122.   155      140  226.  194. 
-##  9  1993 144.   148.  118.   143.     128. 188.  165. 
-## 10  1982  96.5   94.9  98.1   91.7     97   87.8  95.4</code></pre>
+##  1  1981  90.9   85.6  95.3   81.8    92.2  75.5  87.9
+##  2  1990 131.   136.  111.   133.    112.  160.  148. 
+##  3  2003 184    178.  119.   167.    148.  251.  213  
+##  4  2004 189.   181   119.   170.    151.  256.  219. 
+##  5  1996 157.   154.  119.   151.    135.  214.  179. 
+##  6  2001 177.   169.  120.   160.    145.  238.  204. 
+##  7  1984 104.   105.  102.   108     103.  111.  105. 
+##  8  2005 195.   185.  118.   173.    154.  261.  226. 
+##  9  1985 108.   109   104.   114.    105.  122.  111. 
+## 10  1997 160.   156.  122.   153.    138.  218.  185.</code></pre>
 </div>
 <div id="a-with-the-dataset-generate-the-inflation-rate-for-each-country." class="section level3">
 <h3><strong>a) With the dataset, generate the inflation rate for each country.</strong></h3>
@@ -99,16 +99,16 @@ tbl_1.4[sample(nrow(tbl_1.4),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 10
 ##      Ano Australia Canada China Japao Mexico Coreia.sul Suecia Suica Reino.unido
 ##    &lt;int&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;
-##  1  1992     0.735   1.21  5.52 127.   3.10        785.   5.83  1.41       0.566
-##  2  2004     0.736   1.30  8.28 108.  11.3        1145.   7.35  1.24       0.546
-##  3  1997     0.744   1.38  8.32 121.   7.92        953.   7.64  1.45       0.611
-##  4  1988     0.784   1.23  3.73 128.   2.27        735.   6.14  1.46       0.561
-##  5  2001     0.517   1.55  8.28 122.   9.34       1292.  10.3   1.69       0.695
-##  6  1987     0.701   1.33  3.73 145.   1.38        826.   6.35  1.49       0.610
-##  7  1995     0.741   1.37  8.37  94.0  6.45        773.   7.14  1.18       0.634
-##  8  2003     0.652   1.40  8.28 116.  10.8        1192.   8.08  1.34       0.612
-##  9  1985     0.700   1.37  2.94 238.   0.257       872.   8.60  2.46       0.771
-## 10  2002     0.544   1.57  8.28 125.   9.66       1250.   9.72  1.56       0.666</code></pre>
+##  1  1988     0.784   1.23  3.73 128.   2.27        735.   6.14  1.46       0.561
+##  2  1985     0.700   1.37  2.94 238.   0.257       872.   8.60  2.46       0.771
+##  3  2006     0.754   1.13  7.97 116.  10.9         954.   7.37  1.25       0.542
+##  4  1994     0.732   1.37  8.64 102.   3.38        807.   7.72  1.37       0.653
+##  5  1990     0.781   1.17  4.79 145    2.81        711.   5.92  1.39       0.561
+##  6  1995     0.741   1.37  8.37  94.0  6.45        773.   7.14  1.18       0.634
+##  7  1991     0.779   1.15  5.33 135.   3.02        737.   6.05  1.44       0.566
+##  8  1989     0.792   1.18  3.77 138.   2.46        674.   6.46  1.64       0.610
+##  9  1986     0.671   1.39  3.46 168.   0.612       885.   7.13  1.80       0.681
+## 10  2000     0.582   1.49  8.28 108.   9.46       1131.   9.17  1.69       0.660</code></pre>
 </div>
 <div id="a-graphically-represent-the-exchange-rate-evolution-throughout-time" class="section level3">
 <h3><strong>a) Graphically represent the exchange rate evolution throughout time</strong></h3>
@@ -173,16 +173,16 @@ tbl_1.6[sample(nrow(tbl_1.6),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 3
 ##    empresa      impressions investment
 ##    &lt;fct&gt;              &lt;dbl&gt;      &lt;dbl&gt;
-##  1 Kibbles_Bits         4.4        6.1
-##  2 Bud_Lite            10.4       45.6
-##  3 Crest               71.1       32.4
-##  4 Shasta              10          5.7
-##  5 Meow_Mix            12.3        7.6
-##  6 ATT_Bell            88.9      155. 
-##  7 Oscar_Meyer         23.4        9.2
-##  8 MCI                 50.7       26.9
-##  9 Levis               40.8       27  
-## 10 Miller_Lite         32.1       50.1</code></pre>
+##  1 ATT_Bell            88.9      155. 
+##  2 Oscar_Meyer         23.4        9.2
+##  3 Levis               40.8       27  
+##  4 Crest               71.1       32.4
+##  5 Burger_King         60.8       82.4
+##  6 Wendys              29.2       49.7
+##  7 Coca_Cola           78.6       40.1
+##  8 Calvin_Klein        12          5  
+##  9 Meow_Mix            12.3        7.6
+## 10 McDonald            92.4      186.</code></pre>
 </div>
 <div id="a-present-the-relation-between-impressions-and-advertising-expenditures." class="section level3">
 <h3><strong>a) Present the relation between impressions and advertising expenditures.</strong></h3>
@@ -228,16 +228,16 @@ tbl_2.7[sample(nrow(tbl_2.7),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 7
 ##      ano share_men_work_~ share_women_wor~ unemployment_men unemployment_wo~
 ##    &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-##  1  1996             74.9             59.3              5.4              5.4
-##  2  1993             75.4             57.9              7.2              6.6
-##  3  2004             73.3             59.2              5.6              5.4
-##  4  2002             74.1             59.6              5.9              5.6
-##  5  2005             73.3             59.3              5.1              5.1
-##  6  2000             74.8             59.9              3.9              4.1
-##  7  1994             75.1             58.8              6.2              6  
-##  8  2006             73.5             59.4              4.6              4.6
-##  9  1982             76.6             52.6              9.9              9.4
-## 10  1988             76.2             56.6              5.5              5.6
+##  1  1997             75               59.8              4.9              5  
+##  2  1982             76.6             52.6              9.9              9.4
+##  3  1999             74.7             60                4.1              4.3
+##  4  1986             76.3             55.3              6.9              7.1
+##  5  1981             77               52.1              7.4              7.9
+##  6  1984             76.4             53.6              7.4              7.6
+##  7  2004             73.3             59.2              5.6              5.4
+##  8  2005             73.3             59.3              5.1              5.1
+##  9  1987             76.2             56                6.2              6.2
+## 10  2000             74.8             59.9              3.9              4.1
 ## # ... with 2 more variables: avg_hourly_earning_men &lt;dbl&gt;,
 ## #   avg_hourly_earning_women &lt;dbl&gt;</code></pre>
 </div>
@@ -308,16 +308,16 @@ tbl_2.8[sample(nrow(tbl_2.8),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 2
 ##    alimento total
 ##       &lt;int&gt; &lt;int&gt;
-##  1      450   720
-##  2      325   478
-##  3      540   730
-##  4      380   785
-##  5      325   456
-##  6      446   769
-##  7      470   663
-##  8      410   635
-##  9      295   695
-## 10      220   640</code></pre>
+##  1      410   775
+##  2      430   751
+##  3      385   662
+##  4      410   610
+##  5      325   585
+##  6      450   720
+##  7      305   801
+##  8      446   769
+##  9      315   618
+## 10      500   695</code></pre>
 </div>
 <div id="a-graphically-represent-the-data-drawing-the-food-expensed-in-the-y-axis-and-total-expensed-in-the-x-axis-and-then-plot-the-regression-line." class="section level3">
 <h3><strong>a) Graphically represent the data, drawing the food expensed in the Y axis and total expensed in the X axis and then plot the regression line.</strong></h3>
@@ -365,9 +365,9 @@ df_3.18[sample(nrow(df_3.18),10), ] %&gt;%
 </thead>
 <tbody>
 <tr class="odd">
-<td>9</td>
-<td align="center">2</td>
-<td align="center">1</td>
+<td>10</td>
+<td align="center">6</td>
+<td align="center">4</td>
 </tr>
 <tr class="even">
 <td>3</td>
@@ -375,44 +375,44 @@ df_3.18[sample(nrow(df_3.18),10), ] %&gt;%
 <td align="center">8</td>
 </tr>
 <tr class="odd">
-<td>1</td>
-<td align="center">1</td>
-<td align="center">3</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td align="center">5</td>
-<td align="center">6</td>
-</tr>
-<tr class="odd">
 <td>4</td>
 <td align="center">10</td>
 <td align="center">7</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td align="center">3</td>
-<td align="center">2</td>
-</tr>
-<tr class="odd">
-<td>10</td>
-<td align="center">6</td>
-<td align="center">4</td>
-</tr>
-<tr class="even">
-<td>7</td>
-<td align="center">4</td>
-<td align="center">5</td>
-</tr>
-<tr class="odd">
 <td>5</td>
 <td align="center">9</td>
 <td align="center">9</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td align="center">4</td>
+<td align="center">5</td>
 </tr>
 <tr class="even">
 <td>8</td>
 <td align="center">8</td>
 <td align="center">10</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td align="center">5</td>
+<td align="center">6</td>
 </tr>
 </tbody>
 </table>
@@ -458,16 +458,16 @@ tbl_3.6[sample(nrow(tbl_3.6),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 5
 ##      ano prod_setor_empres~ prod_setor_n_agr~ sal_setor_empres~ sal_setor_n_agr~
 ##    &lt;int&gt;              &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;            &lt;dbl&gt;
-##  1  1977               78.5              80                87.6             88  
-##  2  1962               52.9              55.9              64.6             66.7
-##  3  2003              129.              128               118.             117. 
-##  4  1986               89.7              90.2              94.9             95.2
+##  1  1994              101.              102.               99               99.1
+##  2  1990               94.4              94.5              96.2             96.1
+##  3  1986               89.7              90.2              94.9             95.2
+##  4  1995              102.              102                98.7             98.8
 ##  5  1964               56.8              59.6              67.7             69.3
-##  6  1965               58.8              61.4              69.1             70.5
-##  7  1975               74.8              76.2              84.1             84.5
-##  8  1996              104.              105.               99.4             99.4
-##  9  1976               77.1              78.7              86.4             86.6
-## 10  1970               66.3              68                78.8             79.2</code></pre>
+##  6  1981               80.8              81.7              89.3             89.8
+##  7  1985               87.1              87.5              92               92.2
+##  8  1976               77.1              78.7              86.4             86.6
+##  9  1999              113.              112.              108              108. 
+## 10  2000              116.              116.              112              112.</code></pre>
 </div>
 <div id="a-graphically-represent-separetely-y-versus-x-for-the-two-sectors-of-the-economy." class="section level3">
 <h3><strong>a) Graphically represent separetely Y versus X for the two sectors of the economy.</strong></h3>
@@ -529,16 +529,16 @@ tbl_3.7[sample(nrow(tbl_3.7),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 4
 ##      ano gold_price nyse_index ipc_index
 ##    &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
-##  1  2003       363.      5447.     184  
-##  2  1982       376.       729.      96.5
-##  3  1984       360.       977.     104. 
-##  4  1981       460.       783.      90.9
-##  5  1999       279.      6547.     167. 
-##  6  1974       159.       464.      49.3
-##  7  2006       603.      8358.     202. 
-##  8  1993       360.      2639.     144. 
-##  9  1975       161.       484.      53.8
-## 10  1979       307.       617.      72.6</code></pre>
+##  1  1979       307.       617.      72.6
+##  2  1978       193.       568.      65.2
+##  3  1995       384.      3079.     152. 
+##  4  1984       360.       977.     104. 
+##  5  1982       376.       729.      96.5
+##  6  2000       279.      6806.     172. 
+##  7  2003       363.      5447.     184  
+##  8  1986       368.      1438.     110. 
+##  9  1999       279.      6547.     167. 
+## 10  1991       362.      2182.     136.</code></pre>
 </div>
 <div id="a-plot-the-gold-price-nyse-index-and-cpi-index-in-a-dispersion-graph." class="section level3">
 <h3><strong>a) Plot the gold price, NYSE index and CPI index in a dispersion graph.</strong></h3>
@@ -724,16 +724,16 @@ tbl_5.5[sample(nrow(tbl_5.5),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 3
 ##      obs  wage expense
 ##    &lt;int&gt; &lt;dbl&gt;   &lt;int&gt;
-##  1    48  25.8    4123
-##  2    25  23.4    3594
-##  3    40  21.0    2509
-##  4    22  24.6    4517
-##  5    44  24.6    2829
-##  6    37  21.4    2752
-##  7    19  18.1    2967
-##  8    51  25.8    3766
-##  9    16  21.7    3568
-## 10    30  22.2    3731</code></pre>
+##  1    45  22.3    2297
+##  2    42  25.9    4042
+##  3    28  21.6    2920
+##  4    37  21.4    2752
+##  5    18  20.8    3059
+##  6     1  19.6    3346
+##  7    20  20.9    3285
+##  8    38  25.2    3429
+##  9    43  22.6    3402
+## 10    10  24.5    3547</code></pre>
 </div>
 <div id="b-create-the-regression-model-to-analyze-the-standard-error-and-r²." class="section level3">
 <h3><strong>b) Create the regression model to analyze the standard error and r².</strong></h3>
@@ -784,16 +784,16 @@ tbl_3.7[sample(nrow(tbl_1.3),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 4
 ##      ano gold_price nyse_index ipc_index
 ##    &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
-##  1  1989       381.      1903.     124  
-##  2  1976       125.       576.      56.9
-##  3  1980       613.       720.      82.4
-##  4  1978       193.       568.      65.2
-##  5  1999       279.      6547.     167. 
-##  6  1987       446.      1710.     114. 
-##  7  1975       161.       484.      53.8
-##  8  1982       376.       729.      96.5
-##  9  1996       388.      3787.     157. 
-## 10  1979       307.       617.      72.6</code></pre>
+##  1  1977       158.       568.      60.6
+##  2  1983       424.       980.      99.6
+##  3  1990       384.      1939.     131. 
+##  4  1987       446.      1710.     114. 
+##  5  1992       344.      2422.     140. 
+##  6  1982       376.       729.      96.5
+##  7  1997       331.      4827.     160. 
+##  8  1984       360.       977.     104. 
+##  9  1998       294.      5818.     163  
+## 10  1988       437.      1585.     118.</code></pre>
 </div>
 <div id="a-create-the-regression-model-for-the-two-assets-separately." class="section level3">
 <h3><strong>a) Create the regression model for the two assets separately.</strong></h3>
@@ -884,40 +884,52 @@ res_2 %&gt;%
 </div>
 <div id="cap.6-extensions-for-the-linear-regression-models-of-two-variables" class="section level2">
 <h2><strong>Cap.6 Extensions for the Linear Regression Models of two Variables</strong></h2>
-<p>Neste capítulo, os autores relembram a ideia de que o modelo de regressão linear deve ser linear nos parâmetros (<span class="math inline">\(\beta_1\)</span> e <span class="math inline">\(\beta_2\)</span>), porém não necessáriamente nas variáveis (X e Y). Desta forma, pode-se realizar manipulações em Y e X e gerar novos modelos que conseguem explicar melhor as relações entre variáveis.</p>
-<p>O primeiro modelo tratado é o <strong>modelo que passa pela origem</strong>. Neste modelo, o intercepto não é utilizado e desta forma, tem-se o seguinte modelo:</p>
+<p>In this chapter the authors present some additional regression models that will be more appropriated in some circunstances. These models are different, but the premise of linearity of parameters is unbroken.</p>
+<p>The first model is the <strong>regression model that pass by the origin</strong> that has the form:</p>
 <p><span class="math display">\[Y_i = \beta_2 X_i + \mu_i\]</span>
-A utilização deste modelo sem intercepto pode ser recomendada pela teoria por traz das variáveis estudadas, como por exemplo no modelo CAPM, há a construção do modelo:</p>
-<p><span class="math display">\[ER - rf = \beta_i (ER_m - rf)\]</span>
-Ao utilizar este modelo, os autores indicam que, diferentemente do modelo com intercepto, o valor de <span class="math inline">\(\sum{\mu_i}\)</span> pode ser diferente de zero. Também é indicado que a variável R² pode ser negativa, algo que não ocorre no modelo com intercepto. Este último fator faz com que muitos autores não apresentem o R² em modelos de regressão que passam pela origem.</p>
-<p>Por fim, os autores recomendam que só seja utilizado este modelo caso haja fundamentação teórica que o recomende. Caso contrário, mantenha o modelo com uso do intercepto visto que caso esta variável não seja significativa, o resultado dos testes estatísticos irão indicar.</p>
-<p>Dando sequência, os autores abordam o tema de <strong>escalas e unidades</strong> nos modelos de regressão. A ideia é identificar se mudanças de escalas irão afetar os resultados do modelo de regressão. Após alguns exemplos demonstrando esta possbilidade, tem-se a confirmação de que mudanças de escala não afetam no resultado final, apenas mudam a interpretação dos dados pelo leitor.</p>
-<p>Após explicarem sobre escalas e unidades, os autores abordam a questão das variáveis padronizadas para o modelo de regressão. Variáveis padronizadas são o Y e o X do modelo, porém transformados da seguinte forma:</p>
+This model is recommended when the theory behind it indicates that there’s no need for a intercept. Without the theory to indicate it, the authors recommend to always maintain the intercept and let the statistics inform if it will be relevant.</p>
+<p>Continuing, the authors explain about scales and unities on the models, regarding the difference that can exist in scales between the dependent variables and Y. They show that the conclusion won’t change because these differences, but some algebric manipulations will be need. Also, they presented the standard variables on the regression model, used to analyze the impact of each independent variable on Y and obviously indicated to regression models with multiple variables. The standard variable has the form:</p>
 <p><span class="math display">\[Y* = \frac{Y_j - \bar{Y}}{S_Y}\]</span></p>
 <p><span class="math display">\[X* = \frac{X_j - \bar{X}}{S_X}\]</span></p>
-<p>Esta padronização faz com que a média e o desvio padrão destas variáveis sejam 0 e 1 respectivamente. O uso de variáveis padronizadas no modelo de regressão é recomendado para modelos com mais de uma variável explicativa, pois os parâmetros <span class="math inline">\(\beta\)</span> serão comparados entre si para verificação de qual impacta mais no regressando Y. A interpretação será "se o regressor aumenta em 1 desvio padrão, o regressando padronizado aumenta em <span class="math inline">\(\beta\)</span> unidades de desvio padrão.
-Após explicarem sobre variáveis padronizadas, os autores abordam o conceito de modelos logarítmicos do tipo log-log, lin-log e log-lin. Nesta etapa, há a explicação sobre o conceito de elasticidade (usada com modelos log-log) e taxa de crescimento (usada com modelos log-lin).</p>
-<p>Por fim, é feita a explicação dos modelos recíprocos, que assumem a forma:</p>
-<p><span class="math display">\[Y = \beta_1 + \beta_2 (\frac{1}{X}) + \mu\]</span></p>
-<p>Estes modelos apresentam um valor assíntota para Y, ou seja, um valor que será assumido por Y caso X aumente indefinidamente. Este valor será de <span class="math inline">\(\beta_1\)</span>.</p>
-<p>Ao final do capítulo, os autores indicam que a escolha do melhor modelo dependerá da teoria que está gerando as variáveis estudadas e do gráfico gerado por estas variáveis.</p>
-<div id="exercícios" class="section level3">
-<h3><strong>Exercícios</strong></h3>
-</div>
-<div id="com-base-na-tabela-6.7-ajuste-o-seguinte-modelo-aos-dados-e-obtenha-as-estatísticas-de-regressão-habituais.-interprete-os-resultados." class="section level3">
-<h3><strong>6.14 Com base na tabela 6.7, ajuste o seguinte modelo aos dados e obtenha as estatísticas de regressão habituais. Interprete os resultados.</strong></h3>
+<p>The next model presented is the logarithmic regression models, like log-log, lin-log and log-lin. And the last model presented is the reciprocal model, that has the following form:</p>
+<p><span class="math display">\[Y = \beta_1 + \beta_2 (\frac{1}{X}) + \mu\]</span>
+### <strong>Exercises</strong></p>
+<div id="using-the-table-6.7-adjust-the-following-model-and-obtain-the-regression-statistics-of-it." class="section level3">
+<h3><strong>6.14 Using the table 6.7, adjust the following model and obtain the regression statistics of it.</strong></h3>
 <p><span class="math display">\[\frac{100}{100 - Y_i} = \beta_1 + \beta_2(\frac{1}{X_i})\]</span></p>
-<pre class="r"><code>df &lt;- data.frame(y = c(86, 79, 76, 69, 65, 62, 52, 51, 51, 48),
-                 x = c(3, 7, 12, 17, 25, 35, 45, 55, 70, 120))
+<pre class="r"><code>df &lt;- 
+  data.frame(y = c(86,79,76,69,65,62,52,51,51,48),
+             x = c(3,7,12,17,25,35,45,55,70,120))
 
 df %&gt;% 
   ggplot()+
-  geom_point(mapping = aes(x = x, y = y))</code></pre>
+  geom_point(mapping = aes(x = x, y = y))+
+  theme_graph()+
+  labs(title = &quot;Reciprocal regression model&quot;)</code></pre>
 <p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <pre class="r"><code># Gerando o modelo de regressão recíproco
-lm &lt;- df %&gt;% 
-  lm(formula = &quot;100/(100-y) ~ I(1/x)&quot;) %&gt;% summary() %&gt;% pander::pander()</code></pre>
-<p>Com base nos resultados, pode-se concluir que Y tenderá ao valor de 51.64 com base em valores cada vez maiores de X. Ou seja, 51.64 é o valor assintótico de Y no modelo.</p>
+df %&gt;% 
+  lm(formula = &quot;100/(100-y) ~ I(1/x)&quot;) %&gt;% 
+  summary()</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = &quot;100/(100-y) ~ I(1/x)&quot;, data = .)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.34675 -0.31185 -0.07989  0.18582  0.74362 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   2.0675     0.1596   12.96 1.19e-06 ***
+## I(1/x)       16.2662     1.3232   12.29 1.78e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3952 on 8 degrees of freedom
+## Multiple R-squared:  0.9497, Adjusted R-squared:  0.9434 
+## F-statistic: 151.1 on 1 and 8 DF,  p-value: 1.783e-06</code></pre>
+<p>Given the regression output, Y will approach the value of 51.64 as the X value increases.</p>
 </div>
 </div>
 <div id="cap.7-multiple-regression-analysis-the-estimation-problem" class="section level2">
