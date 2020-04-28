@@ -88,10 +88,6 @@ disableHugoGeneratorInject = false
 
     [params.logo]
     logoText  = "Home"
-    url       = "logo_image.png"
-    width     = 150
-    height    = 150
-    alt       = "Logo"
     # logoCursorColor    = "#67a2c9"
     logoCursorAnimate  = "1.3s"
 
