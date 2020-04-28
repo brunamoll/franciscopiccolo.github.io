@@ -12,152 +12,60 @@ output:
 
 <div id="overview" class="section level2">
 <h2><strong>Overview</strong></h2>
-<p>Este livro é a típica “Bíblia” sobre um determinado assunto (i.e. Econometria). Não que não existam outros que também possam ser considerados da mesma forma, porém este é o que vejo com frequência sendo recomendado na parte de bibliografias da matéria de econometria de diversos cursos. Neste livro, os autores buscam explicar a modelagem econométrica de maneira simples e completa, partindo da definição dos termos inerentes à área até os modelos um pouco mais complexos. Ao meu ver, este é um livro de nível básico e intermediário, podendo ser lido por quem ainda não conhece nada sobre econometria.</p>
-<p>Logo no início, os autores buscam estabelecer um conceito sobre o que é econometria, chegando as seguintes definições:</p>
-<ul>
-<li><p><input type="checkbox" disabled="" checked="" />
-<strong>Econometria é a aplicação de estatística a dados econômicos</strong></p></li>
-<li><p><input type="checkbox" disabled="" checked="" />
-<strong>Econometria é a análise quantitativa de fenômenos econômicos</strong></p></li>
-</ul>
-<p>Também afirmam que a metodologia econométrica se baseia em (i) estabelecimento de uma hipótese; (ii) especificação de um modelo matemático; (iii) obtenção de dados; (iv) estimativa de parâmetros; (v) teste de hipótese; (vi) validção do modelo.</p>
-<p>Neste post (como em todos os posts que estão na categoria <strong>library</strong>), irei resumir os capítulos deste livro e resolver alguns exercícios, visando auxiliar pessoas que estejam lendo ele também, pois poderão encontrar a resolução dos exercícios e também a base de dados usadas no meu repositório do git hub.</p>
+<p>This book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economics grad students. For its importance, in this post I’ll present a brief summary of each chapter and solve some exercises (because the book doesn’t present the answer for the problems). Also, I’ll release the datasets used on the problems on my <a href="https://github.com/FranciscoPiccolo">github</a> account.</p>
+<p>The authors aimed to build a material that would serve all levels of students that want learn econometrics. The initial chapters describe the main assumptions of econometric models and simple regression equations and problems. All chapters are embedded with examples to illustrate the main findings. To beggin this summary, lets see what the authors say about the subject:</p>
+<blockquote>
+<p>“Econometry is the application of statistics in economic data”.</p>
+</blockquote>
+<blockquote>
+<p>“Econometry is the quantiative analysis of economic phenomena”.</p>
+</blockquote>
 <p><img src="/images/2020-03-03_econometria_basica.png" /></p>
 </div>
-<div id="cap.1-a-natureza-da-análise-de-regressão" class="section level2">
-<h2><strong>Cap.1 A natureza da análise de regressão</strong></h2>
-<div id="resumo" class="section level3">
-<h3><strong>Resumo</strong></h3>
-<p>Este é um capítulo introdutório que mostra estabelece alguns pilares da análise de regressão. Primeiro é feito uma definição para o termo regressão, que segundo os autores é <em>o estudo da dependência de uma variável em relação a uma ou mais variáveis explicativas.</em> Também tem-se estabelecido o objetivo da regressão, que é estimar o valor médio da variável dependente usando os valores conhecidos da variável explicativa.</p>
-<p>Na sequência, os autores mostram a diferença de relações estatísticas e relações determinísticas, mostrando cenários para cada relação e indicando o por quê da regressão ser tão importante para relações estatísticas. Também é indicada a diferença entre regressão e causação e regressão e correlação.</p>
-<p>Por fim, os autores comentam sobre os tipos de dados normalmente presentes nos modelos econométricos. Estes dados são <strong>séries temporais</strong> e <strong>corte transversal</strong>.</p>
+<div id="cap.1-the-nature-of-regression-analysis" class="section level1">
+<h1><strong>Cap.1 The nature of regression analysis</strong></h1>
+<p>This chapter presents some foundations of regression analysis. First it’s defined the concept and then its goals. Accordingly with the authors, regression is the study of the dependence of one variable in relation to one or more independent variables.</p>
+<p>Following, the authors indicate the difference between statistical relations and deterinistic relations, presenting some scenrios for each one. Also, it’s explained the difference between regression and causality and between regression and correlation.</p>
+<p>Now let’s see some exercised presented in this chapter.</p>
+<div id="exercised" class="section level3">
+<h3><strong>Exercised</strong></h3>
 </div>
-<div id="exercícios" class="section level3">
-<h3><strong>Exercícios</strong></h3>
-</div>
-<div id="traga-os-dados-da-tabela-1.3-sobre-o-índice-de-preço-ao-consumidor-ipc-para-responder-as-alternativas." class="section level3">
-<h3><strong>1.1) Traga os dados da tabela 1.3 sobre o índice de preço ao consumidor (IPC) para responder as alternativas.</strong></h3>
-<pre class="r"><code>tbl_1.3 &lt;- read.table(file = paste(path,&quot;tabela_1.3_IPC.txt&quot;,sep = &quot;&quot;),
+<div id="bring-the-dataset-from-table-1.3-related-to-consumer-price-index-to-answer-the-following-questions" class="section level3">
+<h3><strong>1.1) Bring the dataset from table 1.3 related to consumer price index to answer the following questions</strong></h3>
+<pre class="r"><code>tbl_1.3 &lt;- read.table(file = paste(path,&quot;tabela_1.3_IPC.txt&quot;,
+                                   sep = &quot;&quot;),
                       sep = &quot; &quot;,
                       header = T, 
                       dec = &quot;,&quot;)
 
-# Amostra aleatória dos dados
+# Random sample of the dataset
 tbl_1.3[sample(nrow(tbl_1.3),10), ] %&gt;% pander::pander()</code></pre>
 <table>
 <colgroup>
-<col width="10%" />
-<col width="8%" />
-<col width="9%" />
-<col width="10%" />
+<col width="11%" />
 <col width="9%" />
 <col width="10%" />
 <col width="11%" />
-<col width="9%" />
-<col width="20%" />
+<col width="10%" />
+<col width="11%" />
+<col width="13%" />
+<col width="10%" />
+<col width="10%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="center"> </th>
-<th align="center">Ano</th>
-<th align="center">EUA</th>
-<th align="center">Canada</th>
-<th align="center">Japan</th>
-<th align="center">France</th>
-<th align="center">Germany</th>
-<th align="center">Italy</th>
-<th align="center">United.Kingdon</th>
+<th align="center">year</th>
+<th align="center">usa</th>
+<th align="center">canada</th>
+<th align="center">japan</th>
+<th align="center">france</th>
+<th align="center">germany</th>
+<th align="center">italy</th>
+<th align="center">uk</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="center"><strong>26</strong></td>
-<td align="center">2005</td>
-<td align="center">195.3</td>
-<td align="center">184.9</td>
-<td align="center">118.3</td>
-<td align="center">173.2</td>
-<td align="center">153.7</td>
-<td align="center">261.3</td>
-<td align="center">225.6</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>16</strong></td>
-<td align="center">1995</td>
-<td align="center">152.4</td>
-<td align="center">151.4</td>
-<td align="center">119.2</td>
-<td align="center">148.4</td>
-<td align="center">133.3</td>
-<td align="center">205.6</td>
-<td align="center">175.2</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>17</strong></td>
-<td align="center">1996</td>
-<td align="center">156.9</td>
-<td align="center">153.8</td>
-<td align="center">119.3</td>
-<td align="center">151.4</td>
-<td align="center">135.3</td>
-<td align="center">213.8</td>
-<td align="center">179.4</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>8</strong></td>
-<td align="center">1987</td>
-<td align="center">113.6</td>
-<td align="center">118.4</td>
-<td align="center">104.9</td>
-<td align="center">121.1</td>
-<td align="center">104.9</td>
-<td align="center">135.1</td>
-<td align="center">119.7</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>6</strong></td>
-<td align="center">1985</td>
-<td align="center">107.6</td>
-<td align="center">109</td>
-<td align="center">104.2</td>
-<td align="center">114.3</td>
-<td align="center">104.8</td>
-<td align="center">121.7</td>
-<td align="center">111.1</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>22</strong></td>
-<td align="center">2001</td>
-<td align="center">177.1</td>
-<td align="center">169.1</td>
-<td align="center">120.1</td>
-<td align="center">160.2</td>
-<td align="center">144.8</td>
-<td align="center">238.3</td>
-<td align="center">203.6</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>14</strong></td>
-<td align="center">1993</td>
-<td align="center">144.5</td>
-<td align="center">147.9</td>
-<td align="center">118.5</td>
-<td align="center">143.4</td>
-<td align="center">127.6</td>
-<td align="center">187.7</td>
-<td align="center">165.3</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>18</strong></td>
-<td align="center">1997</td>
-<td align="center">160.5</td>
-<td align="center">156.3</td>
-<td align="center">121.5</td>
-<td align="center">153.2</td>
-<td align="center">137.8</td>
-<td align="center">218.2</td>
-<td align="center">185.1</td>
-</tr>
 <tr class="odd">
 <td align="center"><strong>2</strong></td>
 <td align="center">1981</td>
@@ -170,39 +78,127 @@ tbl_1.3[sample(nrow(tbl_1.3),10), ] %&gt;% pander::pander()</code></pre>
 <td align="center">87.9</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>10</strong></td>
-<td align="center">1989</td>
-<td align="center">124</td>
-<td align="center">129.3</td>
-<td align="center">108</td>
-<td align="center">128.7</td>
-<td align="center">109.2</td>
-<td align="center">150.7</td>
-<td align="center">135.4</td>
+<td align="center"><strong>24</strong></td>
+<td align="center">2003</td>
+<td align="center">184</td>
+<td align="center">177.7</td>
+<td align="center">118.7</td>
+<td align="center">166.7</td>
+<td align="center">148.3</td>
+<td align="center">250.8</td>
+<td align="center">213</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>3</strong></td>
+<td align="center">1982</td>
+<td align="center">96.5</td>
+<td align="center">94.9</td>
+<td align="center">98.1</td>
+<td align="center">91.7</td>
+<td align="center">97</td>
+<td align="center">87.8</td>
+<td align="center">95.4</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>7</strong></td>
+<td align="center">1986</td>
+<td align="center">109.6</td>
+<td align="center">113.5</td>
+<td align="center">104.9</td>
+<td align="center">117.2</td>
+<td align="center">104.6</td>
+<td align="center">128.9</td>
+<td align="center">114.9</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>23</strong></td>
+<td align="center">2002</td>
+<td align="center">179.9</td>
+<td align="center">172.9</td>
+<td align="center">119</td>
+<td align="center">163.3</td>
+<td align="center">146.7</td>
+<td align="center">244.3</td>
+<td align="center">207</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>20</strong></td>
+<td align="center">1999</td>
+<td align="center">166.6</td>
+<td align="center">160.5</td>
+<td align="center">121.8</td>
+<td align="center">155</td>
+<td align="center">140</td>
+<td align="center">226.2</td>
+<td align="center">194.3</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>1</strong></td>
+<td align="center">1980</td>
+<td align="center">82.4</td>
+<td align="center">76.1</td>
+<td align="center">91</td>
+<td align="center">72.2</td>
+<td align="center">86.7</td>
+<td align="center">63.9</td>
+<td align="center">78.5</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>11</strong></td>
+<td align="center">1990</td>
+<td align="center">130.7</td>
+<td align="center">135.5</td>
+<td align="center">111.4</td>
+<td align="center">132.9</td>
+<td align="center">112.2</td>
+<td align="center">160.4</td>
+<td align="center">148.2</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>26</strong></td>
+<td align="center">2005</td>
+<td align="center">195.3</td>
+<td align="center">184.9</td>
+<td align="center">118.3</td>
+<td align="center">173.2</td>
+<td align="center">153.7</td>
+<td align="center">261.3</td>
+<td align="center">225.6</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>13</strong></td>
+<td align="center">1992</td>
+<td align="center">140.3</td>
+<td align="center">145.3</td>
+<td align="center">117</td>
+<td align="center">140.4</td>
+<td align="center">122.2</td>
+<td align="center">179.5</td>
+<td align="center">162.7</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="a-com-base-nos-dados-forneceidos-calcule-a-taxa-de-inflação-de-cada-país" class="section level3">
-<h3><strong>a) Com base nos dados forneceidos, calcule a taxa de inflação de cada país:</strong></h3>
-<pre class="r"><code># Taxa de inflação (1985 = 100, até 2005)
-ipc_total &lt;- tbl_1.3 %&gt;% 
-  filter(Ano %in% c(1985,2005))
+<div id="a-with-the-dataset-generate-the-inflation-rate-for-each-country." class="section level3">
+<h3><strong>a) With the dataset, generate the inflation rate for each country.</strong></h3>
+<pre class="r"><code># Inflation rate (1985 = 100)
+cpi_index &lt;- tbl_1.3 %&gt;% 
+  filter(year %in% c(1985,2005))
 
-ipc_total &lt;- ipc_total[2,2:8]-ipc_total[1,2:8]
+cpi_index &lt;- cpi_index[2,2:8]-cpi_index[1,2:8]
 
-knitr::kable(ipc_total, align = &quot;c&quot;)</code></pre>
+knitr::kable(cpi_index, align = &quot;c&quot;)</code></pre>
 <table>
 <thead>
 <tr class="header">
 <th></th>
-<th align="center">EUA</th>
-<th align="center">Canada</th>
-<th align="center">Japan</th>
-<th align="center">France</th>
-<th align="center">Germany</th>
-<th align="center">Italy</th>
-<th align="center">United.Kingdon</th>
+<th align="center">usa</th>
+<th align="center">canada</th>
+<th align="center">japan</th>
+<th align="center">france</th>
+<th align="center">germany</th>
+<th align="center">italy</th>
+<th align="center">uk</th>
 </tr>
 </thead>
 <tbody>
@@ -219,11 +215,11 @@ knitr::kable(ipc_total, align = &quot;c&quot;)</code></pre>
 </tbody>
 </table>
 </div>
-<div id="b-represente-graficamente-a-taxa-de-inflação-de-cada-país" class="section level3">
-<h3><strong>b) Represente graficamente a taxa de inflação de cada país:</strong></h3>
+<div id="b-graphically-represent-the-inflation-rate-of-each-country." class="section level3">
+<h3><strong>b) Graphically represent the inflation rate of each country.</strong></h3>
 <pre class="r"><code>tbl_1.3 %&gt;%
   tidyr::gather(&quot;campo&quot;, &quot;valor&quot;, 2:8) %&gt;% 
-  ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
+  ggplot(aes(x = year, y = valor, group = campo, color = campo))+
   geom_line()+
   theme_graph()+
   labs(title = &quot;Anual inflation for selected countries&quot;,
@@ -231,88 +227,175 @@ knitr::kable(ipc_total, align = &quot;c&quot;)</code></pre>
        y = &quot;&quot;)</code></pre>
 <p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
-<div id="a-usando-a-tabela-1.3-represente-as-taxas-de-inflação-do-canará-frança-alemanha-e-itália-japão-e-reino-unido-em-relação-à-taxa-do-eua." class="section level3">
-<h3><strong>1.2) a) Usando a tabela 1.3, represente as taxas de inflação do Canará, França, Alemanha e Itália, Japão e Reino Unido em relação à taxa do EUA.</strong></h3>
-<pre class="r"><code>can &lt;- tbl_1.3 %&gt;% 
-  ggplot(aes(x = EUA, y = Canada))+
-  geom_point(color = graph_color)+
-  geom_abline(intercept = 0, color = &quot;red&quot;, lty = 2)+
-  theme_graph()
-
-fra &lt;- tbl_1.3 %&gt;% 
-  ggplot(aes(x = EUA, y = France))+
-  geom_point(color = graph_color)+
-  geom_abline(intercept = 0, color = &quot;red&quot;, lty = 2)+
-  theme_graph()
-
-ale &lt;- tbl_1.3 %&gt;% 
-  ggplot(aes(x = EUA, y = Germany))+
-  geom_point(color = graph_color)+
-  geom_abline(intercept = 0, color = &quot;red&quot;, lty = 2)+
-  theme_graph()
-
-ita &lt;- tbl_1.3 %&gt;% 
-  ggplot(aes(x = EUA, y = Italy))+
-  geom_point(color = graph_color)+
-  geom_abline(intercept = 0, color = &quot;red&quot;, lty = 2)+
-  theme_graph()
-
-jap &lt;- tbl_1.3 %&gt;% 
-  ggplot(aes(x = EUA, y = Japan))+
-  geom_point(color = graph_color)+
-  geom_abline(intercept = 0, color = &quot;red&quot;, lty = 2)+
-  theme_graph()
-
-rei &lt;- tbl_1.3 %&gt;% 
-  ggplot(aes(x = EUA, y = United.Kingdon))+
-  geom_point(color = graph_color)+
-  geom_abline(intercept = 0, color = &quot;red&quot;, lty = 2)+
-  theme_graph()
-
-
-gridExtra::grid.arrange(can,fra,ale,ita,jap,rei,nrow = 2,ncol=3, top = textGrob(&quot;Inflation rate, country vs USA&quot;))</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-</div>
-<div id="a-tabela-abaixo-apresenta-as-taxas-de-câmbio-em-sete-países-industrializados-entre-1985-e-2006." class="section level3">
-<h3><strong>1.3) A tabela abaixo apresenta as taxas de câmbio em sete países industrializados, entre 1985 e 2006.</strong></h3>
+<div id="the-table-1.4-represent-that-exchange-rate-for-7-industrialized-countries-between-1985-to-2006." class="section level3">
+<h3><strong>1.3) The table 1.4 represent that exchange rate for 7 industrialized countries between 1985 to 2006.</strong></h3>
 <pre class="r"><code>tbl_1.4 &lt;- read.table(file = paste(path,&quot;tabela_1.4_cambio.txt&quot;,sep = &quot;&quot;),
                       sep = &quot; &quot;,
                       header = T, 
                       dec = &quot;,&quot;,
                       )
   
-# Ajustando a coluna do reino unido (1/taxa)
+# Adjusting UK variable
 tbl_1.4 &lt;- 
   tbl_1.4 %&gt;% 
   mutate(Reino.unido = 1/Reino.unido)
 
-# Amostra aleatório de 10 valores da tabela
-tbl_1.4[sample(nrow(tbl_1.4),10), ]</code></pre>
-<pre><code>##     Ano Australia Canada  China  Japao Mexico Coreia.sul Suecia  Suica
-## 12 1996    0.7828 1.3638 8.3389 108.78  7.600     805.00 6.7082 1.2361
-## 4  1988    0.7841 1.2306 3.7314 128.17  2.273     734.52 6.1370 1.4643
-## 11 1995    0.7407 1.3725 8.3700  93.96  6.447     772.69 7.1406 1.1812
-## 3  1987    0.7014 1.3259 3.7314 144.60  1.378     826.16 6.3469 1.4918
-## 15 1999    0.6454 1.4858 8.2783 113.73  9.553    1189.84 8.2740 1.5045
-## 13 1997    0.7437 1.3849 8.3193 121.06  7.918     953.19 7.6446 1.4514
-## 10 1994    0.7316 1.3664 8.6397 102.18  3.385     806.93 7.7161 1.3667
-## 2  1986    0.6709 1.3896 3.4616 168.35  0.612     884.60 7.1273 1.7979
-## 5  1989    0.7919 1.1842 3.7673 138.07  2.461     674.13 6.4559 1.6369
-## 6  1990    0.7807 1.1668 4.7921 145.00  2.813     710.64 5.9231 1.3901
-##    Reino.unido
-## 12   0.6407381
-## 4    0.5613878
-## 11   0.6335128
-## 3    0.6098305
-## 15   0.6183527
-## 13   0.6106497
-## 10   0.6527841
-## 2    0.6813381
-## 5    0.6104261
-## 6    0.5605067</code></pre>
+# Random sample of the dataset
+tbl_1.4[sample(nrow(tbl_1.4),10), ] %&gt;% 
+  knitr::kable(align = &quot;c&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Ano</th>
+<th align="center">Australia</th>
+<th align="center">Canada</th>
+<th align="center">China</th>
+<th align="center">Japao</th>
+<th align="center">Mexico</th>
+<th align="center">Coreia.sul</th>
+<th align="center">Suecia</th>
+<th align="center">Suica</th>
+<th align="center">Reino.unido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>22</td>
+<td align="center">2006</td>
+<td align="center">0.7535</td>
+<td align="center">1.1340</td>
+<td align="center">7.9723</td>
+<td align="center">116.31</td>
+<td align="center">10.906</td>
+<td align="center">954.32</td>
+<td align="center">7.3718</td>
+<td align="center">1.2532</td>
+<td align="center">0.5424759</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td align="center">2004</td>
+<td align="center">0.7365</td>
+<td align="center">1.3017</td>
+<td align="center">8.2768</td>
+<td align="center">108.15</td>
+<td align="center">11.290</td>
+<td align="center">1145.24</td>
+<td align="center">7.3480</td>
+<td align="center">1.2428</td>
+<td align="center">0.5455537</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td align="center">2000</td>
+<td align="center">0.5815</td>
+<td align="center">1.4855</td>
+<td align="center">8.2784</td>
+<td align="center">107.80</td>
+<td align="center">9.459</td>
+<td align="center">1130.90</td>
+<td align="center">9.1735</td>
+<td align="center">1.6904</td>
+<td align="center">0.6598047</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td align="center">2003</td>
+<td align="center">0.6524</td>
+<td align="center">1.4008</td>
+<td align="center">8.2772</td>
+<td align="center">115.94</td>
+<td align="center">10.793</td>
+<td align="center">1192.08</td>
+<td align="center">8.0787</td>
+<td align="center">1.3450</td>
+<td align="center">0.6117330</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td align="center">1995</td>
+<td align="center">0.7407</td>
+<td align="center">1.3725</td>
+<td align="center">8.3700</td>
+<td align="center">93.96</td>
+<td align="center">6.447</td>
+<td align="center">772.69</td>
+<td align="center">7.1406</td>
+<td align="center">1.1812</td>
+<td align="center">0.6335128</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td align="center">1986</td>
+<td align="center">0.6709</td>
+<td align="center">1.3896</td>
+<td align="center">3.4616</td>
+<td align="center">168.35</td>
+<td align="center">0.612</td>
+<td align="center">884.60</td>
+<td align="center">7.1273</td>
+<td align="center">1.7979</td>
+<td align="center">0.6813381</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td align="center">1992</td>
+<td align="center">0.7352</td>
+<td align="center">1.2085</td>
+<td align="center">5.5206</td>
+<td align="center">126.78</td>
+<td align="center">3.095</td>
+<td align="center">784.66</td>
+<td align="center">5.8258</td>
+<td align="center">1.4064</td>
+<td align="center">0.5661552</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td align="center">1990</td>
+<td align="center">0.7807</td>
+<td align="center">1.1668</td>
+<td align="center">4.7921</td>
+<td align="center">145.00</td>
+<td align="center">2.813</td>
+<td align="center">710.64</td>
+<td align="center">5.9231</td>
+<td align="center">1.3901</td>
+<td align="center">0.5605067</td>
+</tr>
+<tr class="odd">
+<td>21</td>
+<td align="center">2005</td>
+<td align="center">0.7627</td>
+<td align="center">1.2115</td>
+<td align="center">8.1936</td>
+<td align="center">110.11</td>
+<td align="center">10.894</td>
+<td align="center">1023.75</td>
+<td align="center">7.4710</td>
+<td align="center">1.2459</td>
+<td align="center">0.5493298</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td align="center">1994</td>
+<td align="center">0.7316</td>
+<td align="center">1.3664</td>
+<td align="center">8.6397</td>
+<td align="center">102.18</td>
+<td align="center">3.385</td>
+<td align="center">806.93</td>
+<td align="center">7.7161</td>
+<td align="center">1.3667</td>
+<td align="center">0.6527841</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="a-represente-graficamente-a-evolução-das-taxas-de-câmbio-ao-longo-do-tempo" class="section level3">
-<h3><strong>a) Represente graficamente a evolução das taxas de câmbio ao longo do tempo:</strong></h3>
+<div id="a-graphically-represent-the-exchange-rate-evolution-throughout-time" class="section level3">
+<h3><strong>a) Graphically represent the exchange rate evolution throughout time</strong></h3>
+<p>For this exercise, it’ll be necessary to split the countries in groups in accordance to the scale of their exchange rate.</p>
 <pre class="r"><code>tbl_1.4 %&gt;% 
   tidyr::gather(&quot;campo&quot;,&quot;valor&quot;,2:10) %&gt;% 
   filter(campo != &quot;Coreia.sul&quot;,
@@ -322,14 +405,15 @@ tbl_1.4[sample(nrow(tbl_1.4),10), ]</code></pre>
          campo != &quot;Canada&quot;,
          campo != &quot;Australia&quot;
          ) %&gt;% 
-  mutate(campo = fct_relevel(campo, levels = c(&quot;Mexico&quot;, &quot;China&quot;, &quot;Suecia&quot;))) %&gt;% 
+  mutate(campo = fct_relevel(campo, 
+                             levels = c(&quot;Mexico&quot;, &quot;China&quot;, &quot;Suecia&quot;))) %&gt;% 
   ggplot(aes(x = Ano, y = valor,group = campo, color = campo))+
   geom_line(size = 1.2)+
   theme_graph()+
   labs(title = &quot;Exchange rate times serie&quot;,
        x = &quot;&quot;,
        y = &quot;Currency per 1 US$&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code>tbl_1.4 %&gt;% 
   tidyr::gather(&quot;campo&quot;,&quot;valor&quot;,2:10) %&gt;% 
   filter(campo %in% c(&quot;Coreia.sul&quot;,&quot;Japao&quot;)) %&gt;%
@@ -339,108 +423,273 @@ tbl_1.4[sample(nrow(tbl_1.4),10), ]</code></pre>
   labs(title = &quot;Exchange rate times serie&quot;,
        x = &quot;&quot;,
        y = &quot;Currency per 1 US$&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
 <pre class="r"><code>tbl_1.4 %&gt;% 
   tidyr::gather(&quot;campo&quot;,&quot;valor&quot;,2:10) %&gt;% 
-  filter(campo %in% c(&quot;Reino.unido&quot;,&quot;Canada&quot;,&quot;Australia&quot;,&quot;Suica&quot;)) %&gt;% 
-  mutate(campo = fct_relevel(campo, levels = c(&quot;Suica&quot;, &quot;Canada&quot;, &quot;Australia&quot;, &quot;Reino.unido&quot;))) %&gt;% 
+  filter(campo %in% c(&quot;Reino.unido&quot;,
+                      &quot;Canada&quot;,
+                      &quot;Australia&quot;,
+                      &quot;Suica&quot;)) %&gt;% 
+  mutate(campo = fct_relevel(campo, 
+                             levels = c(&quot;Suica&quot;, &quot;Canada&quot;, &quot;Australia&quot;, &quot;Reino.unido&quot;))) %&gt;% 
   ggplot(aes(x = Ano, y = valor, group = campo, color = campo))+
   geom_line(size = 1.2)+
   theme_graph()+
   labs(title = &quot;Exchange rate times serie&quot;,
        x = &quot;&quot;,
        y = &quot;Currency per 1 US$&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-7-3.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
 </div>
-<div id="a-tabela-abaixo-apresenta-o-orçamento-de-publicidade-com-as-impressões-retidas-através-de-uma-pesquisa-feita-com-4-mil-adultos." class="section level3">
-<h3><strong>1.7) A tabela abaixo apresenta o orçamento de publicidade com as impressões retidas (através de uma pesquisa feita com 4 mil adultos).</strong></h3>
-<pre class="r"><code>tbl_1.6 &lt;- read.table(file = paste(path,&quot;tabela_1.6_publicidade.txt&quot;,sep = &quot;&quot;),
+<div id="the-table-1.6-represents-the-budget-used-with-advertising-and-the-retention-of-impressions-from-customers-based-in-a-survey-with-4.000-people." class="section level3">
+<h3><strong>1.7) The table 1.6 represents the budget used with advertising and the retention of impressions from customers, based in a survey with 4.000 people.</strong></h3>
+<pre class="r"><code>tbl_1.6 &lt;- read.table(file = paste(path,
+                                   &quot;tabela_1.6_publicidade.txt&quot;,
+                                   sep = &quot;&quot;),
                       sep = &quot; &quot;,
                       header = T, 
                       dec = &quot;,&quot;
                       )
 
-# Amostra aleatória dos dados
-tbl_1.6[sample(nrow(tbl_1.6),10), ]</code></pre>
-<pre><code>##         empresa impressions investment
-## 18     Meow_Mix        12.3        7.6
-## 20        Crest        71.1       32.4
-## 8           MCI        50.7       26.9
-## 15       Wendys        29.2       49.7
-## 17       Shasta        10.0        5.7
-## 11        Levis        40.8       27.0
-## 14 Calvin_Klein        12.0        5.0
-## 10         Ford        40.1      166.2
-## 16     Polaroid        38.0       26.9
-## 5   Burger_King        60.8       82.4</code></pre>
+# Sample from the dataset
+tbl_1.6[sample(nrow(tbl_1.6),10), ] %&gt;% 
+  knitr::kable(align = &quot;c&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">empresa</th>
+<th align="center">impressions</th>
+<th align="center">investment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>17</td>
+<td align="center">Shasta</td>
+<td align="center">10.0</td>
+<td align="center">5.7</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td align="center">Burger_King</td>
+<td align="center">60.8</td>
+<td align="center">82.4</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td align="center">MCI</td>
+<td align="center">50.7</td>
+<td align="center">26.9</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td align="center">Calvin_Klein</td>
+<td align="center">12.0</td>
+<td align="center">5.0</td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td align="center">Bud_Lite</td>
+<td align="center">10.4</td>
+<td align="center">45.6</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td align="center">Oscar_Meyer</td>
+<td align="center">23.4</td>
+<td align="center">9.2</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td align="center">Meow_Mix</td>
+<td align="center">12.3</td>
+<td align="center">7.6</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td align="center">Pepsi</td>
+<td align="center">99.6</td>
+<td align="center">74.1</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td align="center">Crest</td>
+<td align="center">71.1</td>
+<td align="center">32.4</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td align="center">Diet_Cola</td>
+<td align="center">21.4</td>
+<td align="center">20.4</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="a-mostre-a-relação-entre-impressões-e-o-investimento-em-publicidade." class="section level3">
-<h3><strong>a) Mostre a relação entre impressões e o investimento em publicidade.</strong></h3>
+<div id="a-present-the-relation-between-impressions-and-advertising-expenditures." class="section level3">
+<h3><strong>a) Present the relation between impressions and advertising expenditures.</strong></h3>
 <pre class="r"><code>tbl_1.6 %&gt;% 
   ggplot(aes(x = investment, y = impressions))+
   geom_point(color = graph_color)+
-  geom_smooth(method = &quot;lm&quot;, formula = y ~ x, se = F, lty = 20, color = &quot;dark orange&quot;)+
+  geom_smooth(method = &quot;lm&quot;, 
+              formula = y ~ x, 
+              se = F, 
+              lty = 20, 
+              color = &quot;dark orange&quot;)+
   theme_graph()+
   labs(title = &quot;Investment and Impressions relation&quot;,
        x = &quot;Investmnet&quot;,
        y = &quot;Impressions&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
+<div id="cap.2-regression-analysis-with-two-variables-some-basic-ideas" class="section level2">
+<h2><strong>Cap.2 Regression analysis with two variables: Some basic ideas</strong></h2>
+<p>In this chapter the authors go a little deep on simple regression models, introducting the concept of <strong>expected value of Y</strong>. One of the key findings of this chapter is…</p>
+<blockquote>
+<p>“The essence of regression models is to supply conditions to explain the average value of the Y variable throughout one equation.”</p>
+</blockquote>
+<p>The authors also affirm that the linear regression model will try to estimate the <strong>population regression function</strong> using economic theories and sample date of the population being studied. With the sample data occur the creation of the regression model for this sample that will be a proxy for the population regression function. Thus, regression models have to deal with inferences and uncertainty.</p>
+<p>Also, in this chapter the authors explain that the models of the book are linear on the independent variables (x1, x2, etc), but not on the parameters (<span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, etc). At the end of the chapter, the authors explain about the stochastic erros of the model, that represent all other variables that weren’t included in the developed model.</p>
+<div id="exercises" class="section level3">
+<h3><strong>Exercises</strong></h3>
 </div>
-<div id="cap.2-análise-de-regressão-com-duas-variáveis-algumas-ideias-básicas" class="section level2">
-<h2><strong>Cap.2 Análise de regressão com duas variáveis: Algumas ideias básicas</strong></h2>
-<div id="resumo-1" class="section level3">
-<h3><strong>Resumo</strong></h3>
-<p>Neste capítulo, os autores abordam de maneira mais aprofundada o modelo de regressão linear, introduzindo o coneito de <strong>valor esperado de Y</strong> condicional e incondicional. Indica-se que a essência do modelo de regressão é fornecer condições para o valor médio esperado da variável (Y) estudada, ou seja, o modelo de regressão irá gerar uma equação que explicará o valor médio desta variável Y.</p>
-<p>Os autores também afirmam que o modelo de regressão buscará <strong>estimar</strong> funções de regressão populacional, fazendo uso de teorias (econômicas) e dados amostrais da população. Existe a função de regressão populacional (sendo apenas uma ideia abstrata) e a função de regressão amostral (que é criada no modelo de regressão), onde a regressão amostral é a responsável por gerar inferências sobre a populacional.</p>
-<p>Os modelos lineares deste livro, segundo os autores, serão lineares nas variáveis explicativas (x1, x2, etc), porém podendo não ser lineares nos parâmetros (<span class="math inline">\(\beta\)</span>).</p>
-<p>Por fim, os autores comentam sobre os erros estocásticos, que estão sempre presentes no modelo de regressão para representar todas variáveis não incluídas no modelo e ruídos aleatórios que não podem ser mapeados. A não inclusão de algumas variáveis no modelo é explicada no sentido de que isso é algo de certa forma positivo, pois é muito custoso coletar todas as variáveis e o aumento da complexidade do modelo não irá gerar aumento de performance de mesma magnitude. Outra ideia mencionada pelos autores referente aos erros estocásticos se refere à natureza aleatória do ser humano, que impacta a variável estudada <strong>Y</strong> e esta aleatoriedade será descrita nestes erros (<strong><span class="math inline">\(\mu\)</span></strong>).</p>
-</div>
-<div id="exercícios-1" class="section level3">
-<h3><strong>Exercícios</strong></h3>
-</div>
-<div id="use-a-tabela-abaixo-com-dados-do-eua-sobre-o-mercado-de-trabalho-para-responder-as-seguinter-alternativas." class="section level3">
-<h3><strong>2.14) Use a tabela abaixo com dados do EUA sobre o mercado de trabalho para responder as seguinter alternativas.</strong></h3>
-<pre class="r"><code>tbl_2.7 &lt;- read.table(file = paste(path,&quot;tabela_2.7_labour_market.txt&quot;,sep = &quot;&quot;),
+<div id="use-the-dataset-of-the-table-2.7-with-data-about-the-usa-job-market-to-answer-the-alternatives." class="section level3">
+<h3><strong>2.14) Use the dataset of the table 2.7 with data about the USA job market to answer the alternatives.</strong></h3>
+<pre class="r"><code>tbl_2.7 &lt;- read.table(file = paste(path,
+                                   &quot;tabela_2.7_labour_market.txt&quot;,
+                                   sep = &quot;&quot;),
                       sep = &quot; &quot;,
                       header = T, 
                       dec = &quot;,&quot;
                       )
 
-# Amostra dos dados
-tbl_2.7[sample(nrow(tbl_2.7),10), ]</code></pre>
-<pre><code>##     ano share_men_work_force share_women_work_force unemployment_men
-## 18 1997                 75.0                   59.8              4.9
-## 5  1984                 76.4                   53.6              7.4
-## 21 2000                 74.8                   59.9              3.9
-## 9  1988                 76.2                   56.6              5.5
-## 12 1991                 75.8                   57.4              7.2
-## 15 1994                 75.1                   58.8              6.2
-## 1  1980                 77.4                   51.5              6.9
-## 16 1995                 75.0                   58.9              5.6
-## 10 1989                 76.4                   57.4              5.2
-## 3  1982                 76.6                   52.6              9.9
-##    unemployment_women avg_hourly_earning_men avg_hourly_earning_women
-## 18                5.0                   7.68                    12.49
-## 5                 7.6                   7.95                     8.48
-## 21                4.1                   8.03                    14.00
-## 9                 5.6                   7.81                     9.43
-## 12                6.4                   7.58                    10.50
-## 15                6.0                   7.53                    11.32
-## 1                 7.4                   7.99                     6.84
-## 16                5.6                   7.53                    11.64
-## 10                5.4                   7.75                     9.80
-## 3                 9.4                   7.86                     7.86</code></pre>
+# Sample data
+tbl_2.7[sample(nrow(tbl_2.7),10), ] %&gt;% 
+  knitr::kable(align = &quot;c&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">ano</th>
+<th align="center">share_men_work_force</th>
+<th align="center">share_women_work_force</th>
+<th align="center">unemployment_men</th>
+<th align="center">unemployment_women</th>
+<th align="center">avg_hourly_earning_men</th>
+<th align="center">avg_hourly_earning_women</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>8</td>
+<td align="center">1987</td>
+<td align="center">76.2</td>
+<td align="center">56.0</td>
+<td align="center">6.2</td>
+<td align="center">6.2</td>
+<td align="center">7.86</td>
+<td align="center">9.13</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td align="center">1988</td>
+<td align="center">76.2</td>
+<td align="center">56.6</td>
+<td align="center">5.5</td>
+<td align="center">5.6</td>
+<td align="center">7.81</td>
+<td align="center">9.43</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td align="center">1997</td>
+<td align="center">75.0</td>
+<td align="center">59.8</td>
+<td align="center">4.9</td>
+<td align="center">5.0</td>
+<td align="center">7.68</td>
+<td align="center">12.49</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td align="center">1984</td>
+<td align="center">76.4</td>
+<td align="center">53.6</td>
+<td align="center">7.4</td>
+<td align="center">7.6</td>
+<td align="center">7.95</td>
+<td align="center">8.48</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td align="center">1982</td>
+<td align="center">76.6</td>
+<td align="center">52.6</td>
+<td align="center">9.9</td>
+<td align="center">9.4</td>
+<td align="center">7.86</td>
+<td align="center">7.86</td>
+</tr>
+<tr class="even">
+<td>23</td>
+<td align="center">2002</td>
+<td align="center">74.1</td>
+<td align="center">59.6</td>
+<td align="center">5.9</td>
+<td align="center">5.6</td>
+<td align="center">8.24</td>
+<td align="center">14.95</td>
+</tr>
+<tr class="odd">
+<td>27</td>
+<td align="center">2006</td>
+<td align="center">73.5</td>
+<td align="center">59.4</td>
+<td align="center">4.6</td>
+<td align="center">4.6</td>
+<td align="center">8.23</td>
+<td align="center">16.73</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td align="center">1991</td>
+<td align="center">75.8</td>
+<td align="center">57.4</td>
+<td align="center">7.2</td>
+<td align="center">6.4</td>
+<td align="center">7.58</td>
+<td align="center">10.50</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td align="center">1995</td>
+<td align="center">75.0</td>
+<td align="center">58.9</td>
+<td align="center">5.6</td>
+<td align="center">5.6</td>
+<td align="center">7.53</td>
+<td align="center">11.64</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td align="center">1994</td>
+<td align="center">75.1</td>
+<td align="center">58.8</td>
+<td align="center">6.2</td>
+<td align="center">6.0</td>
+<td align="center">7.53</td>
+<td align="center">11.32</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="a-represente-graficamente-a-relação-entre-a-taxa-de-participação-dos-homens-na-força-de-trabalho-e-a-taxa-de-desemprego-dos-homens." class="section level3">
-<h3><strong>a) Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho e a taxa de desemprego dos homens.</strong></h3>
+<div id="a-graphically-represent-the-relation-between-participation-rate-of-men-on-the-work-force-and-its-unemployment-rate." class="section level3">
+<h3><strong>a) graphically represent the relation between participation rate of men on the work force and its unemployment rate.</strong></h3>
 <pre class="r"><code>women_df &lt;- 
   tbl_2.7 %&gt;% 
   select(share_women_work_force,unemployment_women) %&gt;% 
-  transmute(
-    share_work_force = share_women_work_force,
-    unemployment = unemployment_women
-  ) %&gt;% 
+  transmute(share_work_force = share_women_work_force,
+            unemployment = unemployment_women) %&gt;% 
   mutate(type = &quot;women&quot;)
     
 tbl_2.7 %&gt;% 
@@ -456,10 +705,10 @@ tbl_2.7 %&gt;%
   labs(title = &quot;Men&#39;s unemployment and participation rate&quot;,
        x = &quot;Participation rate (%)&quot;,
        y = &quot;Unemployment rate (%)&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
-<div id="c-represente-graficamente-a-taxa-de-participação-de-homens-e-mulheres-em-relação-ao-ganho-médio-por-hora." class="section level3">
-<h3><strong>c) Represente graficamente a taxa de participação de homens e mulheres em relação ao ganho médio por hora.</strong></h3>
+<div id="c-graphically-represent-the-participation-rate-on-men-and-women-in-relation-to-thei-average-earning-per-hour." class="section level3">
+<h3><strong>c) Graphically represent the participation rate on men and women in relation to thei average earning per hour.</strong></h3>
 <pre class="r"><code>women_df &lt;- 
   tbl_2.7 %&gt;% 
   select(share_women_work_force,avg_hourly_earning_women) %&gt;% 
@@ -479,90 +728,191 @@ tbl_2.7 %&gt;%
   union_all(women_df) %&gt;% 
   ggplot(aes(x=share_work_force,y=avg_hourly_earning,color=type))+
   geom_point()+
+  scale_color_brewer(type = &quot;qual&quot;)+
   theme_graph()+
   labs(title = &quot;Average hourly wage and participation rate&quot;,
        x = &quot;Participation rate&quot;,
        y = &quot;Hourly wage&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
-<div id="use-os-dados-da-tabela-2.8-sobre-despesa-com-alimentação-e-despesa-total-em-rupias-de-uma-amostra-de-55-domicílios-da-índia-para-responder-as-alternativas-abaixo." class="section level3">
-<h3><strong>2.15) Use os dados da tabela 2.8, sobre despesa com alimentação e despesa total (em rupias), de uma amostra de 55 domicílios da Índia, para responder as alternativas abaixo.</strong></h3>
-<pre class="r"><code>tbl_2.8 &lt;- read.table(file = paste(path,&quot;tabela_2.8_despesa_india.txt&quot;,sep = &quot;&quot;),
+<div id="use-the-dataset-from-table-2.8-with-data-about-food-expenses-and-total-expensed-from-55-houses-in-india-to-answer-the-following-questions." class="section level3">
+<h3><strong>2.15) Use the dataset from table 2.8 with data about food expenses and total expensed from 55 houses in India to answer the following questions.</strong></h3>
+<pre class="r"><code>tbl_2.8 &lt;- read.table(file = paste(path,
+                                   &quot;tabela_2.8_despesa_india.txt&quot;,
+                                   sep = &quot;&quot;),
                       sep = &quot; &quot;,
                       header = T,
                       dec = &quot;,&quot;)
 
-# Amostra dos dados
-tbl_2.8[sample(nrow(tbl_2.8),10), ]</code></pre>
-<pre><code>##    alimento total
-## 19      410   610
-## 27      403   648
-## 32      322   677
-## 28      350   650
-## 20      383   616
-## 8       325   478
-## 18      420   608
-## 16      370   586
-## 21      315   618
-## 46      430   751</code></pre>
+# Random sample
+tbl_2.8[sample(nrow(tbl_2.8),10), ] %&gt;% 
+  knitr::kable(align = &quot;c&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">alimento</th>
+<th align="center">total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>7</td>
+<td align="center">300</td>
+<td align="center">472</td>
+</tr>
+<tr class="even">
+<td>51</td>
+<td align="center">415</td>
+<td align="center">721</td>
+</tr>
+<tr class="odd">
+<td>31</td>
+<td align="center">470</td>
+<td align="center">663</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td align="center">260</td>
+<td align="center">460</td>
+</tr>
+<tr class="odd">
+<td>53</td>
+<td align="center">500</td>
+<td align="center">695</td>
+</tr>
+<tr class="even">
+<td>38</td>
+<td align="center">610</td>
+<td align="center">788</td>
+</tr>
+<tr class="odd">
+<td>48</td>
+<td align="center">450</td>
+<td align="center">733</td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td align="center">315</td>
+<td align="center">575</td>
+</tr>
+<tr class="odd">
+<td>32</td>
+<td align="center">322</td>
+<td align="center">677</td>
+</tr>
+<tr class="even">
+<td>52</td>
+<td align="center">450</td>
+<td align="center">720</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="a-represente-graficamente-os-dados-colocando-no-eixo-vertical-as-despesas-com-alimentação-e-no-eixo-horizontal-os-gastos-totais-e-em-seguida-insira-uma-linha-de-regressão." class="section level3">
-<h3><strong>a) Represente graficamente os dados, colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais e em seguida, insira uma linha de regressão.</strong></h3>
+<div id="a-graphically-represent-the-data-drawing-the-food-expensed-in-the-y-axis-and-total-expensed-in-the-x-axis-and-then-plot-the-regression-line." class="section level3">
+<h3><strong>a) Graphically represent the data, drawing the food expensed in the Y axis and total expensed in the X axis and then plot the regression line.</strong></h3>
 <pre class="r"><code>tbl_2.8 %&gt;% 
   ggplot(aes(x = total, y = alimento))+
   geom_point(color = graph_color, shape = 20)+
-  geom_smooth(method = &quot;lm&quot;, se = F)+
+  geom_smooth(method = &quot;lm&quot;, se = F, color = &quot;dark orange&quot;, lty = 2)+
   theme_graph()+
   labs(title = &quot;Food expenditures and total expenditures&quot;,
        x = &quot;Total expenditures&quot;,
        y = &quot;Food expenditures&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
-<div id="cap.3---modelo-de-regressão-de-duas-variáveis-o-problema-da-estimação" class="section level2">
-<h2><strong>Cap.3 - Modelo de regressão de duas variáveis: o problema da estimação</strong></h2>
-<div id="resumo-2" class="section level3">
-<h3><strong>Resumo</strong></h3>
-<p>O objetivo neste capítulo será estimar a função de regressão populacional (FRP) com base na função de regressão amostral (FRA), da maneira mais precisa possível. Os métodos disponíveis para isso são (i) mínimos quadrados ordinários e (ii) máxima verossimilhança. O método (i) é o mais usado, por ser mais simples, porém ambos geram resultados semelhantes.</p>
-<p>Os autores abordarão o método dos mínimos quadrados ordinários no detalhe, explicando como se chega a equação de geração dos parâmetros do modelo de regressão e o motivo por traz do “mínimo” presente no nome do método. Após explicarem as fórmulas do modelo, os autores comentam sobre as prioridades destes estimadores e as hipóteses presentes neste método. Como as hipóteses deste método são importantes para a geração de um modelo confiável, abaixo elas são descritas com maior detalhe.</p>
-<p><strong>As hipóteses do método dos mínimos quadrados</strong></p>
-<p>Como o objetivo não é só obter os parâmetros (<span class="math inline">\(\beta_1\)</span> e <span class="math inline">\(\beta_2\)</span>) com base em uma amostra, mas sim o de obtê-los e realizar inferências sobre os parâmetros populacionais, se faz neessário estabelecer certas hipóteses a respeito de como a variável explicada / dependente é gerada.</p>
-<p>Hipótese 1: O modelo de regressão linear é linear nos parâmeteos <span class="math inline">\(\beta\)</span>, embora possa não ser linear nas variáveis (x), ou seja, o regressando Y e o regressor X podem não ser lineares e o modelo continuará sendo linear.</p>
-<p>Hipótese 2: Existência de independência entre as variáveis X e o termo de erro. Esta independência se fundamenta na ideia de que os termos X e <span class="math inline">\(\mu\)</span> possuem influências separadas (e aditivas) sobre Y. Se caso estes termos foram correlacionados, não é possível avaliar efeitos individuais sobre Y. Caso estes termos sejam correlacionados é bem provável que o termo <span class="math inline">\(\mu\)</span> contenha uma variável importante no modelo que não foi incluída.</p>
-<p>Hipótese 3: O valor médio do termo de erro <span class="math inline">\(\mu\)</span> deve ser zero. Esta hipótese indica que as variáveis não incluídas no modelo e consequentemente representadas por <span class="math inline">\(\mu\)</span> não devem afetar sistematicamente o valor médio de Y, ou seja, os valores positivos de <span class="math inline">\(\mu\)</span> cancelam os valores negativos. A hipótese 3 implica que não existe erro de especificação ou viés de especificação do modelo, que pode ocorrer quando alguma variável importante deixa de ser mapeada no modelo de regressão ou variáveis irrelevantes são incluídas.</p>
-<p>Hipótese 4: Homocedasticidade de <span class="math inline">\(\mu\)</span>. Este hipótese indica que a variância do termo de erro <span class="math inline">\(\mu\)</span> é a mesma independente do valor de X. Homocedasticidade é a constante variância do termo de erro.</p>
-<p>Hipótese 5: Não há autocorrelação entre os termos de erro.
-Hipótese 6: O número de observações n deve ser maior que o número de parâmetros a serem estimados, ou seja, o número de observações n deve ser maior que o números de variáveis explicativas.</p>
-<p>Hipótese 7: Deve haver variabilidade dos valores de X. Isto também implica que não deve haver outliers ou valores discrepantes.</p>
-<p>Por fim, há uma explicação sobre as medidas de precisão do modelo de regressão. Sendo elas o erro padrão dos estimadores e pelo coeficiente de determinação (R²) que indica a qualidade do ajuste da reta de regressão. Na mesma problemática de validação da precisão dos estimadores, há a técnica de Monte Carlo, que irá realizar simulações dos parâmetros calculados para verificar a consistência dos resultados e por fim aumentar a confiabilidade do parâmetro.</p>
+<div id="cap.3-regression-model-with-two-variables-the-estimation-problem" class="section level2">
+<h2><strong>Cap.3 Regression model with two variables: The estimation problem</strong></h2>
+<p>The goal of this chapter will be the estimation of the populational regression function using a regression model created from a sample data of the population. The authors indicate two possible methods for this task, (i) the ordinary least squares (OLS) and (ii) the maximum likelihood. Both methods lead to the same results but the first one is easier to apply.</p>
+<p>As the focus of the chapter is about estimation, the authors explain the hipothesis that support the estimation when using the OLS method. They are summed up below:</p>
+<ul>
+<li><p>Independency of the X variables and the error term (<span class="math inline">\(\mu\)</span>).</p></li>
+<li><p>The mean value of <span class="math inline">\(\mu\)</span> should be zero. This hipothesis subjectively afirm that there’s not specification mistakes on the model.</p></li>
+<li><p>Homoscedasticity of <span class="math inline">\(\mu\)</span>. In other words, there’s constant variation of the <span class="math inline">\(\mu\)</span> term.</p></li>
+<li><p>There’s no correlation between <span class="math inline">\(\mu\)</span> values of the model.</p></li>
+</ul>
+<div id="exercises-1" class="section level3">
+<h3><strong>Exercises</strong></h3>
 </div>
-<div id="exercícios-2" class="section level3">
-<h3><strong>Exercícios</strong></h3>
-</div>
-<div id="na-tabela-abaixo-consta-a-classificação-de-dez-estudantes-nas-provas-parcial-e-final-de-estatística.-calcule-o-coeficiente-de-correlação-de-ranking-de-spearman-e-interprete-os-resultados." class="section level3">
-<h3><strong>3.18) Na tabela abaixo consta a classificação de dez estudantes nas provas parcial e final de estatística. Calcule o coeficiente de correlação de ranking de Spearman e interprete os resultados.</strong></h3>
+<div id="the-following-data.frame-has-the-classification-of-ten-students-from-the-final-and-parcial-statistical-tests.-determine-the-spearman-correlation-and-interpret-the-results." class="section level3">
+<h3><strong>3.18) The following data.frame has the classification of ten students from the final and parcial statistical tests. Determine the Spearman correlation and interpret the results.</strong></h3>
 <pre class="r"><code>df_3.18 &lt;- data.frame(
-  prova_parcial = c(1,3,7,10,9,5,4,8,2,6),
-  prova_final = c(3,2,8,7,9,6,5,10,1,4)
+  partial_test = c(1,3,7,10,9,5,4,8,2,6),
+  final_test = c(3,2,8,7,9,6,5,10,1,4)
 )
 
-#Amostra aleatória dos dados
-df_3.18[sample(nrow(df_3.18),10), ]</code></pre>
-<pre><code>##    prova_parcial prova_final
-## 1              1           3
-## 7              4           5
-## 10             6           4
-## 6              5           6
-## 4             10           7
-## 5              9           9
-## 8              8          10
-## 3              7           8
-## 9              2           1
-## 2              3           2</code></pre>
-<pre class="r"><code># Coeficiente de correlação de spearman
-cor.test(df_3.18$prova_parcial,df_3.18$prova_final,method = &quot;spearman&quot;) %&gt;% pander()</code></pre>
+# Sample data
+df_3.18[sample(nrow(df_3.18),10), ] %&gt;% 
+  knitr::kable(align = &quot;c&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">partial_test</th>
+<th align="center">final_test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5</td>
+<td align="center">9</td>
+<td align="center">9</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td align="center">7</td>
+<td align="center">8</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td align="center">5</td>
+<td align="center">6</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td align="center">10</td>
+<td align="center">7</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td align="center">8</td>
+<td align="center">10</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td align="center">6</td>
+<td align="center">4</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># Spearman correlation
+cor.test(df_3.18$partial_test,
+         df_3.18$final_test, 
+         method = &quot;spearman&quot;) %&gt;% 
+  pander::pander()</code></pre>
 <table style="width:92%;">
-<caption>Spearman’s rank correlation rho: <code>df_3.18$prova_parcial</code> and <code>df_3.18$prova_final</code></caption>
+<caption>Spearman’s rank correlation rho: <code>df_3.18$partial_test</code> and <code>df_3.18$final_test</code></caption>
 <colgroup>
 <col width="23%" />
 <col width="20%" />
@@ -587,70 +937,147 @@ cor.test(df_3.18$prova_parcial,df_3.18$prova_final,method = &quot;spearman&quot;
 </tbody>
 </table>
 </div>
-<div id="a-equação-abaixo-mostra-a-relação-entre-a-taxa-de-câmbio-e-a-inflação-para-o-canadá-e-estados-unidos-para-o-período-de-1985-e-2005" class="section level3">
-<h3><strong>3.19) A equação abaixo mostra a relação entre a taxa de câmbio e a inflação para o Canadá e Estados Unidos para o período de 1985 e 2005</strong></h3>
-<p><span class="math inline">\(\widehat{Y_t} = 0.912 + 2.25X_t\)</span></p>
+<div id="the-following-equation-shows-the-relation-between-exchange-rate-and-inflation-rate-for-canada-and-us-for-the-period-from-1985-to-2005." class="section level3">
+<h3><strong>3.19) The following equation shows the relation between exchange rate and inflation rate for Canada and US for the period from 1985 to 2005.</strong></h3>
+<p><span class="math display">\[\widehat{Y_t} = 0.912 + 2.25X_t\]</span></p>
 <p>Onde:</p>
-<p><span class="math inline">\(\widehat{Y_t}\)</span> = DC/US$ (taxa de câmbio do Canadá em relação ao Dólar)</p>
-<p><span class="math inline">\(X_t\)</span> = inflação americana / inflação do canadá</p>
+<p><span class="math inline">\(\widehat{Y_t}\)</span> = Canadian Exchange Rate (DC/US$)</p>
+<p><span class="math inline">\(X_t\)</span> = US Inflation Rate/Canada Inflation Rate</p>
 </div>
-<div id="a-interprete-a-regressão" class="section level3">
-<h3><strong>a) Interprete a regressão:</strong></h3>
-<p>R: A regressão indica que conforme a inflação é maior nos EUA do que no Canadá, a moeda canadense irá se desvalorizar com relação ao dólar, pois a taxa de câmbio (Y) irá aumentar, precisando de mais DC para adquiri um US$. A regressão indica que, dado um período inicial com inflação zero, a taxa de câmbio será de 0.912, ou seja, será necessário DC 0.912 dólar canadense para adquirir 1 dólar americano. O valor de r² de 44% indica que o modelo possui outras variáveis que poderiam auxiliar na explicação desta variação na taxa de câmbio.</p>
+<div id="a-write-the-interpretation-for-this-regression-model." class="section level3">
+<h3><strong>a) Write the interpretation for this regression model.</strong></h3>
+<p>R: This regression model indicates that as US inflation rate is higher than Canadian inflation rate, the Canadian currency will appreciate, thus the denominator of the fraction <span class="math inline">\(DC/US\)</span> will be lower because inflation erodes the purchasing power of the currency. The r² of 44% indicates that ther’re other variables that could support the model.</p>
 </div>
-<div id="b-o-valor-positivo-de-x-faz-sentido-econômico" class="section level3">
-<h3><strong>b) O valor positivo de X faz sentido econômico?</strong></h3>
-<p>R: Acredito que não, pois a inflação maior no EUA deveria reduzir a taxa de câmbio do Canadá e não aumentá-la. Desta forma, o valor de X deveria ser negativo.</p>
+<div id="b-the-positive-value-of-x-has-economic-foundations" class="section level3">
+<h3><strong>b) The positive value of X has economic foundations?</strong></h3>
+<p>R: Yes, it does. As the inflation rate is higher in the US, the Canadian dolar will be swaped by more US dolars.</p>
 </div>
-<div id="a-tabela-abaixo-apresenta-dados-do-índice-de-produção-por-hora-x-e-remuneração-real-por-hora-y-para-os-setores-empresarial-e-empresarial-não-agrícola-entre-1960-e-2005.-o-ano-base-é-1992-100." class="section level3">
-<h3><strong>3.20) A tabela abaixo apresenta dados do índice de produção por hora (X) e remuneração real por hora (Y) para os setores empresarial e empresarial não agrícola, entre 1960 e 2005. O ano base é 1992 = 100.</strong></h3>
+<div id="the-next-table-presents-a-dataset-about-hourly-production-index-x-and-hourly-real-wages-y-for-the-industrial-sectors-and-non-agricultural-sectors-between-1960-and-2005" class="section level3">
+<h3><strong>3.20) The next table presents a dataset about hourly production index (X) and hourly real wages (Y) for the industrial sectors and non agricultural sectors, between 1960 and 2005</strong></h3>
 <pre class="r"><code>tbl_3.6 &lt;- read.table(file = paste(path,&quot;tabela_3.6_produtividade_e_salario.txt&quot;,sep = &quot;&quot;),
                       sep = &quot; &quot;,
                       header = T, 
                       dec = &quot;,&quot;,
                       )
 
-tbl_3.6[sample(nrow(tbl_3.6),10), ]</code></pre>
-<pre><code>##     ano prod_setor_empresarial prod_setor_n_agricola sal_setor_empresarial
-## 26 1985                   87.1                  87.5                  92.0
-## 16 1975                   74.8                  76.2                  84.1
-## 32 1991                   95.9                  96.1                  97.4
-## 39 1998                  109.5                 109.4                 105.2
-## 19 1978                   79.3                  81.0                  89.1
-## 33 1992                  100.0                 100.0                 100.0
-## 28 1987                   90.1                  90.6                  95.2
-## 18 1977                   78.5                  80.0                  87.6
-## 46 2005                  135.7                 134.9                 120.2
-## 38 1997                  106.5                 106.4                 100.5
-##    sal_setor_n_agricola
-## 26                 92.2
-## 16                 84.5
-## 32                 97.4
-## 39                104.9
-## 19                 89.6
-## 33                100.0
-## 28                 95.5
-## 18                 88.0
-## 46                119.3
-## 38                100.3</code></pre>
+tbl_3.6[sample(nrow(tbl_3.6),10), ] %&gt;% 
+  knitr::kable(align = &quot;c&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">ano</th>
+<th align="center">prod_setor_empresarial</th>
+<th align="center">prod_setor_n_agricola</th>
+<th align="center">sal_setor_empresarial</th>
+<th align="center">sal_setor_n_agricola</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>21</td>
+<td align="center">1980</td>
+<td align="center">79.2</td>
+<td align="center">80.6</td>
+<td align="center">89.1</td>
+<td align="center">89.6</td>
+</tr>
+<tr class="even">
+<td>39</td>
+<td align="center">1998</td>
+<td align="center">109.5</td>
+<td align="center">109.4</td>
+<td align="center">105.2</td>
+<td align="center">104.9</td>
+</tr>
+<tr class="odd">
+<td>46</td>
+<td align="center">2005</td>
+<td align="center">135.7</td>
+<td align="center">134.9</td>
+<td align="center">120.2</td>
+<td align="center">119.3</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td align="center">1963</td>
+<td align="center">55.0</td>
+<td align="center">57.8</td>
+<td align="center">66.1</td>
+<td align="center">68.1</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td align="center">1977</td>
+<td align="center">78.5</td>
+<td align="center">80.0</td>
+<td align="center">87.6</td>
+<td align="center">88.0</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td align="center">1978</td>
+<td align="center">79.3</td>
+<td align="center">81.0</td>
+<td align="center">89.1</td>
+<td align="center">89.6</td>
+</tr>
+<tr class="odd">
+<td>32</td>
+<td align="center">1991</td>
+<td align="center">95.9</td>
+<td align="center">96.1</td>
+<td align="center">97.4</td>
+<td align="center">97.4</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td align="center">1975</td>
+<td align="center">74.8</td>
+<td align="center">76.2</td>
+<td align="center">84.1</td>
+<td align="center">84.5</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td align="center">1965</td>
+<td align="center">58.8</td>
+<td align="center">61.4</td>
+<td align="center">69.1</td>
+<td align="center">70.5</td>
+</tr>
+<tr class="even">
+<td>17</td>
+<td align="center">1976</td>
+<td align="center">77.1</td>
+<td align="center">78.7</td>
+<td align="center">86.4</td>
+<td align="center">86.6</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="a-represente-graficamente-y-contra-x-para-os-dois-setores-da-economia-separadamente." class="section level3">
-<h3><strong>a) Represente graficamente Y contra X para os dois setores da economia separadamente.</strong></h3>
+<div id="a-graphically-represent-separetely-y-versus-x-for-the-two-sectors-of-the-economy." class="section level3">
+<h3><strong>a) Graphically represent separetely Y versus X for the two sectors of the economy.</strong></h3>
 <pre class="r"><code>tbl_3.6 %&gt;% 
   tidyr::gather(&quot;production&quot;,&quot;prod&quot;,2:3) %&gt;% 
   tidyr::gather(&quot;wage&quot;,&quot;wag&quot;,2:3) %&gt;% 
   ggplot()+
   geom_point(aes(x = prod, y = wag, color = production))+
   scale_color_brewer(palette = &quot;Dark2&quot;)+
-  geom_smooth(aes(x = prod, y = wag), method = &quot;lm&quot;,se = F)+
+  geom_smooth(aes(x = prod, y = wag), 
+              method = &quot;lm&quot;,
+              se = F, 
+              lty = 2, 
+              color = &quot;dark orange&quot;)+
   theme_graph()+
   labs(title = &quot;Production index and hourly wages&quot;,
        x = &quot;Production&quot;,
        y = &quot;Wage&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
-<div id="c-estime-uma-regressão-de-mqo-de-y-contra-x." class="section level3">
-<h3><strong>c) Estime uma regressão de MQO de Y contra X.</strong></h3>
+<div id="c-create-a-regression-model-usgin-ols-method-for-y-and-x." class="section level3">
+<h3><strong>c) Create a regression model usgin OLS method for Y and X.</strong></h3>
 <pre class="r"><code>tbl_3.6 %&gt;% 
   tidyr::gather(&quot;production&quot;,&quot;X&quot;,2:3) %&gt;% 
   tidyr::gather(&quot;wage&quot;,&quot;Y&quot;,2:3) -&gt; df_tbl_3.6
@@ -716,8 +1143,8 @@ summary(lm(Y~X, data = df_tbl_3.6)) %&gt;% pander()</code></pre>
 </tbody>
 </table>
 </div>
-<div id="a-tabela-abaixo-mostra-o-preço-do-ouro-o-índice-nyse-e-o-índice-ipc-entre-1974-e-2006.-use-a-para-responder-as-alternativas-abaixo" class="section level3">
-<h3><strong>3.22) A tabela abaixo mostra o preço do ouro, o índice NYSE e o índice IPC entre 1974 e 2006. Use-a para responder as alternativas abaixo:</strong></h3>
+<div id="the-following-dataset-presents-the-gold-price-nyse-index-and-cpi-index-between-1974-to-2006.-use-this-dataset-to-answer-the-next-questions." class="section level3">
+<h3><strong>3.22) The following dataset presents the gold price, NYSE index and CPI index between 1974 to 2006. Use this dataset to answer the next questions.</strong></h3>
 <pre class="r"><code>tbl_3.7 &lt;- read.table(file = 
                       paste(path,&quot;tabela_3.7_ouro_nyse_IPC.txt&quot;,sep = &quot;&quot;),
                       sep = &quot; &quot;,
@@ -726,21 +1153,94 @@ summary(lm(Y~X, data = df_tbl_3.6)) %&gt;% pander()</code></pre>
                       )
 
 # Amostra aleatória dos dados
-tbl_3.7[sample(nrow(tbl_3.7),10), ]</code></pre>
-<pre><code>##     ano gold_price nyse_index ipc_index
-## 20 1993     359.77    2638.96     144.5
-## 24 1997     331.02    4827.35     160.5
-## 13 1986     367.66    1438.02     109.6
-## 33 2006     603.46    8357.99     201.6
-## 22 1995     384.17    3078.56     152.4
-## 10 1983     424.35     979.52      99.6
-## 23 1996     387.77    3787.20     156.9
-## 30 2003     363.38    5447.46     184.0
-## 12 1985     317.26    1142.97     107.6
-## 18 1991     362.11    2181.72     136.2</code></pre>
+tbl_3.7[sample(nrow(tbl_3.7),10), ] %&gt;% 
+  knitr::kable(align = &quot;c&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">ano</th>
+<th align="center">gold_price</th>
+<th align="center">nyse_index</th>
+<th align="center">ipc_index</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td align="center">1974</td>
+<td align="center">159.26</td>
+<td align="center">463.54</td>
+<td align="center">49.3</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td align="center">1977</td>
+<td align="center">157.71</td>
+<td align="center">567.66</td>
+<td align="center">60.6</td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td align="center">2003</td>
+<td align="center">363.38</td>
+<td align="center">5447.46</td>
+<td align="center">184.0</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td align="center">1979</td>
+<td align="center">306.68</td>
+<td align="center">616.68</td>
+<td align="center">72.6</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td align="center">1990</td>
+<td align="center">383.51</td>
+<td align="center">1939.47</td>
+<td align="center">130.7</td>
+</tr>
+<tr class="even">
+<td>33</td>
+<td align="center">2006</td>
+<td align="center">603.46</td>
+<td align="center">8357.99</td>
+<td align="center">201.6</td>
+</tr>
+<tr class="odd">
+<td>23</td>
+<td align="center">1996</td>
+<td align="center">387.77</td>
+<td align="center">3787.20</td>
+<td align="center">156.9</td>
+</tr>
+<tr class="even">
+<td>21</td>
+<td align="center">1994</td>
+<td align="center">384.00</td>
+<td align="center">2687.02</td>
+<td align="center">148.2</td>
+</tr>
+<tr class="odd">
+<td>26</td>
+<td align="center">1999</td>
+<td align="center">278.88</td>
+<td align="center">6546.81</td>
+<td align="center">166.6</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td align="center">1980</td>
+<td align="center">612.56</td>
+<td align="center">720.15</td>
+<td align="center">82.4</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="a-assinale-em-um-mesmo-diagrama-de-dispersão-os-preços-do-ouro-o-ipc-e-o-índice-nyse." class="section level3">
-<h3><strong>a) Assinale, em um mesmo diagrama de dispersão, os preços do ouro, o IPC e o índice NYSE.</strong></h3>
+<div id="a-plot-the-gold-price-nyse-index-and-cpi-index-in-a-dispersion-graph." class="section level3">
+<h3><strong>a) Plot the gold price, NYSE index and CPI index in a dispersion graph.</strong></h3>
 <pre class="r"><code>tbl_3.7 %&gt;% 
   transmute(x = gold_price,
          y = nyse_index,
@@ -767,21 +1267,56 @@ plot3D::scatter3D(x, y, z,
                   xlab = &quot;gold_price&quot;, 
                   ylab = &quot;nyse_index&quot;, 
                   zlab = &quot;ipc_index&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
-<div id="b-supõe-se-que-um-investimento-funcione-como-proteção-contra-a-inflação-se-seu-preço-ou-sua-taxa-de-retorno-acompanha-pelo-menos-a-taxa-de-inflação.-para-testar-esta-hipótese-ajuste-o-seguinte-modelo-supondo-que-o-diagrama-de-dispersão-elaborado-no-item-a-seja-adequado." class="section level3">
-<h3><strong>b) Supõe-se que um investimento funcione como proteção contra a inflação se seu preço ou sua taxa de retorno acompanha, pelo menos, a taxa de inflação. Para testar esta hipótese, ajuste o seguinte modelo, supondo que o diagrama de dispersão elaborado no item (a) seja adequado.</strong></h3>
+<div id="b-suposing-that-an-investment-works-as-an-inflation-edge-if-its-profitability-follows-the-inflation-rate-test-the-following-regression-models-using-the-gold-price-nyse-index-and-cpi-index-dataset." class="section level3">
+<h3><strong>b) Suposing that an investment works as an inflation edge if its profitability follows the inflation rate, test the following regression models using the gold price, NYSE index and CPI index dataset.</strong></h3>
 <p><span class="math display">\[gold.price = \beta_1 + \beta_2 + IPC + \mu\]</span>
-<span class="math display">\[NYSE.index = \beta_1 + \beta_2 + IPC + \mu\]</span>
-R: Para testar está hipótese se faz necessário analisar a taxa de variação destes indicadores e ver se a variação do outro e do índice NYSE fica acima da variação do IPC, que representa a inflação para o consumidor.</p>
-<pre class="r"><code>tbl_3.7 %&gt;% 
+<span class="math display">\[NYSE.index = \beta_1 + \beta_2 + IPC + \mu\]</span></p>
+<pre class="r"><code># Adjusting the dataset to take the profitability of each asset
+tbl_3.7 %&gt;% 
   mutate(gold_price_var = round(gold_price/lag(gold_price, 1, default = NA), digits = 8)-1,
          nyse_index_var = round(nyse_index/lag(nyse_index, 1, default = NA), digits = 8)-1,
          ipc_index_var = round(ipc_index/lag(ipc_index, 1, default = NA), digits = 8)-1) %&gt;% 
-  filter(!is.na(gold_price_var)) -&gt; tbl_3.7_df_adj
-  
-# Modelo 1, gold_price ~ ipc_index
-tbl_3.7_df_adj %&gt;% lm(formula = gold_price_var ~ ipc_index_var) %&gt;% pander()</code></pre>
+  filter(!is.na(gold_price_var)) -&gt; tbl_3.7_df_adj</code></pre>
+<pre class="r"><code>g1 &lt;- 
+  tbl_3.7_df_adj %&gt;% 
+  ggplot()+
+  geom_point(aes(x = ipc_index_var, y = nyse_index_var), color = graph_color)+
+  geom_abline(lty = 2, color = &quot;dark orange&quot;, alpha = .7)+
+  geom_smooth(aes(x = ipc_index_var, y = nyse_index_var), method = &quot;lm&quot;, formula = y ~ x)+
+  geom_hline(yintercept = 0, lty = 2, color = &quot;red&quot;, alpha = .8)+
+  expand_limits(x = 0, y = 0)+
+  scale_x_continuous(labels = scales::percent)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  theme(title = element_text(size = 8))+
+  labs(title = &quot;NYSE vs IPC&quot;,
+       x = &quot;IPC index variation&quot;,
+       y = &quot;NYSE index variation&quot;)
+
+g2 &lt;- 
+  tbl_3.7_df_adj %&gt;% 
+  ggplot()+
+  geom_point(aes(x = ipc_index_var, y = gold_price_var), color = graph_color)+
+  geom_abline(lty = 2, color = &quot;dark orange&quot;, alpha = .7)+
+  geom_smooth(aes(x = ipc_index_var, y = gold_price_var), method = &quot;lm&quot;, formula = y ~ x)+
+  geom_hline(yintercept = 0, lty = 2, color = &quot;red&quot;, alpha = .8)+
+  expand_limits(x = 0, y = 0)+
+  scale_x_continuous(labels = scales::percent)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  theme(title = element_text(size = 8))+
+  labs(title = &quot;Gold Price vs IPC&quot;,
+       x = &quot;IPC index variation&quot;,
+       y = &quot;Gold price variation&quot;)
+
+gridExtra::grid.arrange(g1,g2,ncol = 2)</code></pre>
+<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code># Modelo 1, gold_price ~ ipc_index
+tbl_3.7_df_adj %&gt;% 
+  lm(formula = gold_price_var ~ ipc_index_var) %&gt;% 
+  pander::pander()</code></pre>
 <table style="width:90%;">
 <caption>Fitting linear model: gold_price_var ~ ipc_index_var</caption>
 <colgroup>
@@ -817,22 +1352,10 @@ tbl_3.7_df_adj %&gt;% lm(formula = gold_price_var ~ ipc_index_var) %&gt;% pander
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>tbl_3.7_df_adj %&gt;% 
-  ggplot()+
-  geom_point(aes(x = ipc_index_var, y = gold_price_var), color = graph_color)+
-  geom_abline(lty = 2, color = &quot;dark orange&quot;, alpha = .7)+
-  geom_smooth(aes(x = ipc_index_var, y = gold_price_var), method = &quot;lm&quot;, formula = y ~ x)+
-  geom_hline(yintercept = 0, lty = 2, color = &quot;red&quot;, alpha = .8)+
-  expand_limits(x = 0, y = 0)+
-  scale_x_continuous(labels = scales::percent)+
-  scale_y_continuous(labels = scales::percent)+
-  theme_graph()+
-  labs(title = &quot;Gold price and IPC index year variation&quot;,
-       x = &quot;IPC index variation&quot;,
-       y = &quot;Gold price variation&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <pre class="r"><code># Modelo 2, nyse_index ~ ipc_index
-tbl_3.7_df_adj %&gt;% lm(formula = nyse_index_var ~ ipc_index_var) %&gt;% pander()</code></pre>
+tbl_3.7_df_adj %&gt;% 
+  lm(formula = nyse_index_var ~ ipc_index_var) %&gt;% 
+  pander::pander()</code></pre>
 <table style="width:90%;">
 <caption>Fitting linear model: nyse_index_var ~ ipc_index_var</caption>
 <colgroup>
@@ -868,787 +1391,26 @@ tbl_3.7_df_adj %&gt;% lm(formula = nyse_index_var ~ ipc_index_var) %&gt;% pander
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>tbl_3.7_df_adj %&gt;% 
-  ggplot()+
-  geom_point(aes(x = ipc_index_var, y = nyse_index_var), color = graph_color)+
-  geom_abline(lty = 2, color = &quot;dark orange&quot;, alpha = .7)+
-  geom_smooth(aes(x = ipc_index_var, y = nyse_index_var), method = &quot;lm&quot;, formula = y ~ x)+
-  geom_hline(yintercept = 0, lty = 2, color = &quot;red&quot;, alpha = .8)+
-  expand_limits(x = 0, y = 0)+
-  scale_x_continuous(labels = scales::percent)+
-  scale_y_continuous(labels = scales::percent)+
-  theme_graph()+
-  labs(title = &quot;NYSE index and IPC index year variation&quot;,
-       x = &quot;IPC index variation&quot;,
-       y = &quot;NYSE index variation&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
-<p>Aparentemente, o ouro é um ativo mais interessante para edge do que o índice NYSE, porém há dois outliers do preço do ouro que está fazendo a regressão gerar um parâmetro positivo.</p>
+<p>Apparently, gold price is a better asset to edge inflation rate than the NYSE index. Althought there’re two outliers on the gold price data that are impacting the model.</p>
 </div>
 </div>
-<div id="cap.4---modelo-clássico-de-regressão-linear-normal" class="section level2">
-<h2><strong>Cap.4 - Modelo clássico de regressão linear normal</strong></h2>
-<div id="resumo-3" class="section level3">
-<h3><strong>Resumo</strong></h3>
-<p>Este capítulo é focado no modelo clássico de regressão linear normal que introduz o conceito de distribuição normal dos termos de erro. A ideia é que, como dito anteriormente, o objetivo do modelo de regressão é gerar estimadores (<span class="math inline">\(\hat{\beta}\)</span>) para o parâmetro populacional (<span class="math inline">\(\beta\)</span>) e como se está falando sobre estimadores, conclui-se que eles irão variar de amostra para amostra, ou seja, são variáveis aleatórias que deverão seguir alguma distribuição de probabilidade.</p>
-<p>Quando se indica que os estimadores devem seguir uma distribuição de probabilidade, a mais cogitada é a normal. Para afirmar que os estimadores seguirão a distribuição normal, os autores mostrma algebricamente que os estimadores seguem uma função linear do termo de erro <span class="math inline">\(\mu\)</span> e sabendo que quando uma variável é uma função linear de outra que segue comportamento aleatório e com distribuição normal, pode-se assumir que a primeira também terá comportamento aleatório de mesma distribuição. Desta forma, cria-se a hipótese de normalidade dos resíduos (a.k.a termo de erro <span class="math inline">\(\mu\)</span>) e consequentemente a hipótese de normalidade dos estimadores (<span class="math inline">\(\hat{\beta}\)</span>), que embasará inferências (teste de hipóteses e intervalos de confiança), pilar fundamental do modelo clássico.</p>
-<p>A hipótese de normalidade dos resíduos, pode ser fundamentado no <strong>teorema do limite central</strong>. Pelo fato de que os resíduos representam diversas variáveis não inclusas no modelo, há a ideia de que quando diversas variáveis são representadas por uma únida e suas distribuições de probabilidade consolidadas (somadas), o resultado será uma distribuição normal. Ao formar esta hipótese do modelo, pode-se realizar testes estatísticos (t, F, x²) dos estimadores para inferir sobre o verdadeiro valor dos parâmetros populacionais.</p>
+<div id="cap.4-classical-normal-linear-regression-model" class="section level2">
+<h2><strong>Cap.4 Classical Normal Linear Regression Model</strong></h2>
+<p>In this chapter the author gave attention to the classical normal linear regression model that introduces the concept of normal distrubutions of residuals. As was informed in previus chapter, the goal of the regression model is to estimate parameters (<span class="math inline">\(\hat{\beta}\)</span>) for the populational parameter (<span class="math inline">\(\beta\)</span>) and because it’s an estimation based on samples, the result will vary on each model and the variation of (<span class="math inline">\(\hat{\beta}\)</span>) will follow a particular distribution.</p>
+<p>Knowing that <span class="math inline">\(\hat{\beta}\)</span> should follow a particular distribution, the most desired one is the normal distribution. To afirm that the parameter follows the normal distribution, the author prove algebrically that <span class="math inline">\(\hat{\beta}\)</span> is a linear function of the residuals <span class="math inline">\(\mu\)</span>. Then, having the premise that <span class="math inline">\(\mu\)</span> is normally distributed, the premise that <span class="math inline">\(\hat{\beta}\)</span> is normally distributed will be attended. The premise of <span class="math inline">\(\hat{\beta}\)</span> and <span class="math inline">\(\mu\)</span> being normally distributed will allow inferences about the population’s parameters using confident intervals and test of hypothesis, two techniques developed by classical statisticians.</p>
 </div>
+<div id="cap.5-two-variables-regression-model-the-confidence-interval-and-hypothesis-test" class="section level2">
+<h2><strong>Cap.5 Two variables regression model: The confidence interval and hypothesis test</strong></h2>
+<p>After explaining the premises of the classical linear regression model on the last chapter, the authors develop in this chapter the hole regression model to draw inferences about the population parameters being studied. Before they start the explanation, they indicate that the expected value of the sample parameter will be the true value of the populational parameter. Mathematically it means that <span class="math inline">\(e(\hat{\beta}) = \beta\)</span>. Also, they indicate that the reliability of the parameters created by the regression model will be measured by the <strong>standard error</strong>, and this metric will support the development of the confidence interval and test of hypothesis.</p>
+<p>After explaining this initial assumptions, the authors explain how to develop confidence intervals for the parameters and how to conduct the test of hypothesis.</p>
+<p><strong>Confidence Intervals</strong></p>
+<p>In this method, intervals are constructed by two distinct methods. The first is when the populational variance is known and the second is when it isn’t known. For the first case, the <strong>t distribution</strong> is used, for the second, the <strong>normal distribution</strong> is used. In both cases, the interval range will be proportional to the standard error.</p>
+<p>The following equation present this method:</p>
+<p><span class="math display">\[\hat{\beta} +/- (z|t_\frac{\alpha}{2}  ep(\hat{\beta}))\]</span></p>
+<p><strong>Hypothesis Test</strong></p>
+<p>In this method, the researcher can use the confidence interval explained before or the test of significance that will create the p-value to allow the conclusion about the hypothesis.</p>
+<div id="exercises-2" class="section level3">
+<h3><strong>Exercises</strong></h3>
 </div>
-<div id="cap.5---a-regressão-de-duas-variáveis-estimação-de-intervalo-e-teste-de-hipóteses" class="section level2">
-<h2><strong>Cap.5 - A regressão de duas variáveis: estimação de intervalo e teste de hipóteses</strong></h2>
-<div id="resumo-4" class="section level3">
-<h3><strong>Resumo</strong></h3>
-<p>Após entender as premissas do modelo clássico de regressão linear no capítulo anterior os autores neste capítulo desenvolvem o modelo de regressão completo para realizar estimativas e inferências sobre os estimadores estudados (<span class="math inline">\(\hat{\beta_1}\)</span> e <span class="math inline">\(\hat{\beta_2}\)</span>).</p>
-<p>Antes de iniciar no desenvolvimento das estimativas e validação de sua acertividade, os autores indicam a premissa de que o valor esperado dos estimadores são o verdadeiro parâmetro populacional, ou seja <span class="math inline">\(e(\hat{\beta}) = \beta\)</span>. Outro ponto indicado é que a medida de confiabilidade para um estimdor é seu erro padrão. Conhecendo estas premissas, pode-se executar o modelo e validar as estimativas. A validação das estimativas é apresentada das seguintes formas:</p>
-<p><strong>1. Intervalo de confiança:</strong> Neste método, é feita a construção de intervalos de confiança, podendo ocorrer de duas formas. Uma quando se conhece a variância populacional, usando a distribuição normal para gerar os valores críticos e outra quando não se conhece a variância populacional, devendo neste caso usar a distribuição t. Em ambos os casos, a amplitude do intervalo será proporcional ao erro padrão dos estimadores.</p>
-<p>A fórmula abaixo mostra o cálculo do intervalo para cada cenário:</p>
-<p><strong>Variância conhecida, usa-se tabela z:</strong> <span class="math inline">\(\hat{\beta} + ou - (z_\frac{\alpha}{2} \times ep(\hat{\beta}))\)</span></p>
-<p><strong>Variância desconhecida, usa-se tabela t:</strong> <span class="math inline">\(\hat{\beta} + ou - (t_\frac{\alpha}{2} \times ep(\hat{\beta}))\)</span></p>
-<p>A proposta deste método é que, ao se construírem vários intervalos (usando diferentes amostras de dados, que gerarão diferentes estimatores e diferentes erros padrão), o parâmetro populacional estará contido em (<span class="math inline">\(1-\alpha\)</span>) dos casos. A variável <span class="math inline">\(\alpha\)</span> é chamada de nível de significância e o valor <span class="math inline">\(1-\alpha\)</span> é o coeficiente de confiança. Por exemplo, se <span class="math inline">\(\alpha\)</span> for 5%, o coeficiente de confiança será de 95%, neste caso, se forem construídos 100 intervalos, o parâmetro populacional <span class="math inline">\(\beta\)</span> estará contido em 95 intervalos. Não dá pra saber em qual intervalo o parâmetro estará, pois é uma variável desconhecida, porém a confiança (de 95%) é dada ao processo de criação dos intervalos.</p>
-<p><strong>2. Teste de hipóteses:</strong> Este modo pode usar o intervalo de confiança visto anteriormente ou usar o teste de significância, que virá junto com o uso do <strong>valor-p</strong>. O ponto inicial deste método é estabelecer uma hipótese nula e uma alternativa. A hipótese nula, para modelos de regressão, é indicar que o estimador (<span class="math inline">\(\hat{\beta}\)</span>) é igual a zero e a alternativa é de que o estimador é diferente de zero.</p>
-<p>No caso de se usar o intervalo de confiança, se o intervalo não conter a hipótese nula, ela poderá ser rejeitada. Por exemplo, se H0: <span class="math inline">\(\beta_2 = 0\)</span> e H1: <span class="math inline">\(\beta_2 \neq 0\)</span> e o intervalo gerado seja [<span class="math inline">\(2\leq \beta_2 \leq 4\)</span>], pode-se rejeitar H0.</p>
-<p>Ao se optar pelo teste de significância, o objetivo será encontrar o valor crítico de <strong>z</strong> ou <strong>t</strong> (caso se conheça ou não a variância populacional). Ao encontrar o valor crítico, basta usar a tabela destas distribuições (tabela <strong>z</strong> ou <strong>t</strong>) e ver a probabilidade de se conseguir o valor crítico encontrado. Caso a probabilidade seja abaixo do nível de significância escolhido (e.g. 5%), será possível rejeitar H0. A probabilidade de se chegar neste valor crítico é o <strong>valor-p</strong>, que indica a probabilidade de se rejeitar H0 incorretamente, que também é chamado de probabilidade de se cometer o <strong>erro tipo I</strong>.</p>
-<p>A proposta do teste de hipótese é buscar rejeitar H0, esta hipótese não poderá ser aceita, pois o parâmetro populacional não é conhecido. Se não for possível rejeitar H0, apenas pode-se concluir que os resultados foram inconclusivos e que se falhou em rejeitar H0.</p>
-<p>Ao finalizarem a explicação sobre inferência e estimativas, os autores dão sequência com a explicação da análise de variância (a.k.a ANOVA). Esta análise, quando aplicada ao modelo de regressão, buscará mostrar a variabilidade de cada estimador do modelo e ver o quanto estas variabilidades explicam a variabilidade total da variável dependente (<span class="math inline">\(\hat{y}\)</span>). A ANOVA também apresentará a variável <strong>F</strong>, que será útil em modelos de regressão múltiplos.</p>
-<p>Após explicarem sobre a análise de variância, os autores indicam uma forma de apresentar o resultado final do modelo de regressão. A indicação é de que deve-se primeiro mostrar a equação desenvolvida, em seguida os erros padrão e o R², na sequência mostra-se os valores críticos t (ou z) e por fim a variável F (em modelos de apenas duas variáveis (intercepto e inclinação) esta estatística não é relevante).</p>
-<p>Tendo apresentado os resultados do modelo, é importante mostrar que a premissa de normalidade dos resíduos se confirma. Para isso, os autores indicam o histograma, o gráfico qq-plot e o teste Jarque-Bera.</p>
-</div>
-<div id="exercícios-3" class="section level3">
-<h3><strong>Exercícios</strong></h3>
-</div>
-<div id="consulte-a-regressão-da-demanda-por-telefones-celulares-na-equação-3.7.3" class="section level3">
-<h3><strong>5.3) Consulte a regressão da demanda por telefones celulares na Equação (3.7.3)</strong></h3>
-</div>
-<div id="a-o-coeficiente-de-intercepto-estimado-é-significativo-no-nível-de-5-de-significância-qual-é-a-hipótese-nula-subjacente" class="section level3">
-<h3><strong>a) O coeficiente de intercepto estimado é significativo no nível de 5% de significância? Qual é a hipótese nula subjacente?</strong></h3>
-<p>A regressão indicada pelo problema é: <span class="math inline">\(\hat{Y} = 14.47+0.0022X\)</span> onde ep(<span class="math inline">\(\beta_1\)</span>) = 6.1523 ep(<span class="math inline">\(\beta_2\)</span>) = 0.00032 e r² = 0.6023</p>
-<p>Como a questão visa avaliar se o intercepto é significativo, deve-se analisar se ele é diferente de zero. Neste caso H0: <span class="math inline">\(\beta_1\)</span> = 0 e H1: <span class="math inline">\(\beta_1 \neq 0\)</span>. Para testar esta hipótese, será optado pelo valor-p, que será obtido através do cálculo do valor crítico t.</p>
-<p>valor-t = <span class="math inline">\(\frac{\hat{\beta_1}-\beta_1}{ep(\hat{\beta_1})}\)</span> = <span class="math inline">\(\frac{14,47-0}{6.1523} = 2.35\)</span></p>
-<p>Dado um nível de significância de 5% e 34 gl, o valor-p para este valor crítico t é de 2.4%, abaixo do limite estimado. Desta forma, pode-se rejeitar H0 e concluir que o intercepto é significativo.</p>
-<pre class="r"><code># Valor-p calculado com o valor t obtido anteriormente
-(1-pt(2.35, 36))*2</code></pre>
-<pre><code>## [1] 0.02437449</code></pre>
-</div>
-<div id="b-o-coeficiente-angular-estimado-é-significativo-no-nível-de-5-de-significância-qual-a-hipótese-nula-subjacente" class="section level3">
-<h3><strong>b) O coeficiente angular estimado é significativo no nível de 5% de significância? Qual a hipótese nula subjacente?</strong></h3>
-<p>Nesta questão, a solução segue a mesma abordagem da anterior. Busca-se saber se o coeficiente é significativo, desta forma a hipótese nula (H0) será H0: <span class="math inline">\(\beta_2 = 0\)</span> e H1: <span class="math inline">\(\beta_2 \neq 0\)</span>. Refazendo os cálculos, alterando os valores, temos:</p>
-<p>valor-t: <span class="math inline">\(\frac{0.0022}{0.00032} = 6.88\)</span></p>
-<p>É um valor-t bastante alto, provavelmente H0 será rejeitada apenas pela magnitude do valor. O valor-p deste valor-t é muito baixo, portanto pode-se de fato rejeitar H0 e concluir que o coeficiente angular também é significativo.</p>
-<pre class="r"><code># Valor-p calculado com o valor t obtido anteriormente
-(1-pt(6.88,36))*2</code></pre>
-<pre><code>## [1] 4.719422e-08</code></pre>
-</div>
-<div id="o-que-se-conhece-por-linha-característica-na-análise-moderna-de-investimentos-nada-mais-é-do-que-a-regressão-obtida-por-meio-do-seguinte-modelo" class="section level3">
-<h3><strong>5.5) O que se conhece por linha característica na análise moderna de investimentos nada mais é do que a regressão obtida por meio do seguinte modelo:</strong></h3>
-<p><span class="math inline">\(r_t = \alpha+\beta\times r_m+\mu_t\)</span></p>
-<p>Onde:</p>
-<p><span class="math inline">\(r_t =\)</span> taxa de retorno do ativo no período t</p>
-<p>$r_m = $ taxa de retorno do portfólio de mercado no período t</p>
-<p>$_t = $ termo de erro estocástico</p>
-<p>Neste modelo, <span class="math inline">\(\beta\)</span> é conhecido como coeficiente beta do ativo, representando uma medida de risco. Com este modelo, dois autores estudaram a taxa de retorno mensal para as ações da IBM e chegaram ao seguinte modelo.</p>
-<p><span class="math inline">\(\hat{r_t} = 0.7264+1.0598r_m\)</span> com ep(0.3001) e ep(0.0728) respectivamente.</p>
-</div>
-<div id="a-diz-se-que-um-ativo-cujo-coeficiente-beta-é-maior-que-um-é-um-papel-volátil.-as-ações-da-ibm-foram-voláteis-no-estudo-realizado" class="section level3">
-<h3><strong>a) Diz-se que um ativo cujo coeficiente beta é maior que um é um papel volátil. As ações da IBM foram voláteis no estudo realizado?</strong></h3>
-<p>Sim, visto que o coeficiente beta ficou em 1.0598.</p>
-</div>
-<div id="b-o-coeficiente-do-intercepto-é-significativamente-diferente-de-zero-se-for-qual-o-significado-prático-disso" class="section level3">
-<h3><strong>b) O coeficiente do intercepto é significativamente diferente de zero? Se for, qual o significado prático disso?</strong></h3>
-<p>O intercepto estimado é de 0.7264, com um erro padrão de 0.3001. Para ver se este valor é significativo, deve-se estabelecer um nível de confiança e uma hipótese nula. Para este caso, H0 será <span class="math inline">\(\beta_1 = 0\)</span> e H1 <span class="math inline">\(\beta_1 \neq 0\)</span>. Tendo o nível de significância e os graus de liberdade, pode-se chegar ao valor-p após calcular o valor crítico t.</p>
-<pre class="r"><code># Valor crítico t
-# Intercepto estimado dividido pelo erro padrão
-valor_t &lt;- 0.7264/0.3001
-
-# Como o teste é bilateral, deve-se multiplicar o valor-p por 2
-(1-pt(valor_t, 238))*2</code></pre>
-<pre><code>## [1] 0.01624765</code></pre>
-<p>O valor-p para o intercepto ficou em 1.62%, abaixo do limite de confiança, indicando que este estimador é estatísticamente significativo a 5% de nível de confiança.</p>
-</div>
-<div id="a-tabela-5.5-apresenta-dados-sobre-a-remuneração-anual-salário-médio-em-dólares-dos-professores-e-as-despesas-por-aluno-das-escolas-em-dólares-no-ano-de-1985-em-50-estados-e-no-distrito-de-columbia.-para-verificar-se-há-alguma-relação-entre-a-remuneração-dos-professores-e-as-despesas-por-aluno-nas-escolas-públicas-sugeriu-se-o-seguinte-modelo" class="section level3">
-<h3><strong>5.9) A tabela 5.5 apresenta dados sobre a remuneração anual (salário médio em dólares) dos professores e as despesas por aluno das escolas (em dólares) no ano de 1985 em 50 estados e no distrito de Columbia. Para verificar se há alguma relação entre a remuneração dos professores e as despesas por aluno nas escolas públicas, sugeriu-se o seguinte modelo:</strong></h3>
-<p><span class="math inline">\(r = \beta_1+\beta_2\times g + \mu\)</span></p>
-<p>r = renda dos professores
-g = despesas por aluno</p>
-<pre class="r"><code># Tabela 5.5
-tbl_5.5 &lt;- read.table(file = 
-                      paste(path,&quot;tabela_5.5_salario_medio_anual_e_despesa_por_aluno.txt&quot;,sep = &quot;&quot;),
-                      sep = &quot; &quot;,
-                      header = T, 
-                      dec = &quot;.&quot;,
-                      )
-
-# Amostra aleatória dos dados
-tbl_5.5[sample(nrow(tbl_5.5),10), ]</code></pre>
-<pre><code>##    obs   wage expense
-## 31  31 20.940    2853
-## 19  19 18.095    2967
-## 10  10 24.500    3547
-## 7    7 30.678    5710
-## 40  40 20.969    2509
-## 26  26 20.627    2821
-## 36  36 20.460    3124
-## 48  48 25.788    4123
-## 46  46 25.610    2932
-## 45  45 22.341    2297</code></pre>
-</div>
-<div id="a-represente-graficamente-os-dados-e-trace-uma-linha-de-regressão" class="section level3">
-<h3><strong>a) Represente graficamente os dados e trace uma linha de regressão</strong></h3>
-<pre class="r"><code>tbl_5.5 %&gt;% 
-  ggplot()+
-  geom_point(mapping = aes(x = expense, y = wage), color = graph_color)+
-  geom_smooth(mapping = aes(x = expense, y = wage), method = &quot;lm&quot;, formula = y~x, se = F, lty = 2, color = &quot;dark orange&quot;)+
-  theme_graph()+
-  labs(title = &quot;Teachers income and students expenditures relation&quot;,
-       x = &quot;Students expenses&quot;,
-       y = &quot;Teachers income&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
-</div>
-<div id="b-suponha-que-com-base-em-a-você-decida-estimar-o-modelo-de-regressão-anterior.-obtenha-as-estimativas-dos-parâmetros-os-erro-padrão-r²-sqr-e-sqe." class="section level3">
-<h3><strong>b) Suponha que, com base em (a), você decida estimar o modelo de regressão anterior. Obtenha as estimativas dos parâmetros, os erro padrão, r², SQR e SQE.</strong></h3>
-<pre class="r"><code>tbl_5.5 %&gt;%
-  lm(formula = wage~expense) %&gt;% summary() %&gt;% 
-  pander::pander()</code></pre>
-<table style="width:89%;">
-<colgroup>
-<col width="25%" />
-<col width="15%" />
-<col width="18%" />
-<col width="13%" />
-<col width="16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Estimate</th>
-<th align="center">Std. Error</th>
-<th align="center">t value</th>
-<th align="center">Pr(&gt;|t|)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>(Intercept)</strong></td>
-<td align="center">12.13</td>
-<td align="center">1.197</td>
-<td align="center">10.13</td>
-<td align="center">1.308e-13</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>expense</strong></td>
-<td align="center">0.003308</td>
-<td align="center">0.0003117</td>
-<td align="center">10.61</td>
-<td align="center">2.707e-14</td>
-</tr>
-</tbody>
-</table>
-<table style="width:88%;">
-<caption>Fitting linear model: wage ~ expense</caption>
-<colgroup>
-<col width="20%" />
-<col width="30%" />
-<col width="12%" />
-<col width="23%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">Observations</th>
-<th align="center">Residual Std. Error</th>
-<th align="center"><span class="math inline">\(R^2\)</span></th>
-<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">51</td>
-<td align="center">2.325</td>
-<td align="center">0.6968</td>
-<td align="center">0.6906</td>
-</tr>
-</tbody>
-</table>
-<p>Com base no output do modelo, pode-se criar a equação estimada para os parâmetros populacionais:</p>
-<p><span class="math inline">\(\hat{r} = \hat{\beta_1}+\hat{\beta_2}\times g+\mu\)</span></p>
-<p><span class="math inline">\(\hat{r} = 12.13+0.003308\times g+\mu\)</span></p>
-<p>Com a equação acima, pode-se ver a estimativa dos parâmetros (<span class="math inline">\(\hat{\beta_1}\)</span> e <span class="math inline">\(\hat{\beta_2}\)</span>). O R² ficou em 69.68% e SQR e SQE serão obtidos com o output da ANOVA demonstrada abaixo.</p>
-<pre class="r"><code>#Anova do modelo de regressão
-anova(tbl_5.5 %&gt;%
-  lm(formula = wage~expense)) %&gt;% pander::pander()</code></pre>
-<table style="width:86%;">
-<caption>Analysis of Variance Table</caption>
-<colgroup>
-<col width="22%" />
-<col width="6%" />
-<col width="12%" />
-<col width="13%" />
-<col width="13%" />
-<col width="16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Df</th>
-<th align="center">Sum Sq</th>
-<th align="center">Mean Sq</th>
-<th align="center">F value</th>
-<th align="center">Pr(&gt;F)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>expense</strong></td>
-<td align="center">1</td>
-<td align="center">608.6</td>
-<td align="center">608.6</td>
-<td align="center">112.6</td>
-<td align="center">2.707e-14</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>Residuals</strong></td>
-<td align="center">49</td>
-<td align="center">264.8</td>
-<td align="center">5.405</td>
-<td align="center">NA</td>
-<td align="center">NA</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="c-interprete-os-resultados-da-regressão.-faz-sentido-do-ponto-de-vista-econômico" class="section level3">
-<h3><strong>c) Interprete os resultados da regressão. Faz sentido do ponto de vista econômico?</strong></h3>
-<p>A regressão faz sentido, visto que o salário dos professores está diretamente atrelado ao gasto com estudo dos alunos e também o intercepto é relevante visto que há um salário mínimo dado pelo governo ao professores que não irá depender do gasto dos alunos.</p>
-</div>
-<div id="d-estabeleça-um-intervalo-de-confiança-de-95-para-o-estimador-beta-2.-você-rejeitaria-a-hipótese-de-que-o-verdadeiro-coeficiente-angular-é-3" class="section level3">
-<h3><strong>d) Estabeleça um intervalo de confiança de 95% para o estimador beta 2. Você rejeitaria a hipótese de que o verdadeiro coeficiente angular é 3?</strong></h3>
-<p>Para testar a hipótese, deve estabelecer uma hipótese nula e uma alternativa. H0 será o valor de <span class="math inline">\(\beta_2\)</span> proposto pela questão, ou seja, H0: <span class="math inline">\(\beta_2 = 3\)</span> e H1: <span class="math inline">\(\beta_2 \neq 3\)</span>. Ao contruir o intervalo, caso o valor 3 esteja dentro dele, não será possível rejeitar H0. Caso fique fora do intervalo, H0 poderá ser rejeitada. O intervalo será construído com o uso do erro padrão e da distribuiçaõ t, que irá fornecer um valor crítico de t para construção dos limites do intervalo.</p>
-<p>Conforme visto anteriormente, os limites são construídos através da fórmula:</p>
-<p><span class="math inline">\(\hat{\beta_2} + t_\frac{\alpha}{2} \times ep(\hat{\beta_2})\)</span></p>
-<p>Lembrando que se faz <span class="math inline">\(\frac{\alpha}{2}\)</span> por ser um teste bicaudal, ou seja <span class="math inline">\(H0 = X\)</span> e <span class="math inline">\(H1 \neq X\)</span>. Se caso fosse algo do tipi <span class="math inline">\(H0 \leq X\)</span> e <span class="math inline">\(H1 &gt; X\)</span>, seria um teste unicaudal e <span class="math inline">\(\alpha\)</span> não seria dividido por 2.</p>
-<p>Para resolver a equação acima, é necessário obter o valor do estimador de <span class="math inline">\(\beta_2\)</span> (dado no resultado do modelo de regressão da equação do item (b)), o erro padrão deste estimador (também fornecido no output anterior) e o valor crítico t, que pode ser obtido através do R pela fórmula abaixo.</p>
-<pre class="r"><code># Valor crítico de t para criar o intervalo
-qt(0.975, df = 49)</code></pre>
-<pre><code>## [1] 2.009575</code></pre>
-<p>Desta forma, tem-se:</p>
-<p><span class="math inline">\(\hat{\beta_2} = 0.003308\)</span></p>
-<p><span class="math inline">\(ep(\hat{\beta_2}) = 0.0003117\)</span></p>
-<p>Valor t = 2.009575</p>
-<p>Colocando na equação: 0.003308 +/- (2.009575(0.0003117)). Que gera o intervalo (0.00268 e 0.00393). Um intervalo bem distante de 3, portanto pode-se rejeitar H0 pois os resultados foram estatísticamente significativos para isso.</p>
-</div>
-<div id="f-como-você-testaria-a-hipótese-de-normalidade-do-termo-de-erro-mostre-os-testes-que-usou." class="section level3">
-<h3><strong>f) Como você testaria a hipótese de normalidade do termo de erro? Mostre os testes que usou.</strong></h3>
-<p>Para testar a normalidade dos resíduos, pode-se usar o histograma e o qq-plot.</p>
-<pre class="r"><code># Histograma dos resíduos
-tbl_5.5 %&gt;%
-  lm(formula = wage~expense) %&gt;% 
-  residuals() %&gt;% data.frame(a = .) %&gt;%
-  ggplot()+
-  geom_histogram(mapping = aes(x = a), binwidth = .5, fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(title = &quot;Residuals distribution&quot;,
-       x = &quot;&quot;,
-       y = &quot;&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
-<pre class="r"><code>tbl_5.5 %&gt;%
-  lm(formula = wage~expense) %&gt;% 
-  residuals() %&gt;% 
-  data.frame(a = .) -&gt; res
-
-
-# QQ plot
-qqnorm(res$a, pch = 20)
-qqline(res$a, pch = 1, col = &quot;dark orange&quot;, lty = 2)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
-</div>
-<div id="consulte-os-dados-da-tabela-3.20-e-monte-as-tabelas-anova-e-teste-a-hipótese-de-que-não-há-relação-entre-produtividade-e-salário-real.-faça-isso-para-o-setor-empresarial-e-para-o-setor-empresarial-não-agrícola." class="section level3">
-<h3><strong>5.10) Consulte os dados da tabela 3.20 e monte as tabelas ANOVA e teste a hipótese de que não há relação entre produtividade e salário real. Faça isso para o setor empresarial e para o setor empresarial não agrícola.</strong></h3>
-<pre class="r"><code>tbl_3.6 %&gt;% 
-  head()</code></pre>
-<pre><code>##    ano prod_setor_empresarial prod_setor_n_agricola sal_setor_empresarial
-## 1 1960                   48.9                  51.9                  60.8
-## 2 1961                   50.6                  53.5                  62.5
-## 3 1962                   52.9                  55.9                  64.6
-## 4 1963                   55.0                  57.8                  66.1
-## 5 1964                   56.8                  59.6                  67.7
-## 6 1965                   58.8                  61.4                  69.1
-##   sal_setor_n_agricola
-## 1                 63.3
-## 2                 64.8
-## 3                 66.7
-## 4                 68.1
-## 5                 69.3
-## 6                 70.5</code></pre>
-<pre class="r"><code>anova(tbl_3.6 %&gt;%
-  lm(formula = prod_setor_empresarial~sal_setor_empresarial)) %&gt;% pander::pander()</code></pre>
-<table style="width:100%;">
-<caption>Analysis of Variance Table</caption>
-<colgroup>
-<col width="37%" />
-<col width="6%" />
-<col width="12%" />
-<col width="13%" />
-<col width="13%" />
-<col width="16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Df</th>
-<th align="center">Sum Sq</th>
-<th align="center">Mean Sq</th>
-<th align="center">F value</th>
-<th align="center">Pr(&gt;F)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>sal_setor_empresarial</strong></td>
-<td align="center">1</td>
-<td align="center">22610</td>
-<td align="center">22610</td>
-<td align="center">1830</td>
-<td align="center">1.724e-37</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>Residuals</strong></td>
-<td align="center">44</td>
-<td align="center">543.6</td>
-<td align="center">12.35</td>
-<td align="center">NA</td>
-<td align="center">NA</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>anova(tbl_3.6 %&gt;%
-  lm(formula = prod_setor_n_agricola~sal_setor_n_agricola)) %&gt;% pander::pander()</code></pre>
-<table>
-<caption>Analysis of Variance Table</caption>
-<colgroup>
-<col width="36%" />
-<col width="6%" />
-<col width="12%" />
-<col width="13%" />
-<col width="13%" />
-<col width="16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Df</th>
-<th align="center">Sum Sq</th>
-<th align="center">Mean Sq</th>
-<th align="center">F value</th>
-<th align="center">Pr(&gt;F)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>sal_setor_n_agricola</strong></td>
-<td align="center">1</td>
-<td align="center">20478</td>
-<td align="center">20478</td>
-<td align="center">1874</td>
-<td align="center">1.033e-37</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>Residuals</strong></td>
-<td align="center">44</td>
-<td align="center">480.7</td>
-<td align="center">10.93</td>
-<td align="center">NA</td>
-<td align="center">NA</td>
-</tr>
-</tbody>
-</table>
-<p>A hipótese nula de que não há relação entre salário e produtividade pode ser rejeitada para os dois setors, visto que ambos geraram um valor f bastante pequeno.</p>
-</div>
-<div id="volte-ao-exercício-1.1-para-usar-os-dados-dele" class="section level3">
-<h3><strong>5.12) Volte ao exercício 1.1 (para usar os dados dele)</strong></h3>
-<pre class="r"><code># Amostra dos dados
-tbl_1.3[sample(nrow(tbl_1.3),10), ]</code></pre>
-<pre><code>##     Ano   EUA Canada Japan France Germany Italy United.Kingdon
-## 17 1996 156.9  153.8 119.3  151.4   135.3 213.8          179.4
-## 1  1980  82.4   76.1  91.0   72.2    86.7  63.9           78.5
-## 14 1993 144.5  147.9 118.5  143.4   127.6 187.7          165.3
-## 24 2003 184.0  177.7 118.7  166.7   148.3 250.8          213.0
-## 15 1994 148.2  148.2 119.3  145.8   131.1 195.3          169.3
-## 13 1992 140.3  145.3 117.0  140.4   122.2 179.5          162.7
-## 19 1998 163.0  157.8 122.2  154.2   139.1 222.5          191.4
-## 10 1989 124.0  129.3 108.0  128.7   109.2 150.7          135.4
-## 8  1987 113.6  118.4 104.9  121.1   104.9 135.1          119.7
-## 20 1999 166.6  160.5 121.8  155.0   140.0 226.2          194.3</code></pre>
-</div>
-<div id="a-trace-um-gráfico-com-os-dados-do-ipc-dos-estados-unidos-em-um-eixo-e-os-do-ipc-canandense-em-outro." class="section level3">
-<h3><strong>a) Trace um gráfico com os dados do IPC dos Estados Unidos em um eixo e os do IPC canandense em outro.</strong></h3>
-<pre class="r"><code>tbl_1.3 %&gt;%
-  ggplot()+
-  geom_point(mapping = aes(x = EUA, y = Canada), color = graph_color)+
-  geom_abline(lty = 2, color = &quot;dark orange&quot;)+
-  theme_graph()+
-  labs(title = &quot;Canada and USA IPC correlation&quot;,
-       x = &quot;EUA&quot;,
-       y = &quot;Canada&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
-</div>
-<div id="b-suponha-que-você-queira-prever-o-ipc-dos-estados-unidos-com-base-no-ipc-do-canadá.-desenvolva-um-modelo-adequado." class="section level3">
-<h3><strong>b) Suponha que você queira prever o IPC dos Estados Unidos com base no IPC do Canadá. Desenvolva um modelo adequado.</strong></h3>
-<p>Com base no gráfico, pode-se desenvolver um modelo de regressão linear simples para fazer esta previsão. A regressão será:</p>
-<p><span class="math inline">\(Ipc_u = \beta_0+\beta_1 \times Ipc_c\)</span></p>
-<pre class="r"><code># Executando o modelo de regressão
-tbl_1.3 %&gt;% 
-  lm(formula = EUA~Canada) %&gt;% summary() %&gt;% pander::pander()</code></pre>
-<table style="width:89%;">
-<colgroup>
-<col width="25%" />
-<col width="15%" />
-<col width="18%" />
-<col width="13%" />
-<col width="16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Estimate</th>
-<th align="center">Std. Error</th>
-<th align="center">t value</th>
-<th align="center">Pr(&gt;|t|)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>(Intercept)</strong></td>
-<td align="center">-8.542</td>
-<td align="center">4.48</td>
-<td align="center">-1.907</td>
-<td align="center">0.06858</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>Canada</strong></td>
-<td align="center">1.072</td>
-<td align="center">0.03157</td>
-<td align="center">33.96</td>
-<td align="center">8.387e-22</td>
-</tr>
-</tbody>
-</table>
-<table style="width:88%;">
-<caption>Fitting linear model: EUA ~ Canada</caption>
-<colgroup>
-<col width="20%" />
-<col width="30%" />
-<col width="12%" />
-<col width="23%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">Observations</th>
-<th align="center">Residual Std. Error</th>
-<th align="center"><span class="math inline">\(R^2\)</span></th>
-<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">26</td>
-<td align="center">4.845</td>
-<td align="center">0.9796</td>
-<td align="center">0.9788</td>
-</tr>
-</tbody>
-</table>
-<p>Com base no output do R, obtém-se a seguinte regressão:</p>
-<p><span class="math inline">\(\hat{Ipc_u} = -8.54164 + 1.07205 \times Ipc_c\)</span></p>
-<p>Desta forma, com base na variação do IPC do Canadá, pode-se prever uma variação na mesma direção e de mesma magnitude nos Estados Unidos. O intercepto não é relevante no modelo, pois seu valor-p não é tão baixo. Sabendo que o valor-p mostra a probabilidade de se cometer um erro tipo I, é preferível não incluí-lo na equação. Portanto, ajustando a regressão acima, tem-se:</p>
-<p><span class="math inline">\(\hat{Ipc_u} = 1.07205 \times Ipc_c\)</span></p>
-<p>Com r² em 97.96% e uma estatística t para <span class="math inline">\(\beta_1\)</span> bastante alta (33.959), permitindo aceitá-la como estatísticamente significativa.</p>
-</div>
-<div id="c-teste-a-hipótese-de-que-não-há-relação-entre-os-ipcs-dos-dois-países.-use-um-nível-de-confiança-de-95.-se-h0-for-rejeitada-isso-significará-que-o-ipc-canadense-causa-o-ipc-dos-estados-unidos" class="section level3">
-<h3><strong>c) Teste a hipótese de que não há relação entre os IPCs dos dois países. Use um nível de confiança de 95%. Se H0 for rejeitada, isso significará que o IPC canadense “causa” o IPC dos Estados Unidos?</strong></h3>
-<p>Com base nos resultados acima, para testar a hipótese nula de que não há relação entre os IPCs dos dois países, basta analisar o valor-p ou a estatística t, ambos corroboram que há relação forte entre IPC canadense e americano. Portanto, pode-se rejeitar H0 pois os testes são estatisticamente significativos.</p>
-<p>Porém isto não significa que o IPC canadense causa o IPC americano. O que ocorre é que ambos são afetados por outras variáveis econômicas que não estão representadas nos dados, por exemplo, taxa de juros, mercado acionário, ciclo econômico, demanda, confiança dos consumidores e empresas, taxa de desemprego, entre outras.</p>
-</div>
-<div id="volte-ao-exercício-3.22-para-fazer-uso-dos-dados." class="section level3">
-<h3><strong>5.13) Volte ao exercício 3.22 para fazer uso dos dados.</strong></h3>
-<pre class="r"><code># Amostra dos dados
-tbl_3.7[sample(nrow(tbl_1.3),10), ]</code></pre>
-<pre><code>##     ano gold_price nyse_index ipc_index
-## 18 1991     362.11    2181.72     136.2
-## 14 1987     446.46    1709.79     113.6
-## 4  1977     157.71     567.66      60.6
-## 23 1996     387.77    3787.20     156.9
-## 17 1990     383.51    1939.47     130.7
-## 9  1982     375.67     728.84      96.5
-## 7  1980     612.56     720.15      82.4
-## 25 1998     294.24    5818.26     163.0
-## 10 1983     424.35     979.52      99.6
-## 12 1985     317.26    1142.97     107.6</code></pre>
-</div>
-<div id="a-estime-as-duas-regressões-dadas-neste-exercício-calculando-os-erros-padrão-e-os-demais-resultados-habituais." class="section level3">
-<h3><strong>a) Estime as duas regressões dadas neste exercício, calculando os erros padrão e os demais resultados habituais.</strong></h3>
-<p>As duas regressões se referem a (i) regressão IPC com o preço do ouro e (ii) IPC com o índice NYSE. Cada regressão buscando avaliar se a variável independente consegue proteger o investidor contra oscilações na inflação.</p>
-<pre class="r"><code># Regressão do preço do ouro e inflação (IPC)
-tbl_3.7 %&gt;%
-  lm(formula = ipc_index~gold_price) %&gt;% summary() %&gt;% pander::pander()</code></pre>
-<table style="width:88%;">
-<colgroup>
-<col width="25%" />
-<col width="15%" />
-<col width="18%" />
-<col width="13%" />
-<col width="15%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Estimate</th>
-<th align="center">Std. Error</th>
-<th align="center">t value</th>
-<th align="center">Pr(&gt;|t|)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>(Intercept)</strong></td>
-<td align="center">68.47</td>
-<td align="center">24.15</td>
-<td align="center">2.835</td>
-<td align="center">0.008003</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>gold_price</strong></td>
-<td align="center">0.1693</td>
-<td align="center">0.06624</td>
-<td align="center">2.556</td>
-<td align="center">0.0157</td>
-</tr>
-</tbody>
-</table>
-<table style="width:88%;">
-<caption>Fitting linear model: ipc_index ~ gold_price</caption>
-<colgroup>
-<col width="20%" />
-<col width="30%" />
-<col width="12%" />
-<col width="23%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">Observations</th>
-<th align="center">Residual Std. Error</th>
-<th align="center"><span class="math inline">\(R^2\)</span></th>
-<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">33</td>
-<td align="center">41.67</td>
-<td align="center">0.1741</td>
-<td align="center">0.1474</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code># Regressão do índice NYSE e inflação (IPC)
-tbl_3.7 %&gt;%
-  lm(formula = ipc_index~nyse_index) %&gt;% summary() %&gt;% pander::pander()</code></pre>
-<table style="width:89%;">
-<colgroup>
-<col width="25%" />
-<col width="15%" />
-<col width="18%" />
-<col width="13%" />
-<col width="16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Estimate</th>
-<th align="center">Std. Error</th>
-<th align="center">t value</th>
-<th align="center">Pr(&gt;|t|)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>(Intercept)</strong></td>
-<td align="center">77.98</td>
-<td align="center">5.037</td>
-<td align="center">15.48</td>
-<td align="center">3.897e-16</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>nyse_index</strong></td>
-<td align="center">0.01668</td>
-<td align="center">0.001313</td>
-<td align="center">12.71</td>
-<td align="center">7.895e-14</td>
-</tr>
-</tbody>
-</table>
-<table style="width:88%;">
-<caption>Fitting linear model: ipc_index ~ nyse_index</caption>
-<colgroup>
-<col width="20%" />
-<col width="30%" />
-<col width="12%" />
-<col width="23%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">Observations</th>
-<th align="center">Residual Std. Error</th>
-<th align="center"><span class="math inline">\(R^2\)</span></th>
-<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">33</td>
-<td align="center">18.4</td>
-<td align="center">0.8389</td>
-<td align="center">0.8337</td>
-</tr>
-</tbody>
-</table>
-<p>O erro padrão para o ouro é de 0.06624 e para o índice NYSE é de 0.001313.</p>
-</div>
-<div id="b-teste-a-hipótese-de-que-os-termos-de-erro-dos-dois-modelos-de-regressão-distribuem-se-normalmente." class="section level3">
-<h3><strong>b) Teste a hipótese de que os termos de erro dos dois modelos de regressão distribuem-se normalmente.</strong></h3>
-<p>Primeiro é necessário extrair os resíduos e depois eles serão plotados em um histograma para validar a normalidade de sua distribuição.</p>
-<pre class="r"><code># Resíduos da regressão 1
-tbl_3.7 %&gt;%
-  lm(formula = ipc_index~gold_price) %&gt;%
-  residuals() %&gt;% data.frame(a = .) -&gt; res_1
-  
-res_1 %&gt;%
-  ggplot()+
-  geom_histogram(mapping = aes(x = a), fill = graph_color)+
-  theme_graph()+
-  labs(title = &quot;Regression model&#39;s residuals distribution&quot;,
-       subtitle = &quot;IPC and gold price relation&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
-<pre class="r"><code># Resíduos da regressão 2
-tbl_3.7 %&gt;%
-  lm(formula = ipc_index~nyse_index) %&gt;%
-  residuals() %&gt;% data.frame(a = .) -&gt; res_2
-  
-res_2 %&gt;%
-  ggplot()+
-  geom_histogram(mapping = aes(x = a), fill = graph_color)+
-  theme_graph()+
-  labs(title = &quot;Regression model&#39;s residuals distribution&quot;,
-       subtitle = &quot;IPC and NYSE index relation&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-40-2.png" width="672" /></p>
-</div>
-<div id="c-na-regressão-do-preço-do-ouro-teste-a-hipótese-de-que-beta-2-é-igual-a-1-ou-seja-de-que-há-uma-relação-de-um-para-um-entre-os-preços-do-ouro-e-o-ipc-o-ouro-é-um-hedge-perfeito.-qual-o-valor-p-da-estatística-t-estimada" class="section level3">
-<h3><strong>c) Na regressão do preço do ouro, teste a hipótese de que beta 2 é igual a 1, ou seja, de que há uma relação de um para um entre os preços do ouro e o IPC (o ouro é um hedge perfeito). Qual o valor p da estatística t estimada?</strong></h3>
-<p>Com base nos resultados da regressão estimada, <span class="math inline">\(\beta_2\)</span> ficou em 0.1693, com um erro padrçao de 0.06624, gerando uma estatística t de 2.556 e um valor p de 0.0157.</p>
-<p>Para testar H0 com <span class="math inline">\(\beta_2 = 1\)</span> e H1 com <span class="math inline">\(\beta_2 \neq 1\)</span>, é preciso utilizar a fórmula:</p>
-<p><span class="math inline">\(valor_t = \frac{|\hat{\beta_2} - \beta_2|}{SEM}\)</span></p>
-<p><span class="math inline">\(valor_t = \frac{|0.1693 - 1|}{0.06624} = 12.54076\)</span></p>
-<p>Este valor t de 12.54076 resulta em um valor p extremamente pequeno (pode ser validado abaixo)</p>
-<pre class="r"><code># Valor p para um valor t de 12.54076
-(1-pt(12.54076, 31))*2</code></pre>
-<pre><code>## [1] 1.112443e-13</code></pre>
-<p>Desta forma, pode-se rejeitar a hipótese nula de que <span class="math inline">\(\beta_2\)</span> é igual a 1 e consequentemente a ideia de que o ouro é um hedge perfeito contra inflação.</p>
-</div>
-<div id="d-repita-o-item-c-agora-com-a-regressão-do-índice-nyse.-o-investimento-no-mercado-de-ações-é-um-hedge-perfeito-contra-a-inflação-que-hipótese-nula-você-está-testando-qual-seu-valor-p" class="section level3">
-<h3><strong>d) Repita o item (c), agora com a regressão do índice NYSE. O investimento no mercado de ações é um hedge perfeito contra a inflação? Que hipótese nula você está testando? Qual seu valor p?</strong></h3>
-<p>Com base nos resultados da regressão, tem-se <span class="math inline">\(\beta_2 = 0.01668\)</span> com erro padrão em 0.001313, valor t de 12.71 e valor p bastante pequeno. Estes valores t e p são obtidos com base na hipótese nula de <span class="math inline">\(\beta_2 = 0\)</span>, desta forma, tem-se <span class="math inline">\(valor_t = \frac{\hat{\beta_2}}{SEM}\)</span> e o valor p obtido com auxílio do R e usando o valor t obtido.</p>
-<p>Porém, no exercício pede-se para testar H0: <span class="math inline">\(\beta_2 = 1\)</span> e H1: <span class="math inline">\(\beta_2 \neq 1\)</span>. Com esta hipótese estabelecida, pode-se alterar a equação do valor t.</p>
-<p><span class="math inline">\(valor_t = \frac{|\hat{\beta_2}-\beta_2|}{SEM}\)</span></p>
-<p><span class="math inline">\(valor_t = \frac{|0.01668-1|}{0.001313} = 748.91\)</span></p>
-<p>Este valor t é muito alto, obtiamente o valor p será extremamente pequeno. Desta forma pode-se rejeitar H0 com <span class="math inline">\(\beta_2 = 0\)</span> e consequentemente rejeitar a ideia de que o índice NYSE é um hedge perfeito contra inflação.</p>
-</div>
-<div id="e-entre-o-ouro-e-as-ações-qual-investimento-você-escolheria-em-que-se-baseia-sua-decisão" class="section level3">
-<h3><strong>e) Entre o ouro e as ações, qual investimento você escolheria? Em que se baseia sua decisão?</strong></h3>
-<p>Utilizando como parâmetro o investimento que mais irá proteger contra inflação, a melhor escolha é o investimento com variação mais próxima da variação do IPC, ou seja, <span class="math inline">\(\beta_2\)</span> mais próximo de 1 com baixo erro padrão. Desta forma, o ouro parece ser a melhor opção.</p>
-</div>
-<div id="a-tabela-5.6-apresenta-dados-sobre-pnb-e-quatro-definições-de-estoque-de-moeda-dos-estados-unidos-no-período-1970-1983.-fazendo-as-regressões-do-pnb-contra-as-várias-definições-de-moeda-obtemos-os-resultados-apresentados-na-tabela-5.7." class="section level3">
-<h3><strong>5.14) A tabela 5.6 apresenta dados sobre PNB e quatro definições de estoque de moeda dos Estados Unidos no período 1970-1983. Fazendo as regressões do PNB contra as várias definições de moeda, obtemos os resultados apresentados na tabela 5.7.</strong></h3>
-<pre class="r"><code>tbl_5.6 &lt;- read.table(file = paste(path,&quot;tabela_5.6_PNB_e_moedas.txt&quot;,sep = &quot;&quot;),
-                      sep = &quot; &quot;,
-                      header = T, 
-                      dec = &quot;,&quot;)
-
-# Amostra dos dados
-tbl_5.6[sample(nrow(tbl_5.6),10), ]</code></pre>
-<pre><code>##     ano    pnb    m1     m2     m3      l
-## 6  1975 1549.2 291.2 1023.3 1174.2 1367.9
-## 5  1974 1434.2 277.6  908.5 1070.5 1249.3
-## 8  1977 1918.3 335.4 1286.7 1472.9 1704.7
-## 1  1970  992.7 216.6  628.2  677.5  816.3
-## 10 1979 2417.8 389.1 1498.5 1804.8 2117.1
-## 9  1978 2163.9 363.1 1389.1 1647.1 1910.6
-## 13 1982 3069.3 480.5 1965.4 2462.5 2870.8
-## 14 1983 3304.8 525.4 2196.3 2710.4 3183.1
-## 2  1971 1077.6 230.8  712.8  776.2  903.1
-## 12 1981 2957.8 441.9 1796.6 2238.2 2599.8</code></pre>
-</div>
-<div id="a-que-definição-de-moeda-parece-apresentar-relação-mais-estreita-com-pnb-nominal" class="section level3">
-<h3><strong>a) Que definição de moeda parece apresentar relação mais estreita com PNB nominal?</strong></h3>
-<p>Para responder esta questão, basta verificar qual é a relação mais forte entre as 4 variáveis disponíveis.</p>
-<pre class="r"><code>tbl_5.6 %&gt;% 
-  tidyr::gather(&quot;campo&quot;,&quot;valor&quot;,3:6) %&gt;% 
-  ggplot()+
-  geom_point(mapping = aes(x = valor, y = pnb))+
-  facet_wrap(~campo, scales = &quot;free&quot;)+
-  scale_y_continuous(labels = scales::comma)+
-  scale_x_continuous(labels = scales::comma)+
-  theme_graph()+
-  labs(title = &quot;PNB and Currency stock relation&quot;,
-       x = &quot;Currency stock&quot;,
-       y = &quot;PNB&quot;)</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
-<p>Aparentemente o estoquede moeda “M3” possui ligação mais forte com o valor do produto nacional bruto. Isso pode ser visto também pelo R² de cada variável, onde todas ficam acima de 99%, porém o maior valor é encontrado na relação entre PNB e Estoque de M3 (99.43%).</p>
-</div>
-</div>
-<div id="cap.6---extensões-do-modelo-de-regressão-linear-de-duas-variáveis" class="section level2">
-<h2><strong>Cap.6 - Extensões do modelo de regressão linear de duas variáveis</strong></h2>
-<div id="resumo-5" class="section level3">
-<h3><strong>Resumo</strong></h3>
-<p>Neste capítulo, os autores relembram a ideia de que o modelo de regressão linear deve ser linear nos parâmetros (<span class="math inline">\(\beta_1\)</span> e <span class="math inline">\(\beta_2\)</span>), porém não necessáriamente nas variáveis (X e Y). Desta forma, pode-se realizar manipulações em Y e X e gerar novos modelos que conseguem explicar melhor as relações entre variáveis.</p>
-<p>O primeiro modelo tratado é o <strong>modelo que passa pela origem</strong>. Neste modelo, o intercepto não é utilizado e desta forma, tem-se o seguinte modelo:</p>
-<p><span class="math display">\[Y_i = \beta_2 X_i + \mu_i\]</span>
-A utilização deste modelo sem intercepto pode ser recomendada pela teoria por traz das variáveis estudadas, como por exemplo no modelo CAPM, há a construção do modelo:</p>
-<p><span class="math display">\[ER - rf = \beta_i (ER_m - rf)\]</span>
-Ao utilizar este modelo, os autores indicam que, diferentemente do modelo com intercepto, o valor de <span class="math inline">\(\sum{\mu_i}\)</span> pode ser diferente de zero. Também é indicado que a variável R² pode ser negativa, algo que não ocorre no modelo com intercepto. Este último fator faz com que muitos autores não apresentem o R² em modelos de regressão que passam pela origem.</p>
-<p>Por fim, os autores recomendam que só seja utilizado este modelo caso haja fundamentação teórica que o recomende. Caso contrário, mantenha o modelo com uso do intercepto visto que caso esta variável não seja significativa, o resultado dos testes estatísticos irão indicar.</p>
-<p>Dando sequência, os autores abordam o tema de <strong>escalas e unidades</strong> nos modelos de regressão. A ideia é identificar se mudanças de escalas irão afetar os resultados do modelo de regressão. Após alguns exemplos demonstrando esta possbilidade, tem-se a confirmação de que mudanças de escala não afetam no resultado final, apenas mudam a interpretação dos dados pelo leitor.</p>
-<p>Após explicarem sobre escalas e unidades, os autores abordam a questão das variáveis padronizadas para o modelo de regressão. Variáveis padronizadas são o Y e o X do modelo, porém transformados da seguinte forma:</p>
-<p><span class="math display">\[Y* = \frac{Y_j - \bar{Y}}{S_Y}\]</span></p>
-<p><span class="math display">\[X* = \frac{X_j - \bar{X}}{S_X}\]</span></p>
-<p>Esta padronização faz com que a média e o desvio padrão destas variáveis sejam 0 e 1 respectivamente. O uso de variáveis padronizadas no modelo de regressão é recomendado para modelos com mais de uma variável explicativa, pois os parâmetros <span class="math inline">\(\beta\)</span> serão comparados entre si para verificação de qual impacta mais no regressando Y. A interpretação será "se o regressor aumenta em 1 desvio padrão, o regressando padronizado aumenta em <span class="math inline">\(\beta\)</span> unidades de desvio padrão.
-Após explicarem sobre variáveis padronizadas, os autores abordam o conceito de modelos logarítmicos do tipo log-log, lin-log e log-lin. Nesta etapa, há a explicação sobre o conceito de elasticidade (usada com modelos log-log) e taxa de crescimento (usada com modelos log-lin).</p>
-<p>Por fim, é feita a explicação dos modelos recíprocos, que assumem a forma:</p>
-<p><span class="math display">\[Y = \beta_1 + \beta_2 (\frac{1}{X}) + \mu\]</span></p>
-<p>Estes modelos apresentam um valor assíntota para Y, ou seja, um valor que será assumido por Y caso X aumente indefinidamente. Este valor será de <span class="math inline">\(\beta_1\)</span>.</p>
-<p>Ao final do capítulo, os autores indicam que a escolha do melhor modelo dependerá da teoria que está gerando as variáveis estudadas e do gráfico gerado por estas variáveis.</p>
-</div>
-<div id="exercícios-4" class="section level3">
-<h3><strong>Exercícios</strong></h3>
-</div>
-<div id="com-base-na-tabela-6.7-ajuste-o-seguinte-modelo-aos-dados-e-obtenha-as-estatísticas-de-regressão-habituais.-interprete-os-resultados." class="section level3">
-<h3><strong>6.14 Com base na tabela 6.7, ajuste o seguinte modelo aos dados e obtenha as estatísticas de regressão habituais. Interprete os resultados.</strong></h3>
-<p><span class="math display">\[\frac{100}{100 - Y_i} = \beta_1 + \beta_2(\frac{1}{X_i})\]</span></p>
-<pre class="r"><code>df &lt;- data.frame(y = c(86, 79, 76, 69, 65, 62, 52, 51, 51, 48),
-                 x = c(3, 7, 12, 17, 25, 35, 45, 55, 70, 120))
-
-df %&gt;% 
-  ggplot()+
-  geom_point(mapping = aes(x = x, y = y))</code></pre>
-<p><img src="/library/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
-<pre class="r"><code># Gerando o modelo de regressão recíproco
-lm &lt;- df %&gt;% 
-  lm(formula = &quot;100/(100-y) ~ I(1/x)&quot;) %&gt;% summary() %&gt;% pander::pander()</code></pre>
-<p>Com base nos resultados, pode-se concluir que Y tenderá ao valor de 51.64 com base em valores cada vez maiores de X. Ou seja, 51.64 é o valor assintótico de Y no modelo.</p>
-</div>
-</div>
-<div id="cap.7---análise-de-regressão-múltipla-o-problema-da-estimação" class="section level2">
-<h2><strong>Cap.7 - Análise de regressão múltipla: O problema da estimação</strong></h2>
-<div id="resumo-6" class="section level3">
-<h3><strong>Resumo</strong></h3>
-</div>
-<div id="exercícios-5" class="section level3">
-<h3><strong>Exercícios</strong></h3>
 </div>
 </div>

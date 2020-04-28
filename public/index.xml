@@ -6,20 +6,10 @@
     <description>Recent content on Francisco Piccolo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Book Review: The Machine that Changed the World</title>
-      <link>/library/2020-04-21-the-machine-that-changed-the-world/</link>
-      <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/library/2020-04-21-the-machine-that-changed-the-world/</guid>
-      <description>OverviewThe Machine that Changed the World is a complete guide in the Lean Methodology, covering every aspect of this practice in the automotive industry in a project that spent 5 million US$ during five years aiming to investigate the differences between the Lean Practices and Mass Production.
-The reason for the research was the growing share of the market being acquired by Japanese companies in the automotive sector. After the end of the project (1985-1990) the members prefered to write this book instead of a white paper research.</description>
-    </item>
     
     <item>
       <title>Book Review: Basic Econometrics by Gujarati and Porter</title>
@@ -27,7 +17,8 @@ The reason for the research was the growing share of the market being acquired b
       <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/library/2020-03-03-basic-econometrics-by-gujarati-and-porter/</guid>
-      <description>OverviewEste livro é a típica “Bíblia” sobre um determinado assunto (i.e. Econometria). Não que não existam outros que também possam ser considerados da mesma forma, porém este é o que vejo com frequência sendo recomendado na parte de bibliografias da matéria de econometria de diversos cursos. Neste livro, os autores buscam explicar a modelagem econométrica de maneira simples e completa, partindo da definição dos termos inerentes à área até os modelos um pouco mais complexos.</description>
+      <description>OverviewThis book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economics grad students. For its importance, in this post I’ll present a brief summary of each chapter and solve some exercises (because the book doesn’t present the answer for the problems). Also, I’ll release the datasets used on the problems on my github account.
+The authors aimed to build a material that would serve all levels of students that want learn econometrics.</description>
     </item>
     
     <item>
