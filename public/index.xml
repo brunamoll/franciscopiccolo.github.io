@@ -12,33 +12,13 @@
     
     
     <item>
-      <title>Book Review: Basic Econometrics by Gujarati and Porter</title>
+      <title>Basic Econometrics by Gujarati and Porter</title>
       <link>/books/2020-03-03-basic-econometrics-by-gujarati-and-porter/</link>
       <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/books/2020-03-03-basic-econometrics-by-gujarati-and-porter/</guid>
       <description>OverviewThis book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economics grad students. For its importance, in this post I’ll present a brief summary of each chapter and solve some exercises (because the book doesn’t present the answer for the problems). Also, I’ll release the datasets used on the problems on my github account.
 The authors aimed to build a material that would serve all levels of students that want learn econometrics.</description>
-    </item>
-    
-    <item>
-      <title>Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun</title>
-      <link>/books/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</link>
-      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/books/2020-02-07-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</guid>
-      <description>OverviewEste livro faz parte de uma coleção da Universidade de Cambridge - Cambridge Series in Statistics and Probabilistic Mathematics, onde além desta públicação, constam outros 19 livros que exploram áreas da estatística.
-O livro foi publicado (2ª ed) em 2006 e talvez seja por isso que os gráficos não façam uso da biblioteca ggplot e a manipulação dos dados não utilize dplyr ou algo do universo tidyverse.
-A didática do livro é muito boa, os autores conseguiram explicar os conceitos estatísticos com clareza e os códigos usados foram bem comentados para facilitar o entendimento.</description>
-    </item>
-    
-    <item>
-      <title>Accessing World Bank database using R</title>
-      <link>/posts/2019/11/accessing-world-bank-database-using-r/</link>
-      <pubDate>Sat, 30 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2019/11/accessing-world-bank-database-using-r/</guid>
-      <description>The World Bank was created in 1944 at the Bretton Woords Conferences and its goal is to fight poverty and inequality, throughout investments and support for developing countries. The institution’s mission can be found on its webpage and the first target seeing at the is reduce to 3% the share of people living on extreme poverty until 2030. When the World Bank was created, one of its first responsibilities was to support Europe’s infrastructure reconstrution that had been devastated by the second world war 1.</description>
     </item>
     
     <item>
@@ -56,7 +36,7 @@ A didática do livro é muito boa, os autores conseguiram explicar os conceitos 
       <pubDate>Mon, 28 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>/posts/2019/10/connecting-r-on-amazon-redshift-database/</guid>
-      <description>IntroductionIn this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.
+      <description>IntroductionIn this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer to use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.
 Step 1Dowload the JDBC driver from Amazon.</description>
     </item>
     
@@ -66,7 +46,7 @@ A didática do livro é muito boa, os autores conseguiram explicar os conceitos 
       <pubDate>Thu, 05 Sep 2019 00:00:00 +0000</pubDate>
       
       <guid>/posts/2019/09/residual-analysis-in-econometric-models/</guid>
-      <description>The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hipothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:</description>
+      <description>The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hypothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:</description>
     </item>
     
   </channel>

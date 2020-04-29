@@ -15,7 +15,7 @@ output:
 
 <div id="introduction" class="section level2">
 <h2><strong>Introduction</strong></h2>
-<p>In this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.</p>
+<p>In this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer to use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.</p>
 </div>
 <div id="step-1" class="section level2">
 <h2><strong>Step 1</strong></h2>
@@ -62,15 +62,6 @@ library(RJDBC)</code></pre>
                    , client
                    , sale_date 
                   from orders_tb 
-                  limit 10&quot;)
-
-RJDBC::dbGetQuery(jconn,
-                  &quot;select 
-                     supplier
-                   , invoice 
-                  from supplier.tb 
-                  where 1 = 1 
-                  and delivery.date = 2019-01-30 
                   limit 10&quot;)</code></pre>
 </div>
 <div id="step-7" class="section level2">
@@ -107,13 +98,7 @@ query_2 &lt;-
   RJDBC::dbGetQuery(jconn, 
                     substr(sql_syntax, 
                            min(stringr::str_locate(string = sql_syntax, &#39;-- query.2.begin&#39;)), 
-                           max(stringr::str_locate(string = sql_syntax, &#39;-- query.2.end&#39;))))
-
-query_3 &lt;- 
-  RJDBC::dbGetQuery(jconn, 
-                    substr(sql_syntax, 
-                           min(stringr::str_locate(string = sql_syntax, &#39;-- query.3.begin&#39;)),
-                           max(stringr::str_locate(string = sql_syntax, &#39;-- query.3.end&#39;))))</code></pre>
+                           max(stringr::str_locate(string = sql_syntax, &#39;-- query.2.end&#39;))))</code></pre>
 </div>
 <div id="conclusion" class="section level2">
 <h2><strong>Conclusion</strong></h2>

@@ -1,5 +1,5 @@
 ---
-title: "Book Review: Basic Econometrics by Gujarati and Porter"
+title: "Basic Econometrics by Gujarati and Porter"
 date: 2020-03-03
 output:
   html_document:
@@ -625,8 +625,37 @@ df %>%
 
 Given the regression output, Y will approach the value of 51.64 as the X value increases.
 
-## **Cap.7 Multiple Regression Analysis: The Estimation Problem**
+### **Cap.7 Multiple Regression Analysis: The Estimation Problem**
 
+The authors in this chapter explain how multiple regression have to be analyzed. They start presenting the hypothesis of this model, that are the same of simple regression models and then they explain that the coeficients of the model will measure the effect on the mean value of Y considering the other variables constant.
+
+This consideration is made by removing the effect of the variation in one independent variable on the other (X1 and X2). Multiple regression models will generate the R² metric, that is different from the r², because it'll represent the proportion of Y that is explained by all other independente variables of the model (X1, X2, X3...).
+
+Then, the author continue explaining the impact thar multiple regression models can suffer by specification errors in the design of the model. In this case, the error would be a missing independent variable.
+
+Also, the author shows that in a multiple regression model, you'll have an Adjusted R² that will inform the same information of R² but considering the amount of variables including in the model. The Adjusted R² in this case, penalizes the inclusion of two many independente variables. At the end, they explain that in regression models, it's not relevant to seek a high Adjusted R², because the goal is to make reliable estimation of the populational parameters $\beta$ in order to make predictions.
+
+### **Exercises**
+
+### **Cap.8 Multple Regression Analysis: The Inference Problem**
+
+In this chapter the author record the reader that OLS method to develop regression models doen't make any assumption about the error distribution $\mu$ and the OLS would be fine if the goal is to make point estimation of the parameters of the model. But when the goal is to make estimations about the populational parameters, the normality of $\mu$ assumption will be required.
+
+After, they present multiple hypothesis that can be tested in a multiple regression model, like:
+
+1) Test hypothesis about one coeficient of the model (similar to Simple Regression Models).
+
+2) Test the general significance of the model. In other words, test all the parameters ($\beta$) of the model.
+
+3) Test if two or more parameters are equal.
+
+4) Test if parameters make sense given a particular theory behind the model.
+
+5) Test the model stability given different data samples or different periods.
+
+In this chapter the author gave special attention to the F statistics. That is a metric that indicates the relevance of the paramters choosen for the regression model. Also, they presented the relation between F statistics and R².
+
+Then, to end the chapter, they presented some discussion about when it is necessary to add new variables on a multiple regression model.
 
 
 
