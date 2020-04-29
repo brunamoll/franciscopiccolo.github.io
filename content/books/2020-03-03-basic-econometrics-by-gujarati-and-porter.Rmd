@@ -627,8 +627,6 @@ Given the regression output, Y will approach the value of 51.64 as the X value i
 
 ## **Cap.7 Multiple Regression Analysis: The Estimation Problem**
 
-### **Exercises**
-
 
 
 

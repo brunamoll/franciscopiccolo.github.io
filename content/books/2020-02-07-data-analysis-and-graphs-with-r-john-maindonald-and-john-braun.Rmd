@@ -3,7 +3,6 @@ title: "Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun
 date: 2020-02-07
 output:
   html_document:
-    df_print: paged
     fig_width: 8.5
     fig_height: 4
 ---
@@ -49,8 +48,6 @@ Após 2 meses (sem muita pressa), consegui finalizar este livro. Alguns capítul
 
 ## **Cap.1 A brief introduction to R**
 
-### **Resumo**
-
 Conseguir absorver o conteúdo deste livro usando uma ferramenta estatística de ponta e gratuita, com este objetivo em mente o primeiro capítulo apresenta o R. Uma ferramenta desenvolvida por uma comunidade engajada que é uma mão na roda para a modelagem estatística e análise de dados. 
 
 Neste capítulo, é fornecido uma visão geral do R, visando deixar o leitor familiarizado com suas funcionalidades. Além disso, tem-se a explicação dos tipos de dados usados na ferramenta (e.g. factors, vectors, data.frames, list e strings), formas de se plotar gráficos (incluindo algumas dicas sobre como se apresentar os dados nos gráficos), instalação e requisição de pacotes no ambiente, modos de acesso à ajuda do sistema (documentação dos pacotes), construção de funções (de maneira bem resumida) e importação de arquivos para o sistema.
@@ -95,8 +92,6 @@ DAAG::rainforest %>%
 ```
 
 ## **Cap.2 Styles of data analysis**
-
-### **Resumo**
 
 A análise exploratória de dados é uma atividade do dia a dia de muitos profissionais (a cada dia esta habilidade se torna mais importante) e o capítulo 2 irá abordar esta técnica, apresentando uma conceituação para o termo e mostrando formas de se realizar uma análise exploratória com rigor técnico.
 
@@ -208,8 +203,6 @@ DAAG::ais %>%
 
 ## **Cap.3 Statistical models**
 
-### **Resumo**
-
 No capítulo 3, ocorre uma breve explicação sobre o que são e para que servem modelos estatísticos. É feita a explicação sobre os *resíduos*, métodos para escolha de modelos, distribuições dos dados (Bernoulli, Binomial, Poisson e Normal), utilização de números aleatórios na construção de modelos, técnicas de amostragem e principais premissas adotadas na construção de modelos (e.g. normalidade dos dados, amostragem aleatória).
 
 Para a premissa de normalidade dos dados, os autores indicam técnicas para validar isso. A principal é o histograma, porém necessitando ser reforçada pelo qq-plot e também por testes formais (e.g. Jarque-Beta, Anderson-Darling e Shapiro-Wilk).
@@ -266,99 +259,6 @@ fun(25,100) %>%
   theme_graph()
 ```
 
-### **5) Plote uma matriz 3 x 4, apresentando em cada célula um histograma baseado em uma distribuição normal (média = 100 e desvio padrão = 10). Na 1º linha, utilize uma amostra com n = 10, na 2ª n = 100 e na 3ª n = 1000.**
-
-```{r, echo=F, include=T, message=F,warning=F}
-g_1000_1 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_1000_2 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_1000_3 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_1000_4 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 1000,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_100_1 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_100_2 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_100_3 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_100_4 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 100,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_10_1 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_10_2 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_10_3 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-g_10_4 <- 
-  ggplot(data = data.frame(a = (rnorm(n = 10,mean = 100,sd = 10))))+
-  geom_histogram(aes(x = a), fill = graph_color, alpha = .5)+
-  theme_graph()+
-  labs(x = "",
-       y = "")
-
-gridExtra::grid.arrange(g_1000_1,g_1000_2,g_1000_3,g_1000_4,
-                        g_100_1,g_100_2,g_100_3,g_100_4,
-                        g_10_1,g_10_2,g_10_3,g_10_4,
-                        nrow = 3, ncol = 4)
-```
-
 ### **7) Use a função de distribuição exponencial (dexp,pexp,qexp,rexp) para calcular a probabilidade de que em 21 dias alguma pessoa sofrerá um acidente de trânsito em uma dado cruzamento, dado que o intervalo entre os acidentes podem ser modelados por uma distribuição exponencial com taxa de 0.05 acidentes por dia.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
@@ -366,8 +266,6 @@ pexp(q = 21,rate = 0.05) # usando a fórmula pronta do R
 ```
 
 ## **Cap.4 An introduction to formal inference**
-
-### **Resumo**
 
 Inferência é um pilar importante da estatística, visto que muitas vezes não se pode acessar os dados de uma população toda para se construir um modelo ou gerar conclusões, por questões de custo e tempo. Desta forma, a capacidade de se fazer inferências com base em uma amostra da população é indispensável no processo científico. 
 
@@ -614,8 +512,6 @@ ggplot(data = df, aes(x = a))+
 ```
 
 ## **Cap.5 Regression with a single predictor**
-
-### **Resumo**
 
 O foco deste capítulo será em modelos de regressão linear. As premissas dos modelos deste capítulo serão: **(i) modelo com apenas uma variável**, **(ii) valores de y independentes** e **(iii) dado um valor de x, o valor de y se distribuirá normalmente com uma média dada pela função linear de x**.
 
