@@ -600,7 +600,30 @@ $$X* = \frac{X_j - \bar{X}}{S_X}$$
 The next model presented is the logarithmic regression models, like log-log, lin-log and log-lin. And the last model presented is the reciprocal model, that has the following form:
 
 $$Y = \beta_1 + \beta_2 (\frac{1}{X}) + \mu$$
+
 ### **Exercises**
+
+### **6.2 The following regressions were obtained from a dataset that has Y as Texaco's monthly returns and X as market's monthly return, both in percentual.**
+
+**(i)** $\hat{Y} = 0.00681 + 0.75815 X_t$  
+
+$ep(\hat{\beta_0}) = 0.02596$; $ep(\hat{\beta_1}) = 0.27009$
+
+p-value: $\hat{\beta_0} = 0.7984$; $\hat{\beta_1} = 0.0186$
+
+r² = 44.06%
+
+**(ii)** $\hat{Y} = 0.76214 X_t$  
+
+$ep(\hat{\beta_1}) = 0.265799$
+
+p-value: $\hat{\beta_1} = 0.0131$
+
+r² = 43.68%
+
+### **f) The normality Jarque-Beta statistics is 1.1167 for the first model and 1.1170 for the second model. What conclusions can be made from this values?**
+
+When the result of this test is far from zero, it indicates that the data isn't normally distributed. Then, the first model with lower jarque-bera value has it's residuals closer to a normal distribution than the second model. The Null hypothesis of this test is that residuals are normally distributed, thus **H0: JB = 0** and **H1: JB > 0**. 
 
 ### **6.14 Using the table 6.7, adjust the following model and obtain the regression statistics of it.**
 
@@ -625,6 +648,59 @@ df %>%
 
 Given the regression output, Y will approach the value of 51.64 as the X value increases.
 
+### **The table 6.8 presents data about investment and saving for 21 countries. This values are an average obtained from 1960 to 1974.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_6.8 <- read.table(file = 
+                      paste(path,"tabela_6.8_investment_and_saving.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ".")
+
+# Dataset sample
+tbl_6.8[sample(nrow(tbl_6.8),5), ] %>% 
+  as.tibble()
+```
+
+### **a) Graphically represent the relation between investment and saving**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_6.8 %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = saving, y = investment), shape = 20)+
+  scale_y_continuous(labels = scales::percent)+
+  scale_x_continuous(labels = scales::percent)+
+  theme_graph()+
+  labs(title = "Investment and Saving relation")
+```
+
+### **c) Develop a regression model using a lin-lin and a log-log model approach.**
+
+$$Y_i = \beta_1 + \beta_2 X_i + \mu_i$$
+Where:
+
+$Y_i = investment$
+
+$X_i = saving$
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Lin-lin model
+tbl_6.8 %>% 
+  lm(formula = investment ~ saving) %>% 
+  summary()
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Log-log model
+tbl_6.8 %>% 
+  lm(formula = log(investment) ~ log(saving)) %>% 
+  summary()
+```
+
+### **d) How would you interpret the slope coeficient in the lin-lin model? And on the log-log model? There're any differences in the interpretation?**
+
+A: The lin-lin model has the coeficient of 1.04772, meaning that in increase in 1 pp in saving would generate an increase of 1.04772 pp in investment. On the other hand, in the log-log model, the coeficient is 1.06308, meaning that an 1% increase in saving would cause and 1.06308% increase in investment. There's a difference in interpretation, because the first model is about changing percentual points and the second is about percentual variation.
+
 ### **Cap.7 Multiple Regression Analysis: The Estimation Problem**
 
 The authors in this chapter explain how multiple regression have to be analyzed. They start presenting the hypothesis of this model, that are the same of simple regression models and then they explain that the coeficients of the model will measure the effect on the mean value of Y considering the other variables constant.
@@ -636,6 +712,57 @@ Then, the author continue explaining the impact thar multiple regression models 
 Also, the author shows that in a multiple regression model, you'll have an Adjusted R² that will inform the same information of R² but considering the amount of variables including in the model. The Adjusted R² in this case, penalizes the inclusion of two many independente variables. At the end, they explain that in regression models, it's not relevant to seek a high Adjusted R², because the goal is to make reliable estimation of the populational parameters $\beta$ in order to make predictions.
 
 ### **Exercises**
+
+### **7.1 Consider the table 7.5 below:**
+
+|y |x_2 |x_3 |
+|--|----|----|
+|1 |1   |2   |
+|3 |2   |1   |
+|8 |3   |-3  |
+
+Build the following models:
+
+$Y = \alpha_1 + \alpha_2 X_2 + \mu$
+
+$Y = \lambda_1 + \lambda_3 X_3 + \mu$
+
+$Y = \beta_1 + \beta_2 X_2 + \beta_3 X_3 + \mu$
+
+Verify if $\alpha_2 = \beta_2$, $\lambda_3 = \beta_3$.
+
+A: Building the models.
+
+```{r, echo=T, include=T, message=F,warning=F}
+df <- data.frame(y = c(1,3,8),
+                 x_2 = c(1,2,3),
+                 x_3 = c(2,1,-3))
+
+# First model
+df %>% 
+  lm(formula = y ~ x_2) %>% 
+  summary()
+
+# Second model
+df %>% 
+  lm(formula = y ~ x_3) %>% 
+  summary()
+
+# Third model
+df %>% 
+  lm(formula = y ~ x_2 + x_3) %>% 
+  summary()
+```
+
+Then, after running the models in R, we have:
+
+$Y = -3 + 3.5 X_2 + \mu$
+
+$Y = 4 - 1.3571X_3 + \mu$
+
+$Y = 2 + 1 X_2 - 1 X_3 + \mu$
+
+With $\alpha_2 = 3.5$ and $\beta_2 = 1$; $\lambda_3 = -1.3571$ and $\beta_3 = -1$. These differences indicate that the independent variables have correlation between then, thus the coeficients diverge when putting together and when putther separatelly on the models. 
 
 ### **Cap.8 Multple Regression Analysis: The Inference Problem**
 
