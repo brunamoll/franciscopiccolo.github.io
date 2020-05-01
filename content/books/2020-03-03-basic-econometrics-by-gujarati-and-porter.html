@@ -42,16 +42,16 @@ tbl_1.3[sample(nrow(tbl_1.3),10), ] %&gt;% as.tibble()</code></pre>
 <pre><code>## # A tibble: 10 x 8
 ##     year   usa canada japan france germany italy    uk
 ##    &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1  1982  96.5   94.9  98.1   91.7    97    87.8  95.4
-##  2  1986 110.   114.  105.   117.    105.  129.  115. 
-##  3  1999 167.   160.  122.   155     140   226.  194. 
-##  4  2005 195.   185.  118.   173.    154.  261.  226. 
-##  5  1992 140.   145.  117    140.    122.  180.  163. 
-##  6  2004 189.   181   119.   170.    151.  256.  219. 
-##  7  1983  99.6  100.   99.8  100.    100.  101.   99.8
-##  8  1989 124    129.  108    129.    109.  151.  135. 
-##  9  2001 177.   169.  120.   160.    145.  238.  204. 
-## 10  1981  90.9   85.6  95.3   81.8    92.2  75.5  87.9</code></pre>
+##  1  2000 172.   165.  121    158.    142   232.  200. 
+##  2  1994 148.   148.  119.   146.    131.  195.  169. 
+##  3  1983  99.6  100.   99.8  100.    100.  101.   99.8
+##  4  1986 110.   114.  105.   117.    105.  129.  115. 
+##  5  1995 152.   151.  119.   148.    133.  206.  175. 
+##  6  1993 144.   148.  118.   143.    128.  188.  165. 
+##  7  1981  90.9   85.6  95.3   81.8    92.2  75.5  87.9
+##  8  2002 180.   173.  119    163.    147.  244.  207  
+##  9  1998 163    158.  122.   154.    139.  222.  191. 
+## 10  1990 131.   136.  111.   133.    112.  160.  148.</code></pre>
 </div>
 <div id="a-with-the-dataset-generate-the-inflation-rate-for-each-country." class="section level3">
 <h3><strong>a) With the dataset, generate the inflation rate for each country.</strong></h3>
@@ -94,18 +94,18 @@ cpi_index %&gt;%
 tbl_1.6[sample(nrow(tbl_1.6),10), ] %&gt;% 
   as.tibble()</code></pre>
 <pre><code>## # A tibble: 10 x 3
-##    empresa     impressions investment
-##    &lt;fct&gt;             &lt;dbl&gt;      &lt;dbl&gt;
-##  1 Ford               40.1      166. 
-##  2 Miller_Lite        32.1       50.1
-##  3 Polaroid           38         26.9
-##  4 MCI                50.7       26.9
-##  5 Bud_Lite           10.4       45.6
-##  6 Pepsi              99.6       74.1
-##  7 Diet_Cola          21.4       20.4
-##  8 ATT_Bell           88.9      155. 
-##  9 Oscar_Meyer        23.4        9.2
-## 10 Crest              71.1       32.4</code></pre>
+##    empresa      impressions investment
+##    &lt;fct&gt;              &lt;dbl&gt;      &lt;dbl&gt;
+##  1 Crest               71.1       32.4
+##  2 Stroh               11.7       19.3
+##  3 MCI                 50.7       26.9
+##  4 Levis               40.8       27  
+##  5 Ford                40.1      166. 
+##  6 Kibbles_Bits         4.4        6.1
+##  7 Shasta              10          5.7
+##  8 Wendys              29.2       49.7
+##  9 ATT_Bell            88.9      155. 
+## 10 Miller_Lite         32.1       50.1</code></pre>
 </div>
 <div id="a-present-the-relation-between-impressions-and-advertising-expenditures." class="section level3">
 <h3><strong>a) Present the relation between impressions and advertising expenditures.</strong></h3>
@@ -150,16 +150,16 @@ tbl_2.7[sample(nrow(tbl_2.7),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 7
 ##      ano share_men_work_~ share_women_wor~ unemployment_men unemployment_wo~
 ##    &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-##  1  1981             77               52.1              7.4              7.9
-##  2  1996             74.9             59.3              5.4              5.4
-##  3  2002             74.1             59.6              5.9              5.6
-##  4  2004             73.3             59.2              5.6              5.4
-##  5  1994             75.1             58.8              6.2              6  
-##  6  1992             75.8             57.8              7.9              7  
-##  7  1985             76.3             54.5              7                7.4
-##  8  1983             76.4             52.9              9.9              9.2
-##  9  2005             73.3             59.3              5.1              5.1
-## 10  1990             76.4             57.5              5.7              5.5
+##  1  1999             74.7             60                4.1              4.3
+##  2  1980             77.4             51.5              6.9              7.4
+##  3  1986             76.3             55.3              6.9              7.1
+##  4  1990             76.4             57.5              5.7              5.5
+##  5  1992             75.8             57.8              7.9              7  
+##  6  1989             76.4             57.4              5.2              5.4
+##  7  1987             76.2             56                6.2              6.2
+##  8  1996             74.9             59.3              5.4              5.4
+##  9  1994             75.1             58.8              6.2              6  
+## 10  1995             75               58.9              5.6              5.6
 ## # ... with 2 more variables: avg_hourly_earning_men &lt;dbl&gt;,
 ## #   avg_hourly_earning_women &lt;dbl&gt;</code></pre>
 </div>
@@ -206,16 +206,16 @@ tbl_2.8[sample(nrow(tbl_2.8),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 2
 ##    alimento total
 ##       &lt;int&gt; &lt;int&gt;
-##  1      360   795
-##  2      325   478
-##  3      355   579
-##  4      540   730
-##  5      220   640
-##  6      397   752
-##  7      383   616
-##  8      303   391
-##  9      336   494
-## 10      315   618</code></pre>
+##  1      420   608
+##  2      340   695
+##  3      325   478
+##  4      403   648
+##  5      322   677
+##  6      383   616
+##  7      415   721
+##  8      267   623
+##  9      295   695
+## 10      410   775</code></pre>
 </div>
 <div id="a-represent-the-data-drawing-the-food-expenses-in-the-y-axis-and-total-expenses-in-the-x-axis-and-then-plot-the-regression-line." class="section level3">
 <h3><strong>a) Represent the data drawing the food expenses in the Y axis and total expenses in the X axis and then plot the regression line.</strong></h3>
@@ -324,16 +324,16 @@ tbl_3.7[sample(nrow(tbl_3.7),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 4
 ##      ano gold_price nyse_index ipc_index
 ##    &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
-##  1  1987       446.      1710.     114. 
-##  2  1976       125.       576.      56.9
-##  3  2004       410.      6613.     189. 
-##  4  1995       384.      3079.     152. 
-##  5  2001       274.      6398.     177. 
-##  6  1978       193.       568.      65.2
-##  7  1988       437.      1585.     118. 
-##  8  1993       360.      2639.     144. 
-##  9  1986       368.      1438.     110. 
-## 10  1980       613.       720.      82.4</code></pre>
+##  1  2006       603.      8358.      202.
+##  2  1999       279.      6547.      167.
+##  3  1995       384.      3079.      152.
+##  4  2002       310.      5579.      180.
+##  5  2005       445.      7349       195.
+##  6  2003       363.      5447.      184 
+##  7  1987       446.      1710.      114.
+##  8  1984       360.       977.      104.
+##  9  1992       344.      2422.      140.
+## 10  1990       384.      1939.      131.</code></pre>
 </div>
 <div id="a-plot-the-gold-price-nyse-index-and-cpi-index-in-a-dispersion-graph." class="section level3">
 <h3><strong>a) Plot the gold price, NYSE index and CPI index in a dispersion graph.</strong></h3>
@@ -495,16 +495,16 @@ tbl_5.5[sample(nrow(tbl_5.5),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 3
 ##      obs  wage expense
 ##    &lt;int&gt; &lt;dbl&gt;   &lt;int&gt;
-##  1    44  24.6    2829
-##  2    43  22.6    3402
-##  3    21  22.6    3914
-##  4    32  21.8    2533
-##  5     7  30.7    5710
-##  6    36  20.5    3124
-##  7     1  19.6    3346
-##  8    15  27.4    3982
-##  9     4  26.8    4642
-## 10    25  23.4    3594</code></pre>
+##  1     5  29.5    4669
+##  2    45  22.3    2297
+##  3    40  21.0    2509
+##  4     3  20.3    3554
+##  5    36  20.5    3124
+##  6    20  20.9    3285
+##  7    15  27.4    3982
+##  8    11  24.3    3159
+##  9    51  25.8    3766
+## 10     6  26.6    4888</code></pre>
 </div>
 <div id="b-create-a-regression-model-to-analyze-the-standard-error-and-r²." class="section level3">
 <h3><strong>b) Create a regression model to analyze the standard error and r².</strong></h3>
@@ -556,16 +556,16 @@ tbl_3.7[sample(nrow(tbl_1.3),10), ] %&gt;%
 <pre><code>## # A tibble: 10 x 4
 ##      ano gold_price nyse_index ipc_index
 ##    &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
-##  1  1985       317.      1143.     108. 
-##  2  1981       460.       783.      90.9
-##  3  1992       344.      2422.     140. 
-##  4  1994       384       2687.     148. 
-##  5  1976       125.       576.      56.9
-##  6  1987       446.      1710.     114. 
-##  7  1996       388.      3787.     157. 
-##  8  1982       376.       729.      96.5
-##  9  1984       360.       977.     104. 
-## 10  1993       360.      2639.     144.</code></pre>
+##  1  1982       376.       729.      96.5
+##  2  1986       368.      1438.     110. 
+##  3  1980       613.       720.      82.4
+##  4  1975       161.       484.      53.8
+##  5  1987       446.      1710.     114. 
+##  6  1998       294.      5818.     163  
+##  7  1988       437.      1585.     118. 
+##  8  1976       125.       576.      56.9
+##  9  1996       388.      3787.     157. 
+## 10  1991       362.      2182.     136.</code></pre>
 </div>
 <div id="b-the-regressions-residuals-are-normally-distributed" class="section level3">
 <h3><strong>b) The regression’s residuals are normally distributed?</strong></h3>
@@ -688,11 +688,11 @@ tbl_6.8[sample(nrow(tbl_6.8),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 3
 ##   country    investment saving
 ##   &lt;fct&gt;           &lt;dbl&gt;  &lt;dbl&gt;
-## 1 us              0.186  0.186
-## 2 norway          0.278  0.299
-## 3 greece          0.219  0.248
-## 4 autria          0.285  0.282
-## 5 new_zeland      0.232  0.249</code></pre>
+## 1 ireland         0.19   0.218
+## 2 swedish         0.241  0.242
+## 3 spain           0.235  0.241
+## 4 netherland      0.273  0.266
+## 5 germany         0.271  0.264</code></pre>
 </div>
 <div id="a-graphically-represent-the-relation-between-investment-and-saving" class="section level3">
 <h3><strong>a) Graphically represent the relation between investment and saving</strong></h3>
@@ -772,32 +772,10 @@ tbl_6.8 %&gt;%
 </div>
 <div id="consider-the-table-7.5-below" class="section level3">
 <h3><strong>7.1 Consider the table 7.5 below:</strong></h3>
-<table>
-<thead>
-<tr class="header">
-<th>y</th>
-<th>x_2</th>
-<th>x_3</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>1</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>2</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td>8</td>
-<td>3</td>
-<td>-3</td>
-</tr>
-</tbody>
-</table>
+<pre><code>##   y x_2 x_3
+## 1 1   1   2
+## 2 2   2   1
+## 3 8   3  -3</code></pre>
 <p>Build the following models:</p>
 <p><span class="math inline">\(Y = \alpha_1 + \alpha_2 X_2 + \mu\)</span></p>
 <p><span class="math inline">\(Y = \lambda_1 + \lambda_3 X_3 + \mu\)</span></p>

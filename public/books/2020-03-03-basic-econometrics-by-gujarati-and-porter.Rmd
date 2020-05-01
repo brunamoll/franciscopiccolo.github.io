@@ -715,11 +715,11 @@ Also, the author shows that in a multiple regression model, you'll have an Adjus
 
 ### **7.1 Consider the table 7.5 below:**
 
-|y |x_2 |x_3 |
-|--|----|----|
-|1 |1   |2   |
-|3 |2   |1   |
-|8 |3   |-3  |
+```{r, echo = F}
+data.frame(y = c(1,2,8),
+           x_2 = c(1,2,3),
+           x_3 = c(2,1,-3))
+```
 
 Build the following models:
 

@@ -13,6 +13,16 @@
   </url>
   
   <url>
+    <loc>/posts/2020/01/global-immigration-outlook-using-wbstats-r-package/</loc>
+    <lastmod>2020-01-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <lastmod>2020-01-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/about/</loc>
     <lastmod>2019-11-01T00:00:00+00:00</lastmod>
   </url>
@@ -24,11 +34,6 @@
   
   <url>
     <loc>/posts/2019/10/connecting-r-on-amazon-redshift-database/</loc>
-    <lastmod>2019-10-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/</loc>
     <lastmod>2019-10-28T00:00:00+00:00</lastmod>
   </url>
   

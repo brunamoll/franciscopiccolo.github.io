@@ -1,0 +1,331 @@
+---
+title: "Global Immigration Outlook using wbstats R package"
+date: 2020-01-20
+output:
+  html_document:
+    fig_width: 8.5
+    fig_height: 4
+---
+
+Imigration is a central theme on political debates for presidential elections nowadays, creating a lot of controversies and also hope for many people. This social event is increasingly calling more attention, both Syria conflict and the weaknesses of the Venezuelan economy that sent millions to seek other place to live surpreended politicians, that didn't get ready earlier to obtain the benefits that migration flow could generate.
+
+Because of the theme's relevance, in November-2019 [The Economist](https://www.economist.com/printedition/2019-11-16) made a special report about immigration, aiming to clarify the current situation, answer some questions about the impact of immigrants on host countries and also present some success cases of countries that are obtaining advantages by the immigration flow. 
+
+I've really enjoyed the theme and the researches that were writen by The Economist's correspondents, thus I decided to write a post to present the main conclusions of the studies and also complement them with additional data about immigration around the world. For this task I'll access World Bank's database using the R package wbstats, an API that allows you to connect to the institution's database.
+
+The following image is from one of the magazine's reports.
+
+![](/images/2020-01-09_imigration_post.png)
+
+## **Main conclusions of the report**
+
+1) People that successfully migrate from a poor country to a rich one increase their income between 3 to 6 times, because rich countries have better institutions, capital alocation and modern companies.
+
+2) If everone that wanted immigration were allowed to, World's GDP could increase in 100%.
+
+3) Immigrants are more likely to open their own business because they percept unatended demands easier than local residents and also they find alternative solutions to existent problems on the country that they enter.
+
+4) The main "problem" with immigration is the cultural change, that occurs speedly in specific places because immigrants tend to cluster in certain locals. In addition of being the main problem, it's a tough condition to measure, then it's difficult to be contested.
+
+5) People are more tolerant to immigration flow in their countries when they feel that their government are in charge of the frontier, allowing people qualified that will add to local society. In other words, people are more receptive if they feel that the process is under control.
+
+6) Imigratns often share their income with their families that have stayed on the country and this shared income is called [remitances](https://www.ted.com/talks/dilip_ratha_the_hidden_force_in_global_economics_sending_money_home). Remitances already is the main source of external investment in certain poor countries. This flow of money has high potential of impacts, because it goes straight to the pocket of people that are in need and also this investment doesn't carry the risk of being misplaced by corruption. Remitances represent more than 10% of GDP for 28 countries.
+
+## **Immigration Outlook**
+
+After understanding some aspects of immigration, we can analyze some data from World Bank in order to dive a little deep on this theme. For this task I'll use the following packages:
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+library(tidyverse)      # data science and data manipulation packages
+library(wbstats)        # World Bank API
+
+theme_graph <- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+}
+```
+
+The first thing the I would like to know about this theme is the population considered immigrant by the institution, as well as the evolution of this metric during the years. In order to access this data, we just need to call the wbstats package with the code that represent the desired metric.
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+# Creating a variable with the data.frame of the requested data
+migrants_pop <- wbstats::wb(indicator = "SM.POP.TOTL",
+                              country = "countries_only",
+                              startdate = 1980,
+                              enddate = 2019)
+```
+
+After requesting the data, it's possible to analyze the immigration population during the years.
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+migrants_pop %>% 
+  group_by(date) %>% 
+  summarise(immigrants = sum(value)) %>% 
+  ggplot()+
+  geom_line(mapping = aes(x = date, y = immigrants, group = 1), 
+            size = .5, 
+            color = "dark orange",
+            alpha = .6)+
+  geom_point(mapping = aes(x = date, y = immigrants),
+             color = "dark orange")+
+  scale_y_continuous(labels = scales::comma)+
+  theme_graph()+
+  labs(title = "Immigrant's population during the years",
+       x = "",
+       y = "")
+```
+
+The dataset goes untill 2015 with a population of 250 millions. That's more than Brazil's population. Moving forward, let's see which countries have the highest share of immigrants living on their territory. The next visualization will present the 20 countries with the highest rate of immigrants on their population. Probably Canada and Australia will be well positioned.
+
+For this visualization, we'll need bring data about country population in order to join with the immigrant population. This metric will consider the share in 2015 only.
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+# Bringing population data from world bank
+population <- wbstats::wb(indicator = "SP.POP.TOTL",
+                          country = "countries_only")
+```
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+# Joining both datasets
+migrants_pop %>% 
+  filter(date == "2015") %>% 
+  select(country, date, value) %>% 
+  inner_join(population, by = c("country" = "country", "date" = "date")) %>%
+  mutate(share_immigrants = round(value.x/value.y, digits = 4)) %>% 
+  filter(value.y >= 10000000) %>% 
+  arrange(desc(share_immigrants)) %>% 
+  head(20) %>% 
+  mutate(country = fct_reorder(country, share_immigrants)) %>% 
+  ggplot()+
+  geom_col(mapping = aes(x = country, y = share_immigrants),
+           fill = "dark orange",
+           alpha = .6)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  labs(title = "County rank by imigration share over population",
+       x = "",
+       y = "% of imigrants over the population")+
+  coord_flip()
+```
+
+I didn't know Saudi Arabia would be the first. This [article](https://www.thestreet.com/personal-finance/countries-with-most-immigrants) enforce this number. As I removed countries with less than 10 million hbitants, I've probably removed UAE that was the first positioned in the mentioned article.
+
+Now that we know the countries that have been receiving many immigrants, let's see some countries that have been loosing residents during the past years. The World Bank has an indicator that shows the net output of people for a given country. The math is straightforward, it's immigrants minus migrants. Thus, if I classify countries from the lowest value to the highest and select the first 20, I'll end up with the 20 countries that have lost more local residents.
+
+For this analysis I'll take the mentioned metric from 2010 to 2017, in order to consider the outflow of residents throughout some years. First, let's take the Net Immigration Flow metric.
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+net_immigration <- wbstats::wb(indicator = "SM.POP.NETM",
+                         country = "countries_only",
+                         startdate = 2010,
+                         enddate = 2019) %>% 
+  select(country, value, date)
+
+# Dataset sample
+net_immigration[sample(nrow(net_immigration),5), ]
+```
+
+Now we can adjust the dataset to sum the years gathered and classify the countries in order to take the 20 that have lost more residents during the period and plot the graph.
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+net_immigration %>% 
+  group_by(country) %>% 
+  summarise(net_immigration = sum(value)) %>% 
+  arrange(net_immigration) %>% 
+  head(20) %>% 
+  mutate(net_immigration = net_immigration * -1,
+         country = fct_reorder(country, net_immigration)) %>% 
+  ggplot()+
+  geom_col(mapping = aes(x = country, y = net_immigration),
+           fill = "dark orange",
+           alpha = .6)+
+  scale_y_continuous(labels = scales::comma)+
+  theme_graph()+
+  coord_flip()+
+  labs(title = "Countries that had lost more residents since 2010",
+       x = "",
+       y = "Net immigration")
+```
+
+I was expecting to see Syria and Venezuela in this plot. India and China isn't in the same scenario of those two countries, but with their large population, any movement in theses countries are a big thing when we don't normalize the data. In order to remove these big countries, let's remake this analysis but now classifing countries considering the share of the population that migrated from it. For this, we'll need to bring the same Net Immigration Flow metric and join with poplational data in the last year of analysis. 
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+# Net immigration summed during the period
+net_immigration %>% 
+  group_by(country) %>% 
+  summarise(net_immigration = sum(value)) -> net_immigration
+
+# Joinning the population and net_immigration data
+population %>% 
+  filter(date == 2015) %>%
+  mutate(population = value) %>% 
+  select(country, population) %>% 
+  inner_join(net_immigration, by = c("country" = "country")) %>% 
+  mutate(net_immigration_share = round(net_immigration/population, digits = 4)) %>% 
+  arrange(net_immigration_share) %>% 
+  head(20) %>% 
+  mutate(net_immigration_share = net_immigration_share * -1,
+         country = fct_reorder(country, net_immigration_share)) %>% 
+  ggplot()+
+  geom_col(mapping = aes(x = country, y = net_immigration_share),
+           fill = "dark orange",
+           alpha = .6)+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  coord_flip()+
+  labs(title = "Share of population that left the country in the period",
+       x = "",
+       y = "",
+       caption = "From 2010 to 2017")
+```
+
+This analysis seems pretty realistic, having Syria in the first place and Puerto Rico with its social problems with gangs and organized crime.
+
+Moving forward, know that we know what countries are loosing their residents, let's analyze how remitances are impacting these countries. As noted at The Economist's reports, remitance is a great source of investment for poor countries, because it goes straight to the hands of the family that are in need of it and is less likely to be drained by corruption. 
+
+Two findings in the research made by the magazine called my attention. The first is that remitance represents more thant 10% of GDP in 29 countries (that's a huge contribution). The second discovery is that remitance is acyclic with Per Capita GDP. Thus it moves in opposite direction of this indicator and this behavior has a theory to justify it.
+
+When immigrants realize that their home country are in trouble, like an economic crises or a war, they sent more money to their families in order to support them in a new tough situation. This seems well justified, but we can verify this hypothesis (i.e. if remitance is acyclic when compared with Per Capita GDP). Fortunately, Word Bank has the necessary data to analyze this hypothesis. 
+
+Let's first visualize the countries that have more than 10% of their GDP comming from remitances. Luckly, World Bank has this specific metric ready to be requested by the API. The following list represent the countries and their share of GDP comming from remitances.
+
+```{r,include=T,echo=T,warning=F,message=F}
+remitances_over_gdp <- wbstats::wb(indicator = "BX.TRF.PWKR.DT.GD.ZS",
+                         country = "countries_only")
+
+remitances_over_gdp %>% 
+  filter(date == "2018",
+         country != "Lesotho",
+         value > 10) %>%
+  mutate(remitance_over_gdp = paste(round(value,digits = 0),"%",sep = "")) %>% 
+  arrange(desc(value)) %>% 
+  select(date, country, remitance_over_gdp)
+```
+
+Now, let's analyze the hypothesis that the remitance is acyclic when compared with Per Capita GDP. For this test, I'll select the following countries: Suriname, Somalia, Sierra Leone, Senegal, Sudan, Rwanda, Nepal, Niger, Malawy, Mali, Lybia, Kenya, Ethiopia, Eritrea and Congo.
+
+```{r,include=F,echo=F,warning=F,message=F}
+# Creating a variable with the selected countries
+country_view <- c("Yemen, Rep.","Tanzania","Uganda",
+                  "Tunisia","Chad","Syrian Arab Republic",
+                  "	Suriname","Somalia","Sierra Leone",
+                  "Senegal","Sudan","Rwanda","Nepal",
+                  "Nigeria","Malawi","Mali","Libya",
+                  "Kenya","Ethiopia","Eritrea",
+                  "Congo, Rep.")
+```
+
+Now I'll request the metric "Remitances received" and "Per Capita GDP".
+
+```{r,include=F,echo=T,warning=F,message=F}
+remitances_received <- wbstats::wb(indicator = "BX.TRF.PWKR.CD.DT",
+                               country = "countries_only")
+
+gdp_pc <- wbstats::wb(indicator = "NY.GDP.PCAP.CD",
+                      country = "countries_only")
+```
+
+Know I have remitances received and Per Capita GDP. In order to compare, it'll be necessary to normalize remitances by country population. The following code chunk will do this task.
+
+```{r,include=T,echo=T,warning=F,message=F}
+remitances_received %>% 
+  mutate(remitances = value) %>% 
+  select(date, country, remitances) %>% 
+  filter(country %in% country_view,
+         date > 2010) %>% 
+  inner_join(population, by = c("date" = "date", "country" = "country")) %>% 
+  select(date, country, remitances, value) %>% 
+  mutate(remitances_adj = round(remitances/value, digits = 4)) %>% 
+  select(date, country, remitances_adj) -> remitances
+
+# Sample from dataset
+remitances[sample(nrow(remitances),5), ]
+```
+
+Know, I can join the two datasets and generate the scaterplot. The remitances dataset created before is already filtered with the selected countries.
+
+```{r,include=T,echo=T,warning=F,message=F}
+gdp_pc %>% 
+  mutate(gdp_pc = value) %>% 
+  select(date, country, gdp_pc) %>% 
+  inner_join(remitances, by = c("date" = "date", "country" = "country")) %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = remitances_adj, y = gdp_pc))+
+  geom_smooth(mapping = aes(x = remitances_adj, y = gdp_pc),
+              method = "lm",
+              formula = y ~ x,
+              se = F,
+              lty = 2,
+              color = "dark orange")+
+  theme_graph()+
+  labs(title = "Per Capita GDP and Remitances correlation",
+       y = "Per Capita GDP",
+       x = "Per Capita Remitances")
+```
+
+I was expecting to see a negative correlation between the variables, because the lower Per Capita GDP, highet should be Per Capita Remitances. Let's see the regression model for this two variables. The model that I'll use will be:
+
+$$R = \beta_0 + \beta_1 pc.gdp + \mu$$
+In other words, I'll analyze the impact that per capita GDP causes in the flow of per capita remitances sent by immigrants to their families or friends. Unfortunately $\beta_2$ will be positive (contraty to what I was expecting), but eventhouth I'll keep the model development.
+
+```{r,include=T,echo=T,warning=F,message=F}
+gdp_pc %>% 
+  mutate(gdp_pc = value) %>% 
+  select(date, country, gdp_pc) %>% 
+  inner_join(remitances, by = c("date" = "date", "country" = "country")) %>%
+  lm(formula = remitances_adj ~ gdp_pc) %>% 
+  summary()
+```
+
+With the output of the model we can reformulate the regression equation:
+
+$$R = 23.91 + 0.03 pc.gdp + \mu$$
+
+Both intercept and slope are statistically significant with a p-value lower than 5%. Let's summarize the both metric and see a time series of them in order to identify the mentioned pattern.
+
+```{r,include=T,echo=T,warning=F,message=F}
+gdp_pc %>% 
+  mutate(gdp_pc = value) %>% 
+  select(date, country, gdp_pc) %>% 
+  inner_join(remitances, by = c("date" = "date", "country" = "country")) %>%
+  group_by(date) %>% 
+  summarise(gdp = sum(gdp_pc),
+            remitance = sum(remitances_adj)) %>% 
+  ggplot()+
+  geom_line(mapping = aes(x = date, y = gdp, group = 1),
+            color = "dark orange")+
+  scale_y_continuous(labels = scales::comma)+
+  theme_graph()+
+  labs(title = "Per Capita GDP time series")
+
+
+gdp_pc %>% 
+  mutate(gdp_pc = value) %>% 
+  select(date, country, gdp_pc) %>% 
+  inner_join(remitances, by = c("date" = "date", "country" = "country")) %>%
+  group_by(date) %>% 
+  summarise(gdp = sum(gdp_pc),
+            remitance = sum(remitances_adj)) %>% 
+  ggplot()+
+  geom_line(mapping = aes(x = date, y = remitance, group = 1),
+            color = "dark orange")+
+  scale_y_continuous(labels = scales::comma)+
+  theme_graph()+
+  labs(title = "Per Capita Remitances time series")
+```
+
+When the data is agregated, the behavior is perceived. I won't go deep in this topic because it would miss the point.
+
+## **Conclusions**
+
+In this post I wanted analyze some data about immigration, share the main findings of the research made by the magazine and show how to request some data from World Bank using the **wbstats** package. I hope it was interesting for you.
+
