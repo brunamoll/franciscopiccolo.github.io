@@ -926,22 +926,6 @@ Given this regression model, $\beta_2 = -1.27$ indicates that rose demand will f
 
 **A:** Yes, because they're on transformed by natural log, then small variations can be interpreted as percentual variations. But this model generated parameters with high p-value, then these parameters aren't strong predictors for the variable being studied.
 
-### **7.18) USA's defense budget between 1962 and 1981 is represented by the table 7.8. To explain this budget, use the following model:**
-
-$$Y = \beta_1 + \beta_2 X_2 + \beta_3 X_3 + \beta_4 X_4 + \beta_5 X_5 + \mu$$
-Where 
-
-$Y$ = Anual expenditure with defense in billions
-
-$\beta_2$ = GNP in billions
-
-$\beta_3$ = Sales of militar assistance in billions
-
-$\beta_4$ = Sales from aerospace industry in billions
-
-$\beta_5$ = Militar conflicts with more than 100.000 soldiers. Binary variable (i.e. 1 or 0)
-
-
 ### **Cap.8 Multple Regression Analysis: The Inference Problem**
 
 In this chapter the author record the reader that OLS method to develop regression models doen't make any assumption about the error distribution $\mu$ and the OLS would be fine if the goal is to make point estimation of the parameters of the model. But when the goal is to make estimations about the populational parameters, the normality of $\mu$ assumption will be required.
