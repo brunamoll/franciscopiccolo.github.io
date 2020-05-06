@@ -12,6 +12,7 @@ library(tidyverse)
 library(Amelia)
 library(gridExtra)
 library(plot3D)
+library(patchwork)
 
 theme_graph <- function(){
   theme(
@@ -41,7 +42,7 @@ This book is the tipical book reference for a given subject, and when the theme 
 
 ![Book cover](/images/2020-03-03_econometria_basica.png)
 
-## **Cap.1 The nature of regression analysis**
+## **Chapter 1 - The nature of regression analysis**
 
 This chapter presents some foundations of regression analysis. First it's defined the concept and then its goals. Accordingly with the authors, regression is the study of the dependence of one variable in relation to one or more independent variables. 
 
@@ -113,7 +114,7 @@ tbl_1.6 %>%
        y = "Impressions")
 ```
 
-## **Cap.2 Regression analysis with two variables: Some basic ideas**
+## **Chapter 2 - Regression analysis with two variables: Some basic ideas**
 
 In this chapter the authors go a little deep on simple regression models, introducing the concept of **expected value of Y**. One of the key findings of this chapter is...
 
@@ -158,7 +159,7 @@ tbl_2.8 %>%
        y = "Food expenditures")
 ```
 
-## **Cap.3 Regression model with two variables: The estimation problem**
+## **Chapter 3 - Regression model with two variables: The estimation problem**
 
 The goal of this chapter will be the estimation of the populational regression function using a regression model created from a sample data of the population. The authors indicate two possible methods for this task, (i) the ordinary least squares (OLS) and (ii) the maximum likelihood. Both methods lead to the same results but the first one is easier to apply.
 
@@ -186,11 +187,11 @@ $X_t$ = US Inflation Rate/Canada Inflation Rate
 
 ### **a) Write the interpretation for this regression model.**
 
-This regression model indicates that as US inflation rate is higher than Canadian inflation rate, the Canadian currency will appreciate, thus the denominator of the fraction $DC/US$ will be lower because inflation erodes the purchasing power of the currency. The r² of 44% indicates that ther're other variables that could support the model.
+**A:** This regression model indicates that as US inflation rate is higher than Canadian inflation rate, the Canadian currency will appreciate, thus the denominator of the fraction $DC/US$ will be lower because inflation erodes the purchasing power of the currency. The r² of 44% indicates that ther're other variables that could support the model.
 
 ### **b) The positive value of X has economic foundations?** 
 
-Yes, it does. As the inflation rate is higher in the US, the Canadian dolar will be traded by more US dolars.
+**A:** Yes, it does. As the inflation rate is higher in the US, the Canadian dolar will be traded by more US dolars.
 
 ### **3.20) The next table presents a dataset about hourly production index (X) and hourly real wages (Y) for the industrial sector and non agricultural sector, between 1960 and 2005**
 
@@ -213,13 +214,13 @@ tbl_3.6 %>%
   tidyr::gather("wage","wag",2:3) %>% 
   ggplot()+
   geom_point(mapping = aes(x = prod, y = wag, color = production))+
-  scale_color_brewer(type = "qual")+
   geom_smooth(mapping = aes(x = prod, y = wag),
               formula = "y ~ x",
               method = "lm",
               se = F, 
               lty = 2, 
               color = "dark orange")+
+  scale_color_brewer(type = "qual")+
   theme_graph()+
   labs(title = "Production index and hourly wages",
        x = "Production",
@@ -233,14 +234,15 @@ tbl_3.6 %>%
   tidyr::gather("production","X",2:3) %>% 
   tidyr::gather("wage","Y",2:3) -> df_tbl_3.6
 
-summary(lm(Y~X, data = df_tbl_3.6))
+lm(Y~X, data = df_tbl_3.6) %>% 
+  summary()
 ```
 
 ### **3.22) The following dataset presents gold price, NYSE index and CPI index between 1974 to 2006. Use this dataset to answer the next questions.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.7 <- read.table(file = 
-                      paste(path,"tabela_3.7_ouro_nyse_IPC.txt",sep = ""),
+                      paste(path,"tabela_3.7_gold_nyse_cpi.txt",sep = ""),
                       sep = " ",
                       header = T, 
                       dec = ",")
@@ -250,13 +252,13 @@ tbl_3.7[sample(nrow(tbl_3.7),5), ] %>%
   as.tibble()
 ```
 
-### **a) Plot the gold price, NYSE index and CPI index in a dispersion graph.**
+### **a) Plot Gold price, NYSE and CPI index in a dispersion graph.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.7 %>% 
-  transmute(x = gold_price,
-            y = nyse_index,
-            z = ipc_index) -> df_test
+  transmute(x = gold,
+            y = nyse,
+            z = cpi) -> df_test
 
 x <- df_test$x
 y <- df_test$y
@@ -276,30 +278,30 @@ plot3D::scatter3D(x, y, z,
                   col.panel = "steelblue", 
                   colkey = T, 
                   main = "Table 3.7 data", 
-                  xlab = "gold_price", 
-                  ylab = "nyse_index", 
-                  zlab = "ipc_index")
+                  xlab = "gold", 
+                  ylab = "nyse", 
+                  zlab = "cpi")
 ```
-
 ### **b) Suposing that an investment works as an inflation edge if its profitability follows the inflation rate, test the following regression models using the variables of the dataset.**
 
-$$gold.price = \beta_1 + \beta_2 + CPI + \mu$$
-$$NYSE.index = \beta_1 + \beta_2 + CPI + \mu$$
+
+$$gold = \beta_1 + \beta_2 + CPI + \mu$$
+$$nyse = \beta_1 + \beta_2 + CPI + \mu$$
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Adjusting the dataset to take the profitability of each asset
 tbl_3.7 %>% 
-  mutate(gold_price_var = round(gold_price/lag(gold_price, 1, default = NA), digits = 8)-1,
-         nyse_index_var = round(nyse_index/lag(nyse_index, 1, default = NA), digits = 8)-1,
-         ipc_index_var = round(ipc_index/lag(ipc_index, 1, default = NA), digits = 8)-1) %>% 
-  filter(!is.na(gold_price_var)) -> tbl_3.7_df_adj
+  mutate(gold_price_var = round(gold/lag(gold, 1, default = NA), digits = 8)-1,
+         nyse_index_var = round(nyse/lag(nyse, 1, default = NA), digits = 8)-1,
+         ipc_index_var = round(cpi/lag(cpi, 1, default = NA), digits = 8)-1) %>% 
+  filter(!is.na(gold)) -> tbl_3.7_df_adj
 ```
 
 ```{r, echo=T, include=T, message=F,warning=F}
 g1 <- 
   tbl_3.7_df_adj %>% 
   ggplot()+
-  geom_point(mapping = aes(x = ipc_index_var, y = nyse_index_var), color = "dark orange")+
+  geom_point(mapping = aes(x = ipc_index_var, y = nyse_index_var))+
   geom_smooth(mapping = aes(x = ipc_index_var, y = nyse_index_var),
               formula = "y ~ x",
               method = "lm",
@@ -318,7 +320,7 @@ g1 <-
 g2 <- 
   tbl_3.7_df_adj %>% 
   ggplot()+
-  geom_point(mapping = aes(x = ipc_index_var, y = gold_price_var), color = "dark orange")+
+  geom_point(mapping = aes(x = ipc_index_var, y = gold_price_var))+
   geom_smooth(mapping = aes(x = ipc_index_var, y = gold_price_var),
               formula = "y ~ x",
               method = "lm",
@@ -334,7 +336,7 @@ g2 <-
        x = "CPI index variation",
        y = "Gold price variation")
 
-gridExtra::grid.arrange(g1,g2,ncol = 2)
+g1 + g2
 ```
 
 ```{r, echo=T, include=T, message=F,warning=F}
@@ -351,7 +353,7 @@ tbl_3.7_df_adj %>%
   summary()
 ```
 
-Apparently, gold price is a better asset to edge inflation rate than the NYSE index. Althought there're two outliers on the gold price data that are impacting the model.
+**A:** Apparently, gold price is a better asset to edge inflation rate than the NYSE index. Althought there're two outliers on the gold price data that are impacting the model.
 
 ## **Cap.4 Classical Normal Linear Regression Model**
 
@@ -385,9 +387,9 @@ $$\hat{Y} = 14.4773 + 0.0022X_i$$
 
 $$ep(\hat{\beta_1}) = 6.1523; ep(\hat{\beta_2}) = 0.00032; r² = 0.6023$$
 
-### **a) The estimated coeficient is statistically significant at 5%? What is the Null hypothesis for this scenario?**
+### **a) The estimated intercept (beta 1) is statistically significant at 5%? What is the Null hypothesis for this scenario?**
 
-The significance of the intercept $\beta_1$ will be validated by testing the hypothesis that it is zero. Then we have H0: $\beta_1 = 0$ and H1: $\beta_1 \neq 0$. For this test we'll generate the **t-statistics** (from the student distribution, because the population variation is unknown) in order to calculate the p-value and make the conclusion about the Null hypothesis (reject H0 or fail to reject it).
+**A:** The significance of the intercept ($\beta_1$) will be validated by testing the hypothesis that it is zero. Then we have H0: $\beta_1 = 0$ and H1: $\beta_1 \neq 0$. For this test we'll generate the **t-statistics** (from the student distribution, because the population variation is unknown) in order to calculate the p-value and make the conclusion about the Null hypothesis (reject H0 or fail to reject it).
 
 **t-statistics** 
 
@@ -410,7 +412,7 @@ The p-value will be the probability of having a value outside this range, in thi
 (1-pt(2.35, 34))*2
 ```
 
-Concluding, with a p-value of 2.437% it's possible to reject H0 because the significance level as of 5%. In other words the intercept of the model is statistically significant at 5% of significance level.
+Concluding, with a p-value of 2.437% it's possible to reject H0 because the significance level is 5%. In other words the intercept of the model is statistically significant at 5% of significance level.
 
 ### **b) The slope is statistically significant at 5% of confidence level? What is the Null hypothesis for this test?**
 
@@ -424,7 +426,7 @@ This **t-statistics** will generate a pretty low **p-value**, thus the Null hypo
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # p-value using the t-statistics calculated before
-(1-pt(6.88,36))*2
+(1-pt(6.88, 34))*2
 ```
 
 ### **5.9) The table 5.5 present data about teachers' earnings and students' expenditures in 1985 for 50 US states. In order to verify the relation between earnings and expenditures, the following model was sugested.**
@@ -453,7 +455,7 @@ tbl_5.5[sample(nrow(tbl_5.5),5), ] %>%
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_5.5 %>%
-  lm(formula = wage~expense) %>% 
+  lm(formula = wage ~ expense) %>% 
   summary()
 ```
 
@@ -465,7 +467,7 @@ $$\hat{r} = 12.13+0.003308\times g+\mu$$
 
 ### **d) Test if the true parameter of beta 2 is 3. Use a confidence interval for this task.**
 
-For this scenario, we have: H0: $\beta_2 = 3$ and H1: $\beta_2 \neq 3$. The equation to build the limits is:
+**A:** For this scenario, we have: H0: $\beta_2 = 3$ and H1: $\beta_2 \neq 3$. The equation to build the limits is:
 
 $$\hat{\beta_2} +/- t_\frac{\alpha}{2} \times ep(\hat{\beta_2})$$
 Using the **t distribution** because population variance is unknown and $\frac{\alpha}{2}$ because is a two side test (i.e. H1: $\beta_2 \neq 3$).
@@ -489,24 +491,36 @@ $$\hat{\beta_2} +/- t_\frac{\alpha}{2} \times ep(\hat{\beta_2})$$
 
 $$0.003308 +/- 2.009575 \times 0.0003117$$
 
-Then, the interval is (0.00268 e 0.00393). Allowing the rejection of the Null hypothesis. 
+Then, the interval is (0.00268 e 0.00393). Allowing the rejection of the Null hypothesis because it doesn't contain the requested value of 3.
+
+**Ps:** If I would make this test using test of hypothesis and p-value for the decision, I would generate a **t-statistics* of:
+
+$$|\frac{\hat{\beta_2} - \beta_2}{ep(\hat{\beta_2})}|$$
+$$|\frac{0.003308 - 3}{0.0003117}| = 9.614,026$$
+The p-value for this **t-statistics** is almost 0, reforcing the rejection of the Null Hypothesis. But note that this p-value is different from the p-value generated from R of **2.707e-14**. This p-value considers a Null Hypothesis of $\hat{\beta_2} = 0$, instead of 3. Thus, R makes the following calculation to get this result:
+
+$$|\frac{0.003308 - 0}{0.0003117}| = 10,61277$$
+
+```{r, echo=T, include=T, message=F,warning=F}
+(1-pt(0.003308/0.0003117, 49))*2
+```
 
 ### **5.13) Return to the exercise 3.22 to use the dataset.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Dataset sample
-tbl_3.7[sample(nrow(tbl_1.3),10), ] %>% 
+tbl_3.7[sample(nrow(tbl_1.3),5), ] %>% 
   as.tibble()
 ```
 
 ### **b) The regression's residuals are normally distributed?**
 
-Yes. The following graph will present the histogram of their values.
+**A:** Yes. The following graph will present the histogram of their values.
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Extracting the residuals from the model
 tbl_3.7 %>%
-  lm(formula = ipc_index~gold_price) %>%
+  lm(formula = cpi ~ gold) %>%
   residuals() %>% 
   data.frame(a = .) -> res_1
   
@@ -518,11 +532,10 @@ res_1 %>%
        subtitle = "IPC and gold price relation")
 ```
 
-
 ```{r, echo=T, include=T, message=F,warning=F}
 # Extracting the residuals from the model
 tbl_3.7 %>%
-  lm(formula = ipc_index~nyse_index) %>%
+  lm(formula = cpi ~ nyse) %>%
   residuals() %>% 
   data.frame(a = .) -> res_2
   
@@ -536,11 +549,11 @@ res_2 %>%
 
 ### **c) In the gold price regression model, test the hypothesis that the second parameter is 1.**
 
-The regression model generated a $\beta_2$ of 0.1693 with a standard error of 0.06624. These values generated a t statistics of 2.556 and a p-value of 0.0157, but considering the Null hypothesis of H0: $\beta_2 = 0$. To answer the question (H0: $\beta_2 = 1$), it's necessary to put these values on the equation below to recalculate the t statistics and the p-value:
+**A:** The regression model generated a $\beta_2$ of 0.1693 with a standard error of 0.06624. These values generated a t statistics of 2.556 and a p-value of 0.0157, but considering the Null hypothesis of H0: $\beta_2 = 0$. To answer the question (H0: $\beta_2 = 1$), it's necessary to put these values on the equation below to recalculate the t statistics and the p-value:
 
-$$t.value = \frac{|\hat{\beta_2} - \beta_2|}{SEM}$$
+$$t.statistics = \frac{|\hat{\beta_2} - \beta_2|}{SEM}$$
 
-$$t.value = \frac{|0.1693 - 1|}{0.06624} = 12.54076$$
+$$t.statistics = \frac{|0.1693 - 1|}{0.06624} = 12.54076$$
 
 This value of t will generate a lower p-value, as seging below.
 
@@ -592,29 +605,6 @@ r² = 43.68%
 ### **f) The normality Jarque-Beta statistics is 1.1167 for the first model and 1.1170 for the second model. What conclusions can be made from this values?**
 
 **A:** When the result of this test is far from zero, it indicates that the data isn't normally distributed. Then, the first model with lower jarque-bera value has it's residuals closer to a normal distribution than the second model. The Null hypothesis of this test is that residuals are normally distributed, thus **H0: JB = 0** and **H1: JB > 0**. 
-
-### **6.14 Using the table 6.7, adjust the following model and obtain the regression statistics of it.**
-
-$$\frac{100}{100 - Y_i} = \beta_1 + \beta_2(\frac{1}{X_i})$$
-
-```{r, echo=T, include=T, message=F,warning=F}
-df <- 
-  data.frame(y = c(86,79,76,69,65,62,52,51,51,48),
-             x = c(3,7,12,17,25,35,45,55,70,120))
-
-df %>% 
-  ggplot()+
-  geom_point(mapping = aes(x = x, y = y))+
-  theme_graph()+
-  labs(title = "Reciprocal regression model")
-
-# Gerando o modelo de regressão recíproco
-df %>% 
-  lm(formula = "100/(100-y) ~ I(1/x)") %>% 
-  summary()
-```
-
-**A:** Given the regression output, Y will approach the value of 51.64 as the X value increases.
 
 ### **6.15) The table 6.8 presents data about investment and saving for 21 countries. This values are an average obtained from 1960 to 1974.**
 
@@ -846,7 +836,10 @@ g1 <- df %>%
   geom_point(mapping = aes(x = x, y = y))+
   geom_smooth(mapping = aes(x = x, y = y),
               formula = "y ~ x",
-              method = "lm")+
+              method = "lm",
+              se = F,
+              lty = 2,
+              color = "dark orange")+
   theme_graph()
 
 g2 <- df %>% 
@@ -855,10 +848,13 @@ g2 <- df %>%
   geom_point(mapping = aes(x = x, y = z))+
   geom_smooth(mapping = aes(x = x, y = z),
               formula = "y ~ x",
-              method = "lm")+
+              method = "lm",
+              se = F,
+              lty = 2,
+              color = "dark orange")+
   theme_graph()
 
-gridExtra::grid.arrange(g1,g2, ncol = 2)
+g1 + g2
 ```
 
 Creating the regression model for the two variables (y and z).
@@ -899,6 +895,7 @@ Consider the following demand functions:
 $$Y = \alpha_1 + \alpha_2 X_2 + \alpha_3 X_3 + \alpha_4 X_4 + \alpha_5 X_5 + \mu$$
 
 $$ln(Y) = \beta_1 + \beta_2 ln(X_2) + \beta_3 ln(X_3) + \beta_4 ln(X_4) + \beta_5 ln(X_5) + \mu$$
+
 ### **a) Estimate the parameters of the linear model and interpret the results**
 
 ```{r, echo=T, include=T, message=F,warning=F}
@@ -964,7 +961,5 @@ After, they present multiple hypothesis that can be tested in a multiple regress
 In this chapter the author gave special attention to the F statistics. That is a metric that indicates the relevance of the paramters choosen for the regression model. Also, they presented the relation between F statistics and R².
 
 Then, to end the chapter, they presented some discussion about when it is necessary to add new variables on a multiple regression model.
-
-
 
 
