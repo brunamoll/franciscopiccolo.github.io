@@ -9,12 +9,8 @@ output:
 
 ```{r,echo=F,include=F,warning=F,message=F}
 library(tidyverse)
-library(DAAG)
 library(Amelia)
-library(ggthemes)
-library(pander)
 library(gridExtra)
-library(grid)
 library(plot3D)
 
 theme_graph <- function(){
@@ -32,35 +28,30 @@ theme_graph <- function(){
   )
 }
 
-graph_color <- "#006666"
-
-# Caminho para a pasta que contém os data sets para cada exercício
 path <- "C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/datasets/livro-econometria-basica-gujarati/"
 ```
 
 ## **Overview**
 
-This book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economics grad students. For its importance, in this post I'll present a brief summary of each chapter and solve some exercises (because the book doesn't present the answer for the problems). Also, I'll release the datasets used on the problems on my [github](https://github.com/FranciscoPiccolo) account.
-
-The authors aimed to build a material that would serve all levels of students that want learn econometrics. The initial chapters describe the main assumptions of econometric models and simple regression equations and problems. All chapters are embedded with examples to illustrate the main findings. To beggin this summary, lets see what the authors say about the subject:
+This book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economy grad students. For its importance, in this post I'll present a brief summary of each chapter and solve some exercises (because the book doesn't present the answer for the problems). Also, I'll release the datasets used on the problems on my [github](https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/livro-econometria-basica-gujarati) account. To beggin this summary, lets see what the authors say about the subject:
 
 > "Econometry is the application of statistics in economic data".
 
 > "Econometry is the quantiative analysis of economic phenomena".
 
-![](/images/2020-03-03_econometria_basica.png)
+![Book cover](/images/2020-03-03_econometria_basica.png)
 
 ## **Cap.1 The nature of regression analysis**
 
 This chapter presents some foundations of regression analysis. First it's defined the concept and then its goals. Accordingly with the authors, regression is the study of the dependence of one variable in relation to one or more independent variables. 
 
-Following, the authors indicate the difference between statistical relations and deterinistic relations, presenting some scenrios for each one. Also, it's explained the difference between regression and causality and between regression and correlation.
+Following, the authors indicate the difference between statistical relations and deterministic relations, presenting some scenarios for each one. Also, it's explained the difference between regression and causality and between regression and correlation.
 
-Now let's see some exercised presented in this chapter.
+Now let's see some problems presented in this chapter.
 
 ### **Exercises**
 
-### **1.1) Bring the dataset from table 1.3 related to consumer price index to answer the following questions**
+### **1.1) Bring the dataset from table 1.3 related to consumer price index to answer the following questions.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",
@@ -70,20 +61,7 @@ tbl_1.3 <- read.table(file = paste(path,"tabela_1.3_IPC.txt",
                       dec = ",")
 
 # Random sample of the dataset
-tbl_1.3[sample(nrow(tbl_1.3),10), ] %>% as.tibble()
-```
-
-### **a) With the dataset, generate the inflation rate for each country.**
-
-```{r, echo=T, include=T, message=F,warning=F}
-# Inflation rate (1985 = 100)
-cpi_index <- tbl_1.3 %>% 
-  filter(year %in% c(1985,2005))
-
-cpi_index <- cpi_index[2,2:8]-cpi_index[1,2:8]
-
-cpi_index %>% 
-  as.tibble()
+tbl_1.3[sample(nrow(tbl_1.3),5), ] %>% as.tibble()
 ```
 
 ### **b) Graphically represent the inflation rate of each country.**
@@ -91,8 +69,10 @@ cpi_index %>%
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.3 %>%
   tidyr::gather("campo", "valor", 2:8) %>% 
-  ggplot(aes(x = year, y = valor, group = campo, color = campo))+
-  geom_line()+
+  ggplot()+
+  geom_line(mapping = aes(x = year, y = valor, group = campo, color = campo),
+            size = 1)+
+  scale_color_brewer(type = "qual")+
   theme_graph()+
   labs(title = "Anual inflation for selected countries",
        x = "",
@@ -103,15 +83,15 @@ tbl_1.3 %>%
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.6 <- read.table(file = paste(path,
-                                   "tabela_1.6_publicidade.txt",
+                                   "tabela_1.6_advertising.txt",
                                    sep = ""),
-                      sep = " ",
+                      sep = ";",
                       header = T, 
                       dec = ","
                       )
 
 # Sample from the dataset
-tbl_1.6[sample(nrow(tbl_1.6),10), ] %>% 
+tbl_1.6[sample(nrow(tbl_1.6),5), ] %>% 
   as.tibble()
 ```
 
@@ -119,12 +99,13 @@ tbl_1.6[sample(nrow(tbl_1.6),10), ] %>%
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_1.6 %>% 
-  ggplot(aes(x = investment, y = impressions))+
-  geom_point(color = graph_color)+
-  geom_smooth(method = "lm", 
-              formula = y ~ x, 
-              se = F, 
-              lty = 20, 
+  ggplot()+
+  geom_point(mapping = aes(x = investment, y = impressions))+
+  geom_smooth(mapping = aes(x = investment, y = impressions),
+              formula = "y ~ x",
+              method = "lm",
+              se = F,
+              lty = 2,
               color = "dark orange")+
   theme_graph()+
   labs(title = "Investment and Impressions relation",
@@ -134,7 +115,7 @@ tbl_1.6 %>%
 
 ## **Cap.2 Regression analysis with two variables: Some basic ideas**
 
-In this chapter the authors go a little deep on simple regression models, introducting the concept of **expected value of Y**. One of the key findings of this chapter is...
+In this chapter the authors go a little deep on simple regression models, introducing the concept of **expected value of Y**. One of the key findings of this chapter is...
 
 > "The essence of regression models is to supply conditions to explain the average value of the Y variable throughout one equation."
 
@@ -144,62 +125,18 @@ Also, in this chapter the authors explain that the models of the book are linear
 
 ### **Exercises**
 
-### **2.14) Use the table 2.7 containing US job market data to answer the alternatives.**
-
-```{r, echo=T, include=T, message=F,warning=F}
-tbl_2.7 <- read.table(file = paste(path,
-                                   "tabela_2.7_labour_market.txt",
-                                   sep = ""),
-                      sep = " ",
-                      header = T, 
-                      dec = ",")
-
-# Sample data
-tbl_2.7[sample(nrow(tbl_2.7),10), ] %>% 
-  as.tibble()
-```
-
-### **c) Graphically represent the participation rate on men and women in relation to thei average earning per hour.**
-
-```{r, echo=T, include=T, message=F,warning=F}
-women_df <- 
-  tbl_2.7 %>% 
-  select(share_women_work_force,avg_hourly_earning_women) %>% 
-  transmute(
-    share_work_force = share_women_work_force,
-    avg_hourly_earning = avg_hourly_earning_women
-  ) %>% 
-  mutate(type = "women")
-
-tbl_2.7 %>% 
-  select(share_men_work_force,avg_hourly_earning_men) %>% 
-  transmute(
-    share_work_force = share_men_work_force,
-    avg_hourly_earning = avg_hourly_earning_men
-  ) %>% 
-  mutate(type = "men") %>% 
-  union_all(women_df) %>% 
-  ggplot(aes(x=share_work_force,y=avg_hourly_earning,color=type))+
-  geom_point()+
-  scale_color_brewer(type = "qual")+
-  theme_graph()+
-  labs(title = "Average hourly wage and participation rate",
-       x = "Participation rate",
-       y = "Hourly wage")
-```
-
 ### **2.15) Use the table 2.8 with data about food expenses and total expenses from 55 houses in India to answer the following questions.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.8 <- read.table(file = paste(path,
-                                   "tabela_2.8_despesa_india.txt",
+                                   "tabela_2.8_expenses_in_india.txt",
                                    sep = ""),
                       sep = " ",
                       header = T,
                       dec = ",")
 
 # Random sample
-tbl_2.8[sample(nrow(tbl_2.8),10), ] %>% 
+tbl_2.8[sample(nrow(tbl_2.8),5), ] %>% 
   as.tibble()
 ```
 
@@ -207,9 +144,14 @@ tbl_2.8[sample(nrow(tbl_2.8),10), ] %>%
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_2.8 %>% 
-  ggplot(aes(x = total, y = alimento))+
-  geom_point(color = graph_color, shape = 20)+
-  geom_smooth(method = "lm", se = F, color = "dark orange", lty = 2)+
+  ggplot()+
+  geom_point(mapping = aes(x = total, y = food))+
+  geom_smooth(mapping = aes(x = total, y = food),
+              formula = "y ~ x",
+              method = "lm",
+              se = F,
+              lty = 2,
+              color = "dark orange")+
   theme_graph()+
   labs(title = "Food expenditures and total expenditures",
        x = "Total expenditures",
@@ -253,10 +195,14 @@ Yes, it does. As the inflation rate is higher in the US, the Canadian dolar will
 ### **3.20) The next table presents a dataset about hourly production index (X) and hourly real wages (Y) for the industrial sector and non agricultural sector, between 1960 and 2005**
 
 ```{r, echo=T, include=T, message=F,warning=F}
-tbl_3.6 <- read.table(file = paste(path,"tabela_3.6_produtividade_e_salario.txt",sep = ""),
+tbl_3.6 <- read.table(file = paste(path,"tabela_3.6_wage_and_productivity.txt",sep = ""),
                       sep = " ",
                       header = T, 
                       dec = ",")
+
+# Random sample
+tbl_3.6[sample(nrow(tbl_3.6),5), ] %>% 
+  as.tibble()
 ```
 
 ### **a) Graphically represent separetely Y versus X for the two sectors of the economy.**
@@ -266,9 +212,10 @@ tbl_3.6 %>%
   tidyr::gather("production","prod",2:3) %>% 
   tidyr::gather("wage","wag",2:3) %>% 
   ggplot()+
-  geom_point(aes(x = prod, y = wag, color = production))+
-  scale_color_brewer(palette = "Dark2")+
-  geom_smooth(aes(x = prod, y = wag), 
+  geom_point(mapping = aes(x = prod, y = wag, color = production))+
+  scale_color_brewer(type = "qual")+
+  geom_smooth(mapping = aes(x = prod, y = wag),
+              formula = "y ~ x",
               method = "lm",
               se = F, 
               lty = 2, 
@@ -279,7 +226,7 @@ tbl_3.6 %>%
        y = "Wage")
 ```
 
-### **c) Create a regression model usgin OLS method for Y and X.**
+### **c) Create a regression model usgin OLS method.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_3.6 %>% 
@@ -299,7 +246,7 @@ tbl_3.7 <- read.table(file =
                       dec = ",")
 
 # Sample from dataset
-tbl_3.7[sample(nrow(tbl_3.7),10), ] %>% 
+tbl_3.7[sample(nrow(tbl_3.7),5), ] %>% 
   as.tibble()
 ```
 
@@ -352,33 +299,39 @@ tbl_3.7 %>%
 g1 <- 
   tbl_3.7_df_adj %>% 
   ggplot()+
-  geom_point(aes(x = ipc_index_var, y = nyse_index_var), color = graph_color)+
-  geom_abline(lty = 2, color = "dark orange", alpha = .7)+
-  geom_smooth(aes(x = ipc_index_var, y = nyse_index_var), method = "lm", formula = y ~ x)+
-  geom_hline(yintercept = 0, lty = 2, color = "red", alpha = .8)+
+  geom_point(mapping = aes(x = ipc_index_var, y = nyse_index_var), color = "dark orange")+
+  geom_smooth(mapping = aes(x = ipc_index_var, y = nyse_index_var),
+              formula = "y ~ x",
+              method = "lm",
+              se = F,
+              lty = 2,
+              color = "dark orange")+
   expand_limits(x = 0, y = 0)+
   scale_x_continuous(labels = scales::percent)+
   scale_y_continuous(labels = scales::percent)+
   theme_graph()+
   theme(title = element_text(size = 8))+
   labs(title = "NYSE vs CPI",
-       x = "IPC index variation",
+       x = "CPI index variation",
        y = "NYSE index variation")
 
 g2 <- 
   tbl_3.7_df_adj %>% 
   ggplot()+
-  geom_point(aes(x = ipc_index_var, y = gold_price_var), color = graph_color)+
-  geom_abline(lty = 2, color = "dark orange", alpha = .7)+
-  geom_smooth(aes(x = ipc_index_var, y = gold_price_var), method = "lm", formula = y ~ x)+
-  geom_hline(yintercept = 0, lty = 2, color = "red", alpha = .8)+
+  geom_point(mapping = aes(x = ipc_index_var, y = gold_price_var), color = "dark orange")+
+  geom_smooth(mapping = aes(x = ipc_index_var, y = gold_price_var),
+              formula = "y ~ x",
+              method = "lm",
+              se = F,
+              lty = 2,
+              color = "dark orange")+
   expand_limits(x = 0, y = 0)+
   scale_x_continuous(labels = scales::percent)+
   scale_y_continuous(labels = scales::percent)+
   theme_graph()+
   theme(title = element_text(size = 8))+
   labs(title = "Gold Price vs CPI",
-       x = "IPC index variation",
+       x = "CPI index variation",
        y = "Gold price variation")
 
 gridExtra::grid.arrange(g1,g2,ncol = 2)
@@ -387,13 +340,15 @@ gridExtra::grid.arrange(g1,g2,ncol = 2)
 ```{r, echo=T, include=T, message=F,warning=F}
 # Modelo 1, gold_price ~ ipc_index
 tbl_3.7_df_adj %>% 
-  lm(formula = gold_price_var ~ ipc_index_var)
+  lm(formula = gold_price_var ~ ipc_index_var) %>% 
+  summary()
 ```
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # Modelo 2, nyse_index ~ ipc_index
 tbl_3.7_df_adj %>% 
-  lm(formula = nyse_index_var ~ ipc_index_var)
+  lm(formula = nyse_index_var ~ ipc_index_var) %>% 
+  summary()
 ```
 
 Apparently, gold price is a better asset to edge inflation rate than the NYSE index. Althought there're two outliers on the gold price data that are impacting the model.
@@ -440,16 +395,24 @@ $$\frac{\hat{\beta_1}-\beta_1}{ep(\hat{\beta_1})}$$
 
 $$\frac{14,47-0}{6.1523} = 2.35$$
 
-Having the **t-statistics**, it's possible to calculate the **p-value**.
+Having the **t-statistics**, it's possible to calculate the **p-value**. For this, we have to use the distribution function for the t distribution, that will ask for the t-statistics and degrees of freedom. This function will show the area under de curve that would contain this t-statistics given this degree of freedom and when we make 1 minus this area under de curve and multiply the result by 2 (because it's a bicaudal test), we generate the p-value.
+
+The area under the curve for the t distribution with a t-statistics of 2.35 and 34 df is 0.9876. In other words, 98.76% probability of having a value inside the range (-2.35 to 2.35) given 34 df.
+
+```{r, echo=T, include=T, message=F,warning=F}
+pt(2.35, 34)
+```
+
+The p-value will be the probability of having a value outside this range, in this case 1-0.9876. Also, as is a bicaudal test (because H1 is $\beta_1\neq 0$) it's necessary to multiply the value by 2. Then, we have:
 
 ```{r, echo=T, include=T, message=F,warning=F}
 # p-value calculation in R
-(1-pt(2.35, 36))*2
+(1-pt(2.35, 34))*2
 ```
 
-Using a significance level of 5% and 34 degrees of freedom, the p-value for this critical value of t is 0.02437, lower than the established limit. In this case, the Null hypothesis can be rejected and the intercept can be considered statistically significant for the model.
+Concluding, with a p-value of 2.437% it's possible to reject H0 because the significance level as of 5%. In other words the intercept of the model is statistically significant at 5% of significance level.
 
-### **b) The coeficient for the slope is statistically significant at 5% of confidence? What is the Null hypothesis for this test?**
+### **b) The slope is statistically significant at 5% of confidence level? What is the Null hypothesis for this test?**
 
 The same approach can be used for this question. The hypothesis are H0: $\beta_2 = 0$ e H1: $\beta_2 \neq 0$. The same equations can be used, adjusting the values of the variables.
 
@@ -475,14 +438,14 @@ r = teachers' earnings
 g = students' expenditures
 
 ```{r, echo=T, include=T, message=F,warning=F}
-tbl_5.5 <- read.table(file = 
-                      paste(path,"tabela_5.5_salario_medio_anual_e_despesa_por_aluno.txt",sep = ""),
+tbl_5.5 <- 
+  read.table(file = paste(path,"tabela_5.5_wage_and_college_expenditures.txt", sep = ""),
                       sep = " ",
                       header = T, 
                       dec = ".")
 
 # Dataset sample
-tbl_5.5[sample(nrow(tbl_5.5),10), ] %>% 
+tbl_5.5[sample(nrow(tbl_5.5),5), ] %>% 
   as.tibble()
 ```
 
@@ -504,7 +467,7 @@ $$\hat{r} = 12.13+0.003308\times g+\mu$$
 
 For this scenario, we have: H0: $\beta_2 = 3$ and H1: $\beta_2 \neq 3$. The equation to build the limits is:
 
-$$\hat{\beta_2} + t_\frac{\alpha}{2} \times ep(\hat{\beta_2})$$
+$$\hat{\beta_2} +/- t_\frac{\alpha}{2} \times ep(\hat{\beta_2})$$
 Using the **t distribution** because population variance is unknown and $\frac{\alpha}{2}$ because is a two side test (i.e. H1: $\beta_2 \neq 3$).
 
 To solve this equation, it's necessary to get the **critical t value** (not **t-statistics** in this case). This value is calculated with the significance level of [1-(5%/2)] and degrees of freedom of the model (49).
@@ -522,6 +485,10 @@ $ep(\hat{\beta_2}) = 0.0003117$
 
 Critical t value = 2.009575
 
+$$\hat{\beta_2} +/- t_\frac{\alpha}{2} \times ep(\hat{\beta_2})$$
+
+$$0.003308 +/- 2.009575 \times 0.0003117$$
+
 Then, the interval is (0.00268 e 0.00393). Allowing the rejection of the Null hypothesis. 
 
 ### **5.13) Return to the exercise 3.22 to use the dataset.**
@@ -531,6 +498,7 @@ Then, the interval is (0.00268 e 0.00393). Allowing the rejection of the Null hy
 tbl_3.7[sample(nrow(tbl_1.3),10), ] %>% 
   as.tibble()
 ```
+
 ### **b) The regression's residuals are normally distributed?**
 
 Yes. The following graph will present the histogram of their values.
@@ -544,7 +512,7 @@ tbl_3.7 %>%
   
 res_1 %>%
   ggplot()+
-  geom_histogram(mapping = aes(x = a), fill = graph_color)+
+  geom_histogram(mapping = aes(x = a), fill = "dark orange")+
   theme_graph()+
   labs(title = "Regression model's residuals distribution",
        subtitle = "IPC and gold price relation")
@@ -560,7 +528,7 @@ tbl_3.7 %>%
   
 res_2 %>%
   ggplot()+
-  geom_histogram(mapping = aes(x = a), fill = graph_color)+
+  geom_histogram(mapping = aes(x = a), fill = "dark orange")+
   theme_graph()+
   labs(title = "Regression model's residuals distribution",
        subtitle = "IPC and NYSE index relation")
@@ -623,7 +591,7 @@ r² = 43.68%
 
 ### **f) The normality Jarque-Beta statistics is 1.1167 for the first model and 1.1170 for the second model. What conclusions can be made from this values?**
 
-When the result of this test is far from zero, it indicates that the data isn't normally distributed. Then, the first model with lower jarque-bera value has it's residuals closer to a normal distribution than the second model. The Null hypothesis of this test is that residuals are normally distributed, thus **H0: JB = 0** and **H1: JB > 0**. 
+**A:** When the result of this test is far from zero, it indicates that the data isn't normally distributed. Then, the first model with lower jarque-bera value has it's residuals closer to a normal distribution than the second model. The Null hypothesis of this test is that residuals are normally distributed, thus **H0: JB = 0** and **H1: JB > 0**. 
 
 ### **6.14 Using the table 6.7, adjust the following model and obtain the regression statistics of it.**
 
@@ -646,9 +614,9 @@ df %>%
   summary()
 ```
 
-Given the regression output, Y will approach the value of 51.64 as the X value increases.
+**A:** Given the regression output, Y will approach the value of 51.64 as the X value increases.
 
-### **The table 6.8 presents data about investment and saving for 21 countries. This values are an average obtained from 1960 to 1974.**
+### **6.15) The table 6.8 presents data about investment and saving for 21 countries. This values are an average obtained from 1960 to 1974.**
 
 ```{r, echo=T, include=T, message=F,warning=F}
 tbl_6.8 <- read.table(file = 
@@ -699,7 +667,100 @@ tbl_6.8 %>%
 
 ### **d) How would you interpret the slope coeficient in the lin-lin model? And on the log-log model? There're any differences in the interpretation?**
 
-A: The lin-lin model has the coeficient of 1.04772, meaning that in increase in 1 pp in saving would generate an increase of 1.04772 pp in investment. On the other hand, in the log-log model, the coeficient is 1.06308, meaning that an 1% increase in saving would cause and 1.06308% increase in investment. There's a difference in interpretation, because the first model is about changing percentual points and the second is about percentual variation.
+**A:** The lin-lin model has the coeficient of 1.04772, meaning that in increase in 1 pp in saving would generate an increase of 1.04772 pp in investment. On the other hand, in the log-log model, the coeficient is 1.06308, meaning that an 1% increase in saving would cause and 1.06308% increase in investment. There's a difference in interpretation, because the first model is about changing percentual points and the second is about percentual variation.
+
+### **6.19) The table 6.10 presents data about total consumption and advertising expendes for 29 product categories in UK.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_6.10 <- read.table(file = 
+                      paste(path,"tabela_6.10_advertising_and_total_expenditures.txt",sep = ""),
+                      sep = " ",
+                      header = T, 
+                      dec = ".")
+```
+
+
+### **a) Which regression model would better represent the data?**
+
+**A:** In order to answer this question, it's better to try different regression models and visualize graphically which of them fit better on the data, taking care to not overfit.
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_6.10 %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = advertising, y = consumo))+
+  geom_smooth(mapping = aes(x = advertising, y = consumo),
+              formula = y ~ x,
+              method = "lm",
+              se = F)+
+  geom_smooth(mapping = aes(x = advertising, y = consumo),
+            formula = "y ~ I(x^0.5)",
+            method = "lm",
+            se = F,
+            color = "red")
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_6.10 %>% 
+  lm(formula = "consumo ~ I(advertising^.5)") %>% 
+  summary()
+
+tbl_6.10 %>% 
+  lm(formula = "consumo ~ advertising") %>% 
+  summary()
+```
+
+It seems that the linear regression model fits better the data, because it generated a higher R² and a lower p-value for the slope.
+
+### **6.20) Recall the 3.3 example from chapter 3 to answer the following questions:**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.3 <- read.table(file = 
+                      paste(path,"tabela_3.3_telefonia_movel_e_computadores.txt",sep = ""),
+                      sep = ";",
+                      header = T, 
+                      dec = ",")
+
+# Dataset sample
+tbl_3.3[sample(nrow(tbl_3.3),10), ]
+```
+
+### **a) Graphically represent cellphone demand in relation to per capita income adjusted by PPP.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.3 %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = cellphone, y = per_capita_income))+
+  theme_graph()+
+  labs(title = "Cellphone vs Per capital income")
+```
+
+### **b) Graphically represent cellphone demand in relation to per capita income, both adjusted by logarithms.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.3 %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = cellphone, y = per_capita_income))+
+  scale_y_log10()+
+  scale_x_log10()+
+  theme_graph()+
+  labs(title = "Cellphone vs Per capita income, log adjusted")
+```
+
+### **d) Analysing these two graphs, do you believe that a log-log model can fit better the data? Develop the regression model for a log-log method.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.3 %>% 
+  lm(formula = "log(cellphone) ~ log(per_capita_income)") %>% 
+  summary()
+```
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_3.3 %>% 
+  lm(formula = "cellphone ~ per_capita_income") %>% 
+  summary()
+```
+
+**A:** The lin-lin model generated a slope with a lower p-value and a higher r². Thus I would prefer this model instead of the log-log model.
 
 ### **Cap.7 Multiple Regression Analysis: The Estimation Problem**
 
@@ -731,7 +792,7 @@ $Y = \beta_1 + \beta_2 X_2 + \beta_3 X_3 + \mu$
 
 Verify if $\alpha_2 = \beta_2$, $\lambda_3 = \beta_3$.
 
-A: Building the models.
+**A:** Building the models.
 
 ```{r, echo=T, include=T, message=F,warning=F}
 df <- data.frame(y = c(1,3,8),
@@ -762,7 +823,127 @@ $Y = 4 - 1.3571X_3 + \mu$
 
 $Y = 2 + 1 X_2 - 1 X_3 + \mu$
 
-With $\alpha_2 = 3.5$ and $\beta_2 = 1$; $\lambda_3 = -1.3571$ and $\beta_3 = -1$. These differences indicate that the independent variables have correlation between then, thus the coeficients diverge when putting together and when putther separatelly on the models. 
+With $\alpha_2 = 3.5$ and $\beta_2 = 1$; $\lambda_3 = -1.3571$ and $\beta_3 = -1$. These differences indicate that the independent variables have correlation between then, thus the coeficients diverge when putting together and when putther separatelly on the models.
+
+### **7.13) Suposing that you have the following equations:**
+
+$$Y = \alpha + \alpha_2 X + \mu$$
+$$Z = \beta + \beta_2 X + \mu$$
+Onde Y = consumo, Z = poupança e X = (Y + Z).
+
+### **a) What is the relation between alpha 2 and beta 2? Show your calculus.**
+
+**A:** The slope of the models summed is 1 and their standard error is equal. Following is a random dataset to exemplify this situation.
+
+```{r, echo=T, include=T, message=F,warning=F}
+# Random dataset
+df <- data.frame(y = rnorm(100, 10, 3),
+           z = rnorm(100, 25, 5))
+
+g1 <- df %>% 
+  mutate(x = y + z) %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = x, y = y))+
+  geom_smooth(mapping = aes(x = x, y = y),
+              formula = "y ~ x",
+              method = "lm")+
+  theme_graph()
+
+g2 <- df %>% 
+  mutate(x = y + z) %>% 
+  ggplot()+
+  geom_point(mapping = aes(x = x, y = z))+
+  geom_smooth(mapping = aes(x = x, y = z),
+              formula = "y ~ x",
+              method = "lm")+
+  theme_graph()
+
+gridExtra::grid.arrange(g1,g2, ncol = 2)
+```
+
+Creating the regression model for the two variables (y and z).
+
+```{r, echo=T, include=T, message=F,warning=F}
+df %>% 
+  mutate(x = y + z) %>% 
+  lm(formula = "y ~ x") %>% 
+  summary()
+
+df %>% 
+  mutate(x = y + z) %>% 
+  lm(formula = "z ~ x") %>% 
+  summary()
+```
+
+### **c) It's possible to compare R² of both models?**
+
+**A:** No, because Y and Z can have different weights on X, thus the R² would include this difference and preclude this comparisson.
+
+### **7.6) The table 7.6 presents roses demand by quarter.**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_7.6 <- read.table(file = 
+                      paste(path,"tabela_7.6_flower_demand_in_detroit.txt",sep = ""),
+                      sep = ";",
+                      header = T, 
+                      dec = ".")
+
+# Dataset sample
+tbl_7.6[sample(nrow(tbl_7.6),5), ]
+```
+
+In this table we have **y = sold roses**, **x2 = average rose price**, **x3 = average clove price**, **x4 = average family income available** and **x5 = trend variable**.
+
+Consider the following demand functions:
+
+$$Y = \alpha_1 + \alpha_2 X_2 + \alpha_3 X_3 + \alpha_4 X_4 + \alpha_5 X_5 + \mu$$
+
+$$ln(Y) = \beta_1 + \beta_2 ln(X_2) + \beta_3 ln(X_3) + \beta_4 ln(X_4) + \beta_5 ln(X_5) + \mu$$
+### **a) Estimate the parameters of the linear model and interpret the results**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_7.6 %>% 
+  lm(formula = "y ~ x2 + x3 + x4 + x5") %>% 
+  summary()
+```
+
+**A:** With R output, we have the following linear regression model:
+
+$$\hat{Y} = 10.816 - 2.227,7 X_2 + 1.251,1 X_3 + 6,3 X_4 - 197,4 X_5$$
+With this regression model, $\alpha_2 = -2.227,7$ indicates that rose demand will be reduced in 2.227 if rose price increases, $\alpha_3 = 1.251,1$ indicates that rose demand will increase if clove price increase, in this case they are substitutes, $\alpha_4 = 6,3$ indicates that rose demnad will increase if average income availability increase and $\alpha_5 = -197,4$ indicate that rose demand is in a fall trend.
+
+### **b) Estimate the parameters of the log-log model and interpret the results**
+
+```{r, echo=T, include=T, message=F,warning=F}
+tbl_7.6 %>% 
+  lm(formula = "log(y) ~ log(x2) + log(x3) + log(x4) + log(x5)") %>% 
+  summary()
+```
+
+**A:** With R output, we have the following log-log regression model:
+
+$$\hat{Y} = 0.63 - 1.27 X_2 + 0.94 X_3 + 1.71 X4 - 0.18 X_5$$
+Given this regression model, $\beta_2 = -1.27$ indicates that rose demand will fall in 1.27% if rose price increase in 1%, $\beta_3 = 0.93$ indicates that rose demand will increase in 0.93% if clove price increase in 1%, $\beta_4 = 1.71$ indicates that rose demand will increase in 1.71% if average family income availability increase in 1% and $\beta_5 = -0.18$ indicates that rose demand is falling in a trend of -0.18% per quarter.
+
+### **C) The parameters beta 2, 3 and 4 represent price elasticity, cross price elasticity and income elasticity for rose demand?**
+
+**A:** Yes, because they're on transformed by natural log, then small variations can be interpreted as percentual variations. But this model generated parameters with high p-value, then these parameters aren't strong predictors for the variable being studied.
+
+### **7.18) USA's defense budget between 1962 and 1981 is represented by the table 7.8. To explain this budget, use the following model:**
+
+$$Y = \beta_1 + \beta_2 X_2 + \beta_3 X_3 + \beta_4 X_4 + \beta_5 X_5 + \mu$$
+Where 
+
+$Y$ = Anual expenditure with defense in billions
+
+$\beta_2$ = GNP in billions
+
+$\beta_3$ = Sales of militar assistance in billions
+
+$\beta_4$ = Sales from aerospace industry in billions
+
+$\beta_5$ = Militar conflicts with more than 100.000 soldiers. Binary variable (i.e. 1 or 0)
+
 
 ### **Cap.8 Multple Regression Analysis: The Inference Problem**
 
