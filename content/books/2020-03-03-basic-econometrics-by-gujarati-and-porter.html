@@ -44,11 +44,11 @@ tbl_1.3[sample(nrow(tbl_1.3),5), ] %&gt;% as.tibble()</code></pre>
 <pre><code>## # A tibble: 5 x 8
 ##    year   usa canada japan france germany italy    uk
 ##   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  1983  99.6  100.   99.8  100.     100. 101.   99.8
-## 2  1997 160.   156.  122.   153.     138. 218.  185. 
-## 3  1994 148.   148.  119.   146.     131. 195.  169. 
-## 4  1982  96.5   94.9  98.1   91.7     97   87.8  95.4
-## 5  1989 124    129.  108    129.     109. 151.  135.</code></pre>
+## 1  1987 114.    118. 105.    121.    105.  135. 120. 
+## 2  1994 148.    148. 119.    146.    131.  195. 169. 
+## 3  1985 108.    109  104.    114.    105.  122. 111. 
+## 4  1984 104.    105. 102.    108     103.  111. 105. 
+## 5  1983  99.6   100.  99.8   100.    100.  101.  99.8</code></pre>
 </div>
 <div id="b-graphically-represent-the-inflation-rate-of-each-country." class="section level3">
 <h3><strong>b) Graphically represent the inflation rate of each country.</strong></h3>
@@ -80,11 +80,11 @@ tbl_1.6[sample(nrow(tbl_1.6),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 3
 ##   company      impressions investment
 ##   &lt;fct&gt;              &lt;dbl&gt;      &lt;dbl&gt;
-## 1 Calvin_Klein        12          5  
-## 2 Stroh               11.7       19.3
-## 3 Crest               71.1       32.4
-## 4 Diet_Cola           21.4       20.4
-## 5 Levis               40.8       27</code></pre>
+## 1 McDonald            92.4      186. 
+## 2 Kibbles_Bits         4.4        6.1
+## 3 Wendys              29.2       49.7
+## 4 Levis               40.8       27  
+## 5 MCI                 50.7       26.9</code></pre>
 </div>
 <div id="a-present-the-relation-between-impressions-and-advertising-expenditures." class="section level3">
 <h3><strong>a) Present the relation between impressions and advertising expenditures.</strong></h3>
@@ -130,11 +130,11 @@ tbl_2.8[sample(nrow(tbl_2.8),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 2
 ##    food total
 ##   &lt;int&gt; &lt;int&gt;
-## 1   325   585
-## 2   540   730
-## 3   420   627
-## 4   395   745
-## 5   403   648</code></pre>
+## 1   220   640
+## 2   403   648
+## 3   370   586
+## 4   540   730
+## 5   410   610</code></pre>
 </div>
 <div id="a-represent-the-data-drawing-the-food-expenses-in-the-y-axis-and-total-expenses-in-the-x-axis-and-then-plot-the-regression-line." class="section level3">
 <h3><strong>a) Represent the data drawing the food expenses in the Y axis and total expenses in the X axis and then plot the regression line.</strong></h3>
@@ -195,11 +195,11 @@ tbl_3.6[sample(nrow(tbl_3.6),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 5
 ##    year corporate non_agricultural corporate_wages non_agricultural_wages
 ##   &lt;int&gt;     &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;                  &lt;dbl&gt;
-## 1  1985      87.1             87.5            92                     92.2
-## 2  1996     104.             105.             99.4                   99.4
-## 3  1980      79.2             80.6            89.1                   89.6
-## 4  2004     133.             132.            119                    118. 
-## 5  1994     101.             102.             99                     99.1</code></pre>
+## 1  1990      94.4             94.5            96.2                   96.1
+## 2  1966      61.2             63.6            71.7                   72.6
+## 3  2005     136.             135.            120.                   119. 
+## 4  1968      64.7             66.9            76.2                   77.1
+## 5  2003     129.             128             118.                   117.</code></pre>
 </div>
 <div id="a-graphically-represent-separetely-y-versus-x-for-the-two-sectors-of-the-economy." class="section level3">
 <h3><strong>a) Graphically represent separetely Y versus X for the two sectors of the economy.</strong></h3>
@@ -262,11 +262,11 @@ tbl_3.7[sample(nrow(tbl_3.7),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 4
 ##    year  gold  nyse   cpi
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  1998  294. 5818. 163  
-## 2  1994  384  2687. 148. 
-## 3  1980  613.  720.  82.4
-## 4  1987  446. 1710. 114. 
-## 5  1993  360. 2639. 144.</code></pre>
+## 1  1998  294. 5818.  163 
+## 2  2004  410. 6613.  189.
+## 3  2000  279. 6806.  172.
+## 4  1992  344. 2422.  140.
+## 5  1988  437. 1585.  118.</code></pre>
 </div>
 <div id="a-plot-gold-price-nyse-and-cpi-index-in-a-dispersion-graph." class="section level3">
 <h3><strong>a) Plot Gold price, NYSE and CPI index in a dispersion graph.</strong></h3>
@@ -395,13 +395,13 @@ tbl_3.7_df_adj %&gt;%
 <p><strong>A:</strong> Apparently, gold price is a better asset to edge inflation rate than the NYSE index. Althought there’re two outliers on the gold price data that are impacting the model.</p>
 </div>
 </div>
-<div id="cap.4-classical-normal-linear-regression-model" class="section level2">
-<h2><strong>Cap.4 Classical Normal Linear Regression Model</strong></h2>
+<div id="chapter-4---classical-normal-linear-regression-model" class="section level2">
+<h2><strong>Chapter 4 - Classical Normal Linear Regression Model</strong></h2>
 <p>In this chapter the authors gave attention to the classical normal linear regression model that introduces the concept of normal distrubutions of residuals. As was informed in previus chapter, the goal of the regression model is to estimate parameters (<span class="math inline">\(\hat{\beta}\)</span>) for the populational parameter (<span class="math inline">\(\beta\)</span>) and because it’s an estimation based on samples, the result will vary on each model and the variation of (<span class="math inline">\(\hat{\beta}\)</span>) will follow a particular distribution.</p>
 <p>Knowing that <span class="math inline">\(\hat{\beta}\)</span> should follow a particular distribution, the most desired one is the normal distribution. To afirm that the parameter follows the normal distribution, the author prove algebrically that <span class="math inline">\(\hat{\beta}\)</span> is a linear function of the residuals <span class="math inline">\(\mu\)</span>. Then, having the premise that <span class="math inline">\(\mu\)</span> is normally distributed, the premise that <span class="math inline">\(\hat{\beta}\)</span> is normally distributed will be attended. The premise of <span class="math inline">\(\hat{\beta}\)</span> and <span class="math inline">\(\mu\)</span> being normally distributed will allow inferences about the population’s parameters using confident intervals and test of hypothesis, two techniques developed by classical statisticians.</p>
 </div>
-<div id="cap.5-two-variables-regression-model-the-confidence-interval-and-hypothesis-test" class="section level2">
-<h2><strong>Cap.5 Two variables regression model: The confidence interval and hypothesis test</strong></h2>
+<div id="chapter-5---two-variables-regression-model-the-confidence-interval-and-hypothesis-test" class="section level2">
+<h2><strong>Chapter 5 - Two variables regression model: The confidence interval and hypothesis test</strong></h2>
 <p>After explaining the premises of the classical linear regression model on the last chapter, the authors develop in this chapter the hole regression model to draw inferences about the population parameters being studied. Before they start the explanation, they indicate that the expected value of the sample parameter will be the true value of the populational parameter. Mathematically it means that <span class="math inline">\(e(\hat{\beta}) = \beta\)</span>. Also, they indicate that the reliability of the parameters created by the regression model will be measured by the <strong>standard error</strong>, and this metric will support the development of the confidence interval and test of hypothesis.</p>
 <p>After explaining this initial assumptions, the authors explain how to develop confidence intervals for the parameters and how to conduct the test of hypothesis.</p>
 <p><strong>Confidence Intervals</strong></p>
@@ -462,11 +462,11 @@ tbl_5.5[sample(nrow(tbl_5.5),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 3
 ##     obs  wage expense
 ##   &lt;int&gt; &lt;dbl&gt;   &lt;int&gt;
-## 1    40  21.0    2509
-## 2    12  27.2    3621
-## 3    45  22.3    2297
-## 4    33  22.9    2729
-## 5    24  34.0    5020</code></pre>
+## 1     2  20.3    3114
+## 2    24  34.0    5020
+## 3    47  26.0    3705
+## 4    48  25.8    4123
+## 5    25  23.4    3594</code></pre>
 </div>
 <div id="b-create-a-regression-model-to-analyze-the-standard-error-and-r²." class="section level3">
 <h3><strong>b) Create a regression model to analyze the standard error and r².</strong></h3>
@@ -527,11 +527,11 @@ tbl_3.7[sample(nrow(tbl_1.3),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 4
 ##    year  gold  nyse   cpi
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  1989  381. 1903. 124  
-## 2  1975  161.  484.  53.8
-## 3  1979  307.  617.  72.6
-## 4  1991  362. 2182. 136. 
-## 5  1996  388. 3787. 157.</code></pre>
+## 1  1974  159.  464.  49.3
+## 2  1982  376.  729.  96.5
+## 3  1978  193.  568.  65.2
+## 4  1992  344. 2422. 140. 
+## 5  1976  125.  576.  56.9</code></pre>
 </div>
 <div id="b-the-regressions-residuals-are-normally-distributed" class="section level3">
 <h3><strong>b) The regression’s residuals are normally distributed?</strong></h3>
@@ -574,8 +574,8 @@ res_2 %&gt;%
 <p>Then, the Null hypothesis H0: <span class="math inline">\(\beta_2 = 1\)</span> can be rejected, allowing the conclusion that Gold Price is not a perfect edge asset for the inflation rate.</p>
 </div>
 </div>
-<div id="cap.6-extensions-for-the-linear-regression-models-of-two-variables" class="section level2">
-<h2><strong>Cap.6 Extensions for the Linear Regression Models of two Variables</strong></h2>
+<div id="chapter-6---extensions-for-the-linear-regression-models-of-two-variables" class="section level2">
+<h2><strong>Chapter 6 - Extensions for the Linear Regression Models of two Variables</strong></h2>
 <p>In this chapter the authors present some additional regression models that will be more appropriated in some circunstances. These models are different, but the premise of linearity of parameters is unbroken.</p>
 <p>The first model is the <strong>regression model that pass by the origin</strong> that has the form:</p>
 <p><span class="math display">\[Y_i = \beta_2 X_i + \mu_i\]</span>
@@ -615,13 +615,13 @@ This model is recommended when the theory behind it indicates that there’s no 
 tbl_6.8[sample(nrow(tbl_6.8),5), ] %&gt;% 
   as.tibble()</code></pre>
 <pre><code>## # A tibble: 5 x 3
-##   country   investment saving
-##   &lt;fct&gt;          &lt;dbl&gt;  &lt;dbl&gt;
-## 1 spain          0.235  0.241
-## 2 norway         0.278  0.299
-## 3 japan          0.372  0.368
-## 4 australia      0.25   0.27 
-## 5 luxemburg      0.313  0.277</code></pre>
+##   country    investment saving
+##   &lt;fct&gt;           &lt;dbl&gt;  &lt;dbl&gt;
+## 1 new_zeland      0.232  0.249
+## 2 italy           0.235  0.224
+## 3 uk              0.184  0.192
+## 4 germany         0.271  0.264
+## 5 spain           0.235  0.241</code></pre>
 </div>
 <div id="a-graphically-represent-the-relation-between-investment-and-saving" class="section level3">
 <h3><strong>a) Graphically represent the relation between investment and saving</strong></h3>
@@ -768,16 +768,16 @@ tbl_6.8 %&gt;%
 # Dataset sample
 tbl_3.3[sample(nrow(tbl_3.3),10), ]</code></pre>
 <pre><code>##       county cellphone    pc per_capita_income
-## 27    sweden     98.05 62.13             26710
-## 15   hungary     76.88 10.84             13840
-## 8   colombia     14.13  4.93              6410
-## 3    belgium     79.28 31.81             28920
-## 22 paquistan     57.10 24.00              2040
-## 1  argentina     17.76  8.20             11410
-## 14 guatemala     13.15  1.44              4090
-## 4     brazil     63.62 84.70              7510
+## 30        us     85.45 89.56             37750
 ## 29        uk     71.19 75.04             27690
-## 5    bulgary     46.64  5.19              7540</code></pre>
+## 19     japan      9.76 22.83             28450
+## 10     egypt     54.80 19.20              3940
+## 15   hungary     76.88 10.84             13840
+## 5    bulgary     46.64  5.19              7540
+## 31 venezuela     27.30  6.09              4750
+## 12   germany     78.52 48.47             27610
+## 22 paquistan     57.10 24.00              2040
+## 13    greece     90.23  8.17             19900</code></pre>
 </div>
 <div id="a-graphically-represent-cellphone-demand-in-relation-to-per-capita-income-adjusted-by-ppp." class="section level3">
 <h3><strong>a) Graphically represent cellphone demand in relation to per capita income adjusted by PPP.</strong></h3>
@@ -843,13 +843,13 @@ tbl_3.3[sample(nrow(tbl_3.3),10), ]</code></pre>
 ## F-statistic: 5.116 on 1 and 29 DF,  p-value: 0.03138</code></pre>
 <p><strong>A:</strong> The lin-lin model generated a slope with a lower p-value and a higher r². Thus I would prefer this model instead of the log-log model.</p>
 </div>
-<div id="cap.7-multiple-regression-analysis-the-estimation-problem" class="section level3">
-<h3><strong>Cap.7 Multiple Regression Analysis: The Estimation Problem</strong></h3>
+</div>
+<div id="chapter-7---multiple-regression-analysis-the-estimation-problem" class="section level2">
+<h2><strong>Chapter 7 - Multiple Regression Analysis: The Estimation Problem</strong></h2>
 <p>The authors in this chapter explain how multiple regression have to be analyzed. They start presenting the hypothesis of this model, that are the same of simple regression models and then they explain that the coeficients of the model will measure the effect on the mean value of Y considering the other variables constant.</p>
 <p>This consideration is made by removing the effect of the variation in one independent variable on the other (X1 and X2). Multiple regression models will generate the R² metric, that is different from the r², because it’ll represent the proportion of Y that is explained by all other independente variables of the model (X1, X2, X3…).</p>
 <p>Then, the author continue explaining the impact thar multiple regression models can suffer by specification errors in the design of the model. In this case, the error would be a missing independent variable.</p>
 <p>Also, the author shows that in a multiple regression model, you’ll have an Adjusted R² that will inform the same information of R² but considering the amount of variables including in the model. The Adjusted R² in this case, penalizes the inclusion of two many independente variables. At the end, they explain that in regression models, it’s not relevant to seek a high Adjusted R², because the goal is to make reliable estimation of the populational parameters <span class="math inline">\(\beta\)</span> in order to make predictions.</p>
-</div>
 <div id="exercises-5" class="section level3">
 <h3><strong>Exercises</strong></h3>
 </div>
@@ -987,18 +987,18 @@ g1 + g2</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -6.4916 -1.9623 -0.3852  2.1597  6.6391 
+## -7.9540 -1.2559 -0.0266  1.4753  5.5086 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  3.71339    1.69054   2.197 0.030409 *  
-## x            0.18680    0.04658   4.010 0.000118 ***
+## (Intercept)  2.47391    1.56953   1.576    0.118    
+## x            0.21540    0.04296   5.014 2.37e-06 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.731 on 98 degrees of freedom
-## Multiple R-squared:  0.141,  Adjusted R-squared:  0.1322 
-## F-statistic: 16.08 on 1 and 98 DF,  p-value: 0.0001184</code></pre>
+## Residual standard error: 2.48 on 98 degrees of freedom
+## Multiple R-squared:  0.2042, Adjusted R-squared:  0.196 
+## F-statistic: 25.14 on 1 and 98 DF,  p-value: 2.371e-06</code></pre>
 <pre class="r"><code>df %&gt;% 
   mutate(x = y + z) %&gt;% 
   lm(formula = &quot;z ~ x&quot;) %&gt;% 
@@ -1009,18 +1009,18 @@ g1 + g2</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -6.6391 -2.1597  0.3852  1.9623  6.4916 
+## -5.5086 -1.4753  0.0266  1.2559  7.9540 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -3.71339    1.69054  -2.197   0.0304 *  
-## x            0.81320    0.04658  17.459   &lt;2e-16 ***
+## (Intercept) -2.47391    1.56953  -1.576    0.118    
+## x            0.78460    0.04296  18.264   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.731 on 98 degrees of freedom
-## Multiple R-squared:  0.7567, Adjusted R-squared:  0.7542 
-## F-statistic: 304.8 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 2.48 on 98 degrees of freedom
+## Multiple R-squared:  0.7729, Adjusted R-squared:  0.7706 
+## F-statistic: 333.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="c-its-possible-to-compare-r²-of-both-models" class="section level3">
 <h3><strong>c) It’s possible to compare R² of both models?</strong></h3>
@@ -1037,11 +1037,11 @@ g1 + g2</code></pre>
 # Dataset sample
 tbl_7.6[sample(nrow(tbl_7.6),5), ]</code></pre>
 <pre><code>##    year    y   x2   x3     x4 x5
-## 3     3 8429 3.07 4.06 165.26  3
-## 13   13 6134 2.82 2.94 184.00 13
+## 11   11 5911 3.77 3.65 181.87 11
 ## 2     2 9348 2.54 2.85 173.36  2
-## 16   16 5872 3.69 3.53 188.00 16
-## 14   14 5868 2.96 3.12 188.20 14</code></pre>
+## 8     8 8253 3.23 3.49 188.98  8
+## 15   15 3160 4.24 3.58 175.67 15
+## 6     6 8862 2.77 3.66 198.62  6</code></pre>
 <p>In this table we have <strong>y = sold roses</strong>, <strong>x2 = average rose price</strong>, <strong>x3 = average clove price</strong>, <strong>x4 = average family income available</strong> and <strong>x5 = trend variable</strong>.</p>
 <p>Consider the following demand functions:</p>
 <p><span class="math display">\[Y = \alpha_1 + \alpha_2 X_2 + \alpha_3 X_3 + \alpha_4 X_4 + \alpha_5 X_5 + \mu\]</span></p>
@@ -1112,8 +1112,9 @@ Given this regression model, <span class="math inline">\(\beta_2 = -1.27\)</span
 <h3><strong>C) The parameters beta 2, 3 and 4 represent price elasticity, cross price elasticity and income elasticity for rose demand?</strong></h3>
 <p><strong>A:</strong> Yes, because they’re on transformed by natural log, then small variations can be interpreted as percentual variations. But this model generated parameters with high p-value, then these parameters aren’t strong predictors for the variable being studied.</p>
 </div>
-<div id="cap.8-multple-regression-analysis-the-inference-problem" class="section level3">
-<h3><strong>Cap.8 Multple Regression Analysis: The Inference Problem</strong></h3>
+</div>
+<div id="chapter-8---multple-regression-analysis-the-inference-problem" class="section level2">
+<h2><strong>Chapter 8 - Multple Regression Analysis: The Inference Problem</strong></h2>
 <p>In this chapter the author record the reader that OLS method to develop regression models doen’t make any assumption about the error distribution <span class="math inline">\(\mu\)</span> and the OLS would be fine if the goal is to make point estimation of the parameters of the model. But when the goal is to make estimations about the populational parameters, the normality of <span class="math inline">\(\mu\)</span> assumption will be required.</p>
 <p>After, they present multiple hypothesis that can be tested in a multiple regression model, like:</p>
 <ol style="list-style-type: decimal">
@@ -1125,5 +1126,4 @@ Given this regression model, <span class="math inline">\(\beta_2 = -1.27\)</span
 </ol>
 <p>In this chapter the author gave special attention to the F statistics. That is a metric that indicates the relevance of the paramters choosen for the regression model. Also, they presented the relation between F statistics and R².</p>
 <p>Then, to end the chapter, they presented some discussion about when it is necessary to add new variables on a multiple regression model.</p>
-</div>
 </div>

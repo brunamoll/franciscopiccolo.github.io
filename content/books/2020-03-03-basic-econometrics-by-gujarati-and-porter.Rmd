@@ -355,13 +355,13 @@ tbl_3.7_df_adj %>%
 
 **A:** Apparently, gold price is a better asset to edge inflation rate than the NYSE index. Althought there're two outliers on the gold price data that are impacting the model.
 
-## **Cap.4 Classical Normal Linear Regression Model**
+## **Chapter 4 - Classical Normal Linear Regression Model**
 
 In this chapter the authors gave attention to the classical normal linear regression model that introduces the concept of normal distrubutions of residuals. As was informed in previus chapter, the goal of the regression model is to estimate parameters ($\hat{\beta}$) for the populational parameter ($\beta$) and because it's an estimation based on samples, the result will vary on each model and the variation of ($\hat{\beta}$) will follow a particular distribution.
 
 Knowing that $\hat{\beta}$ should follow a particular distribution, the most desired one is the normal distribution. To afirm that the parameter follows the normal distribution, the author prove algebrically that $\hat{\beta}$ is a linear function of the residuals $\mu$. Then, having the premise that $\mu$ is normally distributed, the premise that $\hat{\beta}$ is normally distributed will be attended. The premise of $\hat{\beta}$ and $\mu$ being normally distributed will allow inferences about the population's parameters using confident intervals and test of hypothesis, two techniques developed by classical statisticians.
 
-## **Cap.5 Two variables regression model: The confidence interval and hypothesis test**
+## **Chapter 5 - Two variables regression model: The confidence interval and hypothesis test**
 
 After explaining the premises of the classical linear regression model on the last chapter, the authors develop in this chapter the hole regression model to draw inferences about the population parameters being studied. Before they start the explanation, they indicate that the expected value of the sample parameter will be the true value of the populational parameter. Mathematically it means that $e(\hat{\beta}) = \beta$. Also, they indicate that the reliability of the parameters created by the regression model will be measured by the **standard error**, and this metric will support the development of the confidence interval and test of hypothesis.
 
@@ -563,7 +563,7 @@ This value of t will generate a lower p-value, as seging below.
 
 Then, the Null hypothesis H0: $\beta_2 = 1$ can be rejected, allowing the conclusion that Gold Price is not a perfect edge asset for the inflation rate.
 
-## **Cap.6 Extensions for the Linear Regression Models of two Variables**
+## **Chapter 6 - Extensions for the Linear Regression Models of two Variables**
 
 In this chapter the authors present some additional regression models that will be more appropriated in some circunstances. These models are different, but the premise of linearity of parameters is unbroken.
 
@@ -752,7 +752,7 @@ tbl_3.3 %>%
 
 **A:** The lin-lin model generated a slope with a lower p-value and a higher r². Thus I would prefer this model instead of the log-log model.
 
-### **Cap.7 Multiple Regression Analysis: The Estimation Problem**
+## **Chapter 7 - Multiple Regression Analysis: The Estimation Problem**
 
 The authors in this chapter explain how multiple regression have to be analyzed. They start presenting the hypothesis of this model, that are the same of simple regression models and then they explain that the coeficients of the model will measure the effect on the mean value of Y considering the other variables constant.
 
@@ -926,7 +926,7 @@ Given this regression model, $\beta_2 = -1.27$ indicates that rose demand will f
 
 **A:** Yes, because they're on transformed by natural log, then small variations can be interpreted as percentual variations. But this model generated parameters with high p-value, then these parameters aren't strong predictors for the variable being studied.
 
-### **Cap.8 Multple Regression Analysis: The Inference Problem**
+## **Chapter 8 - Multple Regression Analysis: The Inference Problem**
 
 In this chapter the author record the reader that OLS method to develop regression models doen't make any assumption about the error distribution $\mu$ and the OLS would be fine if the goal is to make point estimation of the parameters of the model. But when the goal is to make estimations about the populational parameters, the normality of $\mu$ assumption will be required.
 
