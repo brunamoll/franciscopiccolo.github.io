@@ -1,0 +1,45 @@
+---
+title: "Monitoring Stock Using Yahoo Finance"
+date: 
+output:
+  html_document:
+    fig_width: 8.5
+    fig_height: 4
+---
+
+```{r,echo=F,include=F,warning=F,message=F}
+library(tidyverse)
+library(tidyquant)
+library(patchwork)
+
+theme_graph <- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    text = element_text(family = "Times New Roman"),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+}
+```
+
+
+In this post I'll present a simple method to extract and analyze stock price using **tidyquant**, an R package that encapsulate other packages, including **quantmod**, that is another package that has an API to request Yahoo Finance data. Thus tidyquant will supply stock market data in a tidy way (organized way).
+
+This package request the Symbols (stock price names) in order to bring the necessary data. You can indentify this information on Yahoo [webpage](https://finance.yahoo.com/), searching for a specific company and getting its symbol.
+
+Ações preferenciais terminam em 4
+
+Qtd mínima por operação (i.e. 100 papeis)
+
+
+Centauro, CCR, 
+
+
+
+

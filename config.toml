@@ -122,3 +122,9 @@ disableHugoGeneratorInject = false
     identifier = "book_review"
     name       = "Book Review"
     url        = "books/"
+  [[menu.main]]
+    identifier = "brokerage"
+    name       = "Brokerage"
+    url        = "brokerage/"
+
+
