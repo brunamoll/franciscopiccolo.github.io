@@ -1,0 +1,14 @@
+---
+title: "Researching Companies to Invest"
+date: 
+output:
+  html_document:
+    fig_width: 8.5
+    fig_height: 4
+---
+
+
+
+
+
+

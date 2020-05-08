@@ -21,7 +21,7 @@ As a fundamentalist, I'll be more long term focused and risk averse. I know that
 
 Smart goals are defined as specific, measurable, aggreed-uppon, realistic and time-based, and my journey as an investor has to have a smart goal well defined. Let's see if it will be inspiring too.
 
-> "In this journey, I will seek a profitability aligned with Ibovespa, being measured in a montly report in this webpage. This journey will last untill december 2026, starting in may 2020 (80 months)."
+> "In this journey, the goal is to build a portfolio with low risk stocks that pay dividends and won't devaluate in the long term. The metrics that will inform if I'm on track of this goal will be reported in this webpage. The goal will last untill december 2026, starting in may 2020 (80 months)."
 
 Well, I think it's pretty specific and measurable, because I'll take the price of my portfolio and analyze its variation in order to compare with Ibovespa index. After some research, I've found that it's pretty realistic and also conservative. Also, this is a time-based goal because it has a start and an end point.
 
@@ -31,7 +31,33 @@ Now that I know my profile and my goal, I can set a strategy to support my journ
 
 In order to achieve the defined goal, I'll first research some companies and understand their foundations and attribute a score for them. After I finish this research I'll list the companies to make the purchase of the stock and set an hypothesis for each company. The hypothesis will be based on future stock performance. Then, I'll make the follow-up of the financial data and investor releases of these companies. 
 
-Over time, I'll keep making the researches and analysis in order to add more companies to my portfolio. The loop **research**, **score**, **buy**, **follow-up** can be modified, by the scientific approach won't change. Also, I'll sell some stocks if I get suficient evidences that the company won't support the achievement of the goal.
+Over time, I'll keep making the researches and analysis in order to add more companies to my portfolio. The loop **research**, **score**, **buy**, **follow-up** can be modified, but the scientific approach will not change. Also, I'll sell some stocks if I get suficient evidences that the company won't support the achievement of the goal.
+
+Considering that my goal is to purchase companies that pay dividend, I'll buy only **preferential** stocks.
+
+In the research step, the following metrics of the company will be evaluated, quartely:
+
+* **Fundamentals**
+  1. Op.Profit
+  2. Net Profit
+  3. Cash Flow
+  4. Revenue
+
+* **Stock**
+  1. Average Stock Price (moving average)
+  2. Price to Earning ratio (P/E)
+  3. Price to EBIT ratio (P/EBIT)
+  4. Price to FCO ratio (P/FCO)
+
+* **Dividend**
+  1. Dividend Yield
+
+* **Risk**
+  1. Beta
+
+* **Economic Variables**
+  1. Competitive Advantages
+  2. Macroeconomic variables that can impact the business
 
 ### **4) Follow-up and Adapt**
 
