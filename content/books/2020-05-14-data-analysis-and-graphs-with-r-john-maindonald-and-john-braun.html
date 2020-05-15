@@ -137,9 +137,9 @@ output:
 tibble(mean = mean(y),
            sd = sd(y))</code></pre>
 <pre><code>## # A tibble: 1 x 2
-##      mean    sd
-##     &lt;dbl&gt; &lt;dbl&gt;
-## 1 -0.0429 0.962</code></pre>
+##     mean    sd
+##    &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.0737  1.03</code></pre>
 <p><strong>A:</strong> In order to run this process, it’s necessary to create an empty variable with 25 slots available, then create a <em>for lopp</em> that will calculate the mean for a sample of 100 values taken from a normal distribution, 25 times.</p>
 <pre class="r"><code># Creating an empty variable with 25 slots
 output &lt;- rep(NA,25)
@@ -159,9 +159,9 @@ df &lt;- data.frame(
 tibble(mean = mean(df[,1]),
            sd = sd(df[,1]))</code></pre>
 <pre><code>## # A tibble: 1 x 2
-##     mean     sd
-##    &lt;dbl&gt;  &lt;dbl&gt;
-## 1 0.0243 0.0893</code></pre>
+##     mean    sd
+##    &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.0313 0.126</code></pre>
 </div>
 <div id="create-a-function-that-does-the-calculations-of-exercise-2.-run-the-function-several-times-showing-each-of-the-distributions-of-25-means-in-a-density-plot." class="section level3">
 <h3><strong>3) Create a function that does the calculations of Exercise 2. Run the function several times, showing each of the distributions of 25 means in a density plot.</strong></h3>
@@ -230,31 +230,16 @@ Changing the signals from minus to plus in order to obtain the the upper limit i
          inc75_lower = avg_income_75 - sem_74_times_critical_t,
          inc75_upper = avg_income_75 + sem_74_times_critical_t,
          inc78_lower = avg_income_78 - sem_74_times_critical_t,
-         inc78_upper = avg_income_78 + sem_74_times_critical_t) -&gt; df</code></pre>
-<pre class="r"><code>df %&gt;% 
-  select(inc74_lower,
-         inc74_upper)</code></pre>
-<pre><code>## # A tibble: 2 x 2
-##   inc74_lower inc74_upper
-##         &lt;dbl&gt;       &lt;dbl&gt;
-## 1       1412.       2802.
-## 2       1387.       2804.</code></pre>
-<pre class="r"><code>df %&gt;% 
-  select(inc75_lower,
-         inc75_upper)</code></pre>
-<pre><code>## # A tibble: 2 x 2
-##   inc75_lower inc75_upper
-##         &lt;dbl&gt;       &lt;dbl&gt;
-## 1        572.       1962.
-## 2        823.       2241.</code></pre>
-<pre class="r"><code>df %&gt;% 
-  select(inc78_lower,
-         inc78_upper)</code></pre>
-<pre><code>## # A tibble: 2 x 2
-##   inc78_lower inc78_upper
-##         &lt;dbl&gt;       &lt;dbl&gt;
-## 1       3860.       5249.
-## 2       5640.       7058.</code></pre>
+         inc78_upper = avg_income_78 + sem_74_times_critical_t)</code></pre>
+<pre><code>## # A tibble: 2 x 18
+##   group     n avg_income_74 avg_income_75 avg_income_78 sem_74 sem_75 sem_78
+##   &lt;chr&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 cont~   260         2107.         1267.         4555.   353.   192.   340.
+## 2 test    185         2096.         1532.         6349.   359.   237.   578.
+## # ... with 10 more variables: critical_t &lt;dbl&gt;, sem_74_times_critical_t &lt;dbl&gt;,
+## #   sem_75_times_critical_t &lt;dbl&gt;, sem_78_times_critical_t &lt;dbl&gt;,
+## #   inc74_lower &lt;dbl&gt;, inc74_upper &lt;dbl&gt;, inc75_lower &lt;dbl&gt;, inc75_upper &lt;dbl&gt;,
+## #   inc78_lower &lt;dbl&gt;, inc78_upper &lt;dbl&gt;</code></pre>
 <p>Now, the final question demand us to estimate the income difference between treated and control groups in 1978, with 95% of confidence. For this estimation, the book recommends the following equation:</p>
 <p><span class="math inline">\(SED = \sqrt{SEM_1^2 + SEM_2^2}\)</span></p>
 <p>Where:</p>
@@ -291,7 +276,7 @@ g2 &lt;- t_value %&gt;%
        y = &quot;t-statistics&quot;)
 
 g1 + g2</code></pre>
-<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 <div id="generate-a-random-sample-of-10-numbers-from-a-normal-distribution-with-mean-0-and-standard-deviation-2.-use-t.test-to-test-the-null-hypothesis-that-the-mean-is-0.-now-generate-a-random-sample-of-10-numbers-from-a-normal-distribution-with-mean-1.5-and-standard-deviation-2.-again-use-t.test-to-test-the-null-hypothesis-that-the-mean-is-0.-finally-write-a-function-that-generates-a-random-sample-of-n-numbers-from-a-normal-distribution-with-mean-and-standard-deviation-1-and-returns-the-p-value-for-the-test-that-the-mean-is-0.." class="section level3">
 <h3><strong>3) Generate a random sample of 10 numbers from a normal distribution with mean 0 and standard deviation 2. Use t.test() to test the null hypothesis that the mean is 0. Now generate a random sample of 10 numbers from a normal distribution with mean 1.5 and standard deviation 2. Again use t.test() to test the null hypothesis that the mean is 0. Finally write a function that generates a random sample of n numbers from a normal distribution with mean and standard deviation 1, and returns the p-value for the test that the mean is 0..</strong></h3>
@@ -300,8 +285,8 @@ g1 + g2</code></pre>
 
 # Visualizing the data set
 df</code></pre>
-<pre><code>##  [1]  3.0300076  0.5495646 -2.1466435 -1.5087365  1.9965087 -1.3526119
-##  [7] -0.5509253 -3.5739961  0.4305624  1.8354560</code></pre>
+<pre><code>##  [1]  0.7140189  3.5159454  1.0333839 -0.9531241 -1.5107716 -0.8396788
+##  [7] -0.3228798 -0.7736752  3.0399988 -0.4485823</code></pre>
 <p>Now, let’s make R calculate the t.test() and see the result and after this I’ll calculate the p-value by hand to reach the same result. I expect that the null hypothesis (<span class="math inline">\(H0: \mu = 0\)</span>) won’t be rejected, because the data set was generated from a population with mean 0.</p>
 <pre class="r"><code>df %&gt;% 
   t.test(mu = 0, conf.level = 0.975)</code></pre>
@@ -309,13 +294,13 @@ df</code></pre>
 ##  One Sample t-test
 ## 
 ## data:  .
-## t = -0.19698, df = 9, p-value = 0.8482
+## t = 0.63322, df = 9, p-value = 0.5423
 ## alternative hypothesis: true mean is not equal to 0
 ## 97.5 percent confidence interval:
-##  -1.888568  1.630405
+##  -1.119384  1.810312
 ## sample estimates:
-##  mean of x 
-## -0.1290814</code></pre>
+## mean of x 
+## 0.3454635</code></pre>
 <p>The t.test from R generated a p-value of 0.7261. In this case we can’t reject H0 as expected. Now let’s make the calculation step by step.</p>
 <pre class="r"><code>mean &lt;- mean(df)
 sd &lt;- sd(df)
@@ -324,7 +309,7 @@ n_sqrt &lt;- sqrt(length(df))
 sem &lt;- sd/n_sqrt
 
 (1-pt(mean/sem, 10-1))*2</code></pre>
-<pre><code>## [1] 1.151781</code></pre>
+<pre><code>## [1] 0.5423428</code></pre>
 <p>The same p-value was obtained. Thus, we can rely on our t.test() from R and understand what it is happening on backstage.</p>
 <p>Now, the question ask us to perform the same method in a population with mean 1.5. In this case, let’s make the sample generation and statistical modeling all at once.</p>
 <pre class="r"><code>data.frame(rnorm(n = 10, mean = 1.5, sd = 2)) %&gt;% 
@@ -333,13 +318,13 @@ sem &lt;- sd/n_sqrt
 ##  One Sample t-test
 ## 
 ## data:  .
-## t = 3.2093, df = 9, p-value = 0.01067
+## t = 3.0626, df = 9, p-value = 0.01351
 ## alternative hypothesis: true mean is not equal to 0
 ## 97.5 percent confidence interval:
-##  0.3703831 4.1640321
+##  0.241311 3.673117
 ## sample estimates:
 ## mean of x 
-##  2.267208</code></pre>
+##  1.957214</code></pre>
 <p>In this test, the p-value obtained was lower, but not sufficient to make us reject H0: <span class="math inline">\(\mu = 0\)</span>. Maybe it’s because the sample size is small. Let’s remake the test with a larger sample.</p>
 <pre class="r"><code>data.frame(rnorm(n = 100, mean = 1.5, sd = 2)) %&gt;% 
   t.test(mu = 0, conf.level = 0.975)</code></pre>
@@ -347,13 +332,13 @@ sem &lt;- sd/n_sqrt
 ##  One Sample t-test
 ## 
 ## data:  .
-## t = 6.9181, df = 99, p-value = 4.574e-10
+## t = 7.9756, df = 99, p-value = 2.708e-12
 ## alternative hypothesis: true mean is not equal to 0
 ## 97.5 percent confidence interval:
-##  0.9456001 1.8728564
+##  1.080489 1.943432
 ## sample estimates:
 ## mean of x 
-##  1.409228</code></pre>
+##  1.511961</code></pre>
 <p>Now, the p-value is pretty lower and we can reject H0 with a 95% of confidence.</p>
 </div>
 <div id="use-the-function-that-was-created-in-exercise-3-to-generate-50-independent-p-values-all-with-a-sample-size-n-10-and-with-mean-0.-use-qqplot-with-the-parameter-setting-x-qunifppoints50-to-compare-the-distribution-of-the-p-values-with-that-of-a-uniform-random-variable-on-the-interval-0-1.-comment-on-the-plot." class="section level3">
@@ -402,7 +387,7 @@ g2 &lt;- df %&gt;%
   labs(title = &quot;Histogram of p-values&quot;)
 
 g1+g2</code></pre>
-<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>Look that most of the p-values generated are on the righ side of the histogram’s yellow dached line. This indicates that most of the Null Hypothesis wouldn’t be rejected considering a significance level of 5%.</p>
 </div>
 <div id="here-we-generate-random-normal-numbers-with-a-sequential-dependence-structure.-repeat-this-several-times.-there-should-be-no-consistent-pattern-in-the-acf-plot-for-different-random-samples-y1.-there-will-be-a-fairly-consistent-pattern-in-the-acf-plot-for-y-a-result-of-the-correlation-that-is-introduced-by-adding-to-each-value-the-next-value-in-the-sequence." class="section level3">
@@ -411,9 +396,9 @@ g1+g2</code></pre>
 y1 &lt;- rnorm(51)
 y &lt;- y1[-1] + y1[-51]
 acf(y1) # acf is ‘autocorrelation function’</code></pre>
-<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <pre class="r"><code>acf(y)</code></pre>
-<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
 </div>
 <div id="a-for-each-column-of-the-data-set-nsw74psid1-after-the-first-compare-the-control-group-trt0-with-the-treatment-group-trt1.-use-overlaid-density-plots-to-compare-the-continuous-variables-and-two-way-tables-to-compare-the-binary-01-variables.-where-are-the-greatest-differences." class="section level3">
 <h3><strong>8) (a) For each column of the data set nsw74psid1 after the first, compare the control group (trt==0) with the treatment group (trt==1). Use overlaid density plots to compare the continuous variables, and two-way tables to compare the binary (0/1) variables. Where are the greatest differences?.</strong></h3>
@@ -478,6 +463,188 @@ plots +
   plot_layout(guides = &quot;collect&quot;)+
   plot_annotation(title = &quot;Continuous variables comparison&quot;,
                   subtitle = &quot;Control (0) and treated (1) groups&quot;)</code></pre>
-<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+</div>
+<div id="chapter-5---regression-with-a-single-predictor" class="section level2">
+<h2><strong>Chapter 5 - Regression with a Single Predictor</strong></h2>
+<p>This chapter provides some foundations on linear regression models, where the authors walk through parameters estimation using confidence intervals and hypothesis test, R’s <strong>lm function</strong> and outputs, residual analysis and the use of cross-validation and bootstrap to reproduce the model multiple times in order to assess how it’s stable and reliable.</p>
+<div id="for-each-of-the-data-sets-elastic1-and-elastic2-determine-the-regression-of-stretch-on-distance.-in-each-case-determine." class="section level3">
+<h3><strong>2) For each of the data sets <em>elastic1</em> and <em>elastic2</em>, determine the regression of stretch on distance. In each case determine.</strong></h3>
+<p><strong>(i) fitted values and standard errors of fitted values</strong></p>
+<p><strong>(ii) the R² statistic. Compare the two sets of results. What is the key difference between the two sets of data?</strong></p>
+<p><strong>Use the robust regression function rlm() from the MASS package to fit lines to the data in elastic1 and elastic2. Compare the results with those from use of lm(). Compare regression coefficients, standard errors of coefficients, and plots of residuals against fitted values.</strong></p>
+<p><strong>A:</strong> The data sets mentioned for this exercise is:</p>
+<pre class="r"><code>df1 &lt;- data.frame(stretch = c(46,54,48,50,44,42,52),
+                  distance = c(183,217,189,208,178,150,249))
+
+df2 &lt;- data.frame(stretch = c(25,45,35,40,55,50,30,50,60),
+                  distance = c(71,196,127,187,249,217,114,228,291))</code></pre>
+<p>With these two data sets, let’s determine the regression of stretch (y) on distance (x). For this analysis, I’ll plot the scaterplot with the model output as anottation on the graph.</p>
+<pre class="r"><code>g1 &lt;- df1 %&gt;%
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = distance, y = stretch),
+             shape = 20)+
+  geom_smooth(mapping = aes(x = distance, y = stretch),
+              method = &quot;lm&quot;,
+              formula = &quot;y ~ x&quot;,
+              se = F,
+              lty = 2,
+              color = &quot;dark orange&quot;)+
+  geom_text(mapping = aes(x = 165, y = 55, label = &quot;y = 24.13 + 0.12 X1&quot;),
+            size = 3)+
+  geom_text(mapping = aes(x = 167, y = 54, label = &quot;Std.Error = (5.41) | (0.027)&quot;),
+            size = 3)+
+  geom_text(mapping = aes(x = 165, y = 53, label = &quot;R²: 79.92%&quot;),
+            size = 3)+
+  theme_graph()
+
+g2 &lt;- df2 %&gt;%
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = distance, y = stretch),
+             shape = 20)+
+  geom_smooth(mapping = aes(x = distance, y = stretch),
+              method = &quot;lm&quot;,
+              formula = &quot;y ~ x&quot;,
+              se = F,
+              lty = 2,
+              color = &quot;dark orange&quot;)+
+  geom_text(mapping = aes(x = 105, y = 60, label = &quot;y = 12.56 + 0.16 X1&quot;),
+            size = 3)+
+  geom_text(mapping = aes(x = 105, y = 55, label = &quot;Std.Error = (1.73) | (0.009)&quot;),
+            size = 3)+
+  geom_text(mapping = aes(x = 105, y = 50, label = &quot;R²: 98.08%&quot;),
+            size = 3)+
+  theme_graph()
+
+g1/g2</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>The second data set has a stronger correlation betweem stretch and distance than the first one. The estimators of the second model also are more reliable given their lower standard error.</p>
+<p>Now let’s see what we obtain using the function <em>rlm()</em> from the <em>MASS</em> package.</p>
+<pre class="r"><code>df1 %&gt;% 
+  MASS::rlm(stretch ~ distance, data = .) %&gt;% 
+  summary()</code></pre>
+<pre><code>## 
+## Call: rlm(formula = stretch ~ distance, data = .)
+## Residuals:
+##       1       2       3       4       5       6       7 
+## -0.2207  3.8393  1.0840  0.8822 -1.6413 -0.3967 -1.8689 
+## 
+## Coefficients:
+##             Value   Std. Error t value
+## (Intercept) 25.0146  5.0698     4.9341
+## distance     0.1159  0.0255     4.5366
+## 
+## Residual standard error: 1.607 on 5 degrees of freedom</code></pre>
+<pre class="r"><code>df2 %&gt;% 
+  MASS::rlm(stretch ~ distance, data = .) %&gt;% 
+  summary()</code></pre>
+<pre><code>## 
+## Call: rlm(formula = stretch ~ distance, data = .)
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -3.49045 -0.63426  0.02595  1.28920  1.56422 
+## 
+## Coefficients:
+##             Value   Std. Error t value
+## (Intercept) 12.6646  1.7257     7.3390
+## distance     0.1648  0.0087    18.9266
+## 
+## Residual standard error: 1.911 on 7 degrees of freedom</code></pre>
+</div>
+<div id="using-the-data-frame-cars-datasets-plot-distance-i.e.-stopping-distance-versus-speed.-fit-a-line-to-this-relationship-and-plot-the-line.-then-try-fitting-and-plotting-a-quadratic-curve.-does-the-quadratic-curve-give-a-useful-improvement-to-the-fit" class="section level3">
+<h3><strong>3) Using the data frame cars (datasets), plot distance (i.e. stopping distance) versus speed. Fit a line to this relationship, and plot the line. Then try fitting and plotting a quadratic curve. Does the quadratic curve give a useful improvement to the fit?</strong></h3>
+<p><strong>A:</strong> Let’s plot the scateplot and both curves (linear and quadratic curves). I’ll consider distance on the y axis and speed on the x axis, in order to evaluate what distance will take for the car to stop given it’s speed before it start to brake.</p>
+<pre class="r"><code>cars %&gt;% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = speed, y = dist),
+             shape = 7,
+             color = &quot;dark blue&quot;)+
+  geom_smooth(mapping = aes(x = speed, y = dist),
+              method = &quot;lm&quot;,
+              formula = &quot;y ~ x&quot;,
+              se = F,
+              lty = 2,
+              color = &quot;dark orange&quot;)+
+  geom_smooth(mapping = aes(x = speed, y = dist),
+              method = &quot;lm&quot;,
+              formula = &quot;y ~ I(x^1.7)&quot;,
+              se = F,
+              lty = 2,
+              color = &quot;dark red&quot;)</code></pre>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>Know, let’s summarise both regression models and compare them. The comparison will consider the residual standard error.</p>
+<pre class="r"><code>cars %&gt;% 
+  lm(formula = &quot;dist ~ speed&quot;) %&gt;% 
+  summary()</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = &quot;dist ~ speed&quot;, data = .)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -29.069  -9.525  -2.272   9.215  43.201 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -17.5791     6.7584  -2.601   0.0123 *  
+## speed         3.9324     0.4155   9.464 1.49e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 15.38 on 48 degrees of freedom
+## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
+## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
+<pre class="r"><code>cars %&gt;% 
+  lm(formula = &quot;dist ~ I(speed^1.7)&quot;) %&gt;% 
+  summary()</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = &quot;dist ~ I(speed^1.7)&quot;, data = .)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -28.875  -9.330  -3.155   4.548  45.036 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   3.88615    4.52194   0.859    0.394    
+## I(speed^1.7)  0.34997    0.03573   9.796 4.96e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 15.03 on 48 degrees of freedom
+## Multiple R-squared:  0.6666, Adjusted R-squared:  0.6596 
+## F-statistic: 95.96 on 1 and 48 DF,  p-value: 4.956e-13</code></pre>
+<p>Thus, we have the second model with a residual standard error of 15.03, lower than the 15.38 given by the first model (linear). Then, apparently the second model is better.</p>
 </div>
 </div>
