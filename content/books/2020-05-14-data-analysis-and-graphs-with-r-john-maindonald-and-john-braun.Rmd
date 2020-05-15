@@ -275,18 +275,29 @@ DAAG::nsw74demo %>%
          sem_75_times_critical_t = sem_75 * critical_t,
          sem_78_times_critical_t = sem_78 * critical_t,
          inc74_lower = avg_income_74 - sem_74_times_critical_t,
-         inc_74_upper = avg_income_74 + sem_74_times_critical_t,
-         inc_75_lower = avg_income_75 - sem_74_times_critical_t,
-         inc_75_upper = avg_income_75 + sem_74_times_critical_t,
-         inc_78_lower = avg_income_78 - sem_74_times_critical_t,
-         inc_78_upper = avg_income_78 + sem_74_times_critical_t) %>% 
-  select(group,
-         inc74_lower,
-         inc_74_upper,
-         inc_75_lower,
-         inc_75_upper,
-         inc_78_lower,
-         inc_78_upper)
+         inc74_upper = avg_income_74 + sem_74_times_critical_t,
+         inc75_lower = avg_income_75 - sem_74_times_critical_t,
+         inc75_upper = avg_income_75 + sem_74_times_critical_t,
+         inc78_lower = avg_income_78 - sem_74_times_critical_t,
+         inc78_upper = avg_income_78 + sem_74_times_critical_t) -> df
+```
+
+```{r, message = F, warning = F}
+df %>% 
+  select(inc74_lower,
+         inc74_upper)
+```
+
+```{r, message = F, warning = F}
+df %>% 
+  select(inc75_lower,
+         inc75_upper)
+```
+
+```{r, message = F, warning = F}
+df %>% 
+  select(inc78_lower,
+         inc78_upper)
 ```
 
 Now, the final question demand us to estimate the income difference between treated and control groups in 1978, with 95% of confidence. For this estimation, the book recommends the following equation:
