@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Notes on Glass Frog</title>
+    <link>/notes/</link>
+    <description>Recent content in Notes on Glass Frog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 07 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/notes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Investing Journey</title>
+      <link>/notes/9999-99-99-wip-/</link>
+      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/notes/9999-99-99-wip-/</guid>
+      <description>library(tidyverse)## -- Attaching packages ---------------------------------------------------- tidyverse 1.2.1 --## v ggplot2 3.2.1 v purrr 0.3.3## v tibble 2.1.3 v dplyr 0.8.3## v tidyr 1.0.0 v stringr 1.4.0## v readr 1.3.1 v forcats 0.4.0## Warning: package &amp;#39;purrr&amp;#39; was built under R version 3.6.3## -- Conflicts ------------------------------------------------------- tidyverse_conflicts() --## x dplyr::filter() masks stats::filter()## x dplyr::lag() masks stats::lag()df &amp;lt;- data.frame(x = seq(1, 20, by = .</description>
+    </item>
+    
+  </channel>
+</rss>

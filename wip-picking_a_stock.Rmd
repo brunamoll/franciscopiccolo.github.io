@@ -7,6 +7,21 @@ output:
     fig_height: 4
 ---
 
+Preço médio do papel,
+último dividendo pago
+data de pagamento do último dividendo
+dividend yield
+dividend yield de qualificação: (último dividendo/preço)x100
+
+Ficar de olho em notícias que podem afetar o lucro da empresa
+
+Avalia a performance do portfolio após o pagamento dos dividendos
+
+Monitoramento de seis em seis meses,
+
+Dividendo cresce, papel valoriza
+Dividendo cai, papel desvaloriza
+
 
 
 

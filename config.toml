@@ -6,7 +6,7 @@ theme = "hugo-theme-hello-friend-ng"
 DefaultContentLanguage = "en"
 
 PygmentsCodeFences = true
-PygmentsStyle = "monokai"
+Pygmentsuseclasses = true
 
 rssLimit  = 10  # Maximum number of items in the RSS feed.
 
@@ -119,12 +119,14 @@ disableHugoGeneratorInject = false
     name       = "Posts"
     url        = "posts/"
   [[menu.main]]
-    identifier = "book_review"
-    name       = "Book Review"
+    identifier = "books"
+    name       = "Books"
     url        = "books/"
   [[menu.main]]
     identifier = "brokerage"
     name       = "Brokerage"
     url        = "brokerage/"
-
-
+  [[menu.main]]
+    identifier = "notes"
+    name       = "Math"
+    url        = "notes/"

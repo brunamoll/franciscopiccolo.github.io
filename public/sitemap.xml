@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/books/</loc>
+    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</loc>
+    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/brokerage/</loc>
     <lastmod>2020-05-07T00:00:00+00:00</lastmod>
   </url>
@@ -13,12 +23,17 @@
   </url>
   
   <url>
-    <loc>/books/2020-03-03-basic-econometrics-by-gujarati-and-porter/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
+    <loc>/notes/9999-99-99-wip-/</loc>
+    <lastmod>2020-05-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/books/</loc>
+    <loc>/notes/</loc>
+    <lastmod>2020-05-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/books/2020-03-03-basic-econometrics-by-gujarati-and-porter/</loc>
     <lastmod>2020-03-03T00:00:00+00:00</lastmod>
   </url>
   
