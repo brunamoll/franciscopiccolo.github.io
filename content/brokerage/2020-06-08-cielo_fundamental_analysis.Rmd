@@ -1,0 +1,130 @@
+---
+title: "Cielo Fundamental Analysis"
+date: 2020-06-08
+output:
+  html_document:
+    fig_width: 8.5
+    fig_height: 4
+---
+
+### **Introduction**
+
+This research will investigate the financial data of Cielo, a finance service company created in 1995 with it's head quarters in Brazil. The goal of this research
+
+pdftools
+pdf_text()
+read_PDF
+
+```{r}
+library(tidyverse)
+library(tabulizer)
+library(rJava)
+library(pdftools)
+```
+
+```{r}
+tab <- tabulizer::extract_tables(file = "C:/Users/francisco.piccolo/Desktop/R/cielo_1T20.pdf",
+                          method = "stream",
+                          encoding = "UTF-8",
+                          output = "data.frame")
+
+q1_2020 <- as.data.frame(tab[26]) %>%
+  select(DRE,
+         Cielo.Consolidada) %>% 
+  filter(DRE != "R$ milhões") %>% 
+  separate(col = Cielo.Consolidada,
+           into = c("q1_2020","delta","discard"), sep = " ") %>% 
+  select(DRE, q1_2020)
+```
+
+```{r}
+tab <- tabulizer::extract_tables(file = "C:/Users/francisco.piccolo/Desktop/R/cielo_4T19.pdf",
+                          method = "stream",
+                          encoding = "UTF-8",
+                          output = "data.frame")
+
+q4_2019 <- as.data.frame(tab[15]) %>%
+  select(DRE,
+         Cielo.Consolidada) %>% 
+  filter(DRE != "R$ milhões") %>% 
+  separate(col = Cielo.Consolidada,
+           into = c("q4_2019","delta","1t19"), sep = " ") %>% 
+  select(DRE, q4_2019)
+```
+
+```{r}
+tab <- tabulizer::extract_tables(file = "C:/Users/francisco.piccolo/Desktop/R/cielo_3T19.pdf",
+                          method = "stream",
+                          encoding = "UTF-8",
+                          output = "data.frame")
+
+q3_2019 <- as.data.frame(tab[17]) %>%
+  select(DRE,
+         Cielo.Consolidada) %>% 
+  filter(DRE != "R$ milhões") %>% 
+  separate(col = Cielo.Consolidada,
+           into = c("q3_2019","delta","1t19"), sep = " ") %>% 
+  select(DRE, q3_2019)
+```
+
+```{r}
+tab <- tabulizer::extract_tables(file = "C:/Users/francisco.piccolo/Desktop/R/cielo_2T19.pdf",
+                          method = "stream",
+                          encoding = "UTF-8",
+                          output = "data.frame")
+
+q2_2019 <- as.data.frame(tab[17]) %>%
+  select(DRE,
+         Cielo.Consolidada) %>% 
+  filter(DRE != "R$ milhões") %>% 
+  separate(col = Cielo.Consolidada,
+           into = c("q2_2019","delta","1t19"), sep = " ") %>% 
+  select(DRE, q2_2019)
+```
+
+```{r}
+tab <- tabulizer::extract_tables(file = "C:/Users/francisco.piccolo/Desktop/R/cielo_1T19.pdf",
+                          method = "stream",
+                          encoding = "UTF-8",
+                          output = "data.frame")
+
+q1_2019 <- as.data.frame(tab[17]) %>%
+  select(DRE,
+         Cielo.Consolidada) %>% 
+  filter(DRE != "R$ milhões") %>% 
+  separate(col = Cielo.Consolidada,
+           into = c("q1_2019","delta","1t19"), sep = " ") %>% 
+  select(DRE, q1_2019)
+```
+
+```{r}
+tab <- tabulizer::extract_tables(file = "C:/Users/francisco.piccolo/Desktop/R/cielo_4T18.pdf",
+                          method = "stream",
+                          encoding = "UTF-8",
+                          output = "data.frame")
+
+q4_2018 <- as.data.frame(tab[22]) %>%
+  select(DRE,
+         Cielo.Consolidada) %>% 
+  filter(DRE != "R$ milhões") %>% 
+  separate(col = Cielo.Consolidada,
+           into = c("q4_2018","delta","1t19"), sep = " ") %>% 
+  select(DRE, q4_2018)
+```
+
+```{r}
+tab <- tabulizer::extract_tables(file = "C:/Users/francisco.piccolo/Desktop/R/cielo_3T18.pdf",
+                          method = "stream",
+                          encoding = "UTF-8",
+                          output = "data.frame")
+
+q3_2018 <- as.data.frame(tab[40]) %>%
+  select(Income.Statement,
+         Cielo.Consolidated) %>% 
+  filter(Income.Statement != "R$ millions") %>% 
+  separate(col = Cielo.Consolidated,
+           into = c("q3_2018","delta","1t19"), sep = " ") %>% 
+  select(Income.Statement, q3_2018)
+```
+
+

@@ -1,0 +1,212 @@
+---
+title: "math_studying"
+author: '.'
+date: "12/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("rticles")
+
+library(rticles)
+library(tidyverse)
+
+1/0.8
+
+a <- 0.2
+
+teste <- function(t){
+  10000*(0.9)^t
+}
+
+teste(1:10)
+
+3486.784/10000
+
+round((log(3486.784/10000))/log10(0.9),digits = 5)
+
+a <- function(t){
+  7*exp(1)^(-pi*t)
+}
+
+t <- 1:100
+
+df <- data.frame(
+  t = t,
+  a = a(t)
+)
+
+ggplot(data=df,aes(x=t,y=a))+
+  geom_point()
+
+
+log(exp(1),base = exp(1))
+
+
+c + 12 + c + 12 + c  = 3c + 24 = y
+22 + c + 16 + c + 22 = 2c + 60 = y
+
+                       c - 36 = 0
+                       c = 36
+
+22+22+16
+
+```
+
+
+```{r}
+
+
+
+U <- function(x,y){
+  factorial(x)/(factorial(x-y)*factorial(y))
+}
+
+E <- function(x,y){
+  factorial(x)/(factorial(x-y)*factorial(y))
+}
+
+
+U(7,2)+U(7,3)+U(7,4)+U(7,5)+U(7,6)+1
+
+U(4,4)
+
+P <- function(x,y){
+  factorial(x)/(factorial(x-y))
+}
+
+U(6,1)+U(6,2)+U(6,3)+U(6,4)+U(6,5)+U(6,6)
+
+P <- E(5,2)/U(50,3)
+
+
+(10/18)*(9/17)*(8/16)
+
+```
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+Função e comportamento gráfico
+
+```{r}
+
+a <- function(x){
+  (2*(x^2))+1
+}
+
+b <- function(x){
+  (4*(x^2))+5
+}
+
+df_1 <- data.frame(a=a(seq(1,10,by = 1)),b=seq(1,10,by = 1))
+df_2 <- data.frame(b=b(seq(1,10,by = 1)),a=seq(1,10,by = 1))
+
+ggplot()+
+  geom_line(data=df_1,aes(x=b,y=a))
+  geom_line(data=df_2,aes(x=a,y=b))
+  
+c <- function(e){
+  e^-0.3
+}
+
+plot(c(seq(1,100,by = 1)))
+
+log(-0.6931)
+
+2.71^(0.0025*0.6931)
+
+
+```
+
+
+Limites:
+
+1) Represente graficamente $\lim\limits_{\sin\theta\to0}\frac{\sin\theta}{\theta}$
+
+
+```{r}
+a <- function(x){
+  sin(x)/x
+}
+
+df <- data.frame(
+  a = a(c(-0.0001,-0.001,-0.01,-0.1,0.0001,0.001,0.1,0.9,1)),
+  b = c(-0.0001,-0.001,-0.01,-0.1,0.0001,0.001,0.1,0.9,1))
+
+df %>%
+  ggplot(aes(x=b,y=a))+
+  geom_line()
+
+```
+
+Velocidade de uma partícula: 3t^²
+
+```{r}
+a <- function(h){
+  (((3*(1+h))^2)-9)/(h)
+}
+
+plot(a(c(0.1,0.01,0.001,0.00001,0.0000001)),type = "l")
+```
+
+
+
+Gráfico de um carro sendo girigido a uma velocidade crescente:
+
+```{r}
+a <- function(x){
+  0+1.2^x
+}
+
+plot(a(c(seq(1,10,by = 1))))
+```
+
+
+```{r}
+a <- function(h){
+  (((3+h)^3)-27)/(h)
+}
+
+df <- data.frame(
+  a = a(c(-0.00001,-0.0001,-0.001,-0.01,-0.1,0.000001,0.00001,0.0001,0.001,0.01)),
+  b = c(-0.00001,-0.0001,-0.001,-0.01,-0.1,0.000001,0.00001,0.0001,0.001,0.01)
+)
+
+df %>% 
+  ggplot(aes(x=b,y=a))+
+  geom_line()
+
+```
+
+
+
+
+
+
+
+
+

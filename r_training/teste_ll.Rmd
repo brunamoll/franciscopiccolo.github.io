@@ -1,0 +1,244 @@
+---
+title: "Treinamento em R markdoen"
+subtitle: "Testes de conexao ao banco e criação de gráficos"
+author: "Francisco"
+date: "2020-05-29"
+output: 
+  html_document:
+    df_print: paged
+    highlight: zenburn
+    code_folding: hide
+    css: style.css
+---
+
+# Header 1
+
+## Header 2
+
+**bold**
+
+*italico*
+
+Iniciando documentos Rmarkdown...
+
+1. Chamando pacotes necessários
+
+```{r, echo=F, warning=F, error=F, message=F}
+library(rJava)
+library(RJDBC)
+library(patchwork)
+library(lubridate)
+library(zoo)
+```
+
+Teste.... 
+
+```{r, echo=T, include=F}
+a <- seq(1, 100, by = 10)
+```
+
+Incluindo o código abaixo:
+
+```{r, include=T}
+a
+```
+
+Dividindo por 10
+
+```{r}
+a/10
+```
+
+```{sql, eval=F}
+SELECT * FROM integration_layer.int_sale_item limit 10;
+```
+
+
+### **Conectando ao Redshift**
+
+```{r}
+library(rJava)
+library(RJDBC)
+library(tidyverse)
+```
+
+```{r}
+dw_inf <- data.frame(read.table("C:/Users/francisco.piccolo/Desktop/R/Redshift_access/dw_prod_access.txt",sep=" "))
+sprintf <- as.character(dw_inf[2,2])
+host <- as.character(dw_inf[3,2])
+port <- as.character(dw_inf[4,2])
+dw <- as.character(dw_inf[5,2])
+user <- as.character(dw_inf[6,2])
+password <- as.character(dw_inf[7,2])
+
+
+# Conectando ao banco
+driver <- JDBC(driverClass = 'com.amazon.redshift.jdbc41.Driver', classPath = Sys.glob("C:/Users/francisco.piccolo/Documents/R/Redshift_JDBC/RedshiftJDBC41-1.1.9.1009.jar"), identifier.quote="`")
+db_end <- sprintf(sprintf, host, port, dw)
+jconn <- RJDBC::dbConnect(driver, db_end, user, password)
+```
+
+```{r}
+RJDBC::dbGetQuery(jconn, "select first_name from business_layer.dim_customer limit 100")
+```
+
+```{r}
+sql_syntax <- readr::read_file("C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/queries.sql")
+```
+
+```{r}
+df <- RJDBC::dbGetQuery(jconn, sql_syntax)
+```
+
+
+```{r, eval = F}
+query_1 <- RJDBC::dbGetQuery(jconn, substr(sql_syntax,min(stringr::str_locate(string = sql_syntax,'-- query_1_begin')),max(stringr::str_locate(string=sql_syntax,'-- query_1_end'))))
+
+
+query_2 <- RJDBC::dbGetQuery(jconn, substr(sql_syntax,min(stringr::str_locate(string = sql_syntax,'-- query_2_begin')),max(stringr::str_locate(string=sql_syntax,'-- query_2_end'))))
+```
+
+```{r, eval=F}
+readr::write_rds(query_2, "C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/datasets/query_2.RDS")
+```
+
+```{r, eval=T}
+readr::read_rds("C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/datasets/query_1.RDS") -> query_1
+
+readr::read_rds("C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/datasets/query_1.RDS") -> query_2
+```
+
+```{r}
+query_1 %>% 
+  head(4)
+```
+
+```{r}
+query_2 %>% 
+  head(5)
+```
+
+```{r}
+query_1 %>% 
+  select(fk_company, first_name, billet_unpaid_rate) %>% 
+  filter(first_name == "Francisco") %>% 
+  group_by(first_name) %>% 
+  summarise(billet = sum(billet_unpaid_rate))
+```
+
+```{r}
+sql_syntax <- readr::read_file("C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/researches_train/research_1.sql")
+```
+
+
+```{r, eval = F}
+query_1 <- RJDBC::dbGetQuery(jconn, substr(sql_syntax,min(stringr::str_locate(string = sql_syntax,'-- query_1_begin')),max(stringr::str_locate(string=sql_syntax,'-- query_1_end'))))
+
+query_2 <- RJDBC::dbGetQuery(jconn, substr(sql_syntax,min(stringr::str_locate(string = sql_syntax,'-- query_2_begin')),max(stringr::str_locate(string=sql_syntax,'-- query_2_end'))))
+```
+
+```{r, eval=F}
+readr::write_rds(query_1, "C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/researches_train/datasets/query_1.RDS")
+
+readr::write_rds(query_2, "C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/researches_train/datasets/query_2.RDS")
+```
+
+```{r}
+readr::read_rds("C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/researches_train/datasets/query_1.RDS") -> query_1
+
+readr::read_rds("C:/Users/francisco.piccolo/Desktop/R/01.DFT Research/r_training/researches_train/datasets/query_2.RDS") -> query_2
+```
+
+## Iniciando visualizações
+
+```{r, eval=T}
+query_1$sale_date <- lubridate::ymd(query_1$sale_date)
+```
+
+```{r, eval=T}
+df <- query_1 %>% 
+  filter(uf == "SP") %>% 
+  tidyr::spread(ontime_delivery_status, qty) %>% 
+  dplyr::mutate(after_date = ifelse(is.na(after_date), 0, after_date),
+                before_date = ifelse(is.na(before_date), 0, before_date),
+                ontime = ifelse(is.na(ontime), 0, ontime),
+                share_ontime = round(ontime/(ontime+before_date+after_date), digits = 4),
+                roll_avg = zoo::rollmean(share_ontime, 20, fill = NA))
+```
+
+```{r, eval=T}
+df %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = sale_date, y = share_ontime),
+            alpha = 0.3)+
+  geom_line(mapping = aes(x = sale_date, y = roll_avg),
+            alpha = 0.9)+
+  geom_vline(xintercept = as.Date("2019-11-29"),
+             lty = 2,
+             color = "dark orange",
+             size = 2)+
+  geom_text(mapping = aes(x = as.Date("2019-12-09"), y = .4, label = "teste"))+
+  scale_y_continuous(labels = scales::percent)+
+  scale_x_date(breaks = "6 months")+
+  theme(axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 9),
+        title = element_text(size = 10))+
+  labs(title = "Teste",
+       subtitle = "Teste subtitulo",
+       x = "",
+       y = "")
+```
+
+
+```{r}
+query_2$sale_order_store_date <- lubridate::ymd(query_2$sale_order_store_date)
+```
+
+
+```{r}
+query_2 %>% 
+  group_by(sale_order_store_date) %>% 
+  summarise(rev = sum(net_rev),
+            rev_wo_bnf = sum(net_rev_wo_bnf),
+            cost = sum(net_cost_wo_bnf),
+            cost_wo_bnf = sum(net_cost_wo_bnf)) %>% 
+  mutate(pc1 = 1-round(cost/rev, digits = 4),
+         pc1_wo_bnf = 1-round(cost_wo_bnf/rev_wo_bnf, digits = 4)) %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = sale_order_store_date, y = pc1), color = "red")+
+  geom_line(mapping = aes(x = sale_order_store_date, y = pc1_wo_bnf), color = "dark orange")
+```
+
+
+```{r}
+query_2 %>% 
+  select(sale_order_store_date,
+         net_rev,
+         net_rev_wo_bnf,
+         is_warehouse_transference) %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = sale_order_store_date, y = net_rev, group = is_warehouse_transference, color = as.factor(is_warehouse_transference)))+
+  scale_color_viridis_d()+
+  theme(legend.position = "none")
+```
+
+
+```{r}
+query_2 %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = sale_order_store_date, y = pc1, color = "pc1"))+
+  geom_line(mapping = aes(x = sale_order_store_date, y = pc1_wo_bnf, color = "pc1_wo_bnf"))+
+  scale_color_manual(values = c("pc1" = "steel blue",
+                                "pc1_wo_bnf" = "dark orange"))+
+  facet_wrap(~is_warehouse_transference)
+```
+
+
+
+
+
+
+
+
+
+

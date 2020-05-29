@@ -1,0 +1,15 @@
+---
+title: "Dafiti"
+author: "Me"
+date: "2020-05-29"
+output: html_document
+---
+
+teste
+
+teste
+
+```{r}
+a <- seq(1, 10 ,by = 1)
+```
+
