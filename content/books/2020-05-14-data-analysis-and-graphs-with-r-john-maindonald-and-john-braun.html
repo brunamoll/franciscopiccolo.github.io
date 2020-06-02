@@ -137,9 +137,9 @@ output:
 tibble(mean = mean(y),
            sd = sd(y))</code></pre>
 <pre><code>## # A tibble: 1 x 2
-##     mean    sd
-##    &lt;dbl&gt; &lt;dbl&gt;
-## 1 0.0737  1.03</code></pre>
+##    mean    sd
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.201 0.890</code></pre>
 <p><strong>A:</strong> In order to run this process, it’s necessary to create an empty variable with 25 slots available, then create a <em>for lopp</em> that will calculate the mean for a sample of 100 values taken from a normal distribution, 25 times.</p>
 <pre class="r"><code># Creating an empty variable with 25 slots
 output &lt;- rep(NA,25)
@@ -159,9 +159,9 @@ df &lt;- data.frame(
 tibble(mean = mean(df[,1]),
            sd = sd(df[,1]))</code></pre>
 <pre><code>## # A tibble: 1 x 2
-##     mean    sd
-##    &lt;dbl&gt; &lt;dbl&gt;
-## 1 0.0313 0.126</code></pre>
+##      mean     sd
+##     &lt;dbl&gt;  &lt;dbl&gt;
+## 1 -0.0324 0.0976</code></pre>
 </div>
 <div id="create-a-function-that-does-the-calculations-of-exercise-2.-run-the-function-several-times-showing-each-of-the-distributions-of-25-means-in-a-density-plot." class="section level3">
 <h3><strong>3) Create a function that does the calculations of Exercise 2. Run the function several times, showing each of the distributions of 25 means in a density plot.</strong></h3>
@@ -285,8 +285,8 @@ g1 + g2</code></pre>
 
 # Visualizing the data set
 df</code></pre>
-<pre><code>##  [1]  0.7140189  3.5159454  1.0333839 -0.9531241 -1.5107716 -0.8396788
-##  [7] -0.3228798 -0.7736752  3.0399988 -0.4485823</code></pre>
+<pre><code>##  [1]  1.11047756  0.05717637  2.85255879  2.29140613 -1.19666248 -1.68979701
+##  [7] -2.26653728 -0.51901458  0.50253030 -0.27047453</code></pre>
 <p>Now, let’s make R calculate the t.test() and see the result and after this I’ll calculate the p-value by hand to reach the same result. I expect that the null hypothesis (<span class="math inline">\(H0: \mu = 0\)</span>) won’t be rejected, because the data set was generated from a population with mean 0.</p>
 <pre class="r"><code>df %&gt;% 
   t.test(mu = 0, conf.level = 0.975)</code></pre>
@@ -294,13 +294,13 @@ df</code></pre>
 ##  One Sample t-test
 ## 
 ## data:  .
-## t = 0.63322, df = 9, p-value = 0.5423
+## t = 0.16684, df = 9, p-value = 0.8712
 ## alternative hypothesis: true mean is not equal to 0
 ## 97.5 percent confidence interval:
-##  -1.119384  1.810312
+##  -1.315672  1.490004
 ## sample estimates:
-## mean of x 
-## 0.3454635</code></pre>
+##  mean of x 
+## 0.08716633</code></pre>
 <p>The t.test from R generated a p-value of 0.7261. In this case we can’t reject H0 as expected. Now let’s make the calculation step by step.</p>
 <pre class="r"><code>mean &lt;- mean(df)
 sd &lt;- sd(df)
@@ -309,7 +309,7 @@ n_sqrt &lt;- sqrt(length(df))
 sem &lt;- sd/n_sqrt
 
 (1-pt(mean/sem, 10-1))*2</code></pre>
-<pre><code>## [1] 0.5423428</code></pre>
+<pre><code>## [1] 0.871188</code></pre>
 <p>The same p-value was obtained. Thus, we can rely on our t.test() from R and understand what it is happening on backstage.</p>
 <p>Now, the question ask us to perform the same method in a population with mean 1.5. In this case, let’s make the sample generation and statistical modeling all at once.</p>
 <pre class="r"><code>data.frame(rnorm(n = 10, mean = 1.5, sd = 2)) %&gt;% 
@@ -318,13 +318,13 @@ sem &lt;- sd/n_sqrt
 ##  One Sample t-test
 ## 
 ## data:  .
-## t = 3.0626, df = 9, p-value = 0.01351
+## t = 1.633, df = 9, p-value = 0.1369
 ## alternative hypothesis: true mean is not equal to 0
 ## 97.5 percent confidence interval:
-##  0.241311 3.673117
+##  -0.8949722  3.6735575
 ## sample estimates:
 ## mean of x 
-##  1.957214</code></pre>
+##  1.389293</code></pre>
 <p>In this test, the p-value obtained was lower, but not sufficient to make us reject H0: <span class="math inline">\(\mu = 0\)</span>. Maybe it’s because the sample size is small. Let’s remake the test with a larger sample.</p>
 <pre class="r"><code>data.frame(rnorm(n = 100, mean = 1.5, sd = 2)) %&gt;% 
   t.test(mu = 0, conf.level = 0.975)</code></pre>
@@ -332,13 +332,13 @@ sem &lt;- sd/n_sqrt
 ##  One Sample t-test
 ## 
 ## data:  .
-## t = 7.9756, df = 99, p-value = 2.708e-12
+## t = 8.0186, df = 99, p-value = 2.19e-12
 ## alternative hypothesis: true mean is not equal to 0
 ## 97.5 percent confidence interval:
-##  1.080489 1.943432
+##  1.241623 2.225831
 ## sample estimates:
 ## mean of x 
-##  1.511961</code></pre>
+##  1.733727</code></pre>
 <p>Now, the p-value is pretty lower and we can reject H0 with a 95% of confidence.</p>
 </div>
 <div id="use-the-function-that-was-created-in-exercise-3-to-generate-50-independent-p-values-all-with-a-sample-size-n-10-and-with-mean-0.-use-qqplot-with-the-parameter-setting-x-qunifppoints50-to-compare-the-distribution-of-the-p-values-with-that-of-a-uniform-random-variable-on-the-interval-0-1.-comment-on-the-plot." class="section level3">
@@ -647,4 +647,297 @@ g1/g2</code></pre>
 ## F-statistic: 95.96 on 1 and 48 DF,  p-value: 4.956e-13</code></pre>
 <p>Thus, we have the second model with a residual standard error of 15.03, lower than the 15.38 given by the first model (linear). Then, apparently the second model is better.</p>
 </div>
+<div id="calculate-volumes-volume-and-page-areas-area-for-the-books-on-which-information-is-given-in-the-data-frame-oddbooks-daag." class="section level3">
+<h3><strong>4) Calculate volumes (volume) and page areas (area) for the books on which information is given in the data frame oddbooks (DAAG).</strong></h3>
+</div>
+<div id="a-plot-logweight-against-logvolume-and-fit-a-regression-line." class="section level3">
+<h3><strong>a) Plot log(weight) against log(volume), and fit a regression line.</strong></h3>
+<pre class="r"><code>DAAG::oddbooks %&gt;% 
+  mutate(volume = (height*breadth*weight)) %&gt;% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = log(weight), y = log(volume)))+
+  geom_smooth(mapping = aes(x = log(weight), y = log(volume)),
+              method = &quot;lm&quot;,
+              formula = &quot;y ~ x&quot;,
+              se = F,
+              lty = 2,
+              color = &quot;dark orange&quot;)+
+  theme_graph()+
+  labs(title = &quot;Volume vs Weigth scaterplot&quot;)</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+<div id="b-plot-logweight-against-logarea-and-again-fit-a-regression-line." class="section level3">
+<h3><strong>b) Plot log(weight) against log(area), and again fit a regression line.</strong></h3>
+<pre class="r"><code>DAAG::oddbooks %&gt;% 
+  mutate(area = (height*weight)) %&gt;% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = log(weight), y = log(area)))+
+  geom_smooth(mapping = aes(x = log(weight), y = log(area)),
+              method = &quot;lm&quot;,
+              formula = &quot;y ~ x&quot;,
+              se = F,
+              lty = 2,
+              color = &quot;dark orange&quot;)+
+  theme_graph()+
+  labs(title = &quot;Area vs Weigth scaterplot&quot;)</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+</div>
+<div id="c-which-of-the-lines-a-and-b-gives-the-better-fit" class="section level3">
+<h3><strong>c) Which of the lines (a) and (b) gives the better fit?</strong></h3>
+<p><strong>A:</strong> In order to evaluate the best fit, I’ll use the metric standard error of the residuals and see which model has a lower value.</p>
+<pre class="r"><code>DAAG::oddbooks %&gt;% 
+  mutate(volume = (height*breadth*weight),
+         area = (height*weight)) %&gt;% 
+  lm(formula = &quot;log(volume) ~ log(weight)&quot;) %&gt;%
+  summary()</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = &quot;log(volume) ~ log(weight)&quot;, data = .)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.19855 -0.10268 -0.03917  0.01860  0.40736 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -1.1527     0.8268  -1.394    0.193    
+## log(weight)   2.1034     0.1321  15.921 1.97e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1884 on 10 degrees of freedom
+## Multiple R-squared:  0.962,  Adjusted R-squared:  0.9582 
+## F-statistic: 253.5 on 1 and 10 DF,  p-value: 1.97e-08</code></pre>
+</div>
+<div id="in-the-data-set-pressure-examine-the-dependence-of-pressure-on-temperature.-the-relevant-theory-is-that-associated-with-the-claudius-clapeyron-equation-by-which-the-logarithm-of-the-vapor-pressure-is-approximately-inversely-proportional-to-the-absolute-temperature." class="section level3">
+<h3><strong>5) In the data set <em>pressure</em>, examine the dependence of pressure on temperature. The relevant theory is that associated with the Claudius-Clapeyron equation, by which the logarithm of the vapor pressure is approximately inversely proportional to the absolute temperature.</strong></h3>
+<p><strong>A:</strong> Let’s see this data set, plot the graph and the fitted mdoel.</p>
+<pre class="r"><code>pressure %&gt;% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(y = log(pressure), x = 1/temperature))+
+  geom_smooth(mapping = aes(y = log(pressure), x = 1/temperature),
+              method = &quot;lm&quot;,
+              formula = &quot;y ~ I(1/x)&quot;,
+              se = F,
+              lty = 2,
+              color = &quot;dark orange&quot;)+
+  theme_graph()+
+  labs(title = TeX(&quot;Claudius-Clapeyron equation: $log(p) = \\frac{1}{x}$&quot;),
+       y = TeX(&quot;$log(p)$&quot;),
+       x = TeX(&quot;$\\frac{1}{x}$&quot;))</code></pre>
+<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<p><img src="/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+</div>
+</div>
+<div id="chapter-6---multiple-linear-regression" class="section level2">
+<h2><strong>Chapter 6 - Multiple Linear Regression</strong></h2>
 </div>

@@ -13,6 +13,7 @@ library(DAAG)
 library(MASS)
 library(Amelia)
 library(patchwork)
+library(latex2exp)
 
 theme_graph <- function(){
   theme(
@@ -633,7 +634,75 @@ cars %>%
 
 Thus, we have the second model with a residual standard error of 15.03, lower than the 15.38 given by the first model (linear). Then, apparently the second model is better.
 
+### **4)  Calculate volumes (volume) and page areas (area) for the books on which information is given in the data frame oddbooks (DAAG).**
 
+### **a) Plot log(weight) against log(volume), and fit a regression line.**
+
+```{r}
+DAAG::oddbooks %>% 
+  mutate(volume = (height*breadth*weight)) %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = log(weight), y = log(volume)))+
+  geom_smooth(mapping = aes(x = log(weight), y = log(volume)),
+              method = "lm",
+              formula = "y ~ x",
+              se = F,
+              lty = 2,
+              color = "dark orange")+
+  theme_graph()+
+  labs(title = "Volume vs Weigth scaterplot")
+```
+
+### **b) Plot log(weight) against log(area), and again fit a regression line.**
+
+```{r}
+DAAG::oddbooks %>% 
+  mutate(area = (height*weight)) %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = log(weight), y = log(area)))+
+  geom_smooth(mapping = aes(x = log(weight), y = log(area)),
+              method = "lm",
+              formula = "y ~ x",
+              se = F,
+              lty = 2,
+              color = "dark orange")+
+  theme_graph()+
+  labs(title = "Area vs Weigth scaterplot")
+```
+
+### **c) Which of the lines (a) and (b) gives the better fit?**
+
+**A:** In order to evaluate the best fit, I'll use the metric standard error of the residuals and see which model has a lower value.
+
+```{r}
+DAAG::oddbooks %>% 
+  mutate(volume = (height*breadth*weight),
+         area = (height*weight)) %>% 
+  lm(formula = "log(volume) ~ log(weight)") %>%
+  summary()
+```
+
+### **5) In the data set _pressure_, examine the dependence of pressure on temperature. The relevant theory is that associated with the Claudius-Clapeyron equation, by which the logarithm of the vapor pressure is approximately inversely proportional to the absolute temperature.**
+
+**A:** Let's see this data set, plot the graph and the fitted mdoel.
+
+```{r}
+pressure %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(y = log(pressure), x = 1/temperature))+
+  geom_smooth(mapping = aes(y = log(pressure), x = 1/temperature),
+              method = "lm",
+              formula = "y ~ I(1/x)",
+              se = F,
+              lty = 2,
+              color = "dark orange")+
+  theme_graph()+
+  labs(title = TeX("Claudius-Clapeyron equation: $log(p) = \\frac{1}{x}$"),
+       y = TeX("$log(p)$"),
+       x = TeX("$\\frac{1}{x}$"))
+```
+
+## **Chapter 6 - Multiple Linear Regression**
 
 
 
