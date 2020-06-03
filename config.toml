@@ -84,7 +84,7 @@ disableHugoGeneratorInject = false
     theme = "#252627"
 
   [params.logo]
-    logoText     = "Home"
+    logoText     = "Francisco Piccolo"
     logoHomeLink = "/"
 
 # Social icons
@@ -118,15 +118,3 @@ disableHugoGeneratorInject = false
     identifier = "posts"
     name       = "Posts"
     url        = "posts/"
-  [[menu.main]]
-    identifier = "books"
-    name       = "Books"
-    url        = "books/"
-  [[menu.main]]
-    identifier = "brokerage"
-    name       = "Brokerage"
-    url        = "brokerage/"
-  [[menu.main]]
-    identifier = "notes"
-    name       = "Math"
-    url        = "notes/"

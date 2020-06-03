@@ -3,47 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/books/</loc>
+    <loc>/posts/2020/05/book-review-data-analysis-and-graphs-with-r-by-j.maindonald-and-j.braun/</loc>
     <lastmod>2020-05-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</loc>
+    <loc>/posts/</loc>
     <lastmod>2020-05-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/brokerage/</loc>
-    <lastmod>2020-05-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/brokerage/2020-05-07-investing_journey/</loc>
-    <lastmod>2020-05-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/notes/2020-05-24-linear_functions/</loc>
-    <lastmod>2020-05-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/notes/</loc>
-    <lastmod>2020-05-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/books/2020-03-03-basic-econometrics-by-gujarati-and-porter/</loc>
+    <loc>/posts/2020/03/book-review-basic-econometrics-by-gujarati-and-porter/</loc>
     <lastmod>2020-03-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/posts/2020/01/global-immigration-outlook-using-wbstats-r-package/</loc>
-    <lastmod>2020-01-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/</loc>
     <lastmod>2020-01-20T00:00:00+00:00</lastmod>
   </url>
   

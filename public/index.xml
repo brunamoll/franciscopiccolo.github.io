@@ -12,41 +12,21 @@
     
     
     <item>
-      <title>Data Analysis and Graphs with R by J.Maindonald and J.Braun</title>
-      <link>/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</link>
+      <title>Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun</title>
+      <link>/posts/2020/05/book-review-data-analysis-and-graphs-with-r-by-j.maindonald-and-j.braun/</link>
       <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/books/2020-05-14-data-analysis-and-graphs-with-r-john-maindonald-and-john-braun/</guid>
+      <guid>/posts/2020/05/book-review-data-analysis-and-graphs-with-r-by-j.maindonald-and-j.braun/</guid>
       <description>OverviewThis book is part of a project made by Cambrige University called Cambridge Series in Statistics and Probabilistic Mathematics aiming to spread knowledge in statistics. As well as this book, there’re other 19 that explore other areas of statistics.
 The content of this book is more generic, where the authors explain a range of concepts, from exploratory data analysis, statistical tests, tree models and survival analysis. The book was published in 2006 (the second edition) and I think because of that the authors didn’t use libraries like ggplot or the tidyverse universe.</description>
     </item>
     
     <item>
-      <title>Investing Journey</title>
-      <link>/brokerage/2020-05-07-investing_journey/</link>
-      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/brokerage/2020-05-07-investing_journey/</guid>
-      <description>This post will kick-off my journey as a fundamentalist investor. The posts related to this journey will be placed in a specific page of my website (Brokerage), because I’ll share everything related to my strategy as investor and the decisions that I’ll make during the journey.
-In this first post, I’ll describe how will be the roadmap of the journey, in order to stay organized. The roadmap is divided in some steps described below:</description>
-    </item>
-    
-    <item>
-      <title>Investing Journey</title>
-      <link>/notes/2020-05-24-linear_functions/</link>
-      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/notes/2020-05-24-linear_functions/</guid>
-      <description>This post will kick-off my journey as a fundamentalist investor. The posts related to this journey will be placed in a specific page of my website (Brokerage), because I’ll share everything related to my strategy as investor and the decisions that I’ll make during the journey.
-In this first post, I’ll describe how will be the roadmap of the journey, in order to stay organized. The roadmap is divided in some steps described below:</description>
-    </item>
-    
-    <item>
-      <title>Basic Econometrics by Gujarati and Porter</title>
-      <link>/books/2020-03-03-basic-econometrics-by-gujarati-and-porter/</link>
+      <title>Book Review: Basic Econometrics by Gujarati and Porter</title>
+      <link>/posts/2020/03/book-review-basic-econometrics-by-gujarati-and-porter/</link>
       <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/books/2020-03-03-basic-econometrics-by-gujarati-and-porter/</guid>
+      <guid>/posts/2020/03/book-review-basic-econometrics-by-gujarati-and-porter/</guid>
       <description>OverviewThis book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economy grad students. For its importance, in this post I’ll present a brief summary of each chapter and solve some exercises (because the book doesn’t present the answer for the problems). Also, I’ll release the datasets used on the problems on my github account. To beggin this summary, lets see what the authors say about the subject:</description>
     </item>
     

@@ -1,5 +1,5 @@
 ---
-title: "Data Analysis and Graphs with R by J.Maindonald and J.Braun"
+title: "Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun"
 date: 2020-05-14
 output:
   html_document:
@@ -701,13 +701,4 @@ pressure %>%
        y = TeX("$log(p)$"),
        x = TeX("$\\frac{1}{x}$"))
 ```
-
-## **Chapter 6 - Multiple Linear Regression**
-
-
-
-
-
-
-
 

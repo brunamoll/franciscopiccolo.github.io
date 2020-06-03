@@ -1,5 +1,5 @@
 ---
-title: "Basic Econometrics by Gujarati and Porter"
+title: "Book Review: Basic Econometrics by Gujarati and Porter"
 date: 2020-03-03
 output:
   html_document:
@@ -44,11 +44,11 @@ tbl_1.3[sample(nrow(tbl_1.3),5), ] %&gt;% as.tibble()</code></pre>
 <pre><code>## # A tibble: 5 x 8
 ##    year   usa canada japan france germany italy    uk
 ##   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  1987 114.    118. 105.    121.    105.  135. 120. 
-## 2  1994 148.    148. 119.    146.    131.  195. 169. 
-## 3  1985 108.    109  104.    114.    105.  122. 111. 
-## 4  1984 104.    105. 102.    108     103.  111. 105. 
-## 5  1983  99.6   100.  99.8   100.    100.  101.  99.8</code></pre>
+## 1  1983  99.6   100.  99.8   100.    100.  101.  99.8
+## 2  2002 180.    173. 119     163.    147.  244. 207  
+## 3  2001 177.    169. 120.    160.    145.  238. 204. 
+## 4  1992 140.    145. 117     140.    122.  180. 163. 
+## 5  2003 184     178. 119.    167.    148.  251. 213</code></pre>
 </div>
 <div id="b-graphically-represent-the-inflation-rate-of-each-country." class="section level3">
 <h3><strong>b) Graphically represent the inflation rate of each country.</strong></h3>
@@ -62,7 +62,7 @@ tbl_1.3[sample(nrow(tbl_1.3),5), ] %&gt;% as.tibble()</code></pre>
   labs(title = &quot;Anual inflation for selected countries&quot;,
        x = &quot;&quot;,
        y = &quot;&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
 <div id="the-table-1.6-represents-the-budget-used-with-advertising-and-the-retention-of-impressions-from-customers-based-in-a-survey-with-4.000-people." class="section level3">
 <h3><strong>1.7) The table 1.6 represents the budget used with advertising and the retention of impressions from customers, based in a survey with 4.000 people.</strong></h3>
@@ -80,11 +80,11 @@ tbl_1.6[sample(nrow(tbl_1.6),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 3
 ##   company      impressions investment
 ##   &lt;fct&gt;              &lt;dbl&gt;      &lt;dbl&gt;
-## 1 McDonald            92.4      186. 
-## 2 Kibbles_Bits         4.4        6.1
-## 3 Wendys              29.2       49.7
-## 4 Levis               40.8       27  
-## 5 MCI                 50.7       26.9</code></pre>
+## 1 Meow_Mix            12.3        7.6
+## 2 Levis               40.8       27  
+## 3 Fed_Express         21.9       22.9
+## 4 Oscar_Meyer         23.4        9.2
+## 5 Calvin_Klein        12          5</code></pre>
 </div>
 <div id="a-present-the-relation-between-impressions-and-advertising-expenditures." class="section level3">
 <h3><strong>a) Present the relation between impressions and advertising expenditures.</strong></h3>
@@ -101,7 +101,7 @@ tbl_1.6[sample(nrow(tbl_1.6),5), ] %&gt;%
   labs(title = &quot;Investment and Impressions relation&quot;,
        x = &quot;Investment&quot;,
        y = &quot;Impressions&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 </div>
 <div id="chapter-2---regression-analysis-with-two-variables-some-basic-ideas" class="section level2">
@@ -130,11 +130,11 @@ tbl_2.8[sample(nrow(tbl_2.8),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 2
 ##    food total
 ##   &lt;int&gt; &lt;int&gt;
-## 1   220   640
-## 2   403   648
-## 3   370   586
-## 4   540   730
-## 5   410   610</code></pre>
+## 1   380   785
+## 2   305   801
+## 3   390   655
+## 4   530   790
+## 5   410   635</code></pre>
 </div>
 <div id="a-represent-the-data-drawing-the-food-expenses-in-the-y-axis-and-total-expenses-in-the-x-axis-and-then-plot-the-regression-line." class="section level3">
 <h3><strong>a) Represent the data drawing the food expenses in the Y axis and total expenses in the X axis and then plot the regression line.</strong></h3>
@@ -151,7 +151,7 @@ tbl_2.8[sample(nrow(tbl_2.8),5), ] %&gt;%
   labs(title = &quot;Food expenditures and total expenditures&quot;,
        x = &quot;Total expenditures&quot;,
        y = &quot;Food expenditures&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 </div>
 <div id="chapter-3---regression-model-with-two-variables-the-estimation-problem" class="section level2">
@@ -195,11 +195,11 @@ tbl_3.6[sample(nrow(tbl_3.6),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 5
 ##    year corporate non_agricultural corporate_wages non_agricultural_wages
 ##   &lt;int&gt;     &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;                  &lt;dbl&gt;
-## 1  1990      94.4             94.5            96.2                   96.1
-## 2  1966      61.2             63.6            71.7                   72.6
-## 3  2005     136.             135.            120.                   119. 
-## 4  1968      64.7             66.9            76.2                   77.1
-## 5  2003     129.             128             118.                   117.</code></pre>
+## 1  1999     113.             112.            108                    108. 
+## 2  1978      79.3             81              89.1                   89.6
+## 3  1993     100.             100.             99.7                   99.5
+## 4  1979      79.3             80.7            89.3                   89.7
+## 5  1973      73.4             75.3            84.3                   84.7</code></pre>
 </div>
 <div id="a-graphically-represent-separetely-y-versus-x-for-the-two-sectors-of-the-economy." class="section level3">
 <h3><strong>a) Graphically represent separetely Y versus X for the two sectors of the economy.</strong></h3>
@@ -219,7 +219,7 @@ tbl_3.6[sample(nrow(tbl_3.6),5), ] %&gt;%
   labs(title = &quot;Production index and hourly wages&quot;,
        x = &quot;Production&quot;,
        y = &quot;Wage&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="c-create-a-regression-model-usgin-ols-method." class="section level3">
 <h3><strong>c) Create a regression model usgin OLS method.</strong></h3>
@@ -262,11 +262,11 @@ tbl_3.7[sample(nrow(tbl_3.7),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 4
 ##    year  gold  nyse   cpi
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  1998  294. 5818.  163 
-## 2  2004  410. 6613.  189.
-## 3  2000  279. 6806.  172.
-## 4  1992  344. 2422.  140.
-## 5  1988  437. 1585.  118.</code></pre>
+## 1  1988  437. 1585. 118. 
+## 2  1976  125.  576.  56.9
+## 3  1979  307.  617.  72.6
+## 4  1996  388. 3787. 157. 
+## 5  1980  613.  720.  82.4</code></pre>
 </div>
 <div id="a-plot-gold-price-nyse-and-cpi-index-in-a-dispersion-graph." class="section level3">
 <h3><strong>a) Plot Gold price, NYSE and CPI index in a dispersion graph.</strong></h3>
@@ -296,7 +296,7 @@ plot3D::scatter3D(x, y, z,
                   xlab = &quot;gold&quot;, 
                   ylab = &quot;nyse&quot;, 
                   zlab = &quot;cpi&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 ### <strong>b) Suposing that an investment works as an inflation edge if its profitability follows the inflation rate, test the following regression models using the variables of the dataset.</strong></p>
 <p><span class="math display">\[gold = \beta_1 + \beta_2 + CPI + \mu\]</span>
 <span class="math display">\[nyse = \beta_1 + \beta_2 + CPI + \mu\]</span></p>
@@ -345,7 +345,7 @@ g2 &lt;-
        y = &quot;Gold price variation&quot;)
 
 g1 + g2</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <pre class="r"><code># Modelo 1, gold_price ~ ipc_index
 tbl_3.7_df_adj %&gt;% 
   lm(formula = gold_price_var ~ ipc_index_var) %&gt;% 
@@ -462,11 +462,11 @@ tbl_5.5[sample(nrow(tbl_5.5),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 3
 ##     obs  wage expense
 ##   &lt;int&gt; &lt;dbl&gt;   &lt;int&gt;
-## 1     2  20.3    3114
-## 2    24  34.0    5020
-## 3    47  26.0    3705
-## 4    48  25.8    4123
-## 5    25  23.4    3594</code></pre>
+## 1    44  24.6    2829
+## 2    15  27.4    3982
+## 3    26  20.6    2821
+## 4    36  20.5    3124
+## 5    17  22.0    3155</code></pre>
 </div>
 <div id="b-create-a-regression-model-to-analyze-the-standard-error-and-r²." class="section level3">
 <h3><strong>b) Create a regression model to analyze the standard error and r².</strong></h3>
@@ -527,11 +527,11 @@ tbl_3.7[sample(nrow(tbl_1.3),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 4
 ##    year  gold  nyse   cpi
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  1974  159.  464.  49.3
-## 2  1982  376.  729.  96.5
-## 3  1978  193.  568.  65.2
-## 4  1992  344. 2422. 140. 
-## 5  1976  125.  576.  56.9</code></pre>
+## 1  1976  125.  576.  56.9
+## 2  1994  384  2687. 148. 
+## 3  1992  344. 2422. 140. 
+## 4  1983  424.  980.  99.6
+## 5  1979  307.  617.  72.6</code></pre>
 </div>
 <div id="b-the-regressions-residuals-are-normally-distributed" class="section level3">
 <h3><strong>b) The regression’s residuals are normally distributed?</strong></h3>
@@ -548,7 +548,7 @@ res_1 %&gt;%
   theme_graph()+
   labs(title = &quot;Regression model&#39;s residuals distribution&quot;,
        subtitle = &quot;IPC and gold price relation&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <pre class="r"><code># Extracting the residuals from the model
 tbl_3.7 %&gt;%
   lm(formula = cpi ~ nyse) %&gt;%
@@ -561,7 +561,7 @@ res_2 %&gt;%
   theme_graph()+
   labs(title = &quot;Regression model&#39;s residuals distribution&quot;,
        subtitle = &quot;IPC and NYSE index relation&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 </div>
 <div id="c-in-the-gold-price-regression-model-test-the-hypothesis-that-the-second-parameter-is-1." class="section level3">
 <h3><strong>c) In the gold price regression model, test the hypothesis that the second parameter is 1.</strong></h3>
@@ -617,11 +617,11 @@ tbl_6.8[sample(nrow(tbl_6.8),5), ] %&gt;%
 <pre><code>## # A tibble: 5 x 3
 ##   country    investment saving
 ##   &lt;fct&gt;           &lt;dbl&gt;  &lt;dbl&gt;
-## 1 new_zeland      0.232  0.249
-## 2 italy           0.235  0.224
-## 3 uk              0.184  0.192
-## 4 germany         0.271  0.264
-## 5 spain           0.235  0.241</code></pre>
+## 1 norway          0.278  0.299
+## 2 finland         0.288  0.305
+## 3 greece          0.219  0.248
+## 4 new_zeland      0.232  0.249
+## 5 france          0.254  0.26</code></pre>
 </div>
 <div id="a-graphically-represent-the-relation-between-investment-and-saving" class="section level3">
 <h3><strong>a) Graphically represent the relation between investment and saving</strong></h3>
@@ -632,7 +632,7 @@ tbl_6.8[sample(nrow(tbl_6.8),5), ] %&gt;%
   scale_x_continuous(labels = scales::percent)+
   theme_graph()+
   labs(title = &quot;Investment and Saving relation&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 </div>
 <div id="c-develop-a-regression-model-using-a-lin-lin-and-a-log-log-model-approach." class="section level3">
 <h3><strong>c) Develop a regression model using a lin-lin and a log-log model approach.</strong></h3>
@@ -712,7 +712,7 @@ tbl_6.8 %&gt;%
             method = &quot;lm&quot;,
             se = F,
             color = &quot;red&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <pre class="r"><code>tbl_6.10 %&gt;% 
   lm(formula = &quot;consumo ~ I(advertising^.5)&quot;) %&gt;% 
   summary()</code></pre>
@@ -768,16 +768,16 @@ tbl_6.8 %&gt;%
 # Dataset sample
 tbl_3.3[sample(nrow(tbl_3.3),10), ]</code></pre>
 <pre><code>##       county cellphone    pc per_capita_income
-## 30        us     85.45 89.56             37750
-## 29        uk     71.19 75.04             27690
-## 19     japan      9.76 22.83             28450
-## 10     egypt     54.80 19.20              3940
-## 15   hungary     76.88 10.84             13840
-## 5    bulgary     46.64  5.19              7540
-## 31 venezuela     27.30  6.09              4750
 ## 12   germany     78.52 48.47             27610
-## 22 paquistan     57.10 24.00              2040
-## 13    greece     90.23  8.17             19900</code></pre>
+## 9    equator     18.92  3.24              3940
+## 17 indonesia      8.74  1.19              3210
+## 10     egypt     54.80 19.20              3940
+## 26     spain     16.19  6.91             22150
+## 23    poland     45.09 14.20             11210
+## 3    belgium     79.28 31.81             28920
+## 20    mexico     29.47  8.30              8980
+## 1  argentina     17.76  8.20             11410
+## 15   hungary     76.88 10.84             13840</code></pre>
 </div>
 <div id="a-graphically-represent-cellphone-demand-in-relation-to-per-capita-income-adjusted-by-ppp." class="section level3">
 <h3><strong>a) Graphically represent cellphone demand in relation to per capita income adjusted by PPP.</strong></h3>
@@ -786,7 +786,7 @@ tbl_3.3[sample(nrow(tbl_3.3),10), ]</code></pre>
   geom_point(mapping = aes(x = cellphone, y = per_capita_income))+
   theme_graph()+
   labs(title = &quot;Cellphone vs Per capital income&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 </div>
 <div id="b-graphically-represent-cellphone-demand-in-relation-to-per-capita-income-both-adjusted-by-logarithms." class="section level3">
 <h3><strong>b) Graphically represent cellphone demand in relation to per capita income, both adjusted by logarithms.</strong></h3>
@@ -797,7 +797,7 @@ tbl_3.3[sample(nrow(tbl_3.3),10), ]</code></pre>
   scale_x_log10()+
   theme_graph()+
   labs(title = &quot;Cellphone vs Per capita income, log adjusted&quot;)</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 </div>
 <div id="d-analysing-these-two-graphs-do-you-believe-that-a-log-log-model-can-fit-better-the-data-develop-the-regression-model-for-a-log-log-method." class="section level3">
 <h3><strong>d) Analysing these two graphs, do you believe that a log-log model can fit better the data? Develop the regression model for a log-log method.</strong></h3>
@@ -975,7 +975,7 @@ g2 &lt;- df %&gt;%
   theme_graph()
 
 g1 + g2</code></pre>
-<p><img src="/books/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="/posts/2020-03-03-basic-econometrics-by-gujarati-and-porter_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p>Creating the regression model for the two variables (y and z).</p>
 <pre class="r"><code>df %&gt;% 
   mutate(x = y + z) %&gt;% 
@@ -987,18 +987,18 @@ g1 + g2</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -7.9540 -1.2559 -0.0266  1.4753  5.5086 
+## -6.0051 -1.6340  0.2393  1.6858  5.3138 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  2.47391    1.56953   1.576    0.118    
-## x            0.21540    0.04296   5.014 2.37e-06 ***
+## (Intercept)  1.89237    1.60497   1.179    0.241    
+## x            0.23212    0.04506   5.151 1.34e-06 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.48 on 98 degrees of freedom
-## Multiple R-squared:  0.2042, Adjusted R-squared:  0.196 
-## F-statistic: 25.14 on 1 and 98 DF,  p-value: 2.371e-06</code></pre>
+## Residual standard error: 2.548 on 98 degrees of freedom
+## Multiple R-squared:  0.2131, Adjusted R-squared:  0.205 
+## F-statistic: 26.53 on 1 and 98 DF,  p-value: 1.341e-06</code></pre>
 <pre class="r"><code>df %&gt;% 
   mutate(x = y + z) %&gt;% 
   lm(formula = &quot;z ~ x&quot;) %&gt;% 
@@ -1009,18 +1009,18 @@ g1 + g2</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -5.5086 -1.4753  0.0266  1.2559  7.9540 
+## -5.3138 -1.6858 -0.2393  1.6340  6.0051 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -2.47391    1.56953  -1.576    0.118    
-## x            0.78460    0.04296  18.264   &lt;2e-16 ***
+## (Intercept) -1.89237    1.60497  -1.179    0.241    
+## x            0.76788    0.04506  17.040   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.48 on 98 degrees of freedom
-## Multiple R-squared:  0.7729, Adjusted R-squared:  0.7706 
-## F-statistic: 333.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 2.548 on 98 degrees of freedom
+## Multiple R-squared:  0.7477, Adjusted R-squared:  0.7451 
+## F-statistic: 290.4 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="c-its-possible-to-compare-r²-of-both-models" class="section level3">
 <h3><strong>c) It’s possible to compare R² of both models?</strong></h3>
@@ -1036,12 +1036,12 @@ g1 + g2</code></pre>
 
 # Dataset sample
 tbl_7.6[sample(nrow(tbl_7.6),5), ]</code></pre>
-<pre><code>##    year    y   x2   x3     x4 x5
-## 11   11 5911 3.77 3.65 181.87 11
-## 2     2 9348 2.54 2.85 173.36  2
-## 8     8 8253 3.23 3.49 188.98  8
-## 15   15 3160 4.24 3.58 175.67 15
-## 6     6 8862 2.77 3.66 198.62  6</code></pre>
+<pre><code>##    year     y   x2   x3     x4 x5
+## 11   11  5911 3.77 3.65 181.87 11
+## 14   14  5868 2.96 3.12 188.20 14
+## 3     3  8429 3.07 4.06 165.26  3
+## 4     4 10079 2.91 3.64 172.92  4
+## 7     7  6216 3.59 3.76 186.28  7</code></pre>
 <p>In this table we have <strong>y = sold roses</strong>, <strong>x2 = average rose price</strong>, <strong>x3 = average clove price</strong>, <strong>x4 = average family income available</strong> and <strong>x5 = trend variable</strong>.</p>
 <p>Consider the following demand functions:</p>
 <p><span class="math display">\[Y = \alpha_1 + \alpha_2 X_2 + \alpha_3 X_3 + \alpha_4 X_4 + \alpha_5 X_5 + \mu\]</span></p>
