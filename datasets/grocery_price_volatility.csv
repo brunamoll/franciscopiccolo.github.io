@@ -1,6 +1,6 @@
 
 data,       local,                             cep,      product,            volume_gm_ml,     brand,     price
-2020-06-17, dom_olivio,                        13209000, requeijao_cremoso,  200,              danone,    5,25           
+2020-06-17, dom_olivio,                        13209000, requeijao_cremoso,  200,              danone,    5.25           
 2020-06-17, dom_olivio,                        13209000, banana_prata,       1895,             NA,        8.51                   
 2020-06-17, dom_olivio,                        13209000, laranja_pera,       1175,             NA,        3.16
 2020-06-17, dom_olivio,                        13209000, queijo_fresco,      500,              verify,    24.14
