@@ -6,18 +6,14 @@
     <description>Recent content on Glass Frog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 Nov 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun</title>
       <link>/posts/2020/05/book-review-data-analysis-and-graphs-with-r-by-j.maindonald-and-j.braun/</link>
       <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/posts/2020/05/book-review-data-analysis-and-graphs-with-r-by-j.maindonald-and-j.braun/</guid>
-      <description>OverviewThis book is part of a project made by Cambrige University called Cambridge Series in Statistics and Probabilistic Mathematics aiming to spread knowledge in statistics. As well as this book, there’re other 19 that explore other areas of statistics.
+      <description>Overview This book is part of a project made by Cambrige University called Cambridge Series in Statistics and Probabilistic Mathematics aiming to spread knowledge in statistics. As well as this book, there’re other 19 that explore other areas of statistics.
 The content of this book is more generic, where the authors explain a range of concepts, from exploratory data analysis, statistical tests, tree models and survival analysis. The book was published in 2006 (the second edition) and I think because of that the authors didn’t use libraries like ggplot or the tidyverse universe.</description>
     </item>
     
@@ -27,7 +23,7 @@ The content of this book is more generic, where the authors explain a range of c
       <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/posts/2020/03/book-review-basic-econometrics-by-gujarati-and-porter/</guid>
-      <description>OverviewThis book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economy grad students. For its importance, in this post I’ll present a brief summary of each chapter and solve some exercises (because the book doesn’t present the answer for the problems). Also, I’ll release the datasets used on the problems on my github account. To beggin this summary, lets see what the authors say about the subject:</description>
+      <description>Overview This book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economy grad students. For its importance, in this post I’ll present a brief summary of each chapter and solve some exercises (because the book doesn’t present the answer for the problems). Also, I’ll release the datasets used on the problems on my github account. To beggin this summary, lets see what the authors say about the subject:</description>
     </item>
     
     <item>
@@ -55,8 +51,8 @@ Because of the theme’s relevance, in November-2019 The Economist made a specia
       <pubDate>Mon, 28 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>/posts/2019/10/connecting-r-on-amazon-redshift-database/</guid>
-      <description>IntroductionIn this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer to use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.
-Step 1Dowload the JDBC driver from Amazon.</description>
+      <description>Introduction In this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer to use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.
+ Step 1 Dowload the JDBC driver from Amazon.</description>
     </item>
     
     <item>

@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "main.css",
-	"sourceRoot": "C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io",
+	"sourceRoot": "C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io",
 	"sources": [
 		"themes/hugo-theme-hello-friend-ng/assets/scss/main.scss",
 		"themes/hugo-theme-hello-friend-ng/assets/scss/_normalize.scss",

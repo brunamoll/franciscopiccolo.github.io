@@ -1,0 +1,281 @@
+---
+title: "Análise Fundamentalista da Cielo"
+date: "2020-05-30"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    highlight: zenburn
+    fig_width: 7
+    fig_height: 3.5
+    css: style.css
+---
+
+
+### **Introdução**
+
+Neste relatório, irei fazer uma análise fundamentalista sobre a Cielo, empresa de Adquirência que faz a intermediação de transações financeiras entre lojistas e consumidores. O relatório será subdividido nos seguintes tópicos:
+
+* Panorâma macroeconômico.
+
+* Panorâma setorial.
+
+* Análise fundamentalista
+
+Nesta análise, será feita uma recomendação de compra, venda ou espera dada uma projeção para o valor da empresa para os próximos 12 meses. Para realizar esta análise, utilizarei os seguintes pacotes do R:
+
+```{r, eval=T, include=T, message=F, warning=F}
+library(httr)
+library(tidyverse)
+library(patchwork)
+library(zoo)
+library(BETS)
+library(readxl)
+library(googlesheets)
+library(lubridate)
+library(quantmod)
+
+theme_graph <- function(){
+  theme(
+    plot.title = element_text(size = 14, color = "#5F5656"),
+    plot.subtitle = element_text(size = 10, color = "#6E6363"),
+    plot.caption = element_text(face = "italic", size = 8),
+    axis.text = element_text(size = 9.5),
+    axis.title = element_text(face = "italic", size = 9),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold", size = 7),
+    legend.title = element_blank(),
+    legend.position = "bottom",
+    legend.text = element_text(size = 9)
+  )
+}
+```
+
+### **Panorâma Macroeconômico**
+
+A Cielo atua no setor de varejo, fazendo a intermediação das transações financeiras entre lojistas e clientes. Isto é feito através de suas máquinas que recebem os cartões de débito e crédito. O panorâma atual, em 30 de maio de 2020 é bastante adverso, visto que o Brasil está lidando com uma pandamia causada pelo *corona vírus* e isso impactou diretamente a economia, visto que o consumo ficou reprimido, a confiança das empresas e dos consumidores com relação ao futuro despencou e o desemprego só não aumentou por conta de que as pessoas não começaram a buscar emprego, porém esta taxa será elevada no segundo semestre.
+
+Com isso, pode-se dizer que o panorâma econômico para a Cielo está bastante desfavorável. Para embasar esta conclusão, abaixo irei apresentar alguns indicadores macroeconômicos do Brasil utilizando o pacote **BETS** que contém mais de 18 mil séries temporais advindas do Bacen, IBRE (FVG) e IBGE. 
+
+O uso do pacote é bem simples, basta usar a função *BETSsearch()* com o nome de um indicador (por exemplo *confidence*) e a função irá buscar nas 18 mil séries temporais alguma que se encaixe nesta descrição. Veja o exemplo abaixo: 
+
+```{r, warning=F, message=F, error=F}
+BETS::BETSsearch(description = "confidence") %>% 
+  head()
+```
+
+Parece que o banco de dados contém 5 séries que possuem o termo *confidence* na descrição. Eu vou usar o **Consumer Confidence**, que está com os dados mais recentes.
+
+```{r, warning=F, message=F, error=F}
+y <- BETS::BETSget(code = "4393")
+y_2 <- BETS::BETSget(code = "	4395")
+x <- seq.Date(as.Date("1999-03-31"), length = length(y), by = "month")
+
+df <- data.frame(y = y,
+                 y_2 = y_2,
+                 x = x)
+
+df %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = x, y = y, color = "Índice de Confiança do Consumidor"))+
+  geom_line(mapping = aes(x = x, y = y_2, color = "Índice de Expectativas"))+
+  scale_color_manual(values = c("Índice de Confiança do Consumidor" = "dark orange",
+                                "Índice de Expectativas" = "steel blue"))+
+  theme_graph()+
+  labs(title = "Expectativa e Confiança em Queda",
+       x = "",
+       y = "",
+       caption = "Fonte: Fecomercio")
+```
+
+Agora vamos verificar a taxa de desemprego. Acredito que a taxa estará ainda normal (de acordo com a sazonalidade de início de ano), sem apresentar um pico por conta da pandemia. O desemprego é um bom indicador macro para a Cielo, pois ele irá refletir no consumo da sociedade e consequentemente no volume de transações financeiras captadas pela companhia.
+
+```{r, warning=F, message=F, error=F}
+y <- BETS::BETSget(code = "24369")
+x <- seq.Date(as.Date("2012-03-01"), length = length(y), by = "month")
+
+ggplot2::ggplot()+
+  geom_line(mapping = aes(x = x, y = y, color = "Taxa de Desemprego"))+
+  scale_color_manual(values = c("Taxa de Desemprego" = "dark orange"))+
+  theme_graph()+
+  labs(title = "Desemprego ainda não reagiu à Pandemia",
+       x = "",
+       y = "Taxa (%) de Desemprego",
+       caption = "Fonte: IBGE PNADC")
+```
+
+Por fim, um último indicador macro que poderá reforçar a tese de tempos adversos para a companhia é o Índice CIELO do Varejo Ampliado. Este é um índice de alta frequência (mensal), que acompanha a variação do comércio de acordo com a receita de pequenos lojistas e grandes varejistas. De acordo com este índice, as vendas no varejo recuaram 36,5% em Abril (fonte: [link](https://blog.cielo.com.br/2020/05/21/vendas-no-varejo-recuam-365-em-abril-segundo-icva/)).
+
+```{r, warning=F, message=F, error=F}
+url = 'https://apicatalog.mziq.com/filemanager/v2/d/4d1ebe73-b068-4443-992a-3d72d573238c/3e864198-0b72-c970-1771-80cd8c338a30?origin=2'
+
+download.file(url, destfile='icva.xlsx', mode='wb')
+
+icva <- readxl::read_excel('icva.xlsx')
+
+# Renomeando as colunas
+colnames(icva) <- c("date","nominal","nominal_sa","real","real_sa")
+
+icva$date <- lubridate::ymd(icva$date)
+
+icva %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = date, y = nominal, color = "nominal"))+
+  geom_line(mapping = aes(x = date, y = real, color = "real"))+
+  scale_color_manual(values = c("nominal" = "steel blue",
+                                "real" = "dark orange"))+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  labs(title = "Índice Cielo do Varejo Ampliado",
+       subtitle = "Queda acentuada por conta da pandemia",
+       x = "",
+       y = "",
+       caption = "Fonte: Cielo")
+```
+
+Veja que este índice capta variações e que por conta da pandemia a queda foi bem expressiva, reforçando a ideia de que o futuro será bem desafiador para os clientes da Cielo. 
+
+### **Panorâma Setorial**
+
+Neste tópico, o foco será no setor em que a Cielo atua, ou seja, o setor de meios de pagamento e adquirentes. A Cielo começou cedo neste mercado, antes dos anos 2000 já possuia uma parcela grande do varejo transacionando mercadorias através de suas máquinas. Durante um bom período, entre 2000 e 2009, os lojistas tinham apenas duas opções de adquirentes, Cielo e Rede (Itaú), porém em 2010 este duopólio foi quebrado e com isso novos *players* entraram no mercado e mudaram a dinâmica do setor.
+
+A seguinte imagem ilustra como foi a entrada dos novos concorrentes no setor:
+
+![](C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/fundamental_analysis/cielo_analysis.PNG)
+
+Com a entrada de concorrentes, a Cielo precisou reduzir sua margem de lucro, ou seja, a taxa cobrada dos lojistas, para não perder *market share*. Mesmo com esta redução, os concorrentes conseguiram tomar boa parte da parcela de mercado da Cielo, que ficou com dificuldade de mostrar algum diferencial para seus clientes.
+
+Este problema em mostrar um diferencial competitivo é ilustrado com o caso da Getnet, empresa de adquirência comprada pelo Santander em 2014. O Santander, dendo uma empresa de adquirência, consegue fechar um contrato completo com seus clientes, consolidando antecipação de recebíveis, geração de boletos, crédito e uma máquina sem taxa, oferecida pela Getnet. Desta forma, a Cielo não consegue ofertar algo para um cliente que queira este pacote completo. 
+
+Com isso, pode-se concluir que o panorâma setorial é de guerra de preços e redução de margens e quando se inclui nesta equação o cenário de pandemia, fica difícil prever o resultado final, porém não será de aumento de receitas e margens.
+
+### ***Análise Fundamentalista**
+
+Por fim, após falar sobre o cenário macro e o panorâma setorial, neste tópico irei analisar os fundamentos da empresa. Para esta análise fundamentalista, irei consolidar os dados contábeis da Cielo, publicados trimestralmente no site de relação com investidores ([link](https://ri.cielo.com.br/)).
+
+```{r, warning=F, message=F, error=F}
+dados <- readr::read_csv(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/financial_data/Financial%20Data%20-%20cielo.csv")
+
+dados %>% 
+  mutate(period = lubridate::ymd(paste(period, 01, sep = "-"))) -> dados
+```
+
+```{r, warning=F, message=F, error=F}
+quantmod::getSymbols("CIEL3.SA")
+
+data.frame(CIEL3.SA) -> cielo
+
+cielo <- 
+  cielo %>%
+  mutate(date = row.names(cielo),
+         stock_qty = 2716820000)
+
+cielo$date <- lubridate::ymd(cielo$date)
+```
+
+Após consolidar os dados do período de 2012 até 2020 (1º trimestre), podemos iniciar no desenvolvimento de alguns indicadores fundamentalista para verificar se eles irão corroborar as conclusões dos outros tópicos. Importante destacar que os valores que serão apresentados estarão na casa de milhares de reais. Para as métricas que utilizam a quantidade de ações no cálculo, será considerado o volume atual de 2.716.820.000 ações emitidas.
+
+Primeiro, vamos ver como foi a variação da receita líquida no período.
+
+```{r, warning=F, message=F, error=F}
+dados %>% 
+  ggplot2::ggplot()+
+  geom_area(mapping = aes(x = period, y = net_revenue), fill = "steel blue", alpha = .3)+  
+  geom_line(mapping = aes(x = period, y = net_revenue, group = 1), size = 1, color = "steel blue")+
+  scale_y_continuous(labels = scales::comma)+
+  theme_graph()+
+  labs(title = "Receita da Cielo ao longo do período",
+       x = "",
+       y = "")
+```
+
+A receita ainda está estável, vindo de uma crescente desde o início do período analisado. Pode-se concluir que esta variável não corrobora o cenário adverso presenciado pela Cielo. No próximo gráfico, vamos analisar os principais custos da empresa, sendo custo com pessoal e custo com vendas e marketing. Num cenário adverso, eu espero que a empresa reduza rapidamente estas linhas de despesa, pois a previsão de queda na receita é bastante factível.
+
+```{r, warning=F, message=F, error=F}
+dados %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = period, y = -1*staff_cost, color = "staff"), size = 1)+
+  geom_line(mapping = aes(x = period, y = -1*sales_and_marketing, color = "sales"), size = 1)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_color_manual(values = c("staff" = "dark orange",
+                                "sales" = "steel blue"))+
+  theme_graph()+
+  labs(title = "Gastos com Pessoal e Vendas",
+       x = "",
+       y = "")
+```
+
+A despesa com pessoal não está da maneira que eu esperava, porém pode ter alguma explicação no relatório para os investidores. No seguinte gráfico vamos ver a lucratividade da empresa, medida pelo **EBITDA** e **Lucro Líquido**, ambos em relação à receita líquida.
+
+```{r, warning=F, message=F, error=F}
+dados %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = period, y = ebitda/net_revenue, color = "ebitda"), size = 1)+
+  geom_line(mapping = aes(x = period, y = net_profit/net_revenue, color = "net_profit"), size = 1)+
+  scale_y_continuous(labels = scales::percent)+
+  scale_color_manual(values = c("ebitda" = "dark orange",
+                                "net_profit" = "steel blue"))+
+  theme_graph()+
+  labs(title = "Lucro Líquido e EBITDA",
+       x = "",
+       y = "")
+```
+
+Além da lucratividade, precisamos ver como está se comportando a eficiência da empresa no uso de seus ativos, podendo ser medido pelo **ROA** e **ROE**. O ROA será medido com base no EBITDA dividido pelo ativo médio do ano, sendo o ativo médio do ano dividido por 4 para poder ser comparado com o EBITDA do trimestre. O ROE seguirá a mesma lógica, porém usará o Patrimônio Líquido no lugar do Ativo.
+
+```{r, warning=F, message=F, error=F}
+dados %>% 
+  mutate(year = substr(period, start = 0, stop = 4)) %>% 
+  group_by(year) %>% 
+  summarise(avg_asset = mean(total_asset),
+            avg_equity = mean(equity)) -> avg
+
+dados %>% 
+  mutate(year = substr(period, start = 0, stop = 4)) %>% 
+  inner_join(avg, by = c("year" = "year")) %>% 
+  select(period, total_asset, avg_asset, avg_equity, ebitda) %>% 
+  mutate(roa = ebitda / (avg_asset/4),
+         roe = ebitda / (avg_equity/4)) %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = period, y = roa, color = "roa"), size = 1)+
+  geom_line(mapping = aes(x = period, y = roe, color = "roe"), size = 1)+
+  scale_color_manual(values = c("roa" = "dark orange",
+                                "roe" = "steel blue"))+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()
+```
+
+Percebe-se que ao longo dos anos ambas as métricas caíram continuamente. Isso provavelmente ocorreu por conta de que tanto o Ativo aumentou, quanto o EBITDA caiu.
+
+Agora, vamos verificar como está o endividamento geral da Cielo, sendo medido pela divisão do Passivo Total pelo Patrimônio Líquido.
+
+```{r, warning=F, message=F, error=F}
+dados %>% 
+  select(period,
+         total_asset,
+         equity) %>% 
+  mutate(liability = total_asset - equity,
+         debt_level = liability/total_asset) %>%
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = period, y = debt_level))+
+  scale_y_continuous(labels = scales::percent)+
+  theme_graph()+
+  labs(title = "Endividamento Geral",
+       x = "",
+       y = "")
+```
+
+Além dos indicadores básicos da análise fundamentalista, podemos validar também algumas métricas que levam em conta o valor da ação ao longo do período e também o volume de ações em ciruclação. 
+
+Vamos primeiramente ver o valor da ação ao longo do período. O gráfico abaixo mostra esta variável desde 2010 até hoje.
+
+```{r, warning=F, message=F, error=F}
+cielo %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = date, y = CIEL3.SA.Close, group = 1))+
+  theme_graph()+
+  labs(title = "Valor da ação ao longo dos anos",
+       x = "",
+       y = "")
+```
+
