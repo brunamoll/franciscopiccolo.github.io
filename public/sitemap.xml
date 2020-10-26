@@ -3,47 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/posts/2020/05/book-review-data-analysis-and-graphs-with-r-by-j.maindonald-and-j.braun/</loc>
-    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/</loc>
-    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/2020/03/book-review-basic-econometrics-by-gujarati-and-porter/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/2020/01/global-immigration-outlook-using-wbstats-r-package/</loc>
-    <lastmod>2020-01-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/about/</loc>
     <lastmod>2019-11-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/2019/10/connecting-r-on-amazon-redshift-database/</loc>
-    <lastmod>2019-10-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/2019/09/residual-analysis-in-econometric-models/</loc>
-    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>/</loc>
   </url>
   
   <url>

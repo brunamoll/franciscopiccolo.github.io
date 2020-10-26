@@ -5,37 +5,7 @@
     <link>/</link>
     <description>Recent content on Glass Frog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Book Review: Data Analysis and Graphs with R by J.Maindonald and J.Braun</title>
-      <link>/posts/2020/05/book-review-data-analysis-and-graphs-with-r-by-j.maindonald-and-j.braun/</link>
-      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2020/05/book-review-data-analysis-and-graphs-with-r-by-j.maindonald-and-j.braun/</guid>
-      <description>Overview This book is part of a project made by Cambrige University called Cambridge Series in Statistics and Probabilistic Mathematics aiming to spread knowledge in statistics. As well as this book, there’re other 19 that explore other areas of statistics.
-The content of this book is more generic, where the authors explain a range of concepts, from exploratory data analysis, statistical tests, tree models and survival analysis. The book was published in 2006 (the second edition) and I think because of that the authors didn’t use libraries like ggplot or the tidyverse universe.</description>
-    </item>
-    
-    <item>
-      <title>Book Review: Basic Econometrics by Gujarati and Porter</title>
-      <link>/posts/2020/03/book-review-basic-econometrics-by-gujarati-and-porter/</link>
-      <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2020/03/book-review-basic-econometrics-by-gujarati-and-porter/</guid>
-      <description>Overview This book is the tipical book reference for a given subject, and when the theme is Econometrics, this material is highly recommended for economy grad students. For its importance, in this post I’ll present a brief summary of each chapter and solve some exercises (because the book doesn’t present the answer for the problems). Also, I’ll release the datasets used on the problems on my github account. To beggin this summary, lets see what the authors say about the subject:</description>
-    </item>
-    
-    <item>
-      <title>Global Immigration Outlook using wbstats R package</title>
-      <link>/posts/2020/01/global-immigration-outlook-using-wbstats-r-package/</link>
-      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2020/01/global-immigration-outlook-using-wbstats-r-package/</guid>
-      <description>Imigration is a central theme on political debates for presidential elections nowadays, creating a lot of controversies and also hope for many people. This social event is increasingly calling more attention, both Syria conflict and the weaknesses of the Venezuelan economy that sent millions to seek other place to live surpreended politicians, that didn’t get ready earlier to obtain the benefits that migration flow could generate.
-Because of the theme’s relevance, in November-2019 The Economist made a special report about immigration, aiming to clarify the current situation, answer some questions about the impact of immigrants on host countries and also present some success cases of countries that are obtaining advantages by the immigration flow.</description>
-    </item>
-    
+    <language>en-us</language><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About</title>
       <link>/about/</link>
@@ -43,25 +13,6 @@ Because of the theme’s relevance, in November-2019 The Economist made a specia
       
       <guid>/about/</guid>
       <description>Hi! I&amp;rsquo;m Francisco, an Economist that enjoy working with data and statistics. Maybe that&amp;rsquo;s why i&amp;rsquo;m working with Business Intelligence and Data Warehouse since 2015. This field allows me to code (mainly in SQL, R and Python), analyse data using statistics and communicate business research throughout reports and data viz. I try keep learning different tools and models to solve business problems and increase my capacity to generate insights from data in a productive way.</description>
-    </item>
-    
-    <item>
-      <title>Connecting R on Amazon Redshift Database</title>
-      <link>/posts/2019/10/connecting-r-on-amazon-redshift-database/</link>
-      <pubDate>Mon, 28 Oct 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2019/10/connecting-r-on-amazon-redshift-database/</guid>
-      <description>Introduction In this tutorial I’ll show a step by step on how to access Amazon Redshift Database throughout R. This task will be very useful if you prefer to use R intead of the traditional Excel to execute exploratory data analysis on your company. The goal of this tutorial is to access the database from R, bring a data.frame as a result set and then create your analysis.
- Step 1 Dowload the JDBC driver from Amazon.</description>
-    </item>
-    
-    <item>
-      <title>Residual analysis in econometric models</title>
-      <link>/posts/2019/09/residual-analysis-in-econometric-models/</link>
-      <pubDate>Thu, 05 Sep 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/2019/09/residual-analysis-in-econometric-models/</guid>
-      <description>The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hypothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:</description>
     </item>
     
   </channel>

@@ -3,9 +3,10 @@ title: "Residual analysis in econometric models"
 date: 2019-09-05
 output:
   html_document:
-    fig_width: 8.5
+    fig_width: 4
     fig_height: 4
-    highlightStyle: github
+    fig_align: center
+    df_print: paged
 ---
 
 The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hypothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:
@@ -51,7 +52,7 @@ The data set for this example has 34 rows, with planted area and suggarcane pric
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 # Getting the dataset
-dados <- readxl::read_excel("C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/datasets/Econometria_exercicios/autocorrelacao_cana_de_acucar.xlsx")
+dados <- readxl::read_excel("C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/datasets/Econometria_exercicios/autocorrelacao_cana_de_acucar.xlsx")
 
 # Chaging the name of the fields to remove blank spaces
 dados %>% 
