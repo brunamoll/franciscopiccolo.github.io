@@ -1,10 +1,14 @@
 ---
-title: "Global Immigration Outlook using wbstats R package"
+title: "Análise do Fluxo Imigratório com R"
 date: 2020-01-20
 output:
   html_document:
-    fig_width: 8.5
-    fig_height: 4
+    fig_width: 3
+    fig_height: 3
+    fig_align: center
+    df_print: paged
+    highlight: zenburn
+    css: style.css
 ---
 
 Imigration is a central theme on political debates for presidential elections nowadays, creating a lot of controversies and also hope for many people. This social event is increasingly calling more attention, both Syria conflict and the weaknesses of the Venezuelan economy that sent millions to seek other place to live surpreended politicians, that didn't get ready earlier to obtain the benefits that migration flow could generate.
@@ -41,11 +45,11 @@ library(wbstats)        # World Bank API
 
 theme_graph <- function(){
   theme(
-    plot.title = element_text(size = 16),
-    plot.subtitle = element_text(size = 12),
-    plot.caption = element_text(face = "italic", size = 9),
-    axis.text = element_text(size = 9),
-    axis.title = element_text(face = "italic", size = 9),
+    plot.title = element_text(size = 13),
+    plot.subtitle = element_text(size = 9),
+    plot.caption = element_text(face = "italic", size = 7),
+    axis.text = element_text(size = 8),
+    axis.title = element_text(face = "italic", size = 8),
     strip.background = element_rect(fill = "grey"),
     strip.text = element_text(face = "bold"),
     legend.title = element_blank(),
