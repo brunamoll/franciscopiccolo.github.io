@@ -1,5 +1,5 @@
 ---
-title: "Residual analysis in econometric models"
+title: "Análise de Resíduos em Modelos de Regressão Linear"
 date: 2019-09-05
 output:
   html_document:
@@ -9,28 +9,34 @@ output:
     df_print: paged
 ---
 
-The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hypothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:
+O modelo de regressão linear é bastante usado na predição de variáveis contínuas, onde há uma ou mais variáveis independentes buscando mapear o comportamento de uma variável dependente. O modelo é bastante simples e lembro ser um dos primeiros a ser ensinado nas aulas de econometria. Porém, apesar de sua simplicidade, é preciso se atentar a alguns detalhes sobre suas premissas para que os resultados deste modelo possam ser usados para a tomada de decisão.
 
-i) Absence of multicolineatiry between independent variables.
+Abaixo vou listar algumas das premissas da regressão linear:
 
-ii) Absence of autocorrelation on the dependent variable.
+i) Ausência de multicolinearidade entre as variáveis independentes.
+
+ii) Ausência de autocorrelação na variável dependente.
 
 iii) Absence of pattern on the behavior of the model residuals, in other words, absence of heteroscedasticity.
 
-iv) Normal distribution of residuals.
+iii) Ausência de padrão no comportamento dos resíduos do modelo, ou seja, ausência de heterocedasticidade.
 
-Having this assumptions satisfied, the model can be executed and the generated conclusions will be reliable to allow decision making. In this post, I'll analyse the behavior of the residuals for a linear regression model in order to validate the assumptions (iii) and (iv). For this, I'll use a data set that presents the price of suggarcane as independent variable and the planted area of this product, that will be the dependent variable.
+iv) Resíduos se distribuem de acordo com uma distribuição normal.
 
-The goal of this example is to analyse, through a simple linear regression model, the suggarcane supply elasticity as a function of the suggarcane price. The hipothesis is that there's elasticity on the supply, thus the planted area increases in responde to a price increase. But, in order to validade this existence, it's necessary to check, using a regression model, that these two variables have correlation. Then, the assumptions (iii) and (iv) will support this conclusion.
+Tendo estas premissas atendidas, o modelo pode gerar conclusões confiáveis. Neste post eu vou desenvolver alguns modelos de regressão linear para testar as premissas **iii** e **iv** que tratam dos resíduos, para ver alguns casos práticos.
 
-For this example, I'll utilize the following R packages:
+Para começar, vamos trazer os pacotes necessários para execução das funções no R:
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 library(tidyverse)
 library(lmtest)
 library(corrplot)
 library(readxl)
+```
 
+Também vou criar uma função para facilitar a padronização dos gráficos que serão gerados.
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
 theme_graph <- function(){
   theme(
     plot.title = element_text(size = 16),
@@ -44,9 +50,18 @@ theme_graph <- function(){
     legend.position = "bottom"
   )
 }
-  
-graph_color <- "#006666"
 ```
+
+### **Exemplo 1: Elasticidade preço x oferta na produção de cana de açúcar.
+
+Este exemplo foi passado na minha aula de econometria em 2017. Na época o exercício foi realizado com o software **EViews**, por sorte eu guardei os dados e agora posso refazer o problema com mais facilidade com o uso do R.
+
+No exercício, há a variável independente (X) sendo o preço da cana de açúcar e a variável dependente (Y) sendo a área plantada de cana de açúcar (representando uma proxy para a oferta do produto). O objetivo deste modelo é tentar quantificar a elasticidade da oferta em função do preço, ou seja, quão sensível é a oferta do produto por conta de variações no preço.
+
+
+
+The goal of this example is to analyse, through a simple linear regression model, the suggarcane supply elasticity as a function of the suggarcane price. The hipothesis is that there's elasticity on the supply, thus the planted area increases in responde to a price increase. But, in order to validade this existence, it's necessary to check, using a regression model, that these two variables have correlation. Then, the assumptions (iii) and (iv) will support this conclusion.
+
 
 The data set for this example has 34 rows, with planted area and suggarcane price fields.
 
