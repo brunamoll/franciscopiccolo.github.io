@@ -1,5 +1,5 @@
 ---
-title: "Residual analysis in econometric models"
+title: "Análise de Resíduos em Modelos de Regressão Linear"
 date: 2019-09-05
 output:
   html_document:
@@ -9,28 +9,34 @@ output:
     df_print: paged
 ---
 
-The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hypothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:
+O modelo de regressão linear é bastante usado na predição de variáveis contínuas, onde há uma ou mais variáveis independentes buscando mapear o comportamento de uma variável dependente. O modelo é bastante simples e lembro ser um dos primeiros a ser ensinado nas aulas de econometria. Porém, apesar de sua simplicidade, é preciso se atentar a alguns detalhes sobre suas premissas para que os resultados deste modelo possam ser usados para a tomada de decisão.
 
-i) Absence of multicolineatiry between independent variables.
+Abaixo vou listar algumas das premissas da regressão linear:
 
-ii) Absence of autocorrelation on the dependent variable.
+i) Ausência de multicolinearidade entre as variáveis independentes.
+
+ii) Ausência de autocorrelação na variável dependente.
 
 iii) Absence of pattern on the behavior of the model residuals, in other words, absence of heteroscedasticity.
 
-iv) Normal distribution of residuals.
+iii) Ausência de padrão no comportamento dos resíduos do modelo, ou seja, ausência de heterocedasticidade.
 
-Having this assumptions satisfied, the model can be executed and the generated conclusions will be reliable to allow decision making. In this post, I'll analyse the behavior of the residuals for a linear regression model in order to validate the assumptions (iii) and (iv). For this, I'll use a data set that presents the price of suggarcane as independent variable and the planted area of this product, that will be the dependent variable.
+iv) Resíduos se distribuem de acordo com uma distribuição normal.
 
-The goal of this example is to analyse, through a simple linear regression model, the suggarcane supply elasticity as a function of the suggarcane price. The hipothesis is that there's elasticity on the supply, thus the planted area increases in responde to a price increase. But, in order to validade this existence, it's necessary to check, using a regression model, that these two variables have correlation. Then, the assumptions (iii) and (iv) will support this conclusion.
+Tendo estas premissas atendidas, o modelo pode gerar conclusões confiáveis. Neste post eu vou desenvolver alguns modelos de regressão linear para testar as premissas **iii** e **iv** que tratam dos resíduos, para ver alguns casos práticos.
 
-For this example, I'll utilize the following R packages:
+Para começar, vamos trazer os pacotes necessários para execução das funções no R:
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 library(tidyverse)
 library(lmtest)
 library(corrplot)
 library(readxl)
+```
 
+Também vou criar uma função para facilitar a padronização dos gráficos que serão gerados.
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
 theme_graph <- function(){
   theme(
     plot.title = element_text(size = 16),
@@ -41,57 +47,63 @@ theme_graph <- function(){
     strip.background = element_rect(fill = "grey"),
     strip.text = element_text(face = "bold"),
     legend.title = element_blank(),
-    legend.position = "bottom"
+    legend.position = "bottom",
+    panel.grid.major = element_line(
+        rgb(198, 198, 216, maxColorValue = 255),
+        linetype = "dotted"), 
+    panel.grid.minor = element_line(
+        rgb(198, 198, 216, maxColorValue = 255),
+        linetype = "dotted"),
+    panel.background = element_rect(fill = "#FEFDFF")
   )
 }
-  
-graph_color <- "#006666"
 ```
 
-The data set for this example has 34 rows, with planted area and suggarcane price fields.
+### **Exemplo 1: Elasticidade preço x oferta na produção de cana de açúcar.
 
-```{r,eval=T,include=T,echo=T,warning=F,message=F}
-# Getting the dataset
-dados <- readxl::read_excel("C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/datasets/Econometria_exercicios/autocorrelacao_cana_de_acucar.xlsx")
+Este exemplo foi passado na minha aula de econometria em 2017. Na época o exercício foi realizado com o software **EViews**, por sorte eu guardei os dados e agora posso refazer o problema com mais facilidade com o uso do R.
 
-# Chaging the name of the fields to remove blank spaces
-dados %>% 
-  transmute(period = Período,
-            area = Área,
-            price = `Preço da Cana de Açúcar`*100) -> df
+No exercício, há a variável independente (X) sendo o preço da cana de açúcar e a variável dependente (Y) sendo a área plantada de cana de açúcar (representando uma proxy para a oferta do produto). O objetivo deste modelo é tentar quantificar a elasticidade da oferta em função do preço, ou seja, quantificar quão sensível é a oferta da cana de açúcar quando ocorre uma variações em seu preço. Os dados deste exercício estão no meu repositório do Github, vamos trazê-los com o comando abaixo, salvando-os na variável df (a.k.a data.frame):
+
+```{r, warning=F, message=F}
+df <- read.csv(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2019-09-05-residual_analysis_on_linear_regression_models/dataset_1.csv", sep = ";", dec = ",")
+
+dim(df)
 ```
 
-Lets see a sample of this dataset.
+Com a função **dim** podemos ver a dimensão deste dataset, com 34 registros e 3 colunas. 
 
-```{r,eval=T,include=T,echo=T,warning=F,message=F}
+The data set for this example has 34 rows, with planted area and suggarcane price fields. Vamos ver uma amostra dos dados.
+
+```{r, warning=F, message=F}
 df[sample(nrow(df),5), ] %>%
-	as.tibble()
+	as_tibble()
 ```
 
-The linear regression model proposed for this problem is defined by the following equation:
+O modelo de regressão linear para este cenário será desenvolvido de acordo com a fórmula abaixo:
 
 $$ lnY_t = \beta_0+\beta_1 (lnX_t) + \mu_t $$
 
-Where:
+Onde:
 
-$Y_t$ = planted area, natural log transformed
+$Y_t$ = Área plantada após a transformação com log natural (e)
 
-$X_t$ = suggarcane price, natural log transformed
+$X_t$ = Preço da cana de açúcar também após a transformação com log natural
 
-$\beta_0$ = intercept
+$\beta_0$ = Intercepto
 
-$\beta_1$ = slope
+$\beta_1$ = Inclinação
 
-$\mu_t$ = residuals
+$\mu_t$ = Resíduos
 
-The natural log is used to in order to have variations between periods interpreted as percentual variation. This assumption is made possible only for natural log transformations and this adjustment is needed in problems invonving elasticity, because elasticity is interpreted as a percentual variation in one variable given a percentual variation in another variable.
+Os dados precisam ter a aplicação do log natural, pois esta transformação faz com que as variações entre os períodos possam ser interpretadas como variações percentuais, e isso é necessário por conta de que a elasticidade é quantificada em termos percentuais. Esta característica ocorre apenas na transformação com logarítmo natural, se a transformação fosse feita com outros logs, a interpretação não seria válida.
 
-The following graph shows the behavior of the studied variables and the regression line.
+O gráfico abaixo irá mostrar o comportamento das variáveis do dataset, bem como a curva de regressão linear, antes de aplicar a transformação log natural.
 
-```{r,eval=T,include=T,echo=T,warning=F,message=F}
+```{r, message=F, warning=F}
 df %>% 
   ggplot()+
-  geom_point(mapping = aes(x = price, y = area), shape = 20)+
+  geom_point(mapping = aes(x = price, y = area), shape = 2)+
   geom_smooth(mapping = aes(x = price, y = area), 
               method = "lm", 
               formula = y ~ x, 
@@ -99,61 +111,72 @@ df %>%
               lty = 2,
               color = "dark orange")+
   theme_graph()+
-  labs(title = "Dispersion graph for the model")
+  labs(title = "Gráfico de dispersão das variáveis",
+       x = "Preço da Cana de Açúcar",
+       y = "Área Plantada")
 ```
 
-In order to develop the model using the log transformation, there're two options:
+Podemos ver que há uma relação entre o preço do produto e sua oferta. Agora vamos aplicar o log natural no modelo de regressão. Para isso, o R nos fornece duas opções:
 
-(i) Adjust the variables on the dataset and build the normal using the new variables generated by the log scale calculation.
+* Ajustar as variáveis no dataset e construir o modelo usando as variáveis ajustadas.
 
-(ii) Use the original dataset and inform adjust the model to apply the transformation on the variables before calculating the parameters.
+* Construir o modelo e indicar "dentro dele" que é necessário fazer a transformação antes de computar os resultados.
 
-Lets see each one of theses methods to confirm they're equal:
+Vamos ver na prática como cada opção pode ser usada. O resultado final será idêntico.
 
-**(i) **
+Primeiro vou criar duas variáveis com os resultados dos dois métodos:
 
-```{r,eval=T,include=T,echo=T,warning=F,message=F}
-df %>% 
+```{r, warning=F, message=F}
+# Método 1, criando novos campos no dataset com a transformação log (e)
+first_method <- 
+  df %>% 
   mutate(area_log = log(area),
          price_log = log(price)) %>% 
-  lm(formula = area_log ~ price_log) %>% 
-  summary()
+  lm(formula = area_log ~ price_log)
+
+second_method <- 
+  df %>% 
+  lm(formula = log(area) ~ log(price))
 ```
 
-**(ii)**
+Com as duas variáveis criadas, vamos criar uma tabela comparando os principais resultados dos modelos:
 
-```{r,eval=T,include=T,echo=T,warning=F,message=F}
-df %>% 
-  lm(formula = log(area) ~ log(price)) %>% 
-  summary()
+```{r, warning=F, message=F}
+data.frame("1º Método" = c(first_method$coefficients),
+           "2º Método" = c(second_method$coefficients))
 ```
 
-As indicated, the two alternatives generate the same result. It's up to the researcher to choose the method. The regression model generated is:
+Conforme indicado, ambos os métodos geram o mesmo valor. Eu prefiro o segundo, que exige menos linhas de código. Com base nos coeficientes estimados, temos a seguinte equação:
 
 $$\hat{Y} = 1.6416 + 0.9706X_1 + \mu$$
-With both intercept and slope statistically significant given their low p-value.
 
-The r² reach 70.6%, but this isn't enough to make conclusions about the model. Its necessary to analyse the model hypothesis about the residuals to ensure that the model is reliable. The following code return the residuals from a 'lm' model.
+O resultado é estatisticamente significativo, visto que tanto o intercepto quanto a inclinação apresentam um valor-p baixo. Veja abaixo estes valores bem como o R².
 
-```{r,eval=T,include=T,echo=T,warning=F,message=F}
-model_residuals <- 
-  data.frame(values = df %>% 
-                        lm(formula = log(area) ~ log(price)) %>% 
-                        residuals())
+```{r, message=F, warning=F}
+second_method %>% summary()
 ```
 
-The next graph shows the residuals distribution in order to validate if they're normally distributed. Both histogram and quantil-quantil plot are good choices to validate this assumption.
+Apesar destes dados mostrarem que a reta se ajustou bem aos dados e que o modelo consegue explicar ~70% da variação na variável dependente, é preciso anda analisar os resíduos para poder ter confiança no resultado para fazer projeções. No gráfico abaixo, vamos ver como se distribui os resíduos do modelo.
+
+```{r, message=F, warning=F}
+model_residuals <- 
+  data.frame(values = second_method$residuals)
+```
+
+Eu opto primeiro por analisar um histograma dos reísduos, pois ele indicará se a distribuição se assemelha a uma distribuição normal. Vamos ver isso no gráfico abaixo.
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 # Histogram
 model_residuals %>% 
   ggplot()+
-  geom_histogram(mapping = aes(x = values), fill = "dark orange", alpha = .5)+
+  geom_histogram(mapping = aes(x = values), fill = "steel blue")+
   theme_graph()+
-  labs(title = "Residuals Distribution",
+  labs(title = "Distribuição dos Resíduos",
        x = "",
        y = "")
 ```
+
+Aparentemente os resíduos se distribuem normalmente. Outro gráfico interessante para analisar é o **q-q plot**, que também indicará quão parecido com a distribuição normal é a distribuição de uma variável.
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
 # q-q plot
@@ -166,19 +189,20 @@ model_residuals %>%
        y = "")
 ```
 
-Both graphs enforce the ideia that the model's residuals are normally distributed. But in order to make a conclusion, sometimes a formal test will be necessary. For this problem, we'll use the Durbin Watson test. This test can be performed using the following code.
+Este gráfico também aponta para a ideia de resíduos normalmente distribuídos. Apesar de estes métodos serem bons e práticos, as vezes é necessário usar métodos formais para gerar alguma conclusão. Para validação da independência no comportamento dos resíduos pode-se usar o teste **Durbin Watson**. O código abaixo realiza este teste.
 
 ```{r,eval=T,include=T,echo=T,warning=F,message=F}
+# Necessário instalar e chamar o pacote 'lmtest'
 lmtest::dwtest(df %>% 
                  lm(formula = log(area) ~ log(price)))
 ```
 
-The test generate the value of 1.2912, but only this value isn't enough to make the conclusion. As well as the DW value, DL and DU intervals are necessary. These values can be found at this [table](http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia). In order to find them, take the number of observations of the dataset (n = 33), the significance level of your test (i.e. 0.05) and the degress of freedom (i.e. 1). Thus we have:
+O resultado do teste foi de 1.2912, mas apenas com este valor não é possível fazer uma conclusão. Em conjunto com este valor, é preciso saber os valores limiares **DL** e **DU**, que podem ser encontrados nesta [tabela](http://www.portalaction.com.br/analise-de-regressao/33-diagnostico-de-independencia). Para encontrar os valores com esta tabela, basta saber o número de observações no dataset (i.e. n = 33), o nível de significância do teste (i.e. 0.05) e os graus de liberdade (i.e. 1). Com isso, tem-se:
 
 **DL** = 1.35
 
 **DU** = 1.49
 
-With a DW of 1.2912, above 0 and under the DL value, we can conclude that the residuals are independent. 
+Tendo DW igual a 1.2912, acima de 0 e abaixo de DL, pode-se concluir que os resíduos são independentes.
 
-To conclude, both graphs and formal tests confirmed that the residuals are independent and then we have the hypothesis of the model satisfied, allowing inferences about the problem being studies, in this case, the elasticity of the suggarcane supply given it's price variability.
+Com isso, podemos concluir que de fato o modelo é confiável para realizar projeções, pois tanto os gráficos quanto o teste formal indicam que as premissas (iii) e (iv) estão sendo atendidas, como como as outras premissas. Desta forma, podemos concluir que há elasticidade na oferta de cana de açúcar com relação ao seu preço.

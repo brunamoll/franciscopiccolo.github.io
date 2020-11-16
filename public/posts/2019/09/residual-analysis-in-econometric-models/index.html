@@ -25,7 +25,7 @@
 
 
 
-<link rel="stylesheet" href="/main.min.753fac8f03736f0edc9be411eb20cee875dd7bb8e73c8155fbf6a629c863f4ca.css">
+<link rel="stylesheet" href="/main.min.ffd283cc28f66aa7e4d7fa1f25b3114c85023d1bb37d70c53c281ea5dc5abe09.css">
 
 
 
@@ -141,6 +141,8 @@
 
             <div class="post-content">
                 
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <p>The linear regression model is highly used on the prediction of continuous variables, where is one or more independent variables and one dependent one (the one that it seeks to test an hypothesis about its behavior). This is a pretty simple model to by executed and one of the firsts to be taught in econometric classes. Although its simplicity, in order to reach reliable results, some assumptions are needed, like the following:</p>
@@ -175,7 +177,7 @@ theme_graph &lt;- function(){
 graph_color &lt;- &quot;#006666&quot;</code></pre>
 <p>The data set for this example has 34 rows, with planted area and suggarcane price fields.</p>
 <pre class="r"><code># Getting the dataset
-dados &lt;- readxl::read_excel(&quot;C:/Users/francisco.piccolo/Desktop/R/franciscopiccolo.github.io/datasets/Econometria_exercicios/autocorrelacao_cana_de_acucar.xlsx&quot;)
+dados &lt;- readxl::read_excel(&quot;C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/datasets/Econometria_exercicios/autocorrelacao_cana_de_acucar.xlsx&quot;)
 
 # Chaging the name of the fields to remove blank spaces
 dados %&gt;% 
@@ -188,11 +190,11 @@ dados %&gt;%
 <pre><code>## # A tibble: 5 x 3
 ##   period  area price
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1      1    29  7.53
-## 2     16    99 22.1 
-## 3     25    87 30.1 
-## 4      2    71 11.5 
-## 5      9    60 18.8</code></pre>
+## 1      5    72  11.0
+## 2     27    97  40.1
+## 3     19   121  26.7
+## 4     29   197  35.3
+## 5     30   220  41.0</code></pre>
 <p>The linear regression model proposed for this problem is defined by the following equation:</p>
 <p><span class="math display">\[ lnY_t = \beta_0+\beta_1 (lnX_t) + \mu_t \]</span></p>
 <p>Where:</p>
