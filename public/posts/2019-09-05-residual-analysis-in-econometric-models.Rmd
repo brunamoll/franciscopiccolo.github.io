@@ -3,10 +3,10 @@ title: "Análise de Resíduos em Modelos de Regressão Linear"
 date: 2019-09-05
 output:
   html_document:
-    fig_width: 4
-    fig_height: 4
-    fig_align: center
     df_print: paged
+    highlight: zenburn
+    fig_width: 3
+    fig_height: 3
 ---
 
 O modelo de regressão linear é bastante usado na predição de variáveis contínuas, onde há uma ou mais variáveis independentes buscando mapear o comportamento de uma variável dependente. O modelo é bastante simples e lembro ser um dos primeiros a ser ensinado nas aulas de econometria. Porém, apesar de sua simplicidade, é preciso se atentar a alguns detalhes sobre suas premissas para que os resultados deste modelo possam ser usados para a tomada de decisão.
@@ -59,7 +59,7 @@ theme_graph <- function(){
 }
 ```
 
-### **Exemplo 1: Elasticidade preço x oferta na produção de cana de açúcar.
+#### Exemplo 1: Elasticidade preço x oferta na produção de cana de açúcar.
 
 Este exemplo foi passado na minha aula de econometria em 2017. Na época o exercício foi realizado com o software **EViews**, por sorte eu guardei os dados e agora posso refazer o problema com mais facilidade com o uso do R.
 
