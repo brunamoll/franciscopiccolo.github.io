@@ -1,6 +1,6 @@
 ---
 title: "Análise de Resíduos em Modelos de Regressão Linear"
-date: 2019-09-05
+date: 2019-09-04
 output:
   html_document:
     df_print: paged
@@ -27,7 +27,7 @@ Tendo estas premissas atendidas, o modelo pode gerar conclusões confiáveis. Ne
 
 Para começar, vamos trazer os pacotes necessários para execução das funções no R:
 
-```{r,eval=T,include=T,echo=T,warning=F,message=F}
+```{r, warning=F,message=F}
 library(tidyverse)
 library(lmtest)
 library(corrplot)
