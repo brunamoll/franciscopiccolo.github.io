@@ -122,3 +122,11 @@ disableHugoGeneratorInject = false
     identifier = "recipes"
     name       = "Recipes"
     url        = "recipes/"
+  [[menu.main]]
+    identifier = "documentaries"
+    name       = "Documentaries"
+    url        = "documentaries/"
+  [[menu.main]]
+    identifier = "Library"
+    name       = "library"
+    url        = "library/"
