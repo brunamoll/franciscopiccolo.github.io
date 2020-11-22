@@ -128,5 +128,5 @@ disableHugoGeneratorInject = false
     url        = "documentaries/"
   [[menu.main]]
     identifier = "Library"
-    name       = "library"
+    name       = "Library"
     url        = "library/"
