@@ -13,3 +13,5 @@ A tabela abaixo apresenta livros relacionados à estatística que li e que conse
 |Livro 1            |Titulo 1             |Descrição 1                       |s                  |0                     |10         |
 |Livro 2            |Titulo 1             |Descrição 1                       |s                  |0                     |10         |
 |Livro 3            |Titulo 1             |Descrição 1                       |s                  |0                     |10         |
+|Livro 5            |Titulo 1             |Descrição 1                       |s                  |0                     |10         |
+|-------------------|---------------------|----------------------------------|-------------------|----------------------|-----------|
