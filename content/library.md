@@ -10,7 +10,7 @@ A tabela abaixo apresenta livros relacionados à estatística que li e que conse
 
 #### **Data Analysis and Graphs with R 3**
 
-![image](C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/images/library_images/data_analysis_and_graphics_using_R.PNG)
+![image](C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/images/library_images/data_analysis_and_graphics_using_R.jpg)
 
 <img src="C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/images/library_images/data_analysis_and_graphics_using_R.png"
      alt="Markdown Monster icon"
