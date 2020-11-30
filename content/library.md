@@ -10,9 +10,6 @@ A tabela abaixo apresenta livros relacionados à estatística que li e que conse
 
 |Livro              |Título               |Breve descrição                   |Versão em Pt (s/n) |Exercícios propostos  |Resolução  |
 |-------------------|---------------------|----------------------------------|-------------------|----------------------|-----------|
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
+|Livro 1|Titulo 1|Descrição 1|s|0|10|
+|Livro 1|Titulo 1|Descrição 1|s|0|10|
+|Livro 1|Titulo 1|Descrição 1|s|0|10|
