@@ -10,10 +10,8 @@ A tabela abaixo apresenta livros relacionados à estatística que li e que conse
 
 #### **Data Analysis and Graphs with R 4**
 
-![](/images/library_images/data_analysis_and_graphics_using_R.jpg)
-
 <img src="/images/library_images/data_analysis_and_graphics_using_R.jpg"
-     alt="Markdown Monster icon"
-     style="float: left; margin-right: 10px;" />
+     alt="Capa"
+     style="float: left; widh: 100px; height: 100px" />
 
 
