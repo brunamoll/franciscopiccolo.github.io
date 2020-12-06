@@ -1,124 +1,112 @@
-baseurl = "/"
-title   = "Glass Frog"
-languageCode = "en-us"
-theme = "hugo-theme-hello-friend-ng"
+theme = "starter-academic"
+# Configuration of Hugo
+# Guide: https://sourcethemes.com/academic/docs/get-started/
+# Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
+#
+# This file is formatted using TOML syntax - learn more at https://learnxinyminutes.com/docs/toml/
+# Each configuration section is defined by a name in square brackets (e.g. `[outputs]`).
 
-DefaultContentLanguage = "en"
+# Title of your site
+title = "Francisco Piccolo"
 
-PygmentsCodeFences = true
-Pygmentsuseclasses = true
+# The URL of your site.
+# End your URL with a `/` trailing slash, e.g. `https://example.com/`.
+baseurl = "https://francisco.piccolo.com/"
 
-rssLimit  = 10  # Maximum number of items in the RSS feed.
+# Enter a copyright notice to display in the site footer.
+# To display a copyright symbol, type `&copy;`. For current year, type `{year}`.
+copyright = ""
 
-archetypeDir = "archetypes"
-contentDir   = "content"
-dataDir      = "data"
-layoutDir    = "layouts"
-publishDir   = "public"
+############################
+## Advanced options below ##
+############################
 
-buildDrafts  = false
-buildFuture  = false
-buildExpored = false
-canonifyURLs = true
+# Get last modified date for content from Git?
+enableGitInfo = false
 
+# Default language to use (if you setup multilingual support)
+defaultContentLanguage = "en"
+hasCJKLanguage = false  # Set `true` for Chinese/Japanese/Korean languages.
+defaultContentLanguageInSubdir = false
+removePathAccents = true  # Workaround for https://github.com/gohugoio/hugo/issues/5687
+
+summaryLength = 30  # Listing summary length in words. Also, see `abstract_length` in `params.toml`.
+paginate = 10  # Number of items per page in paginated lists.
+enableEmoji = true
 enableRobotsTXT = true
-enableGitInfo   = false
-enableEmoji     = true
-enableMissingTranslationPlaceholders = false
-disableRSS     = false
-disableSitemap = false
-disable404     = false
-disableHugoGeneratorInject = false
+footnotereturnlinkcontents = "<sup>^</sup>"
+ignoreFiles = ["\\.ipynb$", ".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
+# Workaround Hugo publishing taxonomy URLs as plurals - consistently use singular across Academic.
 [permalinks]
-  posts = "/posts/:year/:month/:title/"
+  authors = "/author/:slug/"
+  tags = "/tag/:slug/"
+  categories = "/category/:slug/"
+  publication_types = "/publication-type/:slug/"
 
-[author]
-  name = "Francisco Piccolo"
+[outputs]
+  home = [ "HTML", "RSS", "JSON", "WebAppManifest" ]
+  section = [ "HTML", "RSS" ]
 
-[blackfriday]
-  hrefTargetBlank = true
+[mediaTypes."application/manifest+json"]
+  suffixes = ["webmanifest"]
 
+[outputFormats.WebAppManifest]
+  mediaType = "application/manifest+json"
+  rel = "manifest"
+
+# Configure the Markdown renderer.
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # Enable user to embed HTML snippets in Markdown content.
+  [markup.highlight]
+    codeFences = false  # Disable Hugo's code highlighter as it conflicts with Academic's highligher.
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[imaging]
+  resampleFilter = "lanczos"
+  quality = 90
+  anchor = "smart"  # Anchor for cropping. Options include Smart and Center.
+
+# Taxonomies.
 [taxonomies]
-  tag      = "tags"
+  tag = "tags"
   category = "categories"
+  publication_type = "publication_types"
+  author = "authors"
 
-[params]
-  dateform        = "Jan 2, 2006"
-  dateformShort   = "Jan 2"
-  dateformNum     = "2006-01-02"
-  dateformNumTime = "2006-01-02 15:04 -0700"
+# Related content.
+[related]
+  threshold = 80.0
+  includeNewer = true
+  toLower = true
 
-  # Metadata mostly used in document's head
-  description = "Nice theme for homepages and blogs"
-  keywords = ""
-  images = [""]
+  [[related.indices]]
+    name = "title"
+    weight = 60.0
 
-  homeSubtitle = "Aprendendo Estatística na Prática"
+  [[related.indices]]
+    name = "summary"
+    weight = 50.0
 
-  # Prefix of link to the git commit detail page. GitInfo must be enabled.
-  # gitUrl = ""
+  [[related.indices]]
+    name = "tags"
+    weight = 80.0
 
-  # Set disableReadOtherPosts to true in order to hide the links to other posts.
-  disableReadOtherPosts = true
+  [[related.indices]]
+    name = "categories"
+    weight = 70.0
 
-  # Integrate Javascript files or stylesheets by adding the url to the external assets or by
-  # linking local files with their path relative to the static folder, e.g. "css/styles.css"
-  customCSS = []
-  customJS  = []
+  [[related.indices]]
+    name = "authors"
+    weight = 20.0
 
-  # Toggle this option need to rebuild SCSS, requires extended version of Hugo
-  justifyContent = false  # Set "text-align: justify" to .content.
-
-  # Directory name of your blog content (default is `content/posts`)
-  contentTypeName = "posts"
-
-  # Default theme "light" or "dark"
-  defaultTheme = "dark"
-  themeColor = "#252627"
-
-  # Colors for favicons
-  [params.favicon.color]
-    mask = "#252627"
-    msapplication = "#252627"
-    theme = "#252627"
-
-  [params.logo]
-    logoText     = "Francisco Piccolo"
-    logoHomeLink = "/"
-
-# Social icons
-  [[params.social]]
-    name = "twitter"
-    url  = "https://twitter.com/FranciscoPicco1"
-
-  [[params.social]]
-    name = "email"
-    url  = "tobias.piccolo@gmail.com"
-
-  [[params.social]]
-    name = "github"
-    url  = "https://github.com/FranciscoPiccolo"
-
-  [[params.social]]
-    name = "linkedin"
-    url  = "https://www.linkedin.com/in/franciscopiccolo/"
-
-[languages]
-  [languages.en]
-    subtitle  = "Francisco Piccolo"
-    weight    = 1
-
-[menu]
-  [[menu.main]]
-    identifier = "about"
-    name       = "About"
-    url        = "about/"
-  [[menu.main]]
-    identifier = "posts"
-    name       = "Posts"
-    url        = "posts/"
-  [[menu.main]]
-    identifier = "Library"
-    name       = "Library"
-    url        = "library/"
+# Install Wowchemy
+[module]
+  [[module.imports]]
+    path = "github.com/wowchemy/wowchemy-hugo-modules/wowchemy"
+      
