@@ -1,18 +1,14 @@
 ---
-title: "Análise de Resíduos em Modelos de Regressão Linear"
+title: "Hello R Markdown"
 author: "Frida Gomam"
 date: 2018-07-23
 categories: ["R"]
 tags: ["R Markdown", "plot", "regression"]
-date: 2019-09-04
-math: true
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
-
 
 # R Markdown
 
