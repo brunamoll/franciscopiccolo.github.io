@@ -1,0 +1,158 @@
+---
+title: "Regressão Linear Múltipla com Dados do Mercado de Trabalho"
+author: "Francisco Piccolo"
+date: 2020-12-06
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+## **Introdução**
+
+Neste post vou desenvolver um exercício comumente passado em aulas de econometria, envolvendo **regressão linear múltipla**. O dataset contêm dados do mercado de trabalho, com os seguintes campos:
+
+* Ano
+* Trimestre
+* UF
+* Situação da casa (house_situation)
+* Gênero: 1 = Homem; 2 = Mulher
+* Idade
+* Raça: 1 = Branco; 2 = Preta; 3 = Amarela; 4 = Parda; 5 = Indígena
+* Tipo de emprego
+* Principal atividade
+* Anos de estudo
+* Rendimento mensal
+
+Para realizar este exercício, irei utilizar os seguintes pacotes:
+
+```{r, eval = T, echo = T, warning = F, error = F}
+# install.packages("tidyverse") >> Para instalar o pacote caso não o tenha instalado
+library(tidyverse)  # Para chamar o pacote
+library(patchwork)
+library(readxl)
+```
+
+Com o código abaixo, irei trazer o dataset para o R.
+
+```{r, eval=T, warning=F, error=F}
+dataset_1 <- readxl::read_excel(path = "C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/datasets/2020-12-06-trabalho-econometria-gabriela/dataset_1.xlsx")
+```
+
+Abaixo uma amostra dos dados para vermos as variáveis que serão estudadas.
+
+```{r, eval=T, warning=F, error=F}
+dataset_1 %>% 
+  head()
+
+dataset_1 %>% 
+  dim()
+```
+
+## **Aspectos Metodológicos**
+
+## **Banco de Dados**
+
+O dataset foi obtido na fonte **xyz**, onde foi possível coletar 15.434 registros para o ano de 2020 no primeiro trimestre. 
+
+Abaixo, vamos fazer uma análise exploratória dos dados para conseguir determinar o modelo ideal de regressão múltipla. 
+
+### **Representatividade de cada grupo na pesqusia**
+
+```{r, eval=T, warning=F, error=F}
+dataset_1 %>% 
+  group_by(race) %>% 
+  summarise(count = n()) %>% 
+  head()
+```
+
+Como o grupo 'amarelo' e 'indígena' contém um baixo número de registros, irei retirá-los para simplificar o modelo.
+
+```{r, eval=T, warning=F, error=F}
+dataset_1 <- 
+  dataset_1 %>% 
+  filter(race %in% c("branco","parda","preto"))
+```
+
+### **Distribuição do Rendimento Mensal por Cor ou Raça**
+
+```{r, eval=T, warning=F, error=F}
+dataset_1 %>% 
+  ggplot2::ggplot()+
+  geom_boxplot(mapping = aes(x = race, y = monthly_earning, color = race), outlier.shape = 20, outlier.color = "black")+
+  scale_y_log10(labels = scales::comma)+
+  theme(legend.position = "none",
+        legend.title = element_blank())+
+  labs(title = "Distribuição da Renda Mensal em cada Grupo",
+       y = "Rendimento Mensal",
+       x = "Grupos")
+```
+
+A renda possuí outliers, por isso usar o **log 10** no eixo y se faz necessário. A renda mensal média do grupo 'brancos' é maior que as dos grupos 'pardos' e 'pretos'. Abaixo a tabela mostra os valores do gráfico acima:
+
+```{r, eval=T, warning=F, error=F}
+dataset_1 %>% 
+  group_by(race) %>% 
+  summarise(min = min(monthly_earning),
+            max = max(monthly_earning),
+            mean = mean(monthly_earning),
+            sd = sd(monthly_earning)) %>% 
+  head()
+```
+
+Há outliers nos grupos, principalmente valores zerados para renda mensal, o que parece estranho considerando que a pessoa está empregada. Vamos ver como os valores zerados de renda mensal impactam cada grupo.
+
+```{r, eval=T, warning=F, error=F}
+dataset_1 %>% 
+  mutate(is_zero_earning = case_when(monthly_earning == 0 ~ 1, TRUE ~ 0)) %>% 
+  group_by(job_type) %>% 
+  summarise(total = n(),
+            is_zero = sum(is_zero_earning)) %>% 
+  mutate(share_zero = round(is_zero/total, digits = 4)) %>% 
+  arrange(desc(share_zero)) %>% 
+  head()
+  
+  group_by(job_type) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  mutate(total = sum(count))
+```
+
+
+
+## **Modelo**
+
+Regressão Linear Múltipla, incluir ao menos variável binária (quais dos três modelos), estudar a presença ou não de multicolinearidade, estudar o ajuste através de MQO ou MQG, apresentar as variáveis.
+
+## **Resultados**
+
+```{r}
+mtcars %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = cyl, y = mpg))
+```
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+fit <- lm(dist ~ speed, data = cars)
+fit
+```
+
+# Including Plots
+
+You can also embed plots. See Figure \@ref(fig:pie) for example:
+
+```{r pie, fig.cap='A fancy pie chart.'}
+par(mar = c(2, 10, 0, 1))
+pie(
+  c(280, 60, 80),
+  c('Sky', 'Sunny side of pyramid', 'Shady side of pyramid'),
+  col = c('#0292D8', '#F7EA39', '#C4B632'),
+  init.angle = -50, border = NA
+)
+```
