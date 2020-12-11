@@ -13,12 +13,12 @@ organizations:
 - name: Amazon.com
   url: ""
 
-Interesses:
+interests:
 - Estatística
-- Banco de Dados (*data warehouse*)
-- Visualização de Dados (*data viz*)
+- Banco de Dados
+- Visualização de Dados
 
-Formação:
+education:
   courses:
   - course: Ciências Econômicas
     institution: PUC-Campinas
