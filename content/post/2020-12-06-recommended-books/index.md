@@ -8,7 +8,7 @@ title: Livros Recomendados
 
 Livros que li e recomendo.
 
-<img src="/images/library_images/data_analysis_and_graphics_using_R.PNG"
+<img src="C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/images/library_images/data_analysis_and_graphics_using_R.PNG"
      style="float: left; widh: 200px; height: 300px" />
 
 <img src="/images/library_images/basic_econometrics_gujarati.PNG"
