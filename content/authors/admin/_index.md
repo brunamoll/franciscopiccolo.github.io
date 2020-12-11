@@ -13,17 +13,17 @@ organizations:
 - name: Amazon.com
   url: ""
 
-interests:
-- Statistics
-- Data Warehouse
-- Data Visualization
+Interesses:
+- Estatística
+- Banco de Dados (*data warehouse*)
+- Visualização de Dados (*data viz*)
 
-education:
+Formação:
   courses:
-  - course: Economy
+  - course: Ciências Econômicas
     institution: PUC-Campinas
     year: 2018
-  - course: Supply Chain and Logistics
+  - course: Técnico em Logística
     institution: Centro Universitário Padre Anchietta
     year: 2013
 

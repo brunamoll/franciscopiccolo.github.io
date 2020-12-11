@@ -1,14 +1,23 @@
 ---
-title: "Regressão Linear Múltipla com Dados do Mercado de Trabalho"
+title: "Econometria - Atividade"
 author: "Francisco Piccolo"
-date: 2020-12-06
+date: "2020-12-08"
+output:
+    prettydoc::html_pretty:
+      theme: leonids
+      fig_height: 4
+      fig_width: 6
+      df_print: paged
+      css: style.css
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-## **Introdução**
+## **Regressão Linear Múltipla com Dados do Mercado de Trabalho**
+
+### **Introdução**
 
 Neste post vou desenvolver um exercício comumente passado em aulas de econometria, envolvendo **regressão linear múltipla**. O dataset contêm dados do mercado de trabalho, com os seguintes campos:
 
@@ -26,61 +35,144 @@ Neste post vou desenvolver um exercício comumente passado em aulas de econometr
 
 Para realizar este exercício, irei utilizar os seguintes pacotes:
 
-```{r, eval = T, echo = T, warning = F, error = F}
+```{r, eval = T, echo = T, warning = F, error = F, message=F}
 # install.packages("tidyverse") >> Para instalar o pacote caso não o tenha instalado
 library(tidyverse)  # Para chamar o pacote
 library(patchwork)
 library(readxl)
+library(GGally)
+library(feasts)
 ```
 
 Com o código abaixo, irei trazer o dataset para o R.
 
-```{r, eval=T, warning=F, error=F}
+```{r, eval=T, warning=F, error=F, message=F}
 dataset_1 <- readxl::read_excel(path = "C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/datasets/2020-12-06-trabalho-econometria-gabriela/dataset_1.xlsx")
 ```
 
-Abaixo uma amostra dos dados para vermos as variáveis que serão estudadas.
+### **Aspectos Metodológicos**
 
-```{r, eval=T, warning=F, error=F}
-dataset_1 %>% 
-  head()
+Desenvolver*
 
-dataset_1 %>% 
-  dim()
-```
+### **Banco de Dados**
 
-## **Aspectos Metodológicos**
+O dataset foi obtido na fonte **xyz**, onde foi possível coletar 15.434 registros para o primeiro trimestre de 2020.
 
-## **Banco de Dados**
+Abaixo, vamos fazer uma análise exploratória dos dados para conseguir determinar o modelo ideal de regressão múltipla.
 
-O dataset foi obtido na fonte **xyz**, onde foi possível coletar 15.434 registros para o ano de 2020 no primeiro trimestre. 
+#### **Representatividade de cada grupo na pesqusia**
 
-Abaixo, vamos fazer uma análise exploratória dos dados para conseguir determinar o modelo ideal de regressão múltipla. 
+##### **Raça**
 
-### **Representatividade de cada grupo na pesqusia**
-
-```{r, eval=T, warning=F, error=F}
+```{r, eval=T, warning=F, error=F, message=F}
 dataset_1 %>% 
   group_by(race) %>% 
-  summarise(count = n()) %>% 
-  head()
+  summarise(Qty = n()) %>% 
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."))
 ```
 
 Como o grupo 'amarelo' e 'indígena' contém um baixo número de registros, irei retirá-los para simplificar o modelo.
 
-```{r, eval=T, warning=F, error=F}
+```{r, eval=T, warning=F, error=F, message=F}
 dataset_1 <- 
   dataset_1 %>% 
   filter(race %in% c("branco","parda","preto"))
 ```
 
-### **Distribuição do Rendimento Mensal por Cor ou Raça**
+##### **Gênero**
 
-```{r, eval=T, warning=F, error=F}
+```{r, eval=T, warning=F, error=F, message=F}
 dataset_1 %>% 
+  group_by(gender) %>% 
+  summarise(count = n()) %>% 
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."))
+```
+
+Nota-se que homens estão bem mais representados na amostra (~96% do total). Talvez seja melhor não usar esta variável, visto que está desbalançeada.
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 <- 
+  dataset_1 %>% 
+  select(-gender)  # Retirando o gênero
+```
+
+##### **Situação do Domicílio (Urbana ou Rural)**
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 %>% 
+  group_by(house_situation) %>% 
+  summarise(count = n()) %>% 
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."))
+```
+
+Aproximadamente 83% dos registros na amostra são de domicílios urbanos. Porém irei manter esta variável, pois pode ser bastante explicativa para a variável dependente (rendimento mensal).
+
+##### **Anos de Estudo**
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 %>% 
+  group_by(years_of_study) %>% 
+  summarise(count = n()) %>% 
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."))
+```
+
+Esta variável parece importante para explicar o rendimento mensal das pessoas do dataset. Ela será mantida no modelo, porém será agrupada nos seguintes grupos:
+
+* 0 Anos
+* Até 6 Anos
+* Até 12 Anos
+* Acima de 12 Anos
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 %>% 
+  mutate(years_of_study_grp = case_when(years_of_study == 0 ~ "zero",
+                                        years_of_study <= 6 ~ "até_6",
+                                        years_of_study <= 12 ~ "até_12",
+                                        TRUE ~ "acima_de_12")) -> dataset_1
+```
+
+Com este agrupamento dos anos de estudo, vamos ver como fica a distribuição.
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 %>% 
+  mutate(count = 1,
+         years_of_study_grp = fct_relevel(years_of_study_grp, levels = c("zero","até_6","até_12","acima_de_12"))) %>% 
+  ggplot2::ggplot()+
+  geom_col(mapping = aes(x = years_of_study_grp, y = count, fill = years_of_study_grp))+
+  theme(legend.position = "none",
+        legend.title = element_blank())+
+  scale_fill_brewer(type = "qual", palette = 2)+
+  scale_y_continuous(labels = scales::comma)+
+  labs(title = "Distribuição dos Anos de Estudo em Grupos")
+```
+
+Após verificar as variáveis separadamente, vamos ajustar o dataset para manter apenas as que serão relevantes para o modelo.
+
+* Situação do domicílio (house_situation): Urbano ou Rural
+* Idade (age)
+* Raça (race)
+* Anos de estudo agrupado (years_of_study_grp)
+* Rendimento Mensal (montly_earnings)
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 %>% 
+  select(house_situation, age, race, years_of_study_grp, monthly_earning) -> dataset_1_adj
+```
+
+O modelo será uma regressão linear múltipla tendo 'monthly_earning' como variável dependente. O modelo poderá ser descrito de acordo com a equação abaixo:
+
+$$\hat{Y} = \hat{\beta_1}X_1 + \hat{\beta_2}X_2 + \hat{\beta_3}X_3 + \hat{\beta_4}X_4 + \mu $$
+
+Vamos ver separadamente qual a correlação da variável dependente com cada uma das variáveis independentes, para poder antever os resultados do modelo.
+
+##### **Rendimento Mensal e Raça**
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1_adj %>% 
   ggplot2::ggplot()+
   geom_boxplot(mapping = aes(x = race, y = monthly_earning, color = race), outlier.shape = 20, outlier.color = "black")+
   scale_y_log10(labels = scales::comma)+
+  scale_color_brewer(type = "qual", palette = 2)+
   theme(legend.position = "none",
         legend.title = element_blank())+
   labs(title = "Distribuição da Renda Mensal em cada Grupo",
@@ -90,69 +182,215 @@ dataset_1 %>%
 
 A renda possuí outliers, por isso usar o **log 10** no eixo y se faz necessário. A renda mensal média do grupo 'brancos' é maior que as dos grupos 'pardos' e 'pretos'. Abaixo a tabela mostra os valores do gráfico acima:
 
-```{r, eval=T, warning=F, error=F}
+```{r, eval=T, warning=F, error=F, message=F}
 dataset_1 %>% 
   group_by(race) %>% 
   summarise(min = min(monthly_earning),
             max = max(monthly_earning),
             mean = mean(monthly_earning),
             sd = sd(monthly_earning)) %>% 
-  head()
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."))
 ```
 
-Há outliers nos grupos, principalmente valores zerados para renda mensal, o que parece estranho considerando que a pessoa está empregada. Vamos ver como os valores zerados de renda mensal impactam cada grupo.
+Os valores zerados de renda mensal parecem estranhos. A princípios iremos mantê-los e caso necessário iremos retirá-los para ver o impacto no modelo.
 
-```{r, eval=T, warning=F, error=F}
-dataset_1 %>% 
-  mutate(is_zero_earning = case_when(monthly_earning == 0 ~ 1, TRUE ~ 0)) %>% 
-  group_by(job_type) %>% 
-  summarise(total = n(),
-            is_zero = sum(is_zero_earning)) %>% 
-  mutate(share_zero = round(is_zero/total, digits = 4)) %>% 
-  arrange(desc(share_zero)) %>% 
-  head()
-  
-  group_by(job_type) %>% 
-  summarise(count = n()) %>% 
-  arrange(desc(count)) %>% 
-  mutate(total = sum(count))
+##### **Rendimento Mensal e Age**
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1_adj %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = age, y = monthly_earning), shape = 20)+
+  scale_y_log10(labels = scales::comma)+
+  labs(title = "Correlação entre Renda e Idade",
+       y = "Renda Mensal",
+       x = "Idade")
 ```
 
+Nota-se que idade não será muito relevante para determinar variações na renda, porém talvez a idade esteja alinhada com os anos de estudo. Vamos ver abaixo estas duas variáveis.
 
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1_adj %>% 
+  mutate(count = 1) %>% 
+  ggplot2::ggplot()+
+  geom_col(mapping = aes(x = age, y = count, fill = years_of_study_grp))+
+  scale_fill_brewer(type = "qual", palette = 2)+
+  theme(legend.title = element_blank())+
+  labs(title = "Distribuição da Amostra por Idade",
+       subtitle = "Participação dos Anos de Estudo em cada grupo",
+       y = "",
+       x = "idade")
+```
+
+Pelo visto não há uma correlação entre as duas variáveis. Desta forma, acredito que a variável 'idade' não será relevante para explicar variações em 'Y'.
+
+##### **Rendimento Mensal e Anos de Estudo**
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1_adj %>% 
+  mutate(years_of_study_grp = fct_relevel(years_of_study_grp, levels = c("zero","até_6","até_12","acima_de_12"))) %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = years_of_study_grp, y = monthly_earning), shape = 20)+
+  scale_y_log10(labels = scales::comma)+
+  labs(title = "Correlação entre Renda e Anos de Estudo",
+       y = "Renda Mensal",
+       x = "Anos de Estudo")
+```
+
+Aparentemente há uma relação entre anos de estudos e rendimento mensal, como era de se esperar. Acredito que esta será a principal variável do modelo (com menor valor-p).
+
+##### **Rendimento Mensal e Situação do Domicílio**
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1_adj %>% 
+  ggplot2::ggplot()+
+  geom_boxplot(mapping = aes(x = house_situation, y = monthly_earning, color = house_situation), outlier.shape = 20)+
+  scale_y_log10(labels = scales::comma)+
+  scale_color_brewer(type = "qual", palette = 2)+
+  theme(legend.position = "none",
+        legend.title = element_blank())+
+  labs(title = "Impacto da Situação Domiciliar na Renda")
+```
+
+A situação domiciliar parece impactar na determinação da renda, porém fortemente influenciada por outliers (que está mais concentrado nos domicílios urbanos, que representam mais de 80% dos registros do dataset). Vamos verificar se há correlação entre a situação domiciliar e os anos de estudos.
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1_adj %>% 
+  mutate(years_of_study_grp = fct_relevel(years_of_study_grp, levels = c("zero","até_6","até_12","acima_de_12"))) %>% 
+  mutate(count = 1) %>% 
+  ggplot2::ggplot()+
+  geom_col(mapping = aes(x = years_of_study_grp, y = count, fill = house_situation), position = "fill")+
+  scale_fill_brewer(type = "qual", palette = 2)+
+  scale_y_continuous(labels = scales::percent)+
+  labs(title = "Situação Domiciliar e Anos de Estudo",
+       y = "",
+       x = "Anos de Estudo")
+```
+
+Veja que a população rural, como era de se esperar, possui um menor tempo de educação formal, podendo gerar uma autocorrelação entre estas variáveis explicativas. Porém, vamos deixá-la para ver o impacto, e depois se necessário uma delas pode ser removida.
 
 ## **Modelo**
 
-Regressão Linear Múltipla, incluir ao menos variável binária (quais dos três modelos), estudar a presença ou não de multicolinearidade, estudar o ajuste através de MQO ou MQG, apresentar as variáveis.
+O modelo de regressão conforme informado anteriormente, buscará explicar variações na variável 'monthly_earning' usando as variáveis explicativas estudadas anteriormente.
 
-## **Resultados**
+### **Modelo 1: Rendimento vs Anos de Estudo**
 
-```{r}
-mtcars %>% 
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 %>% 
+  lm(formula = "monthly_earning ~ (years_of_study)") %>% 
+  summary() %>% 
+  pander::pander()
+```
+
+R² baixo (pouco poder explicativo), porém valor-t alto e valor-p baixo, indicando significância estatística.
+
+### **Modelo 2: Rendimento vs Raça**
+
+Vamos transformar raça em variável binária, sendo 1 = Branco e 0 = Negros e Pardos.
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 %>% 
+  mutate(dummy_race = case_when(race == "branco" ~ 1,
+                                TRUE ~ 0)) %>% 
+  lm(formula = monthly_earning ~ (dummy_race)) %>% 
+  summary() %>% 
+  pander::pander()
+```
+
+Novamente R² baixo, porém com valor-p e valor-t indicando significância estatística. Resultados indicam impacto positivo da raça no rendimento mensal, conforme indicado nos gráfico box-plot visto anteriormente. Vale destacar que o modelo de regressão é bastante impactado por outliers (pois utiliza média simples para minimizar os resíduos), por isso os outliers de renda no grupo "Brancos" está influenciando no resultado.
+
+### **Modelo 3: Rendimento vs Situação Domiciliar**
+
+```{r, eval=T, warning=F, error=F, message=F}
+dataset_1 %>% 
+  lm(formula = monthly_earning ~ (house_situation)) %>% 
+  summary() %>% 
+  pander::pander()
+```
+
+R² novamente baixo. Porém a variável mostra impacto positivo para domicílios urbanos, conforme visto no box-plot desta variável com a renda mensal.
+
+
+### **Modelo Final**
+
+No modelo final, será retirado os valores zerados de renda mensal.
+
+```{r, eval=T, warning=F, error=F, message=F}
+# Criando variável com resultado do modelo de regressão múltipla
+dataset_1 %>% 
+  filter(monthly_earning > 0) -> dataset_1
+
+dataset_1 %>% 
+  mutate(dummy_race = case_when(race == "branco" ~ 1,
+                                TRUE ~ 0)) %>% 
+  lm(formula = monthly_earning ~ (years_of_study + dummy_race)) -> final_model
+```
+
+```{r, eval=T, warning=F, error=F, message=F}
+final_model %>% 
+  summary() %>% 
+  pander::pander()
+```
+
+Verificando fit do modelo:
+
+```{r, eval=T, warning=F, error=F, message=F}
+# Adicionando os valores estimados ao dataset original
+dataset_1$fitted_2 <- final_model$fitted.values
+
+# Plotando os resultados
+dataset_1 %>% 
   ggplot2::ggplot()+
-  geom_point(mapping = aes(x = cyl, y = mpg))
+  geom_point(mapping = aes(x = monthly_earning, y = fitted_2), shape = 20)+
+  scale_x_log10()+
+  labs(title = "Comparando previsão com valores originais",
+       x = "Rendimento Mensal",
+       y = "Estimativa do rendimento mensal")
+```
+
+Verificando os resíduos:
+
+```{r, eval=T, warning=F, error=F, message=F}
+# Adicionando os resíduos no dataset original
+dataset_1$residuals <- final_model$residuals
+
+dataset_1 %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = monthly_earning, y = residuals), shape = 20)+
+  scale_y_log10()+
+  scale_x_log10()+
+  labs(title = "Comparando os resíduos com a Renda Mensal",
+       x = "Renda Mensal",
+       y = "Resíduos")
 ```
 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-fit <- lm(dist ~ speed, data = cars)
-fit
+###################################################################
+
+```{r, eval=T, warning=F, error=F, message=F}
+# install.packages("datarium")
+library(datarium)
+
+datarium::marketing %>% 
+  GGally::ggpairs()
 ```
 
-# Including Plots
 
-You can also embed plots. See Figure \@ref(fig:pie) for example:
-
-```{r pie, fig.cap='A fancy pie chart.'}
-par(mar = c(2, 10, 0, 1))
-pie(
-  c(280, 60, 80),
-  c('Sky', 'Sunny side of pyramid', 'Shady side of pyramid'),
-  col = c('#0292D8', '#F7EA39', '#C4B632'),
-  init.angle = -50, border = NA
-)
+```{r, eval=T, warning=F, error=F, message=F}
+datarium::marketing %>% 
+  lm(formula = sales ~ youtube + facebook + newspaper) -> regression_model
 ```
+
+```{r, eval=T, warning=F, error=F, message=F}
+regression_model %>% 
+  summary() %>% 
+  pander::pander()
+```
+
+
+
+
+
+
+
