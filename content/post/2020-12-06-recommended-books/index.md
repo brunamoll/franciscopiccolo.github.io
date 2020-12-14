@@ -3,7 +3,7 @@ aliases:
 - library
 author:
   name: Francisco Piccolo
-title: Livros que Li e Recomendo
+title: Livros Recomendados
 date: 2020-12-06
 ---
 
