@@ -3,13 +3,9 @@ aliases:
 - library
 author:
   name: Francisco Piccolo
-title: Livros Recomendados
+title: Livros que Li e Recomendo
 date: 2020-12-06
 ---
-
-Livros que li e recomendo.
-
-### **Estatística e Análise de Dados**
 
 <img src=./library_images/basic_econometrics_gujarati.png
      style="float: left; widh: 150px; height: 250px" />
