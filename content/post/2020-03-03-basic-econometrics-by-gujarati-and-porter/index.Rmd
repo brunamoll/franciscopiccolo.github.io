@@ -15,7 +15,14 @@ Estou apresentando estas definições por conta de que neste post irei focar em 
 
 ![Capa do Livro](./library_images/basic_econometrics_gujarati.png)
 
-Os dados usados nos exercícios estarão em meu repositório do !(Github)[]
+Os dados usados nos exercícios estarão em meu repositório do ![Github](https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/2020-03-01-basic_econometrics_by_gujarati). Para acessar cada dataset, basta usar o seguinte comando:
+
+```{r, echo=T, include=F, warning=F, message=F}
+# Exemplo com o dataset 'table_1.3'
+table_1.3_ipc <- readr::read_csv(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2020-03-01-basic_econometrics_by_gujarati/table_1.3_ipc.txt")
+```
+
+
 
 ```{r, echo=F, include=F, warning=F, message=F}
 library(tidyverse)
