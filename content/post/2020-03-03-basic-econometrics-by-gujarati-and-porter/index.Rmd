@@ -1,0 +1,43 @@
+---
+title: "Livro: Econometria Básica - Gujarati"
+subtitle: "Resolvendo Exercícios em R"
+date: 2020-03-01
+math: true
+---
+
+Econometria é uma ferramenta (ou técnica) muito usada por economistas, estatísticos e também por outras ciências. Uma definição encontrada nos livros básicos é:
+
+> "Econometria é a aplicação de modelos estatísticos em dados econômicos"
+
+Com base nesta definição, é importante entender a definição de modelos estatísticos e dados econômicos. Em modelos estatísticos, podemos interpretar como equações matemáticas que buscam traduzir um fenômeno estudado, sendo aplicado à coleta, análise e interpretação de dados ou frequência de eventos visando modelar a aleatoriedade e a incerteza. Por outro lado, dados econômicos não possuem uma definição tão clara, porém sabendo que a ciência econômica atua no estudo da alocação dos recursos da sociedade, é possível inferir quando os dados são econômicos.
+
+Estou apresentando estas definições por conta de que neste post irei focar em um livro de Econometria Básica muito usado nos cursos de Economia. O livro foi escrito por **Damodar N. Gujarati** e **Dawn C. Porter** e contêm muitos exercícios usando dados econômicos que achei bastante interessante. Pelo fato de o livro não mostrar as soluções dos problemas, achei válido fazer um post com as soluções de alguns dos exercícios.
+
+![Capa do Livro](./library_images/basic_econometrics_gujarati.png)
+
+Os dados usados nos exercícios estarão em meu repositório do !(Github)[]
+
+```{r, echo=F, include=F, warning=F, message=F}
+library(tidyverse)
+library(patchwork)
+
+theme_graph <- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    text = element_text(family = "Times New Roman"),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+}
+```
+
+
+
+
+
