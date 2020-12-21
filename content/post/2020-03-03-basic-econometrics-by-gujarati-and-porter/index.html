@@ -1,7 +1,6 @@
 ---
-title: "Livro: Econometria Básica - Gujarati"
-subtitle: "Resolvendo Exercícios em R"
-date: 2020-03-03
+title: "Econometria Básica de Gujarati e Porter: Resolvendo Exercícios Propostos"
+date: 2020-03-01
 math: true
 ---
 
@@ -9,4 +8,159 @@ math: true
 <script src="index_files/anchor-sections/anchor-sections.js"></script>
 
 
-<p><img src="library_images/basic_econometrics_gujarati.png" /></p>
+<p>Econometria é uma ferramenta (ou técnica) muito usada por economistas, estatísticos e também por outras ciências. Uma definição encontrada nos livros básicos é:</p>
+<blockquote>
+<p>“Econometria é a aplicação de modelos estatísticos em dados econômicos”</p>
+</blockquote>
+<p>Com base nesta definição, é importante entender a definição de modelos estatísticos e dados econômicos. Em modelos estatísticos, podemos interpretar como equações matemáticas que buscam traduzir um fenômeno estudado, sendo aplicado à coleta, análise e interpretação de dados ou frequência de eventos visando modelar a aleatoriedade e a incerteza. Por outro lado, dados econômicos não possuem uma definição tão clara, porém sabendo que a ciência econômica atua no estudo da alocação dos recursos da sociedade, é possível inferir quando os dados são econômicos.</p>
+<p>Estou apresentando estas definições por conta de que neste post irei focar em um livro de Econometria Básica muito usado nos cursos de Economia. O livro foi escrito por <strong>Damodar N. Gujarati</strong> e <strong>Dawn C. Porter</strong> e contêm muitos exercícios usando dados econômicos que achei bastante interessante. Pelo fato de o livro não mostrar as soluções dos problemas, achei válido fazer um post com as soluções de alguns dos exercícios.</p>
+<div class="figure">
+<img src="library_images/basic_econometrics_gujarati.png" alt="" />
+<p class="caption">Capa do Livro</p>
+</div>
+<p>Os dados usados nos exercícios estarão em meu repositório do <a href="https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/2020-03-01-basic_econometrics_by_gujarati">Github</a>, em formato “.txt”. Para acessar um dataset, basta usar o seguinte comando:</p>
+<pre class="r"><code># Primeiro chame o pacote &#39;readr&#39; que contém a função &#39;read_csv&#39;
+library(readr)
+
+# Exemplo com o dataset &#39;table_1.3&#39;
+table_1.3_ipc &lt;- readr::read_delim(file = &quot;https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2020-03-01-basic_econometrics_by_gujarati/table_1.3_ipc.txt&quot;,
+                                   delim = &quot; &quot;)</code></pre>
+<p>Porém, ao invés de sempre usar este caminho extenso para trazer o dataset, eu posso criar uma variável contendo este caminho e mudar apenas a última parte, em que indico o nome do dataset (i.e. “table_1.3_ipc.txt”).</p>
+<pre class="r"><code>dataset_path &lt;- &quot;https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2020-03-01-basic_econometrics_by_gujarati/&quot;</code></pre>
+<p>Com isso, para chamar um dataset, basta usar um comando mais curto, com a função “paste”.</p>
+<pre class="r"><code>table_1.3_ipc &lt;- 
+  readr::read_delim(file = paste(dataset_path,
+                               &quot;table_1.3_ipc.txt&quot;, 
+                               sep = &quot;&quot;),
+                  delim = &quot; &quot;)</code></pre>
+<p>Agora vamos ao que interessa. Para desenvolver os exercícios, vou usar os pacotes abaixo e também uma função para padronizar o design dos gráficos.</p>
+<pre class="r"><code>library(tidyverse)
+library(patchwork)
+
+# Função para padronizar o design dos gráficos
+theme_graph &lt;- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = &quot;italic&quot;, size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = &quot;italic&quot;, size = 9),
+    strip.background = element_rect(fill = &quot;grey&quot;),
+    strip.text = element_text(face = &quot;bold&quot;),
+    legend.position = &quot;bottom&quot;,
+    legend.title = element_blank()
+  )
+}</code></pre>
+<div id="capítulo-1" class="section level2">
+<h2><strong>Capítulo 1</strong></h2>
+<p>1.1. A Tabela 1.3 apresenta dados relativos ao Índice de Preços ao Consumidor (IPC) de sete países industrializados. A base do índice é 1982–1984 = 100.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Com base nos dados fornecidos, calcule a taxa de inflação de cada país.</li>
+</ol>
+<p>Para resolver este exercício, vamos trazer o dataset necessário.</p>
+<pre class="r"><code>table_1.3_ipc &lt;- 
+  readr::read_delim(file = paste(dataset_path,
+                               &quot;table_1.3_ipc.txt&quot;, 
+                               sep = &quot;&quot;),
+                  delim = &quot; &quot;) %&gt;% 
+  mutate(year = as.character(year))</code></pre>
+<p>Vamos também ver uma amostra destes dados:</p>
+<pre class="r"><code>table_1.3_ipc %&gt;% 
+  head(5) %&gt;% 
+  knitr::kable(format.args = list(big.mark = &quot;.&quot;, decimal.mark = &quot;.&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">year</th>
+<th align="right">usa</th>
+<th align="right">canada</th>
+<th align="right">japan</th>
+<th align="right">france</th>
+<th align="right">germany</th>
+<th align="right">italy</th>
+<th align="right">uk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1980</td>
+<td align="right">824</td>
+<td align="right">761</td>
+<td align="right">910</td>
+<td align="right">722</td>
+<td align="right">867</td>
+<td align="right">639</td>
+<td align="right">785</td>
+</tr>
+<tr class="even">
+<td align="left">1981</td>
+<td align="right">909</td>
+<td align="right">856</td>
+<td align="right">953</td>
+<td align="right">818</td>
+<td align="right">922</td>
+<td align="right">755</td>
+<td align="right">879</td>
+</tr>
+<tr class="odd">
+<td align="left">1982</td>
+<td align="right">965</td>
+<td align="right">949</td>
+<td align="right">981</td>
+<td align="right">917</td>
+<td align="right">970</td>
+<td align="right">878</td>
+<td align="right">954</td>
+</tr>
+<tr class="even">
+<td align="left">1983</td>
+<td align="right">996</td>
+<td align="right">1.004</td>
+<td align="right">998</td>
+<td align="right">1.003</td>
+<td align="right">1.003</td>
+<td align="right">1.008</td>
+<td align="right">998</td>
+</tr>
+<tr class="odd">
+<td align="left">1984</td>
+<td align="right">1.039</td>
+<td align="right">1.047</td>
+<td align="right">1.021</td>
+<td align="right">1.080</td>
+<td align="right">1.027</td>
+<td align="right">1.114</td>
+<td align="right">1.048</td>
+</tr>
+</tbody>
+</table>
+<p>A inflação para cada país será a variação de um período com base no período anterior. Para realizar este cálculo, basta usar o ‘mutate’ e a função ‘lag’.</p>
+<pre class="r"><code>table_1.3_ipc %&gt;% 
+  mutate(usa_cpi = usa/lag(usa,1)-1,
+         canada_cpi = canada/lag(canada,1)-1,
+         japan_cpi = japan/lag(japan,1)-1,
+         france_cpi = france/lag(france,1)-1,
+         germany_cpi = germany/lag(germany,1)-1,
+         italy_cpi = italy/lag(italy,1)-1,
+         uk_cpi = uk/lag(uk,1)-1) %&gt;% 
+  select(year, usa_cpi, canada_cpi, japan_cpi, france_cpi, germany_cpi, italy_cpi, uk_cpi) %&gt;% 
+  tidyr::gather(&quot;country&quot;,&quot;values&quot;, 2:8) %&gt;% 
+  filter(!is.na(values)) %&gt;% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = year, 
+                          y = values, 
+                          group = country, 
+                          color = country))+
+  scale_y_continuous(labels = scales::percent)+
+  scale_color_brewer(type = &quot;qual&quot;, palette = 2)+
+  scale_x_discrete(breaks = c(&quot;1985&quot;,&quot;1995&quot;,&quot;2005&quot;))+
+  theme_graph()+
+  labs(title = &quot;Inflação dos Países Selecionados&quot;,
+       y = &quot;CPI (Consumer Price Index)&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><p>Represente graficamente a taxa de inflação de cada país em relação ao tempo (isto é, use o eixo horizontal para o tempo e o eixo vertical para a taxa de inflação).</p></li>
+<li><p>Que conclusões gerais é possível tirar sobre a evolução da inflação nos sete países?</p></li>
+<li><p>Em que país a taxa de inflação parece ser a mais flutuante? Há alguma explicação para isso?</p></li>
+</ol>
+</div>

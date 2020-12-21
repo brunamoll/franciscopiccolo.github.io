@@ -108,9 +108,9 @@ migrants_pop %>%
            fill = "steel blue")+
   scale_y_continuous(labels = scales::percent)+
   theme_graph()+
-  labs(title = "County rank by imigration share over population",
+  labs(title = "Países com Maior Proporção de Imigrantes",
        x = "",
-       y = "% of imigrants over the population")+
+       y = "% de Imigrantes no País")+
   coord_flip()
 ```
 
@@ -144,9 +144,9 @@ net_immigration %>%
   scale_y_continuous(labels = scales::comma)+
   theme_graph()+
   coord_flip()+
-  labs(title = "Countries that had lost more residents since 2010",
+  labs(title = "Países que Mais Perderam Imigrantes desde 2010",
        x = "",
-       y = "Net immigration")
+       y = "")
 ```
 
 Síria e Venezuela são dois países que eu esperava ver neste gráfico. Porém Índia e China aparecem por conta de sua grande população, pois um pequeno movimento de seus habitantes é algo grande comparado aos outros. O ideal é normalizar este dataset usando a população de cada país, de forma que a saída de pessoas seja relativa à sua população. Para isso, basta cruzarmos este dataset com o dataset de população do país para criar a métrica de 'saída líquida relativa de pessoas'.
