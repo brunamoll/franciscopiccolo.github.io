@@ -12,7 +12,7 @@ Com base nesta definição, é importante entender a definição de modelos esta
 
 Estou apresentando estas definições por conta de que neste post irei focar em um livro de Econometria Básica muito usado nos cursos de Economia. O livro foi escrito por **Damodar N. Gujarati** e **Dawn C. Porter** e contêm muitos exercícios usando dados econômicos que achei bastante interessante. Pelo fato de o livro não mostrar as soluções dos problemas, achei válido fazer um post com as soluções de alguns dos exercícios.
 
-![Capa do Livro](./library_images/basic_econometrics_gujarati.png)
+![](./library_images/basic_econometrics_gujarati.png)
 
 Os dados usados nos exercícios estarão em meu repositório do [Github](https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/2020-03-01-basic_econometrics_by_gujarati), em formato ".txt". Para acessar um dataset, basta usar o seguinte comando:
 
@@ -46,6 +46,8 @@ Agora vamos ao que interessa. Para desenvolver os exercícios, vou usar os pacot
 ```{r, warning=F, message=F}
 library(tidyverse)
 library(patchwork)
+library(gt)
+library(modelsummary)
 
 # Função para padronizar o design dos gráficos
 theme_graph <- function(){
@@ -67,7 +69,7 @@ theme_graph <- function(){
 
 1.1. A Tabela 1.3 apresenta dados relativos ao Índice de Preços ao Consumidor (IPC) de sete países industrializados. A base do índice é 1982–1984 = 100.
 
-a. Com base nos dados fornecidos, calcule a taxa de inflação de cada país.
+**a. Com base nos dados fornecidos, calcule a taxa de inflação de cada país.**
 
 Para resolver este exercício, vamos trazer o dataset necessário.
 
@@ -91,6 +93,8 @@ table_1.3_cpi %>%
 A inflação para cada país será a variação de um período com base no período anterior. Para realizar este cálculo, basta usar o 'mutate' e a função 'lag'.
 
 ```{r, error=F, message=F, warning=F}
+# Usando (pacote gt para esse exercício) >> Grammar of Tables
+
 table_1.3_cpi %>% 
   mutate(usa_cpi = usa/lag(usa,1)-1,
          canada_cpi = canada/lag(canada,1)-1,
@@ -101,7 +105,24 @@ table_1.3_cpi %>%
          uk_cpi = uk/lag(uk,1)-1) %>% 
   select(year, usa_cpi, canada_cpi, japan_cpi, france_cpi, germany_cpi, italy_cpi, uk_cpi) %>% 
   tidyr::gather("country","values", 2:8) %>% 
-  filter(!is.na(values)) %>% 
+  filter(!is.na(values)) -> country_cpi
+
+country_cpi %>% 
+  tidyr::spread("country","values") %>% 
+  gt::gt() %>% 
+  gt::tab_header(title = md("**Inflação (CPI) para os Países Selecionados**"),
+                 subtitle = "De 1981 Até 2005") %>% 
+  gt::tab_source_note(source_note = "Fonte: FMI") %>% 
+  gt::tab_footnote(footnote = "Index = 100",
+                   locations = cells_body(columns = vars(year),
+                                          rows = 4)) %>% 
+  fmt_percent(columns = 2:8)
+```
+
+**b. Represente graficamente a taxa de inflação de cada país em relação ao tempo (isto é, use o eixo horizontal para o tempo e o eixo vertical para a taxa de inflação).**
+
+```{r, message=F, warning=F, error=F}
+country_cpi %>% 
   ggplot2::ggplot()+
   geom_line(mapping = aes(x = year, 
                           y = values, 
@@ -115,9 +136,40 @@ table_1.3_cpi %>%
        y = "CPI (Consumer Price Index)")
 ```
 
-b. Represente graficamente a taxa de inflação de cada país em relação ao tempo (isto é, use o eixo horizontal para o tempo e o eixo vertical para a taxa de inflação).
+**c. Que conclusões gerais é possível tirar sobre a evolução da inflação nos sete países?**
 
-c. Que conclusões gerais é possível tirar sobre a evolução da inflação nos sete países?
+Há uma tendência de queda nos países selecionados após 1985, onde todos mantiveram uma taxa abaio de 5% ao ano.
 
-d. Em que país a taxa de inflação parece ser a mais flutuante? Há alguma explicação para isso?
+**d. Em que país a taxa de inflação parece ser a mais flutuante? Há alguma explicação para isso?**
 
+A tabela abaixo mostra um resumo da inflação de cada país, já transformada em percentual.
+
+```{r, message=F, warning=F, error=F}
+country_cpi %>% 
+  mutate(values = values*100) %>% 
+  tidyr::spread("country","values") %>% 
+  modelsummary::datasummary_skim()
+```
+
+O desvio padrão (SD) mais elevado é o da Itália, talvez por ter um *outlier* no valor máximo (de 18.2%). O gráfico abaixo irá dar destaque para este país para vermos se é evidente que sua flutuação é maior que a dos outros.
+
+```{r, message=F, warning=F, error=F}
+country_cpi %>% 
+  mutate(is_floating = as.character(case_when(country == "italy_cpi" ~ "Italy CPI",
+                                 TRUE ~ "Others"))) %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = year, 
+                          y = values, 
+                          group = country, 
+                          color = is_floating),
+            size = 1)+
+  scale_y_continuous(labels = scales::percent)+
+  scale_color_manual(values = c("Italy CPI" = "dark orange",
+                                "Others" = "steel blue"),
+                     name = "Inflação da Inglaterra = 1")+
+  scale_x_discrete(breaks = c("1985","1995","2005"))+
+  theme_graph()+
+  labs(title = "Análise da Inflação na Inglaterra",
+       subtitle = "Aparentemente é a taxa mais flutuante",
+       y = "CPI (Consumer Price Index)")
+```

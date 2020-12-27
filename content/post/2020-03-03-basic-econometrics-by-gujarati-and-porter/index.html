@@ -6,6 +6,8 @@ math: true
 
 <link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
 <script src="index_files/anchor-sections/anchor-sections.js"></script>
+<script src="index_files/kePrint/kePrint.js"></script>
+<link href="index_files/lightable/lightable.css" rel="stylesheet" />
 
 
 <p>Econometria é uma ferramenta (ou técnica) muito usada por economistas, estatísticos e também por outras ciências. Uma definição encontrada nos livros básicos é:</p>
@@ -14,10 +16,7 @@ math: true
 </blockquote>
 <p>Com base nesta definição, é importante entender a definição de modelos estatísticos e dados econômicos. Em modelos estatísticos, podemos interpretar como equações matemáticas que buscam traduzir um fenômeno estudado, sendo aplicado à coleta, análise e interpretação de dados ou frequência de eventos visando modelar a aleatoriedade e a incerteza. Por outro lado, dados econômicos não possuem uma definição tão clara, porém sabendo que a ciência econômica atua no estudo da alocação dos recursos da sociedade, é possível inferir quando os dados são econômicos.</p>
 <p>Estou apresentando estas definições por conta de que neste post irei focar em um livro de Econometria Básica muito usado nos cursos de Economia. O livro foi escrito por <strong>Damodar N. Gujarati</strong> e <strong>Dawn C. Porter</strong> e contêm muitos exercícios usando dados econômicos que achei bastante interessante. Pelo fato de o livro não mostrar as soluções dos problemas, achei válido fazer um post com as soluções de alguns dos exercícios.</p>
-<div class="figure">
-<img src="library_images/basic_econometrics_gujarati.png" alt="" />
-<p class="caption">Capa do Livro</p>
-</div>
+<p><img src="library_images/basic_econometrics_gujarati.png" /></p>
 <p>Os dados usados nos exercícios estarão em meu repositório do <a href="https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/2020-03-01-basic_econometrics_by_gujarati">Github</a>, em formato “.txt”. Para acessar um dataset, basta usar o seguinte comando:</p>
 <pre class="r"><code># Primeiro chame o pacote &#39;readr&#39; que contém a função &#39;read_csv&#39;
 library(readr)
@@ -36,6 +35,8 @@ table_1.3_cpi &lt;- readr::read_delim(file = &quot;https://raw.githubusercontent
 <p>Agora vamos ao que interessa. Para desenvolver os exercícios, vou usar os pacotes abaixo e também uma função para padronizar o design dos gráficos.</p>
 <pre class="r"><code>library(tidyverse)
 library(patchwork)
+library(gt)
+library(modelsummary)
 
 # Função para padronizar o design dos gráficos
 theme_graph &lt;- function(){
@@ -54,9 +55,7 @@ theme_graph &lt;- function(){
 <div id="capítulo-1" class="section level2">
 <h2><strong>Capítulo 1</strong></h2>
 <p>1.1. A Tabela 1.3 apresenta dados relativos ao Índice de Preços ao Consumidor (IPC) de sete países industrializados. A base do índice é 1982–1984 = 100.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Com base nos dados fornecidos, calcule a taxa de inflação de cada país.</li>
-</ol>
+<p><strong>a. Com base nos dados fornecidos, calcule a taxa de inflação de cada país.</strong></p>
 <p>Para resolver este exercício, vamos trazer o dataset necessário.</p>
 <pre class="r"><code>table_1.3_cpi &lt;- 
   readr::read_delim(file = paste(dataset_path,
@@ -135,7 +134,9 @@ theme_graph &lt;- function(){
 </tbody>
 </table>
 <p>A inflação para cada país será a variação de um período com base no período anterior. Para realizar este cálculo, basta usar o ‘mutate’ e a função ‘lag’.</p>
-<pre class="r"><code>table_1.3_cpi %&gt;% 
+<pre class="r"><code># Usando (pacote gt para esse exercício) &gt;&gt; Grammar of Tables
+
+table_1.3_cpi %&gt;% 
   mutate(usa_cpi = usa/lag(usa,1)-1,
          canada_cpi = canada/lag(canada,1)-1,
          japan_cpi = japan/lag(japan,1)-1,
@@ -145,7 +146,649 @@ theme_graph &lt;- function(){
          uk_cpi = uk/lag(uk,1)-1) %&gt;% 
   select(year, usa_cpi, canada_cpi, japan_cpi, france_cpi, germany_cpi, italy_cpi, uk_cpi) %&gt;% 
   tidyr::gather(&quot;country&quot;,&quot;values&quot;, 2:8) %&gt;% 
-  filter(!is.na(values)) %&gt;% 
+  filter(!is.na(values)) -&gt; country_cpi
+
+country_cpi %&gt;% 
+  tidyr::spread(&quot;country&quot;,&quot;values&quot;) %&gt;% 
+  gt::gt() %&gt;% 
+  gt::tab_header(title = md(&quot;**Inflação (CPI) para os Países Selecionados**&quot;),
+                 subtitle = &quot;De 1981 Até 2005&quot;) %&gt;% 
+  gt::tab_source_note(source_note = &quot;Fonte: FMI&quot;) %&gt;% 
+  gt::tab_footnote(footnote = &quot;Index = 100&quot;,
+                   locations = cells_body(columns = vars(year),
+                                          rows = 4)) %&gt;% 
+  fmt_percent(columns = 2:8)</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#ifwulaibpx .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ifwulaibpx .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ifwulaibpx .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ifwulaibpx .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ifwulaibpx .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ifwulaibpx .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ifwulaibpx .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ifwulaibpx .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ifwulaibpx .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ifwulaibpx .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ifwulaibpx .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ifwulaibpx .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ifwulaibpx .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#ifwulaibpx .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ifwulaibpx .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ifwulaibpx .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ifwulaibpx .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#ifwulaibpx .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ifwulaibpx .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#ifwulaibpx .gt_left {
+  text-align: left;
+}
+
+#ifwulaibpx .gt_center {
+  text-align: center;
+}
+
+#ifwulaibpx .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ifwulaibpx .gt_font_normal {
+  font-weight: normal;
+}
+
+#ifwulaibpx .gt_font_bold {
+  font-weight: bold;
+}
+
+#ifwulaibpx .gt_font_italic {
+  font-style: italic;
+}
+
+#ifwulaibpx .gt_super {
+  font-size: 65%;
+}
+
+#ifwulaibpx .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="ifwulaibpx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="8" class="gt_heading gt_title gt_font_normal" style><strong>Inflação (CPI) para os Países Selecionados</strong></th>
+    </tr>
+    <tr>
+      <th colspan="8" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>De 1981 Até 2005</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">canada_cpi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">france_cpi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">germany_cpi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">italy_cpi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">japan_cpi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">uk_cpi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">usa_cpi</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">1981</td>
+      <td class="gt_row gt_right">12.48&percnt;</td>
+      <td class="gt_row gt_right">13.30&percnt;</td>
+      <td class="gt_row gt_right">6.34&percnt;</td>
+      <td class="gt_row gt_right">18.15&percnt;</td>
+      <td class="gt_row gt_right">4.73&percnt;</td>
+      <td class="gt_row gt_right">11.97&percnt;</td>
+      <td class="gt_row gt_right">10.32&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1982</td>
+      <td class="gt_row gt_right">10.86&percnt;</td>
+      <td class="gt_row gt_right">12.10&percnt;</td>
+      <td class="gt_row gt_right">5.21&percnt;</td>
+      <td class="gt_row gt_right">16.29&percnt;</td>
+      <td class="gt_row gt_right">2.94&percnt;</td>
+      <td class="gt_row gt_right">8.53&percnt;</td>
+      <td class="gt_row gt_right">6.16&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1983</td>
+      <td class="gt_row gt_right">5.80&percnt;</td>
+      <td class="gt_row gt_right">9.38&percnt;</td>
+      <td class="gt_row gt_right">3.40&percnt;</td>
+      <td class="gt_row gt_right">14.81&percnt;</td>
+      <td class="gt_row gt_right">1.73&percnt;</td>
+      <td class="gt_row gt_right">4.61&percnt;</td>
+      <td class="gt_row gt_right">3.21&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1984<sup class="gt_footnote_marks">1</sup></td>
+      <td class="gt_row gt_right">4.28&percnt;</td>
+      <td class="gt_row gt_right">7.68&percnt;</td>
+      <td class="gt_row gt_right">2.39&percnt;</td>
+      <td class="gt_row gt_right">10.52&percnt;</td>
+      <td class="gt_row gt_right">2.30&percnt;</td>
+      <td class="gt_row gt_right">5.01&percnt;</td>
+      <td class="gt_row gt_right">4.32&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1985</td>
+      <td class="gt_row gt_right">4.11&percnt;</td>
+      <td class="gt_row gt_right">5.83&percnt;</td>
+      <td class="gt_row gt_right">2.04&percnt;</td>
+      <td class="gt_row gt_right">9.25&percnt;</td>
+      <td class="gt_row gt_right">2.06&percnt;</td>
+      <td class="gt_row gt_right">6.01&percnt;</td>
+      <td class="gt_row gt_right">3.56&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1986</td>
+      <td class="gt_row gt_right">4.13&percnt;</td>
+      <td class="gt_row gt_right">2.54&percnt;</td>
+      <td class="gt_row gt_right">&minus;0.19&percnt;</td>
+      <td class="gt_row gt_right">5.92&percnt;</td>
+      <td class="gt_row gt_right">0.67&percnt;</td>
+      <td class="gt_row gt_right">3.42&percnt;</td>
+      <td class="gt_row gt_right">1.86&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1987</td>
+      <td class="gt_row gt_right">4.32&percnt;</td>
+      <td class="gt_row gt_right">3.33&percnt;</td>
+      <td class="gt_row gt_right">0.29&percnt;</td>
+      <td class="gt_row gt_right">4.81&percnt;</td>
+      <td class="gt_row gt_right">0.00&percnt;</td>
+      <td class="gt_row gt_right">4.18&percnt;</td>
+      <td class="gt_row gt_right">3.65&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1988</td>
+      <td class="gt_row gt_right">4.05&percnt;</td>
+      <td class="gt_row gt_right">2.64&percnt;</td>
+      <td class="gt_row gt_right">1.33&percnt;</td>
+      <td class="gt_row gt_right">5.03&percnt;</td>
+      <td class="gt_row gt_right">0.67&percnt;</td>
+      <td class="gt_row gt_right">4.93&percnt;</td>
+      <td class="gt_row gt_right">4.14&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1989</td>
+      <td class="gt_row gt_right">4.95&percnt;</td>
+      <td class="gt_row gt_right">3.54&percnt;</td>
+      <td class="gt_row gt_right">2.73&percnt;</td>
+      <td class="gt_row gt_right">6.20&percnt;</td>
+      <td class="gt_row gt_right">2.27&percnt;</td>
+      <td class="gt_row gt_right">7.80&percnt;</td>
+      <td class="gt_row gt_right">4.82&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1990</td>
+      <td class="gt_row gt_right">4.80&percnt;</td>
+      <td class="gt_row gt_right">3.26&percnt;</td>
+      <td class="gt_row gt_right">2.75&percnt;</td>
+      <td class="gt_row gt_right">6.44&percnt;</td>
+      <td class="gt_row gt_right">3.15&percnt;</td>
+      <td class="gt_row gt_right">9.45&percnt;</td>
+      <td class="gt_row gt_right">5.40&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1991</td>
+      <td class="gt_row gt_right">5.61&percnt;</td>
+      <td class="gt_row gt_right">3.24&percnt;</td>
+      <td class="gt_row gt_right">3.65&percnt;</td>
+      <td class="gt_row gt_right">6.30&percnt;</td>
+      <td class="gt_row gt_right">3.23&percnt;</td>
+      <td class="gt_row gt_right">5.87&percnt;</td>
+      <td class="gt_row gt_right">4.21&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1992</td>
+      <td class="gt_row gt_right">1.54&percnt;</td>
+      <td class="gt_row gt_right">2.33&percnt;</td>
+      <td class="gt_row gt_right">5.07&percnt;</td>
+      <td class="gt_row gt_right">5.28&percnt;</td>
+      <td class="gt_row gt_right">1.74&percnt;</td>
+      <td class="gt_row gt_right">3.70&percnt;</td>
+      <td class="gt_row gt_right">3.01&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1993</td>
+      <td class="gt_row gt_right">1.79&percnt;</td>
+      <td class="gt_row gt_right">2.14&percnt;</td>
+      <td class="gt_row gt_right">4.42&percnt;</td>
+      <td class="gt_row gt_right">4.57&percnt;</td>
+      <td class="gt_row gt_right">1.28&percnt;</td>
+      <td class="gt_row gt_right">1.60&percnt;</td>
+      <td class="gt_row gt_right">2.99&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1994</td>
+      <td class="gt_row gt_right">0.20&percnt;</td>
+      <td class="gt_row gt_right">1.67&percnt;</td>
+      <td class="gt_row gt_right">2.74&percnt;</td>
+      <td class="gt_row gt_right">4.05&percnt;</td>
+      <td class="gt_row gt_right">0.68&percnt;</td>
+      <td class="gt_row gt_right">2.42&percnt;</td>
+      <td class="gt_row gt_right">2.56&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1995</td>
+      <td class="gt_row gt_right">2.16&percnt;</td>
+      <td class="gt_row gt_right">1.78&percnt;</td>
+      <td class="gt_row gt_right">1.68&percnt;</td>
+      <td class="gt_row gt_right">5.27&percnt;</td>
+      <td class="gt_row gt_right">&minus;0.08&percnt;</td>
+      <td class="gt_row gt_right">3.48&percnt;</td>
+      <td class="gt_row gt_right">2.83&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1996</td>
+      <td class="gt_row gt_right">1.59&percnt;</td>
+      <td class="gt_row gt_right">2.02&percnt;</td>
+      <td class="gt_row gt_right">1.50&percnt;</td>
+      <td class="gt_row gt_right">3.99&percnt;</td>
+      <td class="gt_row gt_right">0.08&percnt;</td>
+      <td class="gt_row gt_right">2.40&percnt;</td>
+      <td class="gt_row gt_right">2.95&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1997</td>
+      <td class="gt_row gt_right">1.63&percnt;</td>
+      <td class="gt_row gt_right">1.19&percnt;</td>
+      <td class="gt_row gt_right">1.85&percnt;</td>
+      <td class="gt_row gt_right">2.06&percnt;</td>
+      <td class="gt_row gt_right">1.84&percnt;</td>
+      <td class="gt_row gt_right">3.18&percnt;</td>
+      <td class="gt_row gt_right">2.29&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1998</td>
+      <td class="gt_row gt_right">0.96&percnt;</td>
+      <td class="gt_row gt_right">0.65&percnt;</td>
+      <td class="gt_row gt_right">0.94&percnt;</td>
+      <td class="gt_row gt_right">1.97&percnt;</td>
+      <td class="gt_row gt_right">0.58&percnt;</td>
+      <td class="gt_row gt_right">3.40&percnt;</td>
+      <td class="gt_row gt_right">1.56&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">1999</td>
+      <td class="gt_row gt_right">1.71&percnt;</td>
+      <td class="gt_row gt_right">0.52&percnt;</td>
+      <td class="gt_row gt_right">0.65&percnt;</td>
+      <td class="gt_row gt_right">1.66&percnt;</td>
+      <td class="gt_row gt_right">&minus;0.33&percnt;</td>
+      <td class="gt_row gt_right">1.52&percnt;</td>
+      <td class="gt_row gt_right">2.21&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2000</td>
+      <td class="gt_row gt_right">2.74&percnt;</td>
+      <td class="gt_row gt_right">1.68&percnt;</td>
+      <td class="gt_row gt_right">1.43&percnt;</td>
+      <td class="gt_row gt_right">2.52&percnt;</td>
+      <td class="gt_row gt_right">&minus;0.66&percnt;</td>
+      <td class="gt_row gt_right">2.99&percnt;</td>
+      <td class="gt_row gt_right">3.36&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2001</td>
+      <td class="gt_row gt_right">2.55&percnt;</td>
+      <td class="gt_row gt_right">1.65&percnt;</td>
+      <td class="gt_row gt_right">1.97&percnt;</td>
+      <td class="gt_row gt_right">2.76&percnt;</td>
+      <td class="gt_row gt_right">&minus;0.74&percnt;</td>
+      <td class="gt_row gt_right">1.75&percnt;</td>
+      <td class="gt_row gt_right">2.85&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2002</td>
+      <td class="gt_row gt_right">2.25&percnt;</td>
+      <td class="gt_row gt_right">1.94&percnt;</td>
+      <td class="gt_row gt_right">1.31&percnt;</td>
+      <td class="gt_row gt_right">2.52&percnt;</td>
+      <td class="gt_row gt_right">&minus;0.92&percnt;</td>
+      <td class="gt_row gt_right">1.67&percnt;</td>
+      <td class="gt_row gt_right">1.58&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2003</td>
+      <td class="gt_row gt_right">2.78&percnt;</td>
+      <td class="gt_row gt_right">2.08&percnt;</td>
+      <td class="gt_row gt_right">1.09&percnt;</td>
+      <td class="gt_row gt_right">2.66&percnt;</td>
+      <td class="gt_row gt_right">&minus;0.25&percnt;</td>
+      <td class="gt_row gt_right">2.90&percnt;</td>
+      <td class="gt_row gt_right">2.28&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2004</td>
+      <td class="gt_row gt_right">1.86&percnt;</td>
+      <td class="gt_row gt_right">2.16&percnt;</td>
+      <td class="gt_row gt_right">1.69&percnt;</td>
+      <td class="gt_row gt_right">2.19&percnt;</td>
+      <td class="gt_row gt_right">0.00&percnt;</td>
+      <td class="gt_row gt_right">3.00&percnt;</td>
+      <td class="gt_row gt_right">2.66&percnt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2005</td>
+      <td class="gt_row gt_right">2.15&percnt;</td>
+      <td class="gt_row gt_right">1.70&percnt;</td>
+      <td class="gt_row gt_right">1.92&percnt;</td>
+      <td class="gt_row gt_right">1.95&percnt;</td>
+      <td class="gt_row gt_right">&minus;0.34&percnt;</td>
+      <td class="gt_row gt_right">2.83&percnt;</td>
+      <td class="gt_row gt_right">3.39&percnt;</td>
+    </tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="8">Fonte: FMI</td>
+    </tr>
+  </tfoot>
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td colspan="8">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks">
+            <em>1</em>
+          </sup>
+           
+          Index = 100
+          <br />
+        </p>
+      </td>
+    </tr>
+  </tfoot>
+</table></div>
+<p><strong>b. Represente graficamente a taxa de inflação de cada país em relação ao tempo (isto é, use o eixo horizontal para o tempo e o eixo vertical para a taxa de inflação).</strong></p>
+<pre class="r"><code>country_cpi %&gt;% 
   ggplot2::ggplot()+
   geom_line(mapping = aes(x = year, 
                           y = values, 
@@ -157,10 +800,283 @@ theme_graph &lt;- function(){
   theme_graph()+
   labs(title = &quot;Inflação dos Países Selecionados&quot;,
        y = &quot;CPI (Consumer Price Index)&quot;)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<ol start="2" style="list-style-type: lower-alpha">
-<li><p>Represente graficamente a taxa de inflação de cada país em relação ao tempo (isto é, use o eixo horizontal para o tempo e o eixo vertical para a taxa de inflação).</p></li>
-<li><p>Que conclusões gerais é possível tirar sobre a evolução da inflação nos sete países?</p></li>
-<li><p>Em que país a taxa de inflação parece ser a mais flutuante? Há alguma explicação para isso?</p></li>
-</ol>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><strong>c. Que conclusões gerais é possível tirar sobre a evolução da inflação nos sete países?</strong></p>
+<p>Há uma tendência de queda nos países selecionados após 1985, onde todos mantiveram uma taxa abaio de 5% ao ano.</p>
+<p><strong>d. Em que país a taxa de inflação parece ser a mais flutuante? Há alguma explicação para isso?</strong></p>
+<p>A tabela abaixo mostra um resumo da inflação de cada país, já transformada em percentual.</p>
+<pre class="r"><code>country_cpi %&gt;% 
+  mutate(values = values*100) %&gt;% 
+  tidyr::spread(&quot;country&quot;,&quot;values&quot;) %&gt;% 
+  modelsummary::datasummary_skim()</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Unique (#)
+</th>
+<th style="text-align:right;">
+Missing (%)
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+SD
+</th>
+<th style="text-align:right;">
+Min
+</th>
+<th style="text-align:right;">
+Median
+</th>
+<th style="text-align:right;">
+Max
+</th>
+<th style="text-align:right;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+canada_cpi
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3.7
+</td>
+<td style="text-align:right;">
+2.8
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+12.5
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface1"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.042969 11.664063 L 8.28125 11.664063 L 8.28125 4.15625 L 1.042969 4.15625 Z M 1.042969 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 8.28125 11.664063 L 15.519531 11.664063 L 15.519531 6.035156 L 8.28125 6.035156 Z M 8.28125 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 15.519531 11.664063 L 22.757813 11.664063 L 22.757813 3.21875 L 15.519531 3.21875 Z M 15.519531 11.664063 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 22.757813 11.664063 L 29.996094 11.664063 Z M 22.757813 11.664063 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.996094 11.664063 L 37.234375 11.664063 Z M 29.996094 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 37.234375 11.664063 L 44.472656 11.664063 L 44.472656 10.726563 L 37.234375 10.726563 Z M 37.234375 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 44.472656 11.664063 L 51.710938 11.664063 L 51.710938 10.726563 L 44.472656 10.726563 Z M 44.472656 11.664063 "></path></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+france_cpi
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:right;">
+3.4
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:right;">
+13.3
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface6"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.0273438 11.664063 L 6.929688 11.664063 L 6.929688 4.753906 L -0.0273438 4.753906 Z M -0.0273438 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.929688 11.664063 L 13.886719 11.664063 L 13.886719 3.21875 L 6.929688 3.21875 Z M 6.929688 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 13.886719 11.664063 L 20.84375 11.664063 L 20.84375 10.894531 L 13.886719 10.894531 Z M 13.886719 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 20.84375 11.664063 L 27.800781 11.664063 L 27.800781 10.894531 L 20.84375 10.894531 Z M 20.84375 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 27.800781 11.664063 L 34.757813 11.664063 L 34.757813 10.894531 L 27.800781 10.894531 Z M 27.800781 11.664063 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 34.757813 11.664063 L 41.714844 11.664063 Z M 34.757813 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 41.714844 11.664063 L 48.671875 11.664063 L 48.671875 10.128906 L 41.714844 10.128906 Z M 41.714844 11.664063 "></path></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+germany_cpi
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+-0.2
+</td>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface11"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.726563 11.664063 L 3.074219 11.664063 L 3.074219 10.820313 L -3.726563 10.820313 Z M -3.726563 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3.074219 11.664063 L 9.875 11.664063 L 9.875 9.128906 L 3.074219 9.128906 Z M 3.074219 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 9.878906 11.664063 L 16.679688 11.664063 L 16.679688 3.21875 L 9.878906 3.21875 Z M 9.878906 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 16.679688 11.664063 L 23.480469 11.664063 L 23.480469 7.441406 L 16.679688 7.441406 Z M 16.679688 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 23.480469 11.664063 L 30.28125 11.664063 L 30.28125 9.976563 L 23.480469 9.976563 Z M 23.480469 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 30.28125 11.664063 L 37.082031 11.664063 L 37.082031 10.820313 L 30.28125 10.820313 Z M 30.28125 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 37.082031 11.664063 L 43.882813 11.664063 L 43.882813 9.976563 L 37.082031 9.976563 Z M 37.082031 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 43.882813 11.664063 L 50.683594 11.664063 L 50.683594 10.820313 L 43.882813 10.820313 Z M 43.882813 11.664063 "></path></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+italy_cpi
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5.9
+</td>
+<td style="text-align:right;">
+4.6
+</td>
+<td style="text-align:right;">
+1.7
+</td>
+<td style="text-align:right;">
+4.8
+</td>
+<td style="text-align:right;">
+18.2
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface16"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.703125 11.664063 L 2.6875 11.664063 L 2.6875 8.046875 L -2.703125 8.046875 Z M -2.703125 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 2.6875 11.664063 L 8.078125 11.664063 L 8.078125 3.21875 L 2.6875 3.21875 Z M 2.6875 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 8.078125 11.664063 L 13.46875 11.664063 L 13.46875 3.21875 L 8.078125 3.21875 Z M 8.078125 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 13.46875 11.664063 L 18.859375 11.664063 L 18.859375 8.046875 L 13.46875 8.046875 Z M 13.46875 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 18.855469 11.664063 L 24.246094 11.664063 L 24.246094 10.457031 L 18.855469 10.457031 Z M 18.855469 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 24.246094 11.664063 L 29.636719 11.664063 L 29.636719 10.457031 L 24.246094 10.457031 Z M 24.246094 11.664063 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.636719 11.664063 L 35.027344 11.664063 Z M 29.636719 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 35.027344 11.664063 L 40.417969 11.664063 L 40.417969 10.457031 L 35.027344 10.457031 Z M 35.027344 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 40.417969 11.664063 L 45.808594 11.664063 L 45.808594 10.457031 L 40.417969 10.457031 Z M 40.417969 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 45.808594 11.664063 L 51.199219 11.664063 L 51.199219 10.457031 L 45.808594 10.457031 Z M 45.808594 11.664063 "></path></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+japan_cpi
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.1
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:right;">
+-0.9
+</td>
+<td style="text-align:right;">
+0.7
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface21"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.113281 11.664063 L 8.992188 11.664063 L 8.992188 3.21875 L 1.113281 3.21875 Z M 1.113281 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 8.992188 11.664063 L 16.871094 11.664063 L 16.871094 6.972656 L 8.992188 6.972656 Z M 8.992188 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 16.871094 11.664063 L 24.75 11.664063 L 24.75 7.910156 L 16.871094 7.910156 Z M 16.871094 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 24.75 11.664063 L 32.628906 11.664063 L 32.628906 7.910156 L 24.75 7.910156 Z M 24.75 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 32.628906 11.664063 L 40.507813 11.664063 L 40.507813 9.789063 L 32.628906 9.789063 Z M 32.628906 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 40.507813 11.664063 L 48.386719 11.664063 L 48.386719 10.726563 L 40.507813 10.726563 Z M 40.507813 11.664063 "></path></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+uk_cpi
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:right;">
+3.4
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface26"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -4.660156 11.664063 L 3.839844 11.664063 L 3.839844 8.59375 L -4.660156 8.59375 Z M -4.660156 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3.839844 11.664063 L 12.339844 11.664063 L 12.339844 3.21875 L 3.839844 3.21875 Z M 3.839844 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 12.335938 11.664063 L 20.835938 11.664063 L 20.835938 7.824219 L 12.335938 7.824219 Z M 12.335938 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 20.835938 11.664063 L 29.335938 11.664063 L 29.335938 10.128906 L 20.835938 10.128906 Z M 20.835938 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.332031 11.664063 L 37.832031 11.664063 L 37.832031 10.128906 L 29.332031 10.128906 Z M 29.332031 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 37.832031 11.664063 L 46.332031 11.664063 L 46.332031 10.894531 L 37.832031 10.894531 Z M 37.832031 11.664063 "></path></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+usa_cpi
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+1.8
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+10.3
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface31"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -6.125 11.664063 L 4.023438 11.664063 L 4.023438 9.976563 L -6.125 9.976563 Z M -6.125 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.023438 11.664063 L 14.171875 11.664063 L 14.171875 3.21875 L 4.023438 3.21875 Z M 4.023438 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 14.171875 11.664063 L 24.320313 11.664063 L 24.320313 8.847656 L 14.171875 8.847656 Z M 14.171875 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 24.320313 11.664063 L 34.46875 11.664063 L 34.46875 11.101563 L 24.320313 11.101563 Z M 24.320313 11.664063 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 34.472656 11.664063 L 44.621094 11.664063 Z M 34.472656 11.664063 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 44.621094 11.664063 L 54.769531 11.664063 L 54.769531 11.101563 L 44.621094 11.101563 Z M 44.621094 11.664063 "></path></g>
+</svg>
+</td>
+</tr>
+</tbody>
+</table>
+<p>O desvio padrão (SD) mais elevado é o da Itália, talvez por ter um <em>outlier</em> no valor máximo (de 18.2%). O gráfico abaixo irá dar destaque para este país para vermos se é evidente que sua flutuação é maior que a dos outros.</p>
+<pre class="r"><code>country_cpi %&gt;% 
+  mutate(is_floating = as.character(case_when(country == &quot;italy_cpi&quot; ~ &quot;Italy CPI&quot;,
+                                 TRUE ~ &quot;Others&quot;))) %&gt;% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = year, 
+                          y = values, 
+                          group = country, 
+                          color = is_floating),
+            size = 1)+
+  scale_y_continuous(labels = scales::percent)+
+  scale_color_manual(values = c(&quot;Italy CPI&quot; = &quot;dark orange&quot;,
+                                &quot;Others&quot; = &quot;steel blue&quot;),
+                     name = &quot;Inflação da Inglaterra = 1&quot;)+
+  scale_x_discrete(breaks = c(&quot;1985&quot;,&quot;1995&quot;,&quot;2005&quot;))+
+  theme_graph()+
+  labs(title = &quot;Análise da Inflação na Inglaterra&quot;,
+       subtitle = &quot;Aparentemente é a taxa mais flutuante&quot;,
+       y = &quot;CPI (Consumer Price Index)&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
