@@ -94,7 +94,6 @@ A inflação para cada país será a variação de um período com base no perí
 
 ```{r, error=F, message=F, warning=F}
 # Usando (pacote gt para esse exercício) >> Grammar of Tables
-
 table_1.3_cpi %>% 
   mutate(usa_cpi = usa/lag(usa,1)-1,
          canada_cpi = canada/lag(canada,1)-1,
@@ -180,7 +179,28 @@ country_cpi %>%
 
 **a. Usando a Tabela 1.3, represente as taxas de inflação do Canadá, França, Alemanha, Itália, Japão e Reino Unido em relação à taxa de inflação dos Estados Unidos.**
 
+Com o pacote **GGally** é possível criar estes comparativos mais facilmente.
+
+```{r, warning=F, message=F}
+country_cpi %>% 
+  tidyr::spread("country", "values") %>% 
+  GGally::ggpairs(columns = 2:8)+
+  theme_graph()+
+  theme(axis.text = element_blank())+
+  labs(title = "Correlação Entre as Taxas de Inflação")
+```
+
+Apenas a linha e coluna 'usa_cpi' precisa ser usada, mostrando o gráficos de dispersão entre as variáveis e seu coeficiente de correlação. A menor correlação é a da Alemanha, que ficou em 69,3%.
+
 **b. Faça um comentário geral sobre o comportamento das taxas de inflação dos seis países em relação à inflação dos Estados Unidos.**
+
+```{r, message=F, warning=F}
+country_cpi %>% 
+  tidyr::spread("country", "values") %>% 
+  select(-year) %>% 
+  cor() %>% 
+  head(7)
+```
 
 **c. Se você constatar que as taxas de inflação dos seis países evoluem no mesmo sentido que a dos Estados Unidos, isso sugere que a inflação dos Estados Unidos "causa" inflação nos outros países? Justifique.**
 
