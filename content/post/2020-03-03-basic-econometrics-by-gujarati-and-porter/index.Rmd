@@ -208,7 +208,7 @@ Os países selecionados possuem economias já desenvolvidas e bastante conectada
 
 **c. Se você constatar que as taxas de inflação dos seis países evoluem no mesmo sentido que a dos Estados Unidos, isso sugere que a inflação dos Estados Unidos "causa" inflação nos outros países? Justifique.**
 
-Com estes dados não é possível verificar se há uma correlação [espúria](https://pt.wikipedia.org/wiki/Rela%C3%A7%C3%A3o_esp%C3%BAria) entre as variáveis, portanto não consigo afirmar se a variação na inflação dos EUA causa variação na inflação dos outros países.
+Com estes dados não é possível verificar se há uma correlação [espúria](https://pt.wikipedia.org/wiki/Rela%C3%A7%C3%A3o_esp%C3%BAria) entre as variáveis, portanto não consigo afirmar se a variação na inflação dos EUA causa variação na inflação dos outros países. Mas pelo que lembro das aulas de macroeconomia, se um país está tendo inflação, sua moeda tende a se desvalorizar frente à outras moedas e se um país importa de outro que está tendo uma desvalorização cambial, ocorrerá uma queda no custo de importação e consequentemente uma pressão para redução de preços. 
 
 --------------------------------------------------------------------
 
@@ -216,8 +216,44 @@ Com estes dados não é possível verificar se há uma correlação [espúria](h
 
 **a. Represente graficamente a evolução das taxas de câmbio ao longo do tempo e comente sobre o comportamento geral dessa evolução.**
 
+```{r, message=F, warning=F}
+# Trazendo o dataset para o exercício
+table_1.4_exchange_rate <- 
+  readr::read_delim(file = paste(dataset_path,
+                               "table_1.4_exchange_rate.txt", 
+                               sep = ""),
+                    delim = "\t")
+
+table_1.4_exchange_rate %>% 
+  head(5) %>% 
+  knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
+```
+
+Antes de plotar o gráfico, vou fazer um ajuste para o Reino Unido para representar a mesma unidade de medida que os outros países (unidades de moeda local para adquirir 1 dólar).
+
+```{r, message=F, warning=F}
+table_1.4_exchange_rate %>% 
+  mutate(Reino.unido = 1/Reino.unido) %>%  # Ajustando o Reino Unido
+  tidyr::gather("country", "values", 2:10) %>% 
+  mutate(values = as.numeric(values)) %>% 
+  ggplot2::ggplot()+
+  geom_col(mapping = aes(x = Ano, y = values, fill = country), alpha = .6)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_fill_brewer(type = "qual", palette = 3)+
+  theme_graph()+
+  theme(legend.position = "none")+
+  facet_wrap(~country, scales = "free_y")+
+  labs(title = "Taxa de Câmbio de Países Selecionados",
+       subtitle = "Unidade de moeda local por 1 dólar",
+       y = "Taxa de Câmbio",
+       x = "")
+```
+
+De maneira geral, apenas o México mostrou uma tendência de desvalorização de sua taxa de câmbio. Os outros países parecem ter a taxa de câmbio sob controle.
 
 **b. Diz-se que o dólar apreciou-se quando pode comprar mais unidades de moeda estrangeira. Opostamente, diz-se que se depreciou quando compra menos unidades da moeda estrangeira. No período 1985–2006, qual foi o comportamento geral do dólar dos Estados Unidos? Aproveite para pesquisar em algum livro de macroeconomia ou de economia internacional os fatores que determinam a apreciação ou depreciação de uma moeda.**
+
+O comportamento foi variado entre os países selecionados. Em alguns (Suíça, Japão e Reino Unido) houve desvalorização do dólar e em outros (México, China e Coréia do Sul), houve valorização.
 
 --------------------------------------------------------------------
 
