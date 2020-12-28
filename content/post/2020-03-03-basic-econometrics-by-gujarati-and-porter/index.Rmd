@@ -67,7 +67,7 @@ theme_graph <- function(){
 
 ## **Capítulo 1**
 
-1.1. A Tabela 1.3 apresenta dados relativos ao Índice de Preços ao Consumidor (IPC) de sete países industrializados. A base do índice é 1982–1984 = 100.
+### **1.1. A Tabela 1.3 apresenta dados relativos ao Índice de Preços ao Consumidor (IPC) de sete países industrializados. A base do índice é 1982–1984 = 100.**
 
 **a. Com base nos dados fornecidos, calcule a taxa de inflação de cada país.**
 
@@ -169,7 +169,45 @@ country_cpi %>%
                      name = "Inflação da Inglaterra = 1")+
   scale_x_discrete(breaks = c("1985","1995","2005"))+
   theme_graph()+
-  labs(title = "Análise da Inflação na Inglaterra",
+  labs(title = "Análise da Inflação na Itália",
        subtitle = "Aparentemente é a taxa mais flutuante",
        y = "CPI (Consumer Price Index)")
 ```
+
+--------------------------------------------------------------------
+
+### **1.2**
+
+**a. Usando a Tabela 1.3, represente as taxas de inflação do Canadá, França, Alemanha, Itália, Japão e Reino Unido em relação à taxa de inflação dos Estados Unidos.**
+
+**b. Faça um comentário geral sobre o comportamento das taxas de inflação dos seis países em relação à inflação dos Estados Unidos.**
+
+**c. Se você constatar que as taxas de inflação dos seis países evoluem no mesmo sentido que a dos Estados Unidos, isso sugere que a inflação dos Estados Unidos "causa" inflação nos outros países? Justifique.**
+
+--------------------------------------------------------------------
+
+### **1.3 A Tabela 1.4 apresenta as taxas de câmbio em sete países industrializados, no período 1985 - 2006. Exceto no caso do Reino Unido, as taxas de câmbio estão definidas como unidades de moeda estrangeira por um dólar; no caso do Reino Unido, a taxa de câmbio é dada como o número de dólares por uma libra esterlina.**
+
+**a. Represente graficamente a evolução das taxas de câmbio ao longo do tempo e comente sobre o comportamento geral dessa evolução.**
+
+
+**b. Diz-se que o dólar apreciou-se quando pode comprar mais unidades de moeda estrangeira. Opostamente, diz-se que se depreciou quando compra menos unidades da moeda estrangeira. No período 1985–2006, qual foi o comportamento geral do dólar dos Estados Unidos? Aproveite para pesquisar em algum livro de macroeconomia ou de economia internacional os fatores que determinam a apreciação ou depreciação de uma moeda.**
+
+--------------------------------------------------------------------
+
+### **1.4 A Tabela 1.5 apresenta os dados relativos à oferta monetária, no conceito de M1, que aparecem na Figura 1.5. Você poderia apresentar razões para o aumento da oferta de moeda no período considerado?**
+
+--------------------------------------------------------------------
+
+### **1.7 Os dados apresentados na Tabela 1.6 foram divulgados na edição do The Wall Street Journal de 1º de março de 1984. Relacionam o orçamento de publicidade (em milhões de dólares) de 21 empresas em 1983 com as impressões retidas, semanalmente, pelos que viram os produtos anunciados por essas empresas. Os dados foram obtidos em uma pesquisa realizada com 4 mil adultos, em que foi pedido aos usuários dos produtos que citassem um comercial da categoria do produto que tivessem assistido na semana anterior.**
+
+**a. Trace um gráfico com as impressões no eixo vertical e os gastos com publicidade no eixo horizontal.**
+
+**b. O que você poderia dizer sobre a natureza da relação entre as duas variáveis?**
+
+**c. Examinando o gráfico, você acha que vale a pena anunciar? Pense em todos os comerciais veiculados em finais de campeonatos de esportes ou no horário nobre.**
+
+--------------------------------------------------------------------
+
+## **Capítulo 2**
+
