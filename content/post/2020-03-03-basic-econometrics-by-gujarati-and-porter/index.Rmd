@@ -312,15 +312,46 @@ O crescimento pode ser atribuído ao aumento de oferta de crédito pelo governo 
 
 ### **1.7 Os dados apresentados na Tabela 1.6 foram divulgados na edição do The Wall Street Journal de 1º de março de 1984. Relacionam o orçamento de publicidade (em milhões de dólares) de 21 empresas em 1983 com as impressões retidas, semanalmente, pelos que viram os produtos anunciados por essas empresas. Os dados foram obtidos em uma pesquisa realizada com 4 mil adultos, em que foi pedido aos usuários dos produtos que citassem um comercial da categoria do produto que tivessem assistido na semana anterior.**
 
+Vamos importar o dataset do Github e ver uma amostra dos valores.
+
+```{r, warning=F, message=F}
+# Este arquivo está separado por ';' ao invés de '\tab'
+table_1.6_advertising <- 
+  readr::read_delim(file = paste(dataset_path,
+                               "table_1.6_advertising.txt", 
+                               sep = ""),
+                    delim = "\t") %>% 
+  mutate(impressions = as.numeric(impressions),
+         investment = as.numeric(investment))
+
+# Amostra do dataset
+table_1.6_advertising %>% 
+  head(5) %>% 
+  knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
+```
+
+
 **a. Trace um gráfico com as impressões no eixo vertical e os gastos com publicidade no eixo horizontal.**
 
-
+```{r, message=F, warning=F}
+table_1.6_advertising %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = investment, y = impressions), 
+             shape = 2,
+             color = "steel blue")+
+  theme_graph()+
+  labs(title = "Impressões vs Investimento em Publicidade",
+       subtitle = "Impressões Retidas nos Proutos Anunciados",
+       x = "Investimento em Publicidade (milhões de US$)",
+       y = "Impressões Retidas em Produtos Anunciados")
+```
 
 **b. O que você poderia dizer sobre a natureza da relação entre as duas variáveis?**
 
+Apesar de existir uma correlação (notada pelo gráfico, não estatísticamente comprovada), ela pode não ser linear.
+
 **c. Examinando o gráfico, você acha que vale a pena anunciar? Pense em todos os comerciais veiculados em finais de campeonatos de esportes ou no horário nobre.**
 
+Parece valer a pena anunciar, porém não uma quantia acima de 100 milhões de dólares.
+
 --------------------------------------------------------------------
-
-## **Capítulo 2**
-
