@@ -259,6 +259,15 @@ O comportamento foi variado entre os países selecionados. Em alguns (Suíça, J
 
 ### **1.4 A Tabela 1.5 apresenta os dados relativos à oferta monetária, no conceito de M1, que aparecem na Figura 1.5. Você poderia apresentar razões para o aumento da oferta de moeda no período considerado?**
 
+```{r, message=F, warning=F}
+table_1.5_currency_m1_volume <- 
+  readr::read_delim(file = paste(dataset_path,
+                               "table_1.5_currency_m1_volume.txt", 
+                               sep = ""),
+                    delim = "\t")
+```
+
+
 --------------------------------------------------------------------
 
 ### **1.7 Os dados apresentados na Tabela 1.6 foram divulgados na edição do The Wall Street Journal de 1º de março de 1984. Relacionam o orçamento de publicidade (em milhões de dólares) de 21 empresas em 1983 com as impressões retidas, semanalmente, pelos que viram os produtos anunciados por essas empresas. Os dados foram obtidos em uma pesquisa realizada com 4 mil adultos, em que foi pedido aos usuários dos produtos que citassem um comercial da categoria do produto que tivessem assistido na semana anterior.**
