@@ -37,6 +37,7 @@ table_1.3_cpi &lt;- readr::read_delim(file = &quot;https://raw.githubusercontent
 library(patchwork)
 library(gt)
 library(modelsummary)
+library(stringr)
 
 # Função para padronizar o design dos gráficos
 theme_graph &lt;- function(){
@@ -135,8 +136,7 @@ theme_graph &lt;- function(){
 </tbody>
 </table>
 <p>A inflação para cada país será a variação de um período com base no período anterior. Para realizar este cálculo, basta usar o ‘mutate’ e a função ‘lag’.</p>
-<pre class="r"><code># Usando (pacote gt para esse exercício) &gt;&gt; Grammar of Tables
-
+<pre class="r"><code># Usando o pacote gt (Grammar of Tables) para esse exercício
 table_1.3_cpi %&gt;% 
   mutate(usa_cpi = usa/lag(usa,1)-1,
          canada_cpi = canada/lag(canada,1)-1,
@@ -163,7 +163,7 @@ country_cpi %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qxxqrbyzjb .gt_table {
+#fkufoelwki .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -188,7 +188,7 @@ country_cpi %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_heading {
+#fkufoelwki .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -200,7 +200,7 @@ country_cpi %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_title {
+#fkufoelwki .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -210,7 +210,7 @@ country_cpi %&gt;%
   border-bottom-width: 0;
 }
 
-#qxxqrbyzjb .gt_subtitle {
+#fkufoelwki .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -220,13 +220,13 @@ country_cpi %&gt;%
   border-top-width: 0;
 }
 
-#qxxqrbyzjb .gt_bottom_border {
+#fkufoelwki .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_col_headings {
+#fkufoelwki .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -241,7 +241,7 @@ country_cpi %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_col_heading {
+#fkufoelwki .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -261,7 +261,7 @@ country_cpi %&gt;%
   overflow-x: hidden;
 }
 
-#qxxqrbyzjb .gt_column_spanner_outer {
+#fkufoelwki .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -273,15 +273,15 @@ country_cpi %&gt;%
   padding-right: 4px;
 }
 
-#qxxqrbyzjb .gt_column_spanner_outer:first-child {
+#fkufoelwki .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qxxqrbyzjb .gt_column_spanner_outer:last-child {
+#fkufoelwki .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qxxqrbyzjb .gt_column_spanner {
+#fkufoelwki .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -293,7 +293,7 @@ country_cpi %&gt;%
   width: 100%;
 }
 
-#qxxqrbyzjb .gt_group_heading {
+#fkufoelwki .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -315,7 +315,7 @@ country_cpi %&gt;%
   vertical-align: middle;
 }
 
-#qxxqrbyzjb .gt_empty_group_heading {
+#fkufoelwki .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -330,15 +330,15 @@ country_cpi %&gt;%
   vertical-align: middle;
 }
 
-#qxxqrbyzjb .gt_from_md > :first-child {
+#fkufoelwki .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qxxqrbyzjb .gt_from_md > :last-child {
+#fkufoelwki .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qxxqrbyzjb .gt_row {
+#fkufoelwki .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -357,7 +357,7 @@ country_cpi %&gt;%
   overflow-x: hidden;
 }
 
-#qxxqrbyzjb .gt_stub {
+#fkufoelwki .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -369,7 +369,7 @@ country_cpi %&gt;%
   padding-left: 12px;
 }
 
-#qxxqrbyzjb .gt_summary_row {
+#fkufoelwki .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -379,7 +379,7 @@ country_cpi %&gt;%
   padding-right: 5px;
 }
 
-#qxxqrbyzjb .gt_first_summary_row {
+#fkufoelwki .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -389,7 +389,7 @@ country_cpi %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_grand_summary_row {
+#fkufoelwki .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -399,7 +399,7 @@ country_cpi %&gt;%
   padding-right: 5px;
 }
 
-#qxxqrbyzjb .gt_first_grand_summary_row {
+#fkufoelwki .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -409,11 +409,11 @@ country_cpi %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_striped {
+#fkufoelwki .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qxxqrbyzjb .gt_table_body {
+#fkufoelwki .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -422,7 +422,7 @@ country_cpi %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_footnotes {
+#fkufoelwki .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -436,13 +436,13 @@ country_cpi %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_footnote {
+#fkufoelwki .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#qxxqrbyzjb .gt_sourcenotes {
+#fkufoelwki .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -456,46 +456,46 @@ country_cpi %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#qxxqrbyzjb .gt_sourcenote {
+#fkufoelwki .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#qxxqrbyzjb .gt_left {
+#fkufoelwki .gt_left {
   text-align: left;
 }
 
-#qxxqrbyzjb .gt_center {
+#fkufoelwki .gt_center {
   text-align: center;
 }
 
-#qxxqrbyzjb .gt_right {
+#fkufoelwki .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qxxqrbyzjb .gt_font_normal {
+#fkufoelwki .gt_font_normal {
   font-weight: normal;
 }
 
-#qxxqrbyzjb .gt_font_bold {
+#fkufoelwki .gt_font_bold {
   font-weight: bold;
 }
 
-#qxxqrbyzjb .gt_font_italic {
+#fkufoelwki .gt_font_italic {
   font-style: italic;
 }
 
-#qxxqrbyzjb .gt_super {
+#fkufoelwki .gt_super {
   font-size: 65%;
 }
 
-#qxxqrbyzjb .gt_footnote_marks {
+#fkufoelwki .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qxxqrbyzjb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="fkufoelwki" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="8" class="gt_heading gt_title gt_font_normal" style><strong>Inflação (CPI) para os Países Selecionados</strong></th>
@@ -796,8 +796,8 @@ country_cpi %&gt;%
                           group = country, 
                           color = country))+
   scale_y_continuous(labels = scales::percent)+
-  scale_color_brewer(type = &quot;qual&quot;, palette = 2)+
   scale_x_discrete(breaks = c(&quot;1985&quot;,&quot;1995&quot;,&quot;2005&quot;))+
+  scale_color_brewer(type = &quot;qual&quot;, palette = 2)+
   theme_graph()+
   labs(title = &quot;Inflação dos Países Selecionados&quot;,
        y = &quot;CPI (Consumer Price Index)&quot;)</code></pre>
@@ -1063,7 +1063,7 @@ usa_cpi
 <p>O desvio padrão (SD) mais elevado é o da Itália, talvez por ter um <em>outlier</em> no valor máximo (de 18.2%). O gráfico abaixo irá dar destaque para este país para vermos se é evidente que sua flutuação é maior que a dos outros.</p>
 <pre class="r"><code>country_cpi %&gt;% 
   mutate(is_floating = as.character(case_when(country == &quot;italy_cpi&quot; ~ &quot;Italy CPI&quot;,
-                                 TRUE ~ &quot;Others&quot;))) %&gt;% 
+                                              TRUE ~ &quot;Others&quot;))) %&gt;% 
   ggplot2::ggplot()+
   geom_line(mapping = aes(x = year, 
                           y = values, 
@@ -1071,32 +1071,760 @@ usa_cpi
                           color = is_floating),
             size = 1)+
   scale_y_continuous(labels = scales::percent)+
+  scale_x_discrete(breaks = c(&quot;1985&quot;,&quot;1995&quot;,&quot;2005&quot;))+
   scale_color_manual(values = c(&quot;Italy CPI&quot; = &quot;dark orange&quot;,
                                 &quot;Others&quot; = &quot;steel blue&quot;),
                      name = &quot;Inflação da Inglaterra = 1&quot;)+
-  scale_x_discrete(breaks = c(&quot;1985&quot;,&quot;1995&quot;,&quot;2005&quot;))+
   theme_graph()+
   labs(title = &quot;Análise da Inflação na Itália&quot;,
        subtitle = &quot;Aparentemente é a taxa mais flutuante&quot;,
        y = &quot;CPI (Consumer Price Index)&quot;)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>A flutuação parece maior na Itália por conta dos primeiros anos, onde a inflação ficou bastante alta. Caso a análise seja feita a partir de 1985, a Inglaterra fica com maior desvio padrão.</p>
 <hr />
 </div>
 <div id="section" class="section level3">
 <h3><strong>1.2</strong></h3>
 <p><strong>a. Usando a Tabela 1.3, represente as taxas de inflação do Canadá, França, Alemanha, Itália, Japão e Reino Unido em relação à taxa de inflação dos Estados Unidos.</strong></p>
+<p>Com o pacote <strong>GGally</strong> é possível criar estes comparativos mais facilmente.</p>
+<pre class="r"><code>country_cpi %&gt;% 
+  tidyr::spread(&quot;country&quot;, &quot;values&quot;) %&gt;% 
+  GGally::ggpairs(columns = 2:8)+
+  theme_graph()+
+  theme(axis.text = element_blank())+
+  labs(title = &quot;Correlação Entre as Taxas de Inflação&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Apenas a linha e coluna ‘usa_cpi’ precisa ser usada, mostrando o gráficos de dispersão entre as variáveis e seu coeficiente de correlação. A menor correlação é a da Alemanha, que ficou em 69,3%.</p>
 <p><strong>b. Faça um comentário geral sobre o comportamento das taxas de inflação dos seis países em relação à inflação dos Estados Unidos.</strong></p>
+<pre class="r"><code>country_cpi %&gt;% 
+  tidyr::spread(&quot;country&quot;, &quot;values&quot;) %&gt;% 
+  select(-year) %&gt;% 
+  cor() %&gt;% 
+  knitr::kable(format.args = list(big.mark = &quot;.&quot;, decimal.mark = &quot;,&quot;))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+canada_cpi
+</th>
+<th style="text-align:right;">
+france_cpi
+</th>
+<th style="text-align:right;">
+germany_cpi
+</th>
+<th style="text-align:right;">
+italy_cpi
+</th>
+<th style="text-align:right;">
+japan_cpi
+</th>
+<th style="text-align:right;">
+uk_cpi
+</th>
+<th style="text-align:right;">
+usa_cpi
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+canada_cpi
+</td>
+<td style="text-align:right;">
+1,0000000
+</td>
+<td style="text-align:right;">
+0,9031983
+</td>
+<td style="text-align:right;">
+0,5858029
+</td>
+<td style="text-align:right;">
+0,8816498
+</td>
+<td style="text-align:right;">
+0,7205414
+</td>
+<td style="text-align:right;">
+0,8544959
+</td>
+<td style="text-align:right;">
+0,8730004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+france_cpi
+</td>
+<td style="text-align:right;">
+0,9031983
+</td>
+<td style="text-align:right;">
+1,0000000
+</td>
+<td style="text-align:right;">
+0,6567352
+</td>
+<td style="text-align:right;">
+0,9770683
+</td>
+<td style="text-align:right;">
+0,7057817
+</td>
+<td style="text-align:right;">
+0,7465621
+</td>
+<td style="text-align:right;">
+0,7863659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+germany_cpi
+</td>
+<td style="text-align:right;">
+0,5858029
+</td>
+<td style="text-align:right;">
+0,6567352
+</td>
+<td style="text-align:right;">
+1,0000000
+</td>
+<td style="text-align:right;">
+0,6749995
+</td>
+<td style="text-align:right;">
+0,7360533
+</td>
+<td style="text-align:right;">
+0,5766805
+</td>
+<td style="text-align:right;">
+0,6926212
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+italy_cpi
+</td>
+<td style="text-align:right;">
+0,8816498
+</td>
+<td style="text-align:right;">
+0,9770683
+</td>
+<td style="text-align:right;">
+0,6749995
+</td>
+<td style="text-align:right;">
+1,0000000
+</td>
+<td style="text-align:right;">
+0,7540024
+</td>
+<td style="text-align:right;">
+0,7600933
+</td>
+<td style="text-align:right;">
+0,7644961
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+japan_cpi
+</td>
+<td style="text-align:right;">
+0,7205414
+</td>
+<td style="text-align:right;">
+0,7057817
+</td>
+<td style="text-align:right;">
+0,7360533
+</td>
+<td style="text-align:right;">
+0,7540024
+</td>
+<td style="text-align:right;">
+1,0000000
+</td>
+<td style="text-align:right;">
+0,8570803
+</td>
+<td style="text-align:right;">
+0,7634052
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+uk_cpi
+</td>
+<td style="text-align:right;">
+0,8544959
+</td>
+<td style="text-align:right;">
+0,7465621
+</td>
+<td style="text-align:right;">
+0,5766805
+</td>
+<td style="text-align:right;">
+0,7600933
+</td>
+<td style="text-align:right;">
+0,8570803
+</td>
+<td style="text-align:right;">
+1,0000000
+</td>
+<td style="text-align:right;">
+0,8940935
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+usa_cpi
+</td>
+<td style="text-align:right;">
+0,8730004
+</td>
+<td style="text-align:right;">
+0,7863659
+</td>
+<td style="text-align:right;">
+0,6926212
+</td>
+<td style="text-align:right;">
+0,7644961
+</td>
+<td style="text-align:right;">
+0,7634052
+</td>
+<td style="text-align:right;">
+0,8940935
+</td>
+<td style="text-align:right;">
+1,0000000
+</td>
+</tr>
+</tbody>
+</table>
+<p>Os países selecionados possuem economias já desenvolvidas e bastante conectadas entre si, por isso há este comportamento parecido nas taxas de inflação. A correlação é alta não apenas entre os EUA e os outros países, por conta desta conexão entre as economias.</p>
 <p><strong>c. Se você constatar que as taxas de inflação dos seis países evoluem no mesmo sentido que a dos Estados Unidos, isso sugere que a inflação dos Estados Unidos “causa” inflação nos outros países? Justifique.</strong></p>
+<p>Com estes dados não é possível verificar se há uma correlação <a href="https://pt.wikipedia.org/wiki/Rela%C3%A7%C3%A3o_esp%C3%BAria">espúria</a> entre as variáveis, portanto não consigo afirmar se a variação na inflação dos EUA causa variação na inflação dos outros países. Mas pelo que lembro das aulas de macroeconomia, se um país está tendo inflação, sua moeda tende a se desvalorizar frente à outras moedas e se um país importa de outro que está tendo uma desvalorização cambial, ocorrerá uma queda no custo de importação e consequentemente uma pressão para redução de preços.</p>
 <hr />
 </div>
 <div id="a-tabela-1.4-apresenta-as-taxas-de-câmbio-em-sete-países-industrializados-no-período-1985---2006.-exceto-no-caso-do-reino-unido-as-taxas-de-câmbio-estão-definidas-como-unidades-de-moeda-estrangeira-por-um-dólar-no-caso-do-reino-unido-a-taxa-de-câmbio-é-dada-como-o-número-de-dólares-por-uma-libra-esterlina." class="section level3">
 <h3><strong>1.3 A Tabela 1.4 apresenta as taxas de câmbio em sete países industrializados, no período 1985 - 2006. Exceto no caso do Reino Unido, as taxas de câmbio estão definidas como unidades de moeda estrangeira por um dólar; no caso do Reino Unido, a taxa de câmbio é dada como o número de dólares por uma libra esterlina.</strong></h3>
 <p><strong>a. Represente graficamente a evolução das taxas de câmbio ao longo do tempo e comente sobre o comportamento geral dessa evolução.</strong></p>
+<pre class="r"><code># Trazendo o dataset para o exercício
+table_1.4_exchange_rate &lt;- 
+  readr::read_delim(file = paste(dataset_path,
+                               &quot;table_1.4_exchange_rate.txt&quot;, 
+                               sep = &quot;&quot;),
+                    delim = &quot;\t&quot;)
+
+table_1.4_exchange_rate %&gt;% 
+  mutate(Ano = as.character(Ano)) %&gt;% 
+  head(5) %&gt;% 
+  knitr::kable(format.args = list(big.mark = &quot;.&quot;, decimal.mark = &quot;,&quot;))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Ano
+</th>
+<th style="text-align:right;">
+Australia
+</th>
+<th style="text-align:right;">
+Canada
+</th>
+<th style="text-align:right;">
+China
+</th>
+<th style="text-align:left;">
+Japao
+</th>
+<th style="text-align:right;">
+Mexico
+</th>
+<th style="text-align:right;">
+Coreia.sul
+</th>
+<th style="text-align:right;">
+Suecia
+</th>
+<th style="text-align:right;">
+Suica
+</th>
+<th style="text-align:right;">
+Reino.unido
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1985
+</td>
+<td style="text-align:right;">
+0,7003
+</td>
+<td style="text-align:right;">
+1,3659
+</td>
+<td style="text-align:right;">
+2,9434
+</td>
+<td style="text-align:left;">
+238.4700
+</td>
+<td style="text-align:right;">
+0,257
+</td>
+<td style="text-align:right;">
+872,45
+</td>
+<td style="text-align:right;">
+8,6032
+</td>
+<td style="text-align:right;">
+2,4552
+</td>
+<td style="text-align:right;">
+1,2974
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1986
+</td>
+<td style="text-align:right;">
+0,6709
+</td>
+<td style="text-align:right;">
+1,3896
+</td>
+<td style="text-align:right;">
+3,4616
+</td>
+<td style="text-align:left;">
+168.3500
+</td>
+<td style="text-align:right;">
+0,612
+</td>
+<td style="text-align:right;">
+884,60
+</td>
+<td style="text-align:right;">
+7,1273
+</td>
+<td style="text-align:right;">
+1,7979
+</td>
+<td style="text-align:right;">
+1,4677
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1987
+</td>
+<td style="text-align:right;">
+0,7014
+</td>
+<td style="text-align:right;">
+1,3259
+</td>
+<td style="text-align:right;">
+3,7314
+</td>
+<td style="text-align:left;">
+144.6000
+</td>
+<td style="text-align:right;">
+1,378
+</td>
+<td style="text-align:right;">
+826,16
+</td>
+<td style="text-align:right;">
+6,3469
+</td>
+<td style="text-align:right;">
+1,4918
+</td>
+<td style="text-align:right;">
+1,6398
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1988
+</td>
+<td style="text-align:right;">
+0,7841
+</td>
+<td style="text-align:right;">
+1,2306
+</td>
+<td style="text-align:right;">
+3,7314
+</td>
+<td style="text-align:left;">
+128.1700
+</td>
+<td style="text-align:right;">
+2,273
+</td>
+<td style="text-align:right;">
+734,52
+</td>
+<td style="text-align:right;">
+6,1370
+</td>
+<td style="text-align:right;">
+1,4643
+</td>
+<td style="text-align:right;">
+1,7813
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1989
+</td>
+<td style="text-align:right;">
+0,7919
+</td>
+<td style="text-align:right;">
+1,1842
+</td>
+<td style="text-align:right;">
+3,7673
+</td>
+<td style="text-align:left;">
+138.0700
+</td>
+<td style="text-align:right;">
+2,461
+</td>
+<td style="text-align:right;">
+674,13
+</td>
+<td style="text-align:right;">
+6,4559
+</td>
+<td style="text-align:right;">
+1,6369
+</td>
+<td style="text-align:right;">
+1,6382
+</td>
+</tr>
+</tbody>
+</table>
+<p>Antes de plotar o gráfico, vou fazer um ajuste para o Reino Unido para representar a mesma unidade de medida que os outros países (unidades de moeda local para adquirir 1 dólar).</p>
+<pre class="r"><code>table_1.4_exchange_rate %&gt;% 
+  mutate(Reino.unido = 1/Reino.unido) %&gt;%  # Ajustando o Reino Unido
+  tidyr::gather(&quot;country&quot;, &quot;values&quot;, 2:10) %&gt;% 
+  mutate(values = as.numeric(values)) %&gt;% 
+  ggplot2::ggplot()+
+  geom_col(mapping = aes(x = Ano, y = values, fill = country), alpha = .6)+
+  scale_y_continuous(labels = scales::comma)+
+  scale_fill_brewer(type = &quot;qual&quot;, palette = 3)+
+  theme_graph()+
+  theme(legend.position = &quot;none&quot;)+
+  facet_wrap(~country, scales = &quot;free_y&quot;)+
+  labs(title = &quot;Taxa de Câmbio de Países Selecionados&quot;,
+       subtitle = &quot;Unidade de moeda local por 1 dólar&quot;,
+       y = &quot;Taxa de Câmbio&quot;,
+       x = &quot;&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>De maneira geral, apenas o México mostrou uma tendência de desvalorização de sua taxa de câmbio. Os outros países parecem ter a taxa de câmbio sob controle.</p>
 <p><strong>b. Diz-se que o dólar apreciou-se quando pode comprar mais unidades de moeda estrangeira. Opostamente, diz-se que se depreciou quando compra menos unidades da moeda estrangeira. No período 1985–2006, qual foi o comportamento geral do dólar dos Estados Unidos? Aproveite para pesquisar em algum livro de macroeconomia ou de economia internacional os fatores que determinam a apreciação ou depreciação de uma moeda.</strong></p>
+<p>O comportamento foi variado entre os países selecionados. Em alguns (Suíça, Japão e Reino Unido) houve desvalorização do dólar e em outros (México, China e Coréia do Sul), houve valorização.</p>
 <hr />
 </div>
 <div id="a-tabela-1.5-apresenta-os-dados-relativos-à-oferta-monetária-no-conceito-de-m1-que-aparecem-na-figura-1.5.-você-poderia-apresentar-razões-para-o-aumento-da-oferta-de-moeda-no-período-considerado" class="section level3">
 <h3><strong>1.4 A Tabela 1.5 apresenta os dados relativos à oferta monetária, no conceito de M1, que aparecem na Figura 1.5. Você poderia apresentar razões para o aumento da oferta de moeda no período considerado?</strong></h3>
+<pre class="r"><code>table_1.5_currency_m1_volume &lt;- 
+  readr::read_delim(file = paste(dataset_path,
+                               &quot;table_1.5_currency_m1_volume.txt&quot;, 
+                               sep = &quot;&quot;),
+                    delim = &quot;\t&quot;)
+
+# Amostra do dataset
+table_1.5_currency_m1_volume %&gt;% 
+  head(5) %&gt;% 
+  knitr::kable(format.args = list(big.mark = &quot;.&quot;, decimal.mark = &quot;,&quot;))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+period
+</th>
+<th style="text-align:right;">
+month_1
+</th>
+<th style="text-align:right;">
+month_2
+</th>
+<th style="text-align:right;">
+month_3
+</th>
+<th style="text-align:right;">
+month_4
+</th>
+<th style="text-align:right;">
+month_5
+</th>
+<th style="text-align:right;">
+month_6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1959:01
+</td>
+<td style="text-align:right;">
+138,9
+</td>
+<td style="text-align:right;">
+139,4
+</td>
+<td style="text-align:right;">
+139,7
+</td>
+<td style="text-align:right;">
+139,7
+</td>
+<td style="text-align:right;">
+140,7
+</td>
+<td style="text-align:right;">
+141,2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1959:07
+</td>
+<td style="text-align:right;">
+141,7
+</td>
+<td style="text-align:right;">
+141,9
+</td>
+<td style="text-align:right;">
+141,0
+</td>
+<td style="text-align:right;">
+140,5
+</td>
+<td style="text-align:right;">
+140,4
+</td>
+<td style="text-align:right;">
+140,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1960:01
+</td>
+<td style="text-align:right;">
+140,0
+</td>
+<td style="text-align:right;">
+139,9
+</td>
+<td style="text-align:right;">
+139,8
+</td>
+<td style="text-align:right;">
+139,6
+</td>
+<td style="text-align:right;">
+139,6
+</td>
+<td style="text-align:right;">
+139,6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1960:07
+</td>
+<td style="text-align:right;">
+140,2
+</td>
+<td style="text-align:right;">
+141,3
+</td>
+<td style="text-align:right;">
+141,2
+</td>
+<td style="text-align:right;">
+140,9
+</td>
+<td style="text-align:right;">
+140,9
+</td>
+<td style="text-align:right;">
+140,7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1961:01
+</td>
+<td style="text-align:right;">
+141,1
+</td>
+<td style="text-align:right;">
+141,6
+</td>
+<td style="text-align:right;">
+141,9
+</td>
+<td style="text-align:right;">
+142,1
+</td>
+<td style="text-align:right;">
+142,7
+</td>
+<td style="text-align:right;">
+142,9
+</td>
+</tr>
+</tbody>
+</table>
+<p>Esta tabela precisa ser tratada para poder ser analisada de maneira fácil. Veja que há 6 colunas para 6 meses de dados e os anos contemplam duas linhas. Será necessário ajustar para que cada mês fique em uma linha e o dataset tenha os campos ‘ano’, ‘mês’ e ‘valor (m1)’.</p>
+<pre class="r"><code>table_1.5_currency_m1_volume %&gt;% 
+  tidyr::gather(&quot;month&quot;, &quot;value&quot;, 2:7) %&gt;% 
+  filter(!is.na(value)) %&gt;% 
+  mutate(semester = as.numeric(stringr::str_sub(string = period, start = 6, end = 7)),
+         year = stringr::str_sub(string = period, start = 0, end = 4),
+         month = as.numeric(stringr::str_sub(string = month, start = 7, end = 7))-1+semester) %&gt;% 
+  select(year, month, value) %&gt;% 
+  mutate(year_and_month = paste(year, month, sep = &quot;/&quot;)) -&gt; table_1.5_adj
+
+table_1.5_adj %&gt;% 
+  head(5) %&gt;% 
+  knitr::kable(format.args = list(big.mark = &quot;.&quot;, decimal.mark = &quot;,&quot;))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+month
+</th>
+<th style="text-align:right;">
+value
+</th>
+<th style="text-align:left;">
+year_and_month
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1959
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+138,9
+</td>
+<td style="text-align:left;">
+1959/1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1959
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+141,7
+</td>
+<td style="text-align:left;">
+1959/7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1960
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+140,0
+</td>
+<td style="text-align:left;">
+1960/1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1960
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+140,2
+</td>
+<td style="text-align:left;">
+1960/7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1961
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+141,1
+</td>
+<td style="text-align:left;">
+1961/1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Agora podemos plotar o gráfico conforme solicitado e tentar analisar o aumento no período considerado.</p>
+<pre class="r"><code>table_1.5_adj %&gt;% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = year_and_month, y = value, group = 1))+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_discrete(breaks = c(&quot;1960/5&quot;,&quot;1970/5&quot;,&quot;1980/5&quot;,&quot;1990/5&quot;,&quot;1999/1&quot;))+
+  theme_graph()+
+  labs(title = &quot;Oferta Monetária&quot;,
+       subtitle = &quot;M1: Moeda em poder do público + Reservas Bancárias&quot;,
+       x = &quot;&quot;,
+       y = &quot;M1&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>O crescimento pode ser atribuído ao aumento de oferta de crédito pelo governo e também ao crescimento econômico, que faz as pessoas sacarem seus investimentos para consumo ou investimento.</p>
 <hr />
 </div>
 <div id="os-dados-apresentados-na-tabela-1.6-foram-divulgados-na-edição-do-the-wall-street-journal-de-1º-de-março-de-1984.-relacionam-o-orçamento-de-publicidade-em-milhões-de-dólares-de-21-empresas-em-1983-com-as-impressões-retidas-semanalmente-pelos-que-viram-os-produtos-anunciados-por-essas-empresas.-os-dados-foram-obtidos-em-uma-pesquisa-realizada-com-4-mil-adultos-em-que-foi-pedido-aos-usuários-dos-produtos-que-citassem-um-comercial-da-categoria-do-produto-que-tivessem-assistido-na-semana-anterior." class="section level3">

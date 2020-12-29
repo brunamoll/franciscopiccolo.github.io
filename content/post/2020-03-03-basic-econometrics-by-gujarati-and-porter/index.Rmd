@@ -48,6 +48,7 @@ library(tidyverse)
 library(patchwork)
 library(gt)
 library(modelsummary)
+library(stringr)
 
 # Função para padronizar o design dos gráficos
 theme_graph <- function(){
@@ -201,7 +202,7 @@ country_cpi %>%
   tidyr::spread("country", "values") %>% 
   select(-year) %>% 
   cor() %>% 
-  head(7)
+  knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
 ```
 
 Os países selecionados possuem economias já desenvolvidas e bastante conectadas entre si, por isso há este comportamento parecido nas taxas de inflação. A correlação é alta não apenas entre os EUA e os outros países, por conta desta conexão entre as economias.
@@ -225,6 +226,7 @@ table_1.4_exchange_rate <-
                     delim = "\t")
 
 table_1.4_exchange_rate %>% 
+  mutate(Ano = as.character(Ano)) %>% 
   head(5) %>% 
   knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
 ```
@@ -265,8 +267,46 @@ table_1.5_currency_m1_volume <-
                                "table_1.5_currency_m1_volume.txt", 
                                sep = ""),
                     delim = "\t")
+
+# Amostra do dataset
+table_1.5_currency_m1_volume %>% 
+  head(5) %>% 
+  knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
 ```
 
+Esta tabela precisa ser tratada para poder ser analisada de maneira fácil. Veja que há 6 colunas para 6 meses de dados e os anos contemplam duas linhas. Será necessário ajustar para que cada mês fique em uma linha e o dataset tenha os campos 'ano', 'mês' e 'valor (m1)'.
+
+```{r, message=F, warning=F}
+table_1.5_currency_m1_volume %>% 
+  tidyr::gather("month", "value", 2:7) %>% 
+  filter(!is.na(value)) %>% 
+  mutate(semester = as.numeric(stringr::str_sub(string = period, start = 6, end = 7)),
+         year = stringr::str_sub(string = period, start = 0, end = 4),
+         month = as.numeric(stringr::str_sub(string = month, start = 7, end = 7))-1+semester) %>% 
+  select(year, month, value) %>% 
+  mutate(year_and_month = paste(year, month, sep = "/")) -> table_1.5_adj
+
+table_1.5_adj %>% 
+  head(5) %>% 
+  knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
+```
+
+Agora podemos plotar o gráfico conforme solicitado e tentar analisar o aumento no período considerado.
+
+```{r, warning=F, message=F}
+table_1.5_adj %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = year_and_month, y = value, group = 1))+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_discrete(breaks = c("1960/5","1970/5","1980/5","1990/5","1999/1"))+
+  theme_graph()+
+  labs(title = "Oferta Monetária",
+       subtitle = "M1: Moeda em poder do público + Reservas Bancárias",
+       x = "",
+       y = "M1")
+```
+
+O crescimento pode ser atribuído ao aumento de oferta de crédito pelo governo e também ao crescimento econômico, que faz as pessoas sacarem seus investimentos para consumo ou investimento.
 
 --------------------------------------------------------------------
 
