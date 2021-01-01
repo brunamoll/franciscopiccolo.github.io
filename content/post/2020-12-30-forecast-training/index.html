@@ -1,0 +1,99 @@
+---
+title: "Analisando modelos de Forecasting"
+date: 2020-12-30
+math: true
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<p>Neste post vou desenvolver e analisar diversos modelos de ‘forecasting’ que aprendi após ler livros sobre o tema. A ideia é mostrar, de maneira simples, como rodar estes modelos no R, como analisar a performance e interpretar os resultados.</p>
+<p>Neste trabalho eu vou usar os pacotes abaixo, que já contêm vários datasets de exemplo para desenvolvimento do ‘forecast’.</p>
+<pre class="r"><code>library(GGally)
+library(fpp3)
+library(fable)
+library(tsibble)
+library(tsibbledata)
+library(feasts)
+library(tidyverse)
+library(patchwork)
+library(seasonal)
+library(fma)
+
+# Função para padronizar o design dos gráficos
+theme_graph &lt;- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = &quot;italic&quot;, size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = &quot;italic&quot;, size = 9),
+    strip.background = element_rect(fill = &quot;grey&quot;),
+    strip.text = element_text(face = &quot;bold&quot;),
+    legend.position = &quot;bottom&quot;,
+    legend.title = element_blank()
+  )
+}</code></pre>
+<p>A lista abaixo apresenta os métodos que irei aplicar às séries temporais:</p>
+<ul>
+<li>Average: Média dos valores passados.</li>
+<li>Naive: Último valor da série.</li>
+<li>SNaive: Últimos valores considerando a sazonalidade da série, ou seja, repete o padrão sazonal para o período projetado.</li>
+<li>Drift: Desvio entre o primeiro período (d1) e o último período da projeção. Como se fosse uma linha ligando dois pontos.</li>
+<li>ETS: Suavização Exponencial, sendo médias ponderadas de valores passados, com o peso da média caindo com o tempo.</li>
+<li>Arima: Busca descrever a autocorrelação na série temporal e modelar esta autocorrelação para criar as projeções.</li>
+</ul>
+<p>Importante notar que dentro de cada método é possível criar os modelos de previsão. No caso dos métodos ETS (também conhecido como <em>Suavização Exponencial</em>) e Arima, uma infinidade de modelos é possível, onde é preciso estudar a série temporal para escolher o melhor modelo.</p>
+<p>Para cada série temporal, irei aplicar as seguintes etapas para poder gerar uma conclusão ao final:</p>
+<ol style="list-style-type: decimal">
+<li>Análise exploratória da série temporal.</li>
+<li>Definição dos modelos.</li>
+<li>Segmentação da série temporal em ‘treino’ e ‘teste’.</li>
+<li>Aplicação dos modelos no dataset ‘treino’.</li>
+<li>Validação da performance.</li>
+<li>Conclusões.</li>
+</ol>
+<p>Agora vamos por a mão na massa para ver se as conclusões irão valer a leitura.</p>
+<div id="produção-trimestral-de-barro-na-australia" class="section level2">
+<h2><strong>Produção Trimestral de Barro na Australia</strong></h2>
+<p>Esta série é obtida no dataset ‘aus_production’ do pacote ‘tsibbledata’.</p>
+<pre class="r"><code>tsibbledata::aus_production %&gt;% 
+  select(Quarter, Bricks) %&gt;% 
+  head() %&gt;% 
+  knitr::kable(format.args = list(big.mark = &quot;.&quot;, decimal.mark = &quot;,&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Quarter</th>
+<th align="right">Bricks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1956 Q1</td>
+<td align="right">189</td>
+</tr>
+<tr class="even">
+<td align="left">1956 Q2</td>
+<td align="right">204</td>
+</tr>
+<tr class="odd">
+<td align="left">1956 Q3</td>
+<td align="right">208</td>
+</tr>
+<tr class="even">
+<td align="left">1956 Q4</td>
+<td align="right">197</td>
+</tr>
+<tr class="odd">
+<td align="left">1957 Q1</td>
+<td align="right">187</td>
+</tr>
+<tr class="even">
+<td align="left">1957 Q2</td>
+<td align="right">214</td>
+</tr>
+</tbody>
+</table>
+</div>
