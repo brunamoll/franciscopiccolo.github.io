@@ -355,3 +355,64 @@ Apesar de existir uma correlação (notada pelo gráfico, não estatísticamente
 Parece valer a pena anunciar, porém não uma quantia acima de 100 milhões de dólares.
 
 --------------------------------------------------------------------
+
+## **Capítulo 2**
+
+### **2.14. Com os dados da Tabela 2.7 relativos aos Estados Unidos nos período 1980-2006:**
+
+```{r, warning=F, message=F}
+# Este arquivo está separado por ';' ao invés de '\tab'
+table_2.7_labour_market <- 
+  readr::read_delim(file = paste(dataset_path,
+                               "table_2.7_labour_market.txt", 
+                               sep = ""),
+                    delim = " ")
+
+# Amostra do dataset
+table_2.7_labour_market %>% 
+  head(5) %>% 
+  knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
+```
+
+**a. Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho civil e a taxa de desemprego civil dos homens. Trace, a olho, uma linha de regressão que passe pelos pontos. A priori, qual a relação esperada entre as duas variáveis e em que teoria econômica está embasada? O diagrama de dispersão respalda essa teoria?**
+
+```{r, message=F, warning=F}
+table_2.7_labour_market %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = share_men_work_force, y = unemployment_men))+
+  theme_graph()+
+  labs(title = "Relação entre Participação na Força de Trabalho e Taxa de Desemprego",
+       subtitle = "Para os Homens",
+       x = "Participação (%) no mercado de trabalho",
+       y = "Taxa (%) de Desemprego")
+```
+
+**b. Faça o mesmo para as mulheres**
+
+```{r, message=F, warning=F}
+table_2.7_labour_market %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = share_women_work_force, y = unemployment_women))+
+  theme_graph()+
+  labs(title = "Relação entre Participação na Força de Trabalho e Taxa de Desemprego",
+       subtitle = "Para as Mulheres",
+       x = "Participação (%) no mercado de trabalho",
+       y = "Taxa (%) de Desemprego")
+```
+
+**c. Agora, represente graficamente a taxa de participação de homens e mulheres em relação aos ganhos médios por hora (em dólares de 1982). (Você pode usar gráficos separados.) O que constatou? Como você justificaria isso?**
+
+**d. É possível representar graficamente a taxa de participação na força de trabalho em relação à taxa de desemprego e aos ganhos médios por horas simultaneamente? Em caso negativo, como você expressaria a relação entre as três variáveis?**
+
+
+### **2.15. A Tabela 2.8 apresenta dados sobre despesas com alimentação e totais, em rupias, para uma amostra de 55 domicílios rurais da Índia. (No início de 2000, um dólar americano era equivalente a cerca de 40 rupias indianas.)**
+
+**a. Represente graficamente os dados colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais. Trace uma linha de regressão.**
+
+**b. Que conclusões gerais você pode tirar deste exemplo?**
+
+**c. Você esperaria, a priori, que as despesas com alimentação aumentassem linearmente com o aumento das despesas totais, independentemente do nível destas? Por quê? Utilize a despesa total como uma proxy para o nível de renda total.**
+
+--------------------------------------------------------------------
+
+
