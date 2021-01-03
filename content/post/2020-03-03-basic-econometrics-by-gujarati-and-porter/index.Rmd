@@ -404,17 +404,17 @@ table_2.7_labour_market %>%
 
 ```{r, message=F, warning=F}
 table_2.7_labour_market %>% 
-  select(ano, 
+  select(year, 
          share_men_work_force, 
          share_women_work_force) %>% 
   tidyr::gather("gender","values", 2:3) %>% 
   mutate(gender = ifelse(gender == "share_men_work_force","men","women")) %>% 
   inner_join(table_2.7_labour_market %>% 
-               select(ano, 
+               select(year, 
                      avg_hourly_earning_men, 
                      avg_hourly_earning_women) %>% 
                tidyr::gather("gender","values",2:3),
-             by = c("ano" = "ano")) %>% 
+             by = c("year" = "year")) %>% 
   select(-gender.y) %>% 
   ggplot2::ggplot()+
   geom_point(mapping = aes(x = values.x, 
@@ -422,14 +422,11 @@ table_2.7_labour_market %>%
                            color = gender.x))+
   theme_graph()+
   scale_color_viridis_d()+
+  facet_grid(~gender.x, scales = "free")+
   labs(title = "Relação Entre Salário e Participação no Mercado de Trabalho",
        x = "Participação no Mercado de Trabalho (%)",
        y = "Salário por Hora")
 ```
-
-
-**d. É possível representar graficamente a taxa de participação na força de trabalho em relação à taxa de desemprego e aos ganhos médios por horas simultaneamente? Em caso negativo, como você expressaria a relação entre as três variáveis?**
-
 
 ### **2.15. A Tabela 2.8 apresenta dados sobre despesas com alimentação e totais, em rupias, para uma amostra de 55 domicílios rurais da Índia. (No início de 2000, um dólar americano era equivalente a cerca de 40 rupias indianas.)**
 
