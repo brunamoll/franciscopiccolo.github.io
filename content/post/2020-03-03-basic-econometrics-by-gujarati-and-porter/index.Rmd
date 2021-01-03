@@ -402,6 +402,32 @@ table_2.7_labour_market %>%
 
 **c. Agora, represente graficamente a taxa de participação de homens e mulheres em relação aos ganhos médios por hora (em dólares de 1982). (Você pode usar gráficos separados.) O que constatou? Como você justificaria isso?**
 
+```{r, message=F, warning=F}
+table_2.7_labour_market %>% 
+  select(ano, 
+         share_men_work_force, 
+         share_women_work_force) %>% 
+  tidyr::gather("gender","values", 2:3) %>% 
+  mutate(gender = ifelse(gender == "share_men_work_force","men","women")) %>% 
+  inner_join(table_2.7_labour_market %>% 
+               select(ano, 
+                     avg_hourly_earning_men, 
+                     avg_hourly_earning_women) %>% 
+               tidyr::gather("gender","values",2:3),
+             by = c("ano" = "ano")) %>% 
+  select(-gender.y) %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = values.x, 
+                           y = values.y, 
+                           color = gender.x))+
+  theme_graph()+
+  scale_color_viridis_d()+
+  labs(title = "Relação Entre Salário e Participação no Mercado de Trabalho",
+       x = "Participação no Mercado de Trabalho (%)",
+       y = "Salário por Hora")
+```
+
+
 **d. É possível representar graficamente a taxa de participação na força de trabalho em relação à taxa de desemprego e aos ganhos médios por horas simultaneamente? Em caso negativo, como você expressaria a relação entre as três variáveis?**
 
 

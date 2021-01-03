@@ -1,4 +1,4 @@
-ano share_men_work_force share_women_work_force unemployment_men unemployment_women avg_hourly_earning_men avg_hourly_earning_women
+year share_men_work_force share_women_work_force unemployment_men unemployment_women avg_hourly_earning_men avg_hourly_earning_women
 1980 77.40000 51.50000 6.900000 7.400000 7.990000 6.840000
 1981 77.00000 52.10000 7.400000 7.900000 7.880000 7.430000
 1982 76.60000 52.60000 9.900000 9.400000 7.860000 7.860000
