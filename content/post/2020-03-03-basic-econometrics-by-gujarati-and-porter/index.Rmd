@@ -360,6 +360,8 @@ Parece valer a pena anunciar, porém não uma quantia acima de 100 milhões de d
 
 ### **2.14. Com os dados da Tabela 2.7 relativos aos Estados Unidos nos período 1980-2006:**
 
+**a. Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho civil e a taxa de desemprego civil dos homens. Trace, a olho, uma linha de regressão que passe pelos pontos. A priori, qual a relação esperada entre as duas variáveis e em que teoria econômica está embasada? O diagrama de dispersão respalda essa teoria?**
+
 ```{r, warning=F, message=F}
 # Este arquivo está separado por ';' ao invés de '\tab'
 table_2.7_labour_market <- 
@@ -374,12 +376,51 @@ table_2.7_labour_market %>%
   knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
 ```
 
-**a. Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho civil e a taxa de desemprego civil dos homens. Trace, a olho, uma linha de regressão que passe pelos pontos. A priori, qual a relação esperada entre as duas variáveis e em que teoria econômica está embasada? O diagrama de dispersão respalda essa teoria?**
+O dataset está em um formato não muito organizado ('tidy'), pois está com as variáveis duplicadas para representar homens e mulheres. Vou ajustar o dataset para agrupar as variáveis e separar as linhas em 'men'/'women'. 
+
+```{r, warning=F, message=F}
+table_2.7_labour_market %>% 
+  select(year,
+         share_men_work_force,
+         share_women_work_force) %>% 
+  tidyr::gather("gender","values",2:3) %>% 
+  inner_join(table_2.7_labour_market %>% 
+               select(year,
+                      unemployment_men,
+                      unemployment_women) %>%
+               tidyr::gather("gender","values",2:3),
+             by = c("year" = "year")) %>% 
+  inner_join(table_2.7_labour_market %>% 
+               select(year,
+                      avg_hourly_earning_men,
+                      avg_hourly_earning_women) %>%
+               tidyr::gather("gender","values",2:3),
+             by = c("year" = "year")) %>% 
+  mutate(gender.x = ifelse(gender.x == "share_men_work_force","men","women")) %>% 
+  mutate(gender = gender.x,
+         share_work_force = values.x,
+         unemployment_rate = values.y,
+         hourly_wage = values) %>% 
+  select(year,
+         gender,
+         share_work_force,
+         unemployment_rate,
+         hourly_wage) -> table_2.7_labour_market_adj
+```
+
+Veja a tabela ajustada. Talvez desse para fazer o ajuste com menos código, mas no fim o resultado deu certo.
 
 ```{r, message=F, warning=F}
-table_2.7_labour_market %>% 
+table_2.7_labour_market_adj %>% 
+  head(5) %>% 
+  knitr::kable()
+```
+
+```{r, message=F, warning=F}
+table_2.7_labour_market_adj %>% 
+  filter(gender == "men") %>% 
   ggplot2::ggplot()+
-  geom_point(mapping = aes(x = share_men_work_force, y = unemployment_men))+
+  geom_point(mapping = aes(x = share_work_force, y = unemployment_rate))+
   theme_graph()+
   labs(title = "Relação entre Participação na Força de Trabalho e Taxa de Desemprego",
        subtitle = "Para os Homens",
@@ -390,9 +431,11 @@ table_2.7_labour_market %>%
 **b. Faça o mesmo para as mulheres**
 
 ```{r, message=F, warning=F}
-table_2.7_labour_market %>% 
+table_2.7_labour_market_adj %>%
+  filter(gender == "women") %>% 
   ggplot2::ggplot()+
-  geom_point(mapping = aes(x = share_women_work_force, y = unemployment_women))+
+  geom_point(mapping = aes(x = share_work_force, 
+                           y = unemployment_rate))+
   theme_graph()+
   labs(title = "Relação entre Participação na Força de Trabalho e Taxa de Desemprego",
        subtitle = "Para as Mulheres",
@@ -403,26 +446,14 @@ table_2.7_labour_market %>%
 **c. Agora, represente graficamente a taxa de participação de homens e mulheres em relação aos ganhos médios por hora (em dólares de 1982). (Você pode usar gráficos separados.) O que constatou? Como você justificaria isso?**
 
 ```{r, message=F, warning=F}
-table_2.7_labour_market %>% 
-  select(year, 
-         share_men_work_force, 
-         share_women_work_force) %>% 
-  tidyr::gather("gender","values", 2:3) %>% 
-  mutate(gender = ifelse(gender == "share_men_work_force","men","women")) %>% 
-  inner_join(table_2.7_labour_market %>% 
-               select(year, 
-                     avg_hourly_earning_men, 
-                     avg_hourly_earning_women) %>% 
-               tidyr::gather("gender","values",2:3),
-             by = c("year" = "year")) %>% 
-  select(-gender.y) %>% 
+table_2.7_labour_market_adj %>% 
   ggplot2::ggplot()+
-  geom_point(mapping = aes(x = values.x, 
-                           y = values.y, 
-                           color = gender.x))+
+  geom_point(mapping = aes(x = share_work_force, 
+                           y = hourly_wage, 
+                           color = gender))+
   theme_graph()+
   scale_color_viridis_d()+
-  facet_grid(~gender.x, scales = "free")+
+  facet_grid(~gender, scales = "free")+
   labs(title = "Relação Entre Salário e Participação no Mercado de Trabalho",
        x = "Participação no Mercado de Trabalho (%)",
        y = "Salário por Hora")
@@ -437,5 +468,4 @@ table_2.7_labour_market %>%
 **c. Você esperaria, a priori, que as despesas com alimentação aumentassem linearmente com o aumento das despesas totais, independentemente do nível destas? Por quê? Utilize a despesa total como uma proxy para o nível de renda total.**
 
 --------------------------------------------------------------------
-
 
