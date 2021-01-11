@@ -1,0 +1,59 @@
+---
+title: "Entendo 'Akaike and Schwarz (Bayesian) Information Criterion' na Prática"
+date: 2019-09-04
+math: true
+---
+
+'Akaika e Schwarz Information Criterion' são métodos usados para se fazer a escolha de um modelo dentre vários modelos desenvolvidos.
+
+Conhecidos como AIC e BIC. Tem também s² que penaliza parâmetros. Qual destes escolher? Aquele que tiver mais consistência? Terá consistência se (i) 
+
+Usados em modelos de séries temporais (do tipo 'Auto Regressive models') e também em outros modelos que usam regressão.
+
+A premissa é de que sempre que se adiciona mais parâmetros em um modelo, o modelo consegue explicar melhor as variações passadas, ou seja, ele se encaixa melhor.
+
+O modelo com melhor fit vai ter um menor AIC (que irá penalizar o incremento de mais variáveis explicaticas).
+
+O modelo precisa ter um bom fit (log likelihood alto) com poucas variáveis, ou seja, precisa ser encontrado um equilíbrio ideal. 
+
+AIC foca em fit e números de parâmetros, enquanto BIC considera além disso, o tamanho da amostra (n).
+
+$$AIC = 2k - 2l$$
+$$BIC = ln(n)k - 2l$$
+
+
+
+```{r, warning=F,message=F}
+library(tidyverse)
+library(lmtest)
+library(corrplot)
+library(readxl)
+```
+
+Também vou criar uma função para facilitar a padronização dos gráficos que serão gerados.
+
+```{r,eval=T,include=T,echo=T,warning=F,message=F}
+theme_graph <- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = "italic", size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = "italic", size = 9),
+    strip.background = element_rect(fill = "grey"),
+    strip.text = element_text(face = "bold"),
+    legend.title = element_blank(),
+    legend.position = "bottom",
+    panel.grid.major = element_line(
+        rgb(198, 198, 216, maxColorValue = 255),
+        linetype = "dotted"), 
+    panel.grid.minor = element_line(
+        rgb(198, 198, 216, maxColorValue = 255),
+        linetype = "dotted"),
+    panel.background = element_rect(fill = "#FEFDFF")
+  )
+}
+```
+
+#### Exemplo 1: Elasticidade preço x oferta na produção de cana de açúcar.
+

@@ -363,7 +363,6 @@ Parece valer a pena anunciar, porém não uma quantia acima de 100 milhões de d
 **a. Represente graficamente a relação entre a taxa de participação dos homens na força de trabalho civil e a taxa de desemprego civil dos homens. Trace, a olho, uma linha de regressão que passe pelos pontos. A priori, qual a relação esperada entre as duas variáveis e em que teoria econômica está embasada? O diagrama de dispersão respalda essa teoria?**
 
 ```{r, warning=F, message=F}
-# Este arquivo está separado por ';' ao invés de '\tab'
 table_2.7_labour_market <- 
   readr::read_delim(file = paste(dataset_path,
                                "table_2.7_labour_market.txt", 
@@ -459,13 +458,137 @@ table_2.7_labour_market_adj %>%
        y = "Salário por Hora")
 ```
 
-### **2.15. A Tabela 2.8 apresenta dados sobre despesas com alimentação e totais, em rupias, para uma amostra de 55 domicílios rurais da Índia. (No início de 2000, um dólar americano era equivalente a cerca de 40 rupias indianas.)**
+### **2.15. A Tabela 2.8 apresenta dados sobre despesas com alimentação e gastos totais, em rupias, para uma amostra de 55 domicílios rurais da Índia. (No início de 2000, um dólar americano era equivalente a cerca de 40 rupias indianas.)**
+
+```{r, message=F, warning=F}
+table_2.8_expenses_in_india <- 
+  readr::read_delim(file = paste(dataset_path,
+                               "table_2.8_expenses_in_india.txt", 
+                               sep = ""),
+                    delim = " ")
+
+table_2.8_expenses_in_india %>% 
+  head(5) %>% 
+  kableExtra::kable()
+```
 
 **a. Represente graficamente os dados colocando no eixo vertical as despesas com alimentação e no eixo horizontal os gastos totais. Trace uma linha de regressão.**
 
+```{r, message=F, warning=F}
+table_2.8_expenses_in_india %>%
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = total, y = food), 
+             shape = 2,
+             color = "dark orange")+
+  theme_graph()+
+  labs(title = "Despesas Totais vs Despesas com Alimentação",
+       x = "Despesas Totais",
+       y = "Despesas com Alimentação")
+```
+
 **b. Que conclusões gerais você pode tirar deste exemplo?**
+
+A correlação é mais para famílias de baixa renda (com despesas totais abaixo de 600 rupias), visto que a maior parte dos gastos se concentra em itens básicos de alimentação. Porém, no geral, pode-se concluir com base neste teste visual, que há uma correlação entre as duas variáveis.
 
 **c. Você esperaria, a priori, que as despesas com alimentação aumentassem linearmente com o aumento das despesas totais, independentemente do nível destas? Por quê? Utilize a despesa total como uma proxy para o nível de renda total.**
 
+Não esperaria, visto que com o aumento do nível de renda a necessidade de se comprar mais alimentos não aumentará na mesma magnitude.
+
+### **2.16. A Tabela 2.9 apresenta dados sobre a pontuação média do Teste de Aptidão Escolar (SAT) para os estudantes que se preparavam para ingressar no ensino superior no período 1967-1990.**
+
+```{r, message=F, warning=F}
+table_2.9_sat_scores <-
+  readr::read_delim(file = paste(dataset_path,
+                               "table_2.9_sat_scores.txt", 
+                               sep = ""),
+                    delim = " ")
+
+table_2.9_sat_scores %>% 
+  head(5) %>% 
+  kableExtra::kable()
+```
+
+**a. Use o eixo horizontal para os anos e o eixo vertical para a pontuação obtida para traçar as notas nas provas de aptidão verbal e matemática obtidas por homens e mulheres, separadamente.**
+
+```{r, message=F, warning=F}
+verbal_graph <- 
+  table_2.9_sat_scores %>% 
+  ggplot2::ggplot(mapping = aes(x = year))+
+  geom_line(mapping = aes(y = men_verbal_score, color = "men|verbal"))+
+  geom_line(mapping = aes(y = wonem_verbal_score, color = "women|verbal"))+
+  scale_color_manual(values = c("men|verbal" = "blue",
+                                "women|verbal" = "red"),
+                     name = "")+
+  theme_graph()+
+  labs(x = "",
+        y = "")
+
+math_graph <- 
+  table_2.9_sat_scores %>% 
+  ggplot2::ggplot(mapping = aes(x = year))+
+  geom_line(mapping = aes(y = men_math_score, color = "men|math"))+
+  geom_line(mapping = aes(y = women_math_score, color = "women|math"))+
+  scale_color_manual(values = c("men|math" = "blue",
+                                "women|math" = "red"),
+                     name = "")+
+  theme_graph()+
+  labs(x = "",
+        y = "")
+
+verbal_graph + math_graph +
+  patchwork::plot_annotation(title = "Comparativo de Notas Entre os Gêneros",
+                             subtitle = "Teste SAT dos EUA")
+```
+
+**b. Que conclusões gerais você tirou desses gráficos?**
+
+Mulheres se saem melhores em ambos os testes e o teste de matemática ou foi ficando mais fácil ao longo dos anos ou os alunos se prepararam melhor para fazê-lo. Também nota-se uma correlação entre os desempenhos em 'Verbal' e 'Math'.
+
+**c. Conhecendo a pontuação de homens e mulheres nos testes de aptidão verbal, você poderia prever suas notas em matemática?**
+
+Analisando a série temporal do exercício 'a', parece ser possível esta regressão.
+
+**d. Represente graficamente as notas de matemática das mulheres em relação às dos homens. O que você observa?**
+
+```{r, message=F, warning=F}
+table_2.9_sat_scores %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = women_math_score, y = men_math_score),
+             shape = 2,
+             color = "dark orange")+
+  theme_graph()+
+  labs(title = "Relação Entre Nota de Mulheres e Homens",
+       subtitle = "Exame de Matemática (SAT)",
+       x = "Mulheres",
+       y = "Homens")
+```
+
 --------------------------------------------------------------------
 
+## **Capítulo 3**
+
+**3.18. Na Tabela 3.5 está a classificação de dez estudantes nas provas parcial e final de estatística. Calcule o coeficiente de correlação de rankings de Spearman e interprete os resultados.**
+
+**3.19. A relação entre a taxa de câmbio nominal e os preços relativos. Com base nas observações anuais de 1985 a 2005, obteve-se a seguinte regressão, em que Y D taxa de câmbio do dólar canadense em relação ao dólar americano (DC/$) e X D razão do IPC americano pelo IPC canadense, isto é, X representa os preços relativos dos dois países:**
+
+**a. Interprete a regressão. Como você interpretaria r²?**
+
+**b. O valor positivo de Xt faz sentido econômico? Qual a teoria econômica em que se embasa?**
+
+**c. Suponha que X seja redefinido como a razão entre o IPC canadense e o IPC americano. Isso mudaria o sinal de X? Por quê?**
+
+**3.20. A Tabela 3.6 apresenta dados relativos a índices de produção por hora (X) e remuneração real por hora (Y) para os setores empresarial e empresarial não agrícola da economia dos Estados Unidos no período 1960-2005. O ano-base dos índices é 1992 D 100 e os índices foram ajustados sazonalmente**
+
+**a. Represente graficamente Y contra X para os dois setores da economia separadamente.**
+
+**b. Qual a teoria econômica que embasa a relação entre as duas variáveis? O gráfico de dispersão confirma a teoria?**
+
+**c. Estime uma regressão de MQO de Y contra X. Guarde os resultados para examiná-los novamente depois de estudar o Capítulo 5.**
+
+**3.22.A Tabela 3.7 apresenta dados relativos a preços do ouro, índice de preços ao consumidor (IPC) e o índice Nyse da Bolsa de Valores de Nova York para o período 1974-2006. O índice Nyse inclui mais de 1.500 ações negociadas nessa bolsa.**
+
+**a. Assinale, em um mesmo diagrama de dispersão, os preços do ouro, o IPC e o índice Nyse.**
+
+**b. Supõe-se que um investimento funcione como proteção contra a inflação se seu preço e/ou sua taxa de retorno acompanha, pelo menos, a taxa de inflação. Para testar essa hipótese, ajuste o seguinte modelo, supondo que o diagrama de dispersão elaborado no item (a) sugiria que isso seja adequado:**
+
+--------------------------------------------------------------------
