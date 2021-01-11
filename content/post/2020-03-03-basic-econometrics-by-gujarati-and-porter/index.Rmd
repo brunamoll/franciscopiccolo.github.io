@@ -176,8 +176,6 @@ country_cpi %>%
 
 A flutuação parece maior na Itália por conta dos primeiros anos, onde a inflação ficou bastante alta. Caso a análise seja feita a partir de 1985, a Inglaterra fica com maior desvio padrão.
 
---------------------------------------------------------------------
-
 ### **1.2**
 
 **a. Usando a Tabela 1.3, represente as taxas de inflação do Canadá, França, Alemanha, Itália, Japão e Reino Unido em relação à taxa de inflação dos Estados Unidos.**
@@ -210,9 +208,6 @@ Os países selecionados possuem economias já desenvolvidas e bastante conectada
 **c. Se você constatar que as taxas de inflação dos seis países evoluem no mesmo sentido que a dos Estados Unidos, isso sugere que a inflação dos Estados Unidos "causa" inflação nos outros países? Justifique.**
 
 Com estes dados não é possível verificar se há uma correlação [espúria](https://pt.wikipedia.org/wiki/Rela%C3%A7%C3%A3o_esp%C3%BAria) entre as variáveis, portanto não consigo afirmar se a variação na inflação dos EUA causa variação na inflação dos outros países. Mas pelo que lembro das aulas de macroeconomia, se um país está tendo inflação, sua moeda tende a se desvalorizar frente à outras moedas e se um país importa de outro que está tendo uma desvalorização cambial, ocorrerá uma queda no custo de importação e consequentemente uma pressão para redução de preços. 
-
---------------------------------------------------------------------
-
 ### **1.3 A Tabela 1.4 apresenta as taxas de câmbio em sete países industrializados, no período 1985 - 2006. Exceto no caso do Reino Unido, as taxas de câmbio estão definidas como unidades de moeda estrangeira por um dólar; no caso do Reino Unido, a taxa de câmbio é dada como o número de dólares por uma libra esterlina.**
 
 **a. Represente graficamente a evolução das taxas de câmbio ao longo do tempo e comente sobre o comportamento geral dessa evolução.**
@@ -256,8 +251,6 @@ De maneira geral, apenas o México mostrou uma tendência de desvalorização de
 **b. Diz-se que o dólar apreciou-se quando pode comprar mais unidades de moeda estrangeira. Opostamente, diz-se que se depreciou quando compra menos unidades da moeda estrangeira. No período 1985–2006, qual foi o comportamento geral do dólar dos Estados Unidos? Aproveite para pesquisar em algum livro de macroeconomia ou de economia internacional os fatores que determinam a apreciação ou depreciação de uma moeda.**
 
 O comportamento foi variado entre os países selecionados. Em alguns (Suíça, Japão e Reino Unido) houve desvalorização do dólar e em outros (México, China e Coréia do Sul), houve valorização.
-
---------------------------------------------------------------------
 
 ### **1.4 A Tabela 1.5 apresenta os dados relativos à oferta monetária, no conceito de M1, que aparecem na Figura 1.5. Você poderia apresentar razões para o aumento da oferta de moeda no período considerado?**
 
@@ -308,8 +301,6 @@ table_1.5_adj %>%
 
 O crescimento pode ser atribuído ao aumento de oferta de crédito pelo governo e também ao crescimento econômico, que faz as pessoas sacarem seus investimentos para consumo ou investimento.
 
---------------------------------------------------------------------
-
 ### **1.7 Os dados apresentados na Tabela 1.6 foram divulgados na edição do The Wall Street Journal de 1º de março de 1984. Relacionam o orçamento de publicidade (em milhões de dólares) de 21 empresas em 1983 com as impressões retidas, semanalmente, pelos que viram os produtos anunciados por essas empresas. Os dados foram obtidos em uma pesquisa realizada com 4 mil adultos, em que foi pedido aos usuários dos produtos que citassem um comercial da categoria do produto que tivessem assistido na semana anterior.**
 
 Vamos importar o dataset do Github e ver uma amostra dos valores.
@@ -329,7 +320,6 @@ table_1.6_advertising %>%
   head(5) %>% 
   knitr::kable(format.args = list(big.mark = ".", decimal.mark = ","))
 ```
-
 
 **a. Trace um gráfico com as impressões no eixo vertical e os gastos com publicidade no eixo horizontal.**
 
@@ -542,7 +532,7 @@ verbal_graph + math_graph +
 
 **b. Que conclusões gerais você tirou desses gráficos?**
 
-Mulheres se saem melhores em ambos os testes e o teste de matemática ou foi ficando mais fácil ao longo dos anos ou os alunos se prepararam melhor para fazê-lo. Também nota-se uma correlação entre os desempenhos em 'Verbal' e 'Math'.
+(i) Homens se saem melhores em ambos os testes e (ii) o teste de matemática ou foi ficando mais fácil ao longo dos anos ou os alunos foram se preparando melhor para fazê-lo. Também nota-se uma correlação entre os desempenhos em 'Verbal' e 'Math'.
 
 **c. Conhecendo a pontuação de homens e mulheres nos testes de aptidão verbal, você poderia prever suas notas em matemática?**
 
