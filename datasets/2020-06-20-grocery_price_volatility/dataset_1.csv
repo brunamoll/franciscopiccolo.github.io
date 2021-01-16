@@ -23,7 +23,7 @@ data,       local,                             cep,      product,            vol
 2020-08-03, dom_olivio,                        13209000, manga_palmer,       1.330,             na,        11.69
 2020-08-03, dom_olivio,                        13209000, abacaxi_perola,     2,                 na,        14.78
 2020-08-03, dom_olivio,                        13209000, coco_verde,         2,                 na,        5.38
-2020-08-23, boa_vila_rami,                     13206305, banana_prata,       2.620, 			na,        11.76
+2020-08-23, boa_vila_rami,                     13206305, banana_prata,       2.620, 			      na,        11.76
 2020-08-23, boa_vila_rami,                     13206305, beterraba,          1.215,             na,        2.78
 2020-08-23, boa_vila_rami,                     13206305, cerveja,            0.375,             na,        4.49
 2020-08-19, boa_vila_rami,                     13206305, couve_manteiga,     1,                 na,        5.45
@@ -107,6 +107,52 @@ data,       local,                             cep,      product,            vol
 2020-10-18, covabra_malota,                    13211685, pimentao_vermelho,  0.170,             na,        3.21
 2020-10-18, covabra_malota,                    13211685, mamao_papaya,       0.770,             na,        5.38
 2020-10-18, covabra_malota,                    13211685, pimentao_amarelo,   0.360,             na,        6.80
+2021-01-01, boa_vila_hortolandia,              13214302, cenoura,            0.160,             na,        0.44
+2021-01-01, boa_vila_hortolandia,              13214302, tomate_grape,       0,290,             na,        4.02
+2021-01-01, boa_vila_hortolandia,              13214302, laranja_pera,       3.010,             na,        9.30
+2021-01-01, boa_vila_hortolandia,              13214302, mamao_papaya,       0.645,             na,        2.89
+2021-01-01, boa_vila_hortolandia,              13214302, ameixa_nacional,    0.670,             na,        8.03
+2021-01-01, boa_vila_hortolandia,              13214302, abacate,            0.505,             na,        7.16
+2020-12-26, boa_vila_hortolandia,              13214302, coco_verde,         2,                 na,        4.76
+2020-12-26, boa_vila_hortolandia,              13214302, melao_amarelo,      1.755,             na,        7.87
+2020-12-26, boa_vila_hortolandia,              13214302, abacaxi_hawai,      1,                 na,        9.45
+2020-12-26, boa_vila_hortolandia,              13214302, laranja_pera,       3.480,             na,        11.10
+2020-12-26, boa_vila_hortolandia,              13214302, ameixa_nacional,    0.675,             na,        8.20
+2020-12-26, boa_vila_hortolandia,              13214302, manga_palmer,       0.960,             na,        3.63
+2020-12-26, boa_vila_hortolandia,              13214302, mamao_papaya,       0.585,             na,        3.36
+2020-12-26, boa_vila_hortolandia,              13214302, beterraba,          0.485,             na,        1.40
+2020-12-26, boa_vila_hortolandia,              13214302, tomate_grape,       0.305,             na,        4.23
+2020-12-26, boa_vila_hortolandia,              13214302, cenoura,            0.355,             na,        1.0
+2020-12-26, boa_vila_hortolandia,              13214302, cebola,             0.540,             na,        1.56
+2020-12-26, boa_vila_hortolandia,              13214302, banana_prata,       1.245,             na,        7.20
+2020-12-26, boa_vila_hortolandia,              13214302, batata_monalisa,    1.270,             na,        7.98
+2020-12-26, boa_vila_hortolandia,              13214302, mandioquinha,       0.425,             na,        2.71
+2021-01-02, boa_vila_hortolandia,              13214302, melancia,           2.350,             na,        6.70
+2021-01-02, boa_vila_hortolandia,              13214302, banana_prata,       1.430,             na,        8.27
+2021-01-02, boa_vila_hortolandia,              13214302, batata_rosada,      0.380,             na,        2.01
+2021-01-02, boa_vila_hortolandia,              13214302, mamao_papaya,       0.550,             na,        3.01
+2021-01-02, boa_vila_hortolandia,              13214302, abacate,            0.425,             na,        5.94
+2021-01-02, boa_vila_hortolandia,              13214302, pepino_japones,     0.155,             na,        0.52
+2021-01-02, boa_vila_hortolandia,              13214302, beterraba,          0.230,             na,        0.64
+2021-01-02, boa_vila_hortolandia,              13214302, tomate_italiano,    0.680,             na,        4.11
+2021-01-02, boa_vila_hortolandia,              13214302, cebola,             0.280,             na,        0.80
+2021-01-02, boa_vila_hortolandia,              13214302, batata_monalisa,    1.110,             na,        6.98
+2021-01-02, boa_vila_hortolandia,              13214302, repolho_liso,       1.715,             na,        6.84
+2021-01-02, boa_vila_hortolandia,              13214302, mandioquinha,       0.345,             na,        2.23
+2021-01-02, boa_vila_hortolandia,              13214302, cenoura,            0.300,             na,        0.86
+2021-01-02, boa_vila_hortolandia,              13214302, cebola_roxa,        0.145,             na,        0.99
+2021-01-02, boa_vila_hortolandia,              13214302, abobrinha,          0.290,             na,        0.75
+
+
+
+
+
+
+
+
+
+
+
 
 
 
