@@ -656,13 +656,63 @@ table_3.6_wage_and_productivity %>%
 
 **3.23. A Tabela 3.8 apresenta dados do produto interno bruto (PIB) dos Estados Unidos no período 1959-2005.**
 
+```{r, message=F, warning=F}
+table_3.8_usa_gdp_nominal_and_real <-
+  readr::read_delim(file = paste(dataset_path,
+                               "table_3.8_usa_gdp_nominal_and_real.txt", 
+                               sep = ""),
+                    delim = " ")
+```
+
+```{r, message=F, warning=F}
+table_3.8_usa_gdp_nominal_and_real %>% 
+  head(5) %>% 
+  knitr::kable(format.args = list(big.mark = ".",
+                                  decimal.mark = ","))
+```
+
 **a. Represente graficamente os dados do PIB em dólares correntes e em dólares constantes (de 2000) em relação ao tempo.**
+
+```{r, warning=F, message=F}
+table_3.8_usa_gdp_nominal_and_real %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = year, y = nominal_gdp, color = "Nominal"))+
+  geom_line(mapping = aes(x = year, y = real_gdp, color = "Real"))+
+  scale_color_manual(values = c("Nominal" = "Dark Orange",
+                                "Real" = "Steel Blue"))+
+  theme_graph()+
+  labs(title = "PIB dos EUA, Nominal e Real",
+       x = "Year",
+       y = "GDP")
+```
 
 **b. Denotando o PIB por Y e o tempo por X (medido em uma sequência cronológica em que l represente 1959, 2, 1960 e assim por diante até 47 para 2005), veja se o seguinte modelo ajusta-se aos dados do PIB:**
 
 $$y_t = \beta_1 + \beta_2 x_t + \mu_t$$
 
+Apenas pelo gráfico dá para se notar uma relação entre tempo e variação do PIB. Algo que é bem comum em séries temporais, onde se incluem modelos de regressão para fazer o 'forecasting'. Vamos ver se o modelo se adequa bem aos dados.
+
+* PIB Nominal
+
+```{r, warning=F, message=F}
+table_3.8_usa_gdp_nominal_and_real %>%
+  lm(formula = "nominal_gdp ~ year") %>% 
+  summary() %>% 
+  pander::pander()
+```
+
+* PIB Real
+
+```{r, warning=F, message=F}
+table_3.8_usa_gdp_nominal_and_real %>%
+  lm(formula = "real_gdp ~ year") %>% 
+  summary() %>% 
+  pander::pander()
+```
+
 **c. Como você interpretaria **$\beta_2$**?**
+
+Para ambas as variáveis (Nominal e Real), o tempo se mostra estatisticamente significativo (com valor p bastante baixo) e também nos dois modelos a capacidade de explicar variações em Y é alta (demonstrado pelo r²).
 
 
 
