@@ -574,27 +574,96 @@ cor.test(x = table_3.5$parcial_test,
          method = "spearman")
 ```
 
-
 **3.19. A relação entre a taxa de câmbio nominal e os preços relativos. Com base nas observações anuais de 1985 a 2005, obteve-se a seguinte regressão, em que Y D taxa de câmbio do dólar canadense em relação ao dólar americano (DC/$) e X D razão do IPC americano pelo IPC canadense, isto é, X representa os preços relativos dos dois países:**
 
 **a. Interprete a regressão. Como você interpretaria r²?**
 
-**b. O valor positivo de Xt faz sentido econômico? Qual a teoria econômica em que se embasa?**
+R: r² em 44% indica que a variação de Y possui outras variáveis explicativas que precisam ser inseridas no modelo. O erro padrão está baixo (acredito que seja estatisticamente significativo no modelo), portanto apesar de um r² baixo, o modelo se mostra confiável na explicação das variações de Y.
+
+**b. O valor positivo de X_t faz sentido econômico? Qual a teoria econômica em que se embasa?**
+
+R: Faz sentido, visto que $X_t$ indica a razão entre Inflação dos EUA e do Canadá, e sabendo que a inflação corri o poder de compra da moeda e impacta na taxa de câmbio, se a Inflação dos EUA estiver maior que a do Canadá, a relação (DC/\$) será afetada, onde o dólar ficará mais fraco frente ao dólar canadense (gerando aumento em Y, explicado pelo valor positivo de $X_t$).
 
 **c. Suponha que X seja redefinido como a razão entre o IPC canadense e o IPC americano. Isso mudaria o sinal de X? Por quê?**
 
+R: Mudaria, visto que Y continuaria sendo (DC/\$).
+
 **3.20. A Tabela 3.6 apresenta dados relativos a índices de produção por hora (X) e remuneração real por hora (Y) para os setores empresarial e empresarial não agrícola da economia dos Estados Unidos no período 1960-2005. O ano-base dos índices é 1992 D 100 e os índices foram ajustados sazonalmente**
+
+```{r, message=F, warning=F}
+table_3.6_wage_and_productivity <-
+  readr::read_delim(file = paste(dataset_path,
+                               "table_3.6_wage_and_productivity.txt", 
+                               sep = ""),
+                    delim = " ") %>% 
+  tidyr::gather("metric","value",2:5) %>% 
+  mutate(value = value/10) %>% 
+  tidyr::spread("metric","value")
+```
+
+```{r, message=F, warning=F}
+table_3.6_wage_and_productivity %>% 
+  head(5) %>% 
+  knitr::kable(format.args = list(big.mark = ".", 
+                                  decimal.mark = ","))
+```
 
 **a. Represente graficamente Y contra X para os dois setores da economia separadamente.**
 
+```{r, message=F, warning=F}
+table_3.6_wage_and_productivity %>% 
+  ggplot2::ggplot()+
+  geom_point(mapping = aes(x = corporate, 
+                           y = corporate_wages,
+                           color = "Setor Empresarial"),
+             shape = 3)+
+  geom_point(mapping = aes(x = non_agricultural, 
+                           y = non_agricultural_wages,
+                           color = "Setor Não Agrícola"),
+             shape = 2)+
+  scale_color_manual(values = c("Setor Empresarial" = "Steel Blue",
+                                "Setor Não Agrícola" = "Dark Orange"),
+                     name = "Setores")+
+  theme_graph()+
+  labs(title = "Relação Entre Produção por Hora e Salários",
+       x = "Produção por Hora",
+       y = "Salário")
+```
+
 **b. Qual a teoria econômica que embasa a relação entre as duas variáveis? O gráfico de dispersão confirma a teoria?**
+
+R: Não sei dizer a teoria econômica que fundamenta esta relação direta, porém é esperado que a produtividade gere ganhos salariais, visto que se cria mais valor pra sociedade em um mesmo intervalo de tempo.
 
 **c. Estime uma regressão de MQO de Y contra X. Guarde os resultados para examiná-los novamente depois de estudar o Capítulo 5.**
 
-**3.22.A Tabela 3.7 apresenta dados relativos a preços do ouro, índice de preços ao consumidor (IPC) e o índice Nyse da Bolsa de Valores de Nova York para o período 1974-2006. O índice Nyse inclui mais de 1.500 ações negociadas nessa bolsa.**
+Cada setor terá uma regressão estimada.
 
-**a. Assinale, em um mesmo diagrama de dispersão, os preços do ouro, o IPC e o índice Nyse.**
+* Setor Empresarial
 
-**b. Supõe-se que um investimento funcione como proteção contra a inflação se seu preço e/ou sua taxa de retorno acompanha, pelo menos, a taxa de inflação. Para testar essa hipótese, ajuste o seguinte modelo, supondo que o diagrama de dispersão elaborado no item (a) sugiria que isso seja adequado:**
+```{r, warning=F, message=F}
+table_3.6_wage_and_productivity %>% 
+  lm(formula = "corporate_wages ~ corporate") %>% 
+  summary() %>% 
+  pander::pander()
+```
+
+```{r, warning=F, message=F}
+table_3.6_wage_and_productivity %>% 
+  lm(formula = "non_agricultural_wages ~ non_agricultural") %>% 
+  summary() %>% 
+  pander::pander()
+```
+
+**3.23. A Tabela 3.8 apresenta dados do produto interno bruto (PIB) dos Estados Unidos no período 1959-2005.**
+
+**a. Represente graficamente os dados do PIB em dólares correntes e em dólares constantes (de 2000) em relação ao tempo.**
+
+**b. Denotando o PIB por Y e o tempo por X (medido em uma sequência cronológica em que l represente 1959, 2, 1960 e assim por diante até 47 para 2005), veja se o seguinte modelo ajusta-se aos dados do PIB:**
+
+$$y_t = \beta_1 + \beta_2 x_t + \mu_t$$
+
+**c. Como você interpretaria **$\beta_2$**?**
+
+
 
 --------------------------------------------------------------------
