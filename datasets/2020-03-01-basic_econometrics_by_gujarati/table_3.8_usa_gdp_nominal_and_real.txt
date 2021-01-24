@@ -1,4 +1,4 @@
-year nominal_gdp real_gdp 
+year nominal_gdp real_gdp
 1959 506.6 2441.3
 1960 526.4 2501.8
 1961 544.7 2560.0
