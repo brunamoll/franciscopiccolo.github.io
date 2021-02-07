@@ -714,6 +714,4 @@ table_3.8_usa_gdp_nominal_and_real %>%
 
 Para ambas as variáveis (Nominal e Real), o tempo se mostra estatisticamente significativo (com valor p bastante baixo) e também nos dois modelos a capacidade de explicar variações em Y é alta (demonstrado pelo r²).
 
-
-
 --------------------------------------------------------------------

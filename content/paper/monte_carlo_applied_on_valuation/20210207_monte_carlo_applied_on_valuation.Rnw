@@ -1,0 +1,20 @@
+\documentclass[12pt, letterpaper]{article}
+
+% Preamble
+\title{Monte Carlo Simulations Applied on Discounted Cash Flow}
+\author{Francisco Piccolo}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+
+This is a simple abstract
+
+\end{abstract}
+
+
+\end{document}

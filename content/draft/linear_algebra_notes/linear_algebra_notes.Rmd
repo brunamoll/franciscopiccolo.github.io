@@ -1,0 +1,180 @@
+---
+title: "Algebra Linear"
+output:
+  rmdformats::downcute:
+    highlight: tango
+    fig_width: 5
+    fig_height: 4
+    css: style.css
+---
+
+```{r, message=F, warning=F}
+library(tidyverse)
+
+library(matlib)
+```
+
+
+Sistema em forma triangular, ou o sistema é triangular.
+
+Solução de sistemas lineares por escalonamento ou eliminação Gaussiana, quando se gera um sistema em forma triangular.
+
+Para resolver um sistema linear, pode-se usar o pacote **matlib** ou a função *solve* nativa do R.
+
+### Resolvendo alguns exercícios
+
+
+$$
+\begin{bmatrix}
+-5x & +2y & =3\\
+9x & +y & =2
+\end{bmatrix}
+$$
+
+Escreva os coeficientes desta matriz:
+
+$$
+\begin{bmatrix}
+-5 & 2 & = 3\\
+ 9 & 1 & = 2
+\end{bmatrix}
+$$
+
+Crie uma matriz no R:
+
+```{r}
+matriz <- matrix(c(-5,9,2,1),
+                 nrow = 2)
+
+b <- matrix(c(3,2), 
+            nrow = 2)
+```
+
+Validando a equação;
+
+```{r}
+matlib::showEqn(matriz,b)
+```
+
+Verificando consistência:
+
+```{r}
+all.equal(R(matriz), R(cbind(matriz,b)))
+```
+
+
+```{r}
+matlib::plotEqn(matriz,b)
+```
+
+Usando a função *solve* nativa do R para solucionar o sistema linear.
+
+```{r}
+solve(matriz,b)
+```
+
+
+### Definição de forma escalonada:
+
+1. linhas que cotém apenas zeros estão abaixo das demais
+
+2. o primeiro elemento não nulo de uma linha, conhecido como **elemento líder** está em uma coluna à direita do elemento líder da linha acima. Ou seja, os elementos abaixo de elementos líder são zeros.
+
+Ex:
+
+$$
+\begin{bmatrix}
+1 & \alpha_0 & \alpha_1 & \alpha_2 & \alpha_3 \\
+0 & 0 & 2 & \alpha_4 & \alpha_5 \\
+0 & 0 & 0 & -1 & \alpha_6 \\
+0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+$$
+
+No R, para transformar uma matriz para sua forma escalonada, use a função **echelon**
+
+```{r, eval=F}
+matlib::echelon()
+```
+
+
+### Matriz em forma escalonada reduzida
+
+1. Está na forma escalonada
+
+2. Todos os elementos líder são iguais a 1 e são os únicos elementos não nulos das suas **colunas**.
+
+Soluções de sistemas:
+
+Sistemas incosistentes (não possui solução):
+
+$$
+\begin{bmatrix}
+    1  &  1      \\
+    1  &  1      
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    1      \\
+    2      
+\end{bmatrix} 
+$$
+
+```{r}
+matriz <- matrix(c(1,1,1,1),
+                 nrow = 2)
+
+b <- matrix(c(1,2), 
+            nrow = 2)
+
+matlib::showEqn(matriz,b)
+
+all.equal(R(matriz), R(cbind(matriz,b)))
+
+matlib::plotEqn(matriz,b)
+
+solve(matriz,b)
+```
+
+```{r}
+matlib::echelon(matriz, b)
+
+matlib::echelon(matriz, b, verbose = T, fractions = T)
+```
+
+
+Sistemas lineares com mais de uma solução:
+
+$$
+\begin{bmatrix}
+      & +3x_2 & -6x_3 & +6x_4 & +4x_5      \\
++3x_1 & -7x_2 & +8x_3 & -5x_4 & +8x_5      \\
++3x_1 & -9x_2 & +12_x2 & -9x_4 & +6x_5
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    -5      \\
+    9      \\
+    15
+\end{bmatrix} 
+$$
+Criando a matriz
+
+```{r}
+matriz <- matrix(c(0,3,3,3,-7,-9,-6,8,12,6,8,12,6,-5,-9,4,8,6),
+                 nrow = 3)
+
+b <- matrix(c(-5,9,15),
+            nrow = 3)
+
+matlib::showEqn(matriz, b)
+
+all.equal(R(matriz),R(cbind(matriz,b)))
+
+solve(matriz,b)
+
+matlib::echelon(matriz, b, verbose = T, fractions = T)
+```
+
+
+
