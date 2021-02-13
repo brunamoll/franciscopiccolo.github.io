@@ -12,37 +12,106 @@ math: true
 <pre class="r"><code>knitr::opts_chunk$set(
   message = F,
   warning = F,
-  echo = F,
+  echo = T,
   eval = T,
   fig.align = &quot;center&quot;
 )</code></pre>
 <p>Após muitas idas ao mercado, fiquei interessado em saber como os preços dos alimentos oscilam ao longo do tempo e também em como eles se diferenciam de um mercado para outro (especificamente em Jundiaí). Por isso, neste post eu vou analisar um dataset que eu mesmo venho desenvolvendo, que mostra o preço dos alimentos que mais são usados em minha casa.</p>
 <p>Com este script, poderei apenas atualizar o post para pegar a última versão do dataset e acompanhar esta variação de preços. Vamos ver se conseguimos extrair algum insight ao final.</p>
 <p>Para esta tarefa, vou usar os seguintes pacotes:</p>
+<pre class="r"><code>library(tidyverse)
+library(patchwork)
+
+# Função para padronizar o design dos gráficos
+theme_graph &lt;- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = &quot;italic&quot;, size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = &quot;italic&quot;, size = 9),
+    strip.background = element_rect(fill = &quot;grey&quot;),
+    strip.text = element_text(face = &quot;bold&quot;),
+    legend.position = &quot;bottom&quot;,
+    legend.title = element_blank()
+  )
+}</code></pre>
 <p>O dataset está sendo atualizado em meu repositório do github. Se caso quiser acessá-lo pelo R, basta usar o comando abaixo:</p>
+<pre class="r"><code>dataset &lt;- readr::read_csv(file = &quot;https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2020-06-20-grocery_price_volatility/dataset_1.csv&quot;)</code></pre>
 <p>Para este estudo, vou preferir olhar apenas para produtos que possuem mais que 3 observações, ou seja, que comprei mais que 3 vezes no período. O código abaixo irá listar os produtos que precisam ser removidos da análise.</p>
+<pre class="r"><code>dataset %&gt;%
+  group_by(product) %&gt;% 
+  summarise(rows = n()) %&gt;% 
+  filter(rows &lt;= 4) %&gt;% 
+  select(product) -&gt; low_sample_product</code></pre>
 <p>Com esta lista de ‘low_sample_product’, podemos ajustar o dataset filtrando estes produtos.</p>
+<pre class="r"><code>dataset &lt;- 
+  dataset %&gt;% 
+  mutate(price_per_vol = price/volume_gm_ml) %&gt;% 
+  filter(!product %in% c(low_sample_product$product))</code></pre>
 <div id="análise-exploratória-do-dataset" class="section level2">
 <h2><strong>Análise Exploratória do Dataset</strong></h2>
 <p>Vamos entender melhor este dataset antes de focar na volatilidade. Primeiro, vamos ver o período de compra, os mercados e produtos considerados.</p>
+<pre class="r"><code>dataset$price &lt;- as.numeric(dataset$price)
+
+dataset %&gt;% 
+  group_by() %&gt;% 
+  summarise(first_date = min(date),
+            last_date = max(date)) %&gt;% 
+  tibble::tibble()</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   first_date last_date 
 ##   &lt;date&gt;     &lt;date&gt;    
 ## 1 2020-06-14 2021-02-13</code></pre>
 <div id="observações-por-produto-e-local-de-compra" class="section level3">
 <h3><strong>Observações por Produto e Local de Compra</strong></h3>
+<pre class="r"><code>dataset %&gt;%
+  group_by(local,product) %&gt;% 
+  summarise(count = n()) %&gt;% 
+  ggplot2::ggplot()+
+  geom_col(mapping = aes(x = product, y = count, fill = local))+
+  scale_fill_brewer(type = &quot;qual&quot;, palette = 2)+
+  theme_graph()+
+  theme(legend.position = &quot;none&quot;)+
+  coord_flip()+
+  facet_grid(~local)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="variabilidade" class="section level3">
 <h3><strong>Variabilidade</strong></h3>
+<pre class="r"><code>dataset %&gt;% 
+  ggplot2::ggplot()+
+  geom_boxplot(mapping = aes(x = reorder(product,price_per_vol, .fun = mean), y = price_per_vol),
+               fill = &quot;steel blue&quot;,
+               outlier.shape = 20,
+               outlier.color = &quot;grey&quot;)+
+  coord_flip()+
+  theme_graph()</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="variabilidade-por-estabelecimento" class="section level3">
 <h3><strong>Variabilidade por Estabelecimento</strong></h3>
+<pre class="r"><code>dataset %&gt;% 
+  ggplot2::ggplot()+
+  geom_boxplot(mapping = aes(x = reorder(product,price_per_vol, .fun = mean), y = price_per_vol, fill = local),
+               outlier.shape = 20,
+               outlier.color = &quot;grey&quot;)+
+  scale_fill_brewer(type = &quot;qual&quot;, palette = 2)+
+  coord_flip()+
+  facet_grid(~local)+
+  theme_graph()+
+  theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="série-temporal-dos-preços-por-produto-e-estabelecimento" class="section level3">
 <h3><strong>Série Temporal dos Preços por Produto e Estabelecimento</strong></h3>
+<pre class="r"><code>dataset %&gt;% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = date, y = price_per_vol, group = local, color = local),
+            size = 1)+
+  scale_color_brewer(type = &quot;qual&quot;, palette = 2)+
+  theme_graph()+
+  facet_wrap(~product)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>

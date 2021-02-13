@@ -8,7 +8,7 @@ math: true
 knitr::opts_chunk$set(
   message = F,
   warning = F,
-  echo = F,
+  echo = T,
   eval = T,
   fig.align = "center"
 )
