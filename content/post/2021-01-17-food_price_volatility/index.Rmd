@@ -47,7 +47,7 @@ O dataset está sendo atualizado em meu repositório do github. Se caso quiser a
 dataset <- readr::read_csv(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2020-06-20-grocery_price_volatility/dataset_1.csv")
 ```
 
-Para este estudo, vou preferir olhar apenas para produtos que possuem mais que 3 observações, ou seja, que comprei mais que 3 vezes no período. O código abaixo irá listar os produtos que precisam ser removidos da análise.
+Para este estudo, vou preferir olhar apenas para produtos que possuem mais que 3 observações, ou seja, que comprei mais que 4 vezes no período. O código abaixo irá listar os produtos que precisam ser removidos da análise.
 
 ```{r}
 dataset %>%
