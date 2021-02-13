@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 
-Após muitas idas ao mercado, fiquei interessado em saber como os preços dos alimentos oscilam ao longo do tempo e em como eles se diferenciam de um mercado para outro (especificamente em Jundiaí). Por isso neste post vou analisar um dataset que eu mesmo atualizo, que mostra o preço dos alimentos que mais são usados em minha casa. 
+Após muitas idas ao mercado, fiquei interessado em saber como os preços dos alimentos oscilam ao longo do tempo e também em como eles se diferenciam de um mercado para outro (especificamente em Jundiaí). Por isso, neste post eu vou analisar um dataset que eu mesmo venho desenvolvendo, que mostra o preço dos alimentos que mais são usados em minha casa. 
 
 Com este script, poderei apenas atualizar o post para pegar a última versão do dataset e acompanhar esta variação de preços. Vamos ver se conseguimos extrair algum insight ao final.
 
@@ -53,7 +53,7 @@ Para este estudo, vou preferir olhar apenas para produtos que possuem mais que 3
 dataset %>%
   group_by(product) %>% 
   summarise(rows = n()) %>% 
-  filter(rows <= 3) %>% 
+  filter(rows <= 4) %>% 
   select(product) -> low_sample_product
 ```
 
@@ -66,40 +66,72 @@ dataset <-
   filter(!product %in% c(low_sample_product$product))
 ```
 
-## ****
+## **Análise Exploratória do Dataset**
 
-```{r, warning=F, message=F}
+Vamos entender melhor este dataset antes de focar na volatilidade. Primeiro, vamos ver o período de compra, os mercados e produtos considerados.
+
+```{r}
 dataset$price <- as.numeric(dataset$price)
 
 dataset %>% 
-  group_by(product) %>% 
-  summarise(rows = n()) %>% 
-  mutate(product = fct_reorder(product, rows, .desc = T),
-         product = fct_lump(product, 10)) %>% 
-  ggplot2::ggplot()+
-  geom_col(mapping = aes(x = product, y = rows))+
-  coord_flip()
+  group_by() %>% 
+  summarise(first_date = min(date),
+            last_date = max(date)) %>% 
+  tibble::tibble()
 ```
 
-```{r, message=F, warning=F}
+### **Observações por Produto e Local de Compra**
+
+```{r}
 dataset %>%
+  group_by(local,product) %>% 
+  summarise(count = n()) %>% 
   ggplot2::ggplot()+
-  geom_line(mapping = aes(x = data, y = price_per_vol, group = local, color = local))+
-  scale_color_brewer(type = "qual", palette = 2)+
+  geom_col(mapping = aes(x = product, y = count, fill = local))+
+  scale_fill_brewer(type = "qual", palette = 2)+
   theme_graph()+
-  facet_wrap(~product, scales = "free_y")
+  theme(legend.position = "none")+
+  coord_flip()+
+  facet_grid(~local)
 ```
 
-```{r, message=F, warning=F}
+### **Variabilidade**
+
+```{r}
 dataset %>% 
   ggplot2::ggplot()+
-  geom_boxplot(mapping = aes(x = local, y = price_per_vol))+
-  facet_wrap(~product, scales = "free_x")+
-  coord_flip()
+  geom_boxplot(mapping = aes(x = reorder(product,price_per_vol, .fun = mean), y = price_per_vol),
+               fill = "steel blue",
+               outlier.shape = 20,
+               outlier.color = "grey")+
+  coord_flip()+
+  theme_graph()
 ```
 
+### **Variabilidade por Estabelecimento**
 
+```{r}
+dataset %>% 
+  ggplot2::ggplot()+
+  geom_boxplot(mapping = aes(x = reorder(product,price_per_vol, .fun = mean), y = price_per_vol, fill = local),
+               outlier.shape = 20,
+               outlier.color = "grey")+
+  scale_fill_brewer(type = "qual", palette = 2)+
+  coord_flip()+
+  facet_grid(~local)+
+  theme_graph()+
+  theme(legend.position = "none")
+```
 
+### **Série Temporal dos Preços por Produto e Estabelecimento**
 
-
+```{r}
+dataset %>% 
+  ggplot2::ggplot()+
+  geom_line(mapping = aes(x = date, y = price_per_vol, group = local, color = local),
+            size = 1)+
+  scale_color_brewer(type = "qual", palette = 2)+
+  theme_graph()+
+  facet_wrap(~product)
+```
 
