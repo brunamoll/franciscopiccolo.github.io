@@ -4,17 +4,26 @@ date: 2020-12-30
 math: true
 ---
 
-```{r, warning=F, message=F}
-library(GGally)
-library(fpp3)
-library(fable)
-library(tsibble)
-library(tsibbledata)
-library(feasts)
+```{r, message=F, warning=F}
+knitr::opts_chunk$set(
+  message = F,
+  warning = F,
+  echo = F,
+  eval = T,
+  fig.align = "center"
+)
+```
+
+
+Após muitas idas ao mercado, fiquei interessado em saber como os preços dos alimentos oscilam ao longo do tempo e em como eles se diferenciam de um mercado para outro (especificamente em Jundiaí). Por isso neste post vou analisar um dataset que eu mesmo atualizo, que mostra o preço dos alimentos que mais são usados em minha casa. 
+
+Com este script, poderei apenas atualizar o post para pegar a última versão do dataset e acompanhar esta variação de preços. Vamos ver se conseguimos extrair algum insight ao final.
+
+Para esta tarefa, vou usar os seguintes pacotes:
+
+```{r}
 library(tidyverse)
 library(patchwork)
-library(seasonal)
-library(fma)
 
 # Função para padronizar o design dos gráficos
 theme_graph <- function(){
@@ -32,17 +41,23 @@ theme_graph <- function(){
 }
 ```
 
-```{r, warning=F, message=F}
+O dataset está sendo atualizado em meu repositório do github. Se caso quiser acessá-lo pelo R, basta usar o comando abaixo:
+
+```{r}
 dataset <- readr::read_csv(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2020-06-20-grocery_price_volatility/dataset_1.csv")
 ```
 
-```{r, message=F, warning=F}
+Para este estudo, vou preferir olhar apenas para produtos que possuem mais que 3 observações, ou seja, que comprei mais que 3 vezes no período. O código abaixo irá listar os produtos que precisam ser removidos da análise.
+
+```{r}
 dataset %>%
   group_by(product) %>% 
   summarise(rows = n()) %>% 
   filter(rows <= 3) %>% 
   select(product) -> low_sample_product
 ```
+
+Com esta lista de 'low_sample_product', podemos ajustar o dataset filtrando estes produtos.
 
 ```{r, warning=F, message=F}
 dataset <- 
