@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.2.5)  7 FEB 2021 14:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.2.5)  7 FEB 2021 15:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -113,29 +113,42 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <14.4> on input line 60.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 60.
+ (./20210207_monte_carlo_applied_on_valuation.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 3.
+)
+\tf@toc=\write3
+\openout3 = `20210207_monte_carlo_applied_on_valuation.toc'.
+
  [1
 
 {c:/Users/fppicco/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdf
-tex.map}] (./20210207_monte_carlo_applied_on_valuation.aux) ) 
+tex.map}]
+(./20210207_monte_carlo_applied_on_valuation.aux) ) 
 Here is how much of TeX's memory you used:
- 1043 strings out of 481251
- 17687 string characters out of 5913866
- 286111 words of memory out of 5000000
- 18017 multiletter control sequences out of 15000+600000
- 405548 words of font info for 34 fonts, out of 8000000 for 9000
+ 1070 strings out of 481251
+ 18090 string characters out of 5913866
+ 289111 words of memory out of 5000000
+ 18034 multiletter control sequences out of 15000+600000
+ 409206 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  68i,6n,74p,303b,191s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/Users/fppicco/
-AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c
-:/Users/fppicco/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr10.pfb><c:/Users/fppicco/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr12.pfb><c:/Users/fppicco/AppData/Roaming/TinyTeX/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on 20210207_monte_carlo_applied_on_valuation.pdf (1 page, 42887 
+<c:/Users/fppicco/AppData/Ro
+aming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/Users/fp
+picco/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.
+pfb><c:/Users/fppicco/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb><c:/Users/fppicco/AppData/Roaming/TinyTeX/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr12.pfb><c:/Users/fppicco/AppData/Roaming/TinyTeX/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on 20210207_monte_carlo_applied_on_valuation.pdf (1 page, 58098 
 bytes).
 PDF statistics:
- 24 PDF objects out of 1000 (max. 8388607)
- 16 compressed objects within 1 object stream
+ 28 PDF objects out of 1000 (max. 8388607)
+ 19 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

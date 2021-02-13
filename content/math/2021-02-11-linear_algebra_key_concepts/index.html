@@ -1,0 +1,95 @@
+---
+title: "Resolvendo Sistemas Lineares com R"
+date: 2021-02-11
+math: true
+---
+
+<script src="index_files/header-attrs/header-attrs.js"></script>
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<pre class="r"><code># Parâmetro para ser usado em todos os códigos
+
+knitr::opts_chunk$set(
+  eval = T,
+  echo = T,
+  warning = F,
+  message = F,
+  fig.align = &quot;center&quot;
+)</code></pre>
+<div id="introdução" class="section level2">
+<h2><strong>Introdução</strong></h2>
+<p>Neste post vou mostrar como o R pode ser usado na Álgebra Linear, especificamente na resolução de Sistemas Lineares. Vou começar com exercícios simples, que podem ser resolvidos facilmente na mão, para depois avançar para exercícios mais complexos. Para resolvê-los, vou usar os seguintes pacotes:</p>
+<pre class="r"><code>library(tidyverse)
+library(patchwork)
+library(matlib)
+
+theme_graph &lt;- function(){
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(face = &quot;italic&quot;, size = 9),
+    axis.text = element_text(size = 9),
+    axis.title = element_text(face = &quot;italic&quot;, size = 9),
+    strip.background = element_rect(fill = &quot;grey&quot;),
+    strip.text = element_text(face = &quot;bold&quot;),
+    legend.title = element_blank(),
+    legend.position = &quot;bottom&quot;,
+    panel.grid.major = element_line(
+        rgb(198, 198, 216, maxColorValue = 255),
+        linetype = &quot;dotted&quot;), 
+    panel.grid.minor = element_line(
+        rgb(198, 198, 216, maxColorValue = 255),
+        linetype = &quot;dotted&quot;),
+    panel.background = element_rect(fill = &quot;#FEFDFF&quot;)
+  )
+}</code></pre>
+<p>O processo de resolução será bem simples, vou (i) escrever a matriz (pois em alguns problemas não será fornecida de maneira direta); (ii) escrever os coeficientes da matriz; (iii) criar variáveis no R com os coeficientes; (iv) testar se o sistema tem solução; (v) aplicar a função para resolvê-lo; (iv) plotar a solução em um gráfico.</p>
+<div id="exercícios-1" class="section level3">
+<h3><strong>Exercícios 1</strong></h3>
+<ol style="list-style-type: lower-roman">
+<li><p>Escrevendo a matriz:
+<span class="math display">\[
+\begin{bmatrix}
+-5x &amp; +2y &amp; =3\\
+9x &amp; +y &amp; =2
+\end{bmatrix}
+\]</span></p></li>
+<li><p>Escrevendo os coeficientes:
+<span class="math display">\[
+\begin{bmatrix}
+-5 &amp; 2 &amp; = 3\\
+ 9 &amp; 1 &amp; = 2
+\end{bmatrix}
+\]</span></p></li>
+<li><p>Criando as variáveis:</p></li>
+</ol>
+<pre class="r"><code>left_side &lt;- matrix(c(-5,9,2,1),
+                 nrow = 2)
+
+right_side &lt;- matrix(c(3,2), 
+            nrow = 2)</code></pre>
+<ol start="4" style="list-style-type: lower-roman">
+<li>Validando se há solução:</li>
+</ol>
+<pre class="r"><code>all.equal(R(left_side), R(cbind(left_side,right_side)))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<ol start="22" style="list-style-type: lower-alpha">
+<li>Solucionando o sistema linear:</li>
+</ol>
+<pre class="r"><code>solve(left_side,right_side)</code></pre>
+<pre><code>##            [,1]
+## [1,] 0.04347826
+## [2,] 1.60869565</code></pre>
+<p>Os valores 0.0435 e 1.6087 indicam os valores de X e Y que geram a intersecção destas retas. Plotando o gráfico, a solução ficará mais evidente.</p>
+<ol start="6" style="list-style-type: lower-roman">
+<li>Visualização gráfica:</li>
+</ol>
+<pre class="r"><code>matlib::plotEqn(left_side,right_side)</code></pre>
+<pre><code>## -5*x[1] + 2*x[2]  =  3 
+##  9*x[1]   + x[2]  =  2</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Este gráfico é bastante intuitivo, porém só é aplicável em sistemas com até três variávels.</p>
+</div>
+</div>

@@ -9,6 +9,7 @@
 
 \maketitle
 
+\tableofcontents
 
 \begin{abstract}
 
@@ -16,5 +17,14 @@ This is a simple abstract
 
 \end{abstract}
 
+\section{Introduction}
+
+\section{Methodology}
+
+\subsection{Monte Carlo Simulation}
+
+\subsection{Discounted Cash Flow}
+
+\section{Results}
 
 \end{document}
