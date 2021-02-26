@@ -5,9 +5,10 @@ author:
 
 output:
   bookdown::pdf_document2:
+    latex_engine: xelatex
     fig_caption: yes
-    fig_width: 7.5
-    fig_height: 6
+    fig_width: 5.5
+    fig_height: 3
     df_print: kable
     keep_tex: yes
     number_sections: no
@@ -22,11 +23,10 @@ pagestyle: plain  # plain, empty, headings
 geometry: margin=1in
 linestretch: 1.2
 fontfamily: mathpazo
+mainfont: Arial
 fontsize: 11pt
 
-# zotero: "My shared Zotero group"
 csl: ecology.csl
-# csl: https://www.zotero.org/styles/ecology
 
 linkcolor: RoyalBlue
 urlcolor: RoyalBlue
@@ -51,69 +51,171 @@ My abstract.
 
 ```{r setup, include=FALSE, cache=FALSE, message = FALSE}
 library(knitr)
+library(tidyverse)
+library(tidyquant)
+library(quantmod)
 
 ## Text results
-opts_chunk$set(echo = F, warning = F, message = F, fig.align = "center")
+opts_chunk$set(echo = F, 
+               warning = F, 
+               message = F, 
+               fig.align = "center",
+               fig.height = 3.5,
+               fig.width = 5.5)
 
 ## Code decoration
-opts_chunk$set(tidy = T, comment = NA, highlight = T)
+opts_chunk$set(highlight = T)
 
 ## Plots
 opts_chunk$set(fig.path = "output/figures/")
-
 ```
 
-# INTRODUCTION
+# INTRODUCTIONb
 
-Write your introduction here. You can cite bibliography like this [@Yan2011; @Sutherland2011] if you provide a `BibTeX` file with references. See http://rmarkdown.rstudio.com for more information. Or you could also use [knitcitations](https://cran.r-project.org/web/packages/knitcitations/index.html) or [RefManageR](https://cran.r-project.org/web/packages/RefManageR/index.html) to fetch bibliographic metadata automatically from the web. For example, citing a paper can be as easy as providing its DOI.
+On the first decade of the 21ft century the global economy has experienced the dot-com and real estate bubbles that bursted and impacted the lives of many people on different ways. Some authors claim that these bubbles could have been avoided if basic principles from finance and economics were applied during the euphoria (Koller, 2006). The basic principles indicated by these authors are related to value creation and the methods to proof that an asset is creating value.
 
-You can even specify the desired output format for your bibliography by including a style file for a specific journal (e.g. "ecology.csl"). Many different bibliography styles (CSL files) can be obtained at http://citationstyles.org/, https://github.com/citation-style-language/styles, or https://zotero.org/styles.
+On one side, the creation of value for a given asset (e.g. a company) is related to the Free Cash Flow that it generates, where this Free Cash Flow must be higher than the cost of capital used to put this asset to work (Assaf Neto, 2004). On the other side, the methods used to proof that an asset is creating value is related to the financial and mathematical framework used on the analysis. These financial and mathematical framework is generally called Valuation.
+
+The Valuation is a technique used to calculate the value of an asset and is broadly used on the financial sector (Assaf Neto, 2004). Within this area, there are different methods that can be choose and one of the most used and recommended is the Discounted Cash Flow Valuation. This method tries to project the future Free Cash Flow (FCF) that an asset will generate and applies a rate to discount these future FCF that will represent the cost of capital. This cost of capital exist to represent the investors that allocates capital on the asset being evaluated and it contemplates both risk and opportunity cost.
+
+Projecting FCF, discounting it by the cost of capital and summing up the period projected is the foundation of this method, that will result in a value that represents the asset's value. In other words, this method indicates that an asset will value the sum of future free cash flows after being discounted by the cost of capital. The method seems simple, but it's often forgotten by investors, leading to decisions that, when in conjunction with other circumstances, create bubbles that could be avoided, like the dot-com bubble from the 2000's or the real state bubble from 2007/08.
+
+The Discounted Free Cash Flow Valuation is well recommended on the academia (Damodaram, 2012), but the method will generate a deterministic result. This deterministic result informs the asset's value, but it doesn't inform the distribution of values that will exist if the model incorporates the risk during the Free Cash Flow projections. This risk on the projections was first incorporated by McKisney Company during the 1980, that applied the Monte Carlo Simulation together with the Discounted Free Cash Flow Valuation (Sharma; Peacock, 2008).
+
+The simulation applied on Discounted Cash Flow Valuations is a recommended approach by practitioners but the literature covering the way to build a model to run this simulation isn't broad. This research will attempt to cover this gap, showing the step-by-step method to develop a Discounted Cash Flow Valuation using Monte Carlo Simulations to generate a distribution probability of values for an asset.
+
+# MODEL
+
+The Discounted Free Cash Flow Valuation can be explained with a simple example, that will grow in complexity in a smooth way. First it's necessary to get the asset's Free Cash Flow. For this illustration, let's assume the asset is a company. Then the Free Cash Flow can be found on the company's Balance Sheet and Profit and Loss Statement. These documents will indicate the revenues, cost, expenses, taxes and investments for a specific period. With these variables, and the following equation, it's possible to get the Free Cash Flow:
+
+$$FCF = ((R-C-E).(1-t))-I$$
+Where:
+
+R = Revenue.
+
+C = Cost of Products Sold.
+
+E = Expenses.
+
+t = Tax rate.
+
+I = Investments.
+
+After calculating FCF, it's necessary to get the cost of capital for the investors that allocated capital on the company. This cost of capital will account for internal and external investors and the recommended method to estimate this cost is the Weigt Average Cost of Capital (WACC), that will look at the company's capital structure in terms of capital division between internal and external, and calculate the cost for each type of investor in order to generate the weigh average. The WACC equation is presented as follows:
+
+$$WACC = I_i.K_d + E_i.K_e$$
+Where:
+
+$I_i =$ Capital share for internal investors.
+
+$K_d =$ Cost of capital for internal investors.
+
+$E_i =$ Capital share for external investors.
+
+$K_e =$ Cost of capital for external investors.
+
+The capital structure for the company can be calculated using the company's Balance Sheet that will inform on liabilities the parcel of it that came from Internal and External investors. The cost of capital for external investors will be in the form of financial expenditures indicated on the Profit and Loss statement, where the ratio of financial expenditures over the amount of loan on the period.
+
+Taking the Free Cash Flow generated by the business in one year is not enough to reach the company's value, because the company will generate this Free Cash Flow on years beyond. Thus, this monetary value should be extended in the future and the sum of this Free Cash Flow will be a more accurate value of the business. Generally the projections use 10 years ahead in order to get the sum of all these Free Cash Flow.
+
+When making this projection, like all variables that are projected, there's a risk implicit with the Free Cash Flow on future years. Then it's important to consider this risk, that will act as a penalty cost on the Free Cash Flow projected. After the 10 years projection, it's not possible assume that the company will end it's activity and will not generate more Free Cash Flow, but also, is not feasible to make more than 10 years projection, because the years ahead become too uncertain. An alternative well recommended and use by practitioners is to get the Residual Value (RV) of the company.
+
+Residual Value is the Free Cash Flow for the years ahead from the 10 years projected. This value is highly uncertain and it's calculation carries a lot of risk and also the growth that the company can reach on the Free Cash Flow variable. This growth act by reducing the risk of the business, then increasing the Residual Value. The formula for RV is described as follows:
+
+$$RV = \frac{FCF}{r-g}$$
+
+After getting these variables, it's possible to create the equation that will generate the business's value:
+
+$$EV = \sum_{t=1}^n\frac{FCF_1}{(1+r)^1} + \frac{FCF_2}{(1+r)^2} + ... \frac{FCF_t}{(1+r)^t} + RV $$
+
+Where
+
+r = Risk rate (WACC)
+
+$$WACC = \frac{D}{D+E}[K_d(1-T_m)]+\frac{E}{D+E}(K_e)$$
+
+$$K_e = R_f+\beta(R_m - R_f)$$
 
 # METHODS
 
-## Study Area
+Taking a simple approach to understand each variables impact on company's valuation.
 
-We worked in a **beautiful** place with lots of trees, like *Quercus suber* and *Laurus nobilis*.
+```{r}
+dataset <- 
+  data.frame(
+    t = 1:10,
+    fcf = rep(1000,10),
+    r = rep(0.25,10)
+  )
 
-
-## Data collection and analysis
-
-```{r read_data, eval = FALSE}
-dataset <- read.csv("mydata.csv")
+dataset <- 
+  dataset %>% 
+  mutate(dcf = fcf/((1+r)^t))
 ```
 
-We applied a linear model where
+The above graph shows each Discounted Cash Flow for the 10 years projection.
 
-$$
-y_{i} = \alpha + \beta*x_{i} 
-$$
+```{r}
+dataset %>% 
+  ggplot2::ggplot()+
+  geom_col(mapping = aes(x = t, y = dcf, fill = t))+
+  theme(legend.position = "none",
+        legend.title = element_blank())
+```
 
-```{r model, eval = FALSE}
-model <- lm(y ~ x)
+```{r}
+dataset %>% 
+  group_by() %>% 
+  summarise(company_value = sum(dcf))
+```
+
+In order to calculate the company's value it's necessary to have the historical values of the necessary variabbles present on the following equations:
+
+```{r, eval=F}
+output <- rep(NA,1000)
+
+for(i in 1:1000){
+  output[i] <- 
+    data.frame(
+      ebitda = sample(ebitda, size = 10),
+      investment = sample(investment, size = 10),
+      n = n
+    ) %>% 
+    mutate(dcf = (ebitda*(1-t)-investment)/((1+sample(wacc, size = 1))^n)) %>% 
+    summarise(sum(dcf)) + (mean(ebitda)/(sample(wacc,size = 1)-sample(g,size = 1)))
+}
+
+output <- 
+  data.frame(valuation = matrix(unlist(output),
+                                nrow = 1000,
+                                byrow = T),
+             stringsAsFactors = F)
+
+output %>% 
+  ggplot2::ggplot()+
+  geom_histogram(mapping = aes(x = valuation),
+                 fill = "steel blue",
+                 alpha = .5)+
+  geom_vline(mapping = aes(xintercept = mean(valuation)),
+                           lty = 2,
+                           color = "dark red")+
+  scale_x_continuous(labels = scales::comma)+
+  labs(title = "Enterprise Value",
+       x = "",
+       y = "")
 ```
 
 # RESULTS
 
-Trees in forest *A* grew taller than those in forest *B* (mean height: `r mean(25, 31, 28)` versus `r mean(13, 19, 16)` m). 
-
-And many more cool results that get updated dynamically, e.g. see Table \@ref(tab:Table-mtcars) and Fig. \@ref(fig:scatterplot). Note Tables and Figures are cross-linked and numbered automatically. They could also appear in the middle of the document, not necessarily at the end.
-
-
 # DISCUSSION
 
-Discuss.
-
 # CONCLUSIONS
-
-Wrap up
 
 \eleft
 
 \clearpage
 
-
 \listoftables
-
 
 \newpage
 
@@ -124,6 +226,4 @@ Wrap up
 \listoffigures
 
 \newpage
-
-
 
