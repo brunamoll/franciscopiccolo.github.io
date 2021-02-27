@@ -10,13 +10,44 @@ knitr::opts_chunk$set(
   warning = F,
   echo = T,
   eval = T,
-  fig.align = "center"
+  fig.align = "center",
+  fig.height = 5,
+  fig.width = 6.5
 )
 ```
 
 A Economatica é uma empresa de tecnologia do setor financeiro que fornece dados sobre empresas, fundos de investimentos e ações, que auxiliam investidores na tomada de decisão e também acadêmicos na elaboração de estudos. Recentemente comecei a elaborar um artigo acadêmico relacionado a finanças e precisei recorrer à Economatica para pegar alguns dados necessários.
 
-Como precisarei fazer uma análise exploratória do dataset para ver o que será relevante usar no artigo, vou aproveitar para documentar esta análise e deixar o dataset disponível para que outras pessoas usem também.
+Como vou ter que fazer uma análise exploratória do dataset para ver o que será relevante usar no artigo, vou aproveitar para documentar esta análise e deixar o dataset disponível para que outras pessoas usem também. O dataset pode ser acessado neste [link](https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/2021-02-27-dataset_economatica) ou através do comando abaixo:
+
+```{r}
+library(readr)
+
+dataset <- readr::read_csv(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv")
+```
+
+Para este projeto, vou usar os pacotes abaixo, e também o template de gráficos criando a função 'theme_graph':
+
+```{r}
+library(tidyverse)
+library(patchwork)
+
+# Função para padronizar o design dos gráficos
+theme_graph <- function(){
+  theme(
+    plot.title = element_text(size = 14),
+    plot.subtitle = element_text(size = 10),
+    plot.caption = element_text(face = "italic", size = 8.5),
+    axis.text = element_text(size = 8.5),
+    axis.title = element_text(face = "italic", size = 8.5),
+    strip.background = element_rect(fill = "blue"),
+    strip.text = element_text(face = "bold"),
+    legend.position = "bottom",
+    legend.title = element_blank()
+  )
+}
+```
+
 
 
 
