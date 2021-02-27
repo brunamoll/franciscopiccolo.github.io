@@ -13,7 +13,8 @@ math: true
 <p>Como vou ter que fazer uma análise exploratória do dataset para ver o que será relevante usar no artigo, vou aproveitar para documentar esta análise e deixar o dataset disponível para que outras pessoas usem também. O dataset pode ser acessado neste <a href="https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/2021-02-27-dataset_economatica">link</a> ou através do comando abaixo:</p>
 <pre class="r"><code>library(readr)
 
-dataset &lt;- readr::read_csv(file = &quot;https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv&quot;)</code></pre>
+dataset &lt;- readr::read_delim(file = &quot;https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv&quot;,
+                           delim = &quot;;&quot;)</code></pre>
 <p>Para este projeto, vou usar os pacotes abaixo, e também o template de gráficos criando a função ‘theme_graph’:</p>
 <pre class="r"><code>library(tidyverse)
 library(patchwork)
@@ -35,12 +36,41 @@ theme_graph &lt;- function(){
 <p>O dataset apresenta dados financeiros de empresas de capital aberto negociadas na Ibovespa. Abaixo há uma amostra dos dados presentes nele:</p>
 <pre class="r"><code>dataset %&gt;% 
   head()</code></pre>
-<pre><code>## # A tibble: 6 x 1
-##   `;Nome;Classe;Bolsa / Fonte;Tipo de Ativo;&quot;Ativo /`                           
-##   &lt;chr&gt;                                                                         
-## 1 &quot;;;;;;;;;31/03/2016;30/06/2016;30/09/2016;31/12/2016;31/03/2017;30/06/2017;30~
-## 2 &quot;1;3r Petroleum;ON;Bovespa;A\xe7\xe3o;ativo;RRRP3;Petr\xf3leo e Gas;-;-;-;-;-~
-## 3 &quot;2;524 Particip;ON;Bovespa;A\xe7\xe3o;ativo;QVQP3B;Energia El\xe9trica;0;0;0;~
-## 4 &quot;3;Abc Brasil;PN;Bovespa;A\xe7\xe3o;ativo;ABCB4;Finan\xe7as e Seguros;-;-;-;-~
-## 5 &quot;4;Aco Altona;PN;Bovespa;A\xe7\xe3o;ativo;EALT4;Siderur &amp; Metalur;37.863;69.1~
-## 6 &quot;5;Aerisenergia;ON;Bovespa;A\xe7\xe3o;ativo;AERI3;M\xe1quinas Indust;-;-;-;-;~</code></pre>
+<pre><code>## # A tibble: 6 x 230
+##   Nome  Classe `C\xf3digo` Setor_Economati~ net_revenue net_revenue_1
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;        
+## 1 na    na     na          &quot;na&quot;             31/03/2016  30/06/2016   
+## 2 3r P~ ON     RRRP3       &quot;Petr\xf3leo e ~ -           -            
+## 3 524 ~ ON     QVQP3B      &quot;Energia El\xe9~ 0           0            
+## 4 Abc ~ PN     ABCB4       &quot;Finan\xe7as e ~ -           -            
+## 5 Aco ~ PN     EALT4       &quot;Siderur &amp; Meta~ 37.863      69.114       
+## 6 Aeri~ ON     AERI3       &quot;M\xe1quinas In~ -           -            
+## # ... with 224 more variables: net_revenue_2 &lt;chr&gt;, net_revenue_3 &lt;chr&gt;,
+## #   net_revenue_4 &lt;chr&gt;, net_revenue_5 &lt;chr&gt;, net_revenue_6 &lt;chr&gt;,
+## #   net_revenue_7 &lt;chr&gt;, net_revenue_8 &lt;chr&gt;, net_revenue_9 &lt;chr&gt;,
+## #   net_revenue_10 &lt;chr&gt;, net_revenue_11 &lt;chr&gt;, net_revenue_12 &lt;chr&gt;,
+## #   net_revenue_13 &lt;chr&gt;, net_revenue_14 &lt;chr&gt;, net_revenue_15 &lt;chr&gt;,
+## #   net_revenue_16 &lt;chr&gt;, net_revenue_17 &lt;chr&gt;, net_revenue_18 &lt;chr&gt;,
+## #   net_revenue_19 &lt;chr&gt;, net_revenue_20 &lt;chr&gt;, net_revenue_21 &lt;chr&gt;,
+## #   cogs &lt;chr&gt;, cogs_1 &lt;chr&gt;, cogs_2 &lt;chr&gt;, cogs_3 &lt;chr&gt;, cogs_4 &lt;chr&gt;,
+## #   cogs_5 &lt;chr&gt;, cogs_6 &lt;chr&gt;, cogs_7 &lt;chr&gt;, cogs_8 &lt;chr&gt;, cogs_9 &lt;chr&gt;,
+## #   cogs_10 &lt;chr&gt;, cogs_11 &lt;chr&gt;, cogs_12 &lt;chr&gt;, cogs_13 &lt;chr&gt;, cogs_14 &lt;chr&gt;,
+## #   cogs_15 &lt;chr&gt;, cogs_16 &lt;chr&gt;, cogs_17 &lt;chr&gt;, cogs_18 &lt;chr&gt;, cogs_19 &lt;chr&gt;,
+## #   cogs_20 &lt;chr&gt;, cogs_21 &lt;chr&gt;, investment &lt;chr&gt;, investment_1 &lt;chr&gt;,
+## #   investment_2 &lt;chr&gt;, investment_3 &lt;chr&gt;, investment_4 &lt;chr&gt;,
+## #   investment_5 &lt;chr&gt;, investment_6 &lt;chr&gt;, investment_7 &lt;chr&gt;,
+## #   investment_8 &lt;chr&gt;, investment_9 &lt;chr&gt;, investment_10 &lt;chr&gt;,
+## #   investment_11 &lt;chr&gt;, investment_12 &lt;chr&gt;, investment_13 &lt;chr&gt;,
+## #   investment_14 &lt;chr&gt;, investment_15 &lt;chr&gt;, investment_16 &lt;chr&gt;,
+## #   investment_17 &lt;chr&gt;, investment_18 &lt;chr&gt;, investment_19 &lt;chr&gt;,
+## #   investment_20 &lt;chr&gt;, investment_21 &lt;chr&gt;, ebitda &lt;chr&gt;, ebitda_1 &lt;chr&gt;,
+## #   ebitda_2 &lt;chr&gt;, ebitda_3 &lt;chr&gt;, ebitda_4 &lt;chr&gt;, ebitda_5 &lt;chr&gt;,
+## #   ebitda_6 &lt;chr&gt;, ebitda_7 &lt;chr&gt;, ebitda_8 &lt;chr&gt;, ebitda_9 &lt;chr&gt;,
+## #   ebitda_10 &lt;chr&gt;, ebitda_11 &lt;chr&gt;, ebitda_12 &lt;chr&gt;, ebitda_13 &lt;chr&gt;,
+## #   ebitda_14 &lt;chr&gt;, ebitda_15 &lt;chr&gt;, ebitda_16 &lt;chr&gt;, ebitda_17 &lt;chr&gt;,
+## #   ebitda_18 &lt;chr&gt;, ebitda_19 &lt;chr&gt;, ebitda_20 &lt;chr&gt;, ebitda_21 &lt;chr&gt;,
+## #   net_cash_flow &lt;chr&gt;, net_cash_flow_1 &lt;chr&gt;, net_cash_flow_2 &lt;chr&gt;,
+## #   net_cash_flow_3 &lt;chr&gt;, net_cash_flow_4 &lt;chr&gt;, net_cash_flow_5 &lt;chr&gt;,
+## #   net_cash_flow_6 &lt;chr&gt;, net_cash_flow_7 &lt;chr&gt;, net_cash_flow_8 &lt;chr&gt;,
+## #   net_cash_flow_9 &lt;chr&gt;, net_cash_flow_10 &lt;chr&gt;, net_cash_flow_11 &lt;chr&gt;,
+## #   net_cash_flow_12 &lt;chr&gt;, net_cash_flow_13 &lt;chr&gt;, ...</code></pre>

@@ -23,7 +23,8 @@ Como vou ter que fazer uma análise exploratória do dataset para ver o que ser�
 ```{r}
 library(readr)
 
-dataset <- readr::read_csv(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv")
+dataset <- readr::read_delim(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv",
+                           delim = ";")
 ```
 
 Para este projeto, vou usar os pacotes abaixo, e também o template de gráficos criando a função 'theme_graph':
