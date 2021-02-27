@@ -48,6 +48,12 @@ theme_graph <- function(){
 }
 ```
 
+O dataset apresenta dados financeiros de empresas de capital aberto negociadas na Ibovespa. Abaixo há uma amostra dos dados presentes nele:
+
+```{r}
+dataset %>% 
+  head()
+```
 
 
 

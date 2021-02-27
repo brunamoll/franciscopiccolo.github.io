@@ -1,0 +1,46 @@
+---
+title: "Análise Exploratória de Dados Financeiros - Dataset da Economatica"
+date: 2021-02-27
+math: true
+---
+
+<script src="index_files/header-attrs/header-attrs.js"></script>
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<p>A Economatica é uma empresa de tecnologia do setor financeiro que fornece dados sobre empresas, fundos de investimentos e ações, que auxiliam investidores na tomada de decisão e também acadêmicos na elaboração de estudos. Recentemente comecei a elaborar um artigo acadêmico relacionado a finanças e precisei recorrer à Economatica para pegar alguns dados necessários.</p>
+<p>Como vou ter que fazer uma análise exploratória do dataset para ver o que será relevante usar no artigo, vou aproveitar para documentar esta análise e deixar o dataset disponível para que outras pessoas usem também. O dataset pode ser acessado neste <a href="https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/2021-02-27-dataset_economatica">link</a> ou através do comando abaixo:</p>
+<pre class="r"><code>library(readr)
+
+dataset &lt;- readr::read_csv(file = &quot;https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv&quot;)</code></pre>
+<p>Para este projeto, vou usar os pacotes abaixo, e também o template de gráficos criando a função ‘theme_graph’:</p>
+<pre class="r"><code>library(tidyverse)
+library(patchwork)
+
+# Função para padronizar o design dos gráficos
+theme_graph &lt;- function(){
+  theme(
+    plot.title = element_text(size = 14),
+    plot.subtitle = element_text(size = 10),
+    plot.caption = element_text(face = &quot;italic&quot;, size = 8.5),
+    axis.text = element_text(size = 8.5),
+    axis.title = element_text(face = &quot;italic&quot;, size = 8.5),
+    strip.background = element_rect(fill = &quot;blue&quot;),
+    strip.text = element_text(face = &quot;bold&quot;),
+    legend.position = &quot;bottom&quot;,
+    legend.title = element_blank()
+  )
+}</code></pre>
+<p>O dataset apresenta dados financeiros de empresas de capital aberto negociadas na Ibovespa. Abaixo há uma amostra dos dados presentes nele:</p>
+<pre class="r"><code>dataset %&gt;% 
+  head()</code></pre>
+<pre><code>## # A tibble: 6 x 1
+##   `;Nome;Classe;Bolsa / Fonte;Tipo de Ativo;&quot;Ativo /`                           
+##   &lt;chr&gt;                                                                         
+## 1 &quot;;;;;;;;;31/03/2016;30/06/2016;30/09/2016;31/12/2016;31/03/2017;30/06/2017;30~
+## 2 &quot;1;3r Petroleum;ON;Bovespa;A\xe7\xe3o;ativo;RRRP3;Petr\xf3leo e Gas;-;-;-;-;-~
+## 3 &quot;2;524 Particip;ON;Bovespa;A\xe7\xe3o;ativo;QVQP3B;Energia El\xe9trica;0;0;0;~
+## 4 &quot;3;Abc Brasil;PN;Bovespa;A\xe7\xe3o;ativo;ABCB4;Finan\xe7as e Seguros;-;-;-;-~
+## 5 &quot;4;Aco Altona;PN;Bovespa;A\xe7\xe3o;ativo;EALT4;Siderur &amp; Metalur;37.863;69.1~
+## 6 &quot;5;Aerisenergia;ON;Bovespa;A\xe7\xe3o;ativo;AERI3;M\xe1quinas Indust;-;-;-;-;~</code></pre>
