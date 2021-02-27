@@ -1,0 +1,27 @@
+---
+title: "Análise Exploratória de Dados Financeiros - Dataset da Economatica"
+date: 2021-02-27
+math: true
+---
+
+```{r, message=F, warning=F, echo=F}
+knitr::opts_chunk$set(
+  message = F,
+  warning = F,
+  echo = T,
+  eval = T,
+  fig.align = "center"
+)
+```
+
+A Economatica é uma empresa de tecnologia do setor financeiro que fornece dados sobre empresas, fundos de investimentos e ações, que auxiliam investidores na tomada de decisão e também acadêmicos na elaboração de estudos. Recentemente comecei a elaborar um artigo acadêmico relacionado a finanças e precisei recorrer à Economatica para pegar alguns dados necessários.
+
+Como precisarei fazer uma análise exploratória do dataset para ver o que será relevante usar no artigo, vou aproveitar para documentar esta análise e deixar o dataset disponível para que outras pessoas usem também.
+
+
+
+
+
+
+
+
