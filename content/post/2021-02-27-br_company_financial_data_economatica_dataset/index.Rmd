@@ -32,6 +32,7 @@ Para este projeto, vou usar os pacotes abaixo, e também o template de gráficos
 ```{r}
 library(tidyverse)
 library(patchwork)
+library(kableExtra)
 
 # Função para padronizar o design dos gráficos
 theme_graph <- function(){
@@ -53,7 +54,8 @@ O dataset apresenta dados financeiros de empresas de capital aberto negociadas n
 
 ```{r}
 dataset %>% 
-  head()
+  head() %>%
+  kableExtra::kable(format.args = list(big.mark = ".", decimal.mark = "."))
 ```
 
 

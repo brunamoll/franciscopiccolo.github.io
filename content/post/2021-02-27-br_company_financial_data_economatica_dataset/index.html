@@ -18,6 +18,7 @@ dataset &lt;- readr::read_delim(file = &quot;https://raw.githubusercontent.com/F
 <p>Para este projeto, vou usar os pacotes abaixo, e também o template de gráficos criando a função ‘theme_graph’:</p>
 <pre class="r"><code>library(tidyverse)
 library(patchwork)
+library(kableExtra)
 
 # Função para padronizar o design dos gráficos
 theme_graph &lt;- function(){
@@ -35,42 +36,5467 @@ theme_graph &lt;- function(){
 }</code></pre>
 <p>O dataset apresenta dados financeiros de empresas de capital aberto negociadas na Ibovespa. Abaixo há uma amostra dos dados presentes nele:</p>
 <pre class="r"><code>dataset %&gt;% 
-  head()</code></pre>
-<pre><code>## # A tibble: 6 x 230
-##   Nome  Classe `C\xf3digo` Setor_Economati~ net_revenue net_revenue_1
-##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;        
-## 1 na    na     na          &quot;na&quot;             31/03/2016  30/06/2016   
-## 2 3r P~ ON     RRRP3       &quot;Petr\xf3leo e ~ -           -            
-## 3 524 ~ ON     QVQP3B      &quot;Energia El\xe9~ 0           0            
-## 4 Abc ~ PN     ABCB4       &quot;Finan\xe7as e ~ -           -            
-## 5 Aco ~ PN     EALT4       &quot;Siderur &amp; Meta~ 37.863      69.114       
-## 6 Aeri~ ON     AERI3       &quot;M\xe1quinas In~ -           -            
-## # ... with 224 more variables: net_revenue_2 &lt;chr&gt;, net_revenue_3 &lt;chr&gt;,
-## #   net_revenue_4 &lt;chr&gt;, net_revenue_5 &lt;chr&gt;, net_revenue_6 &lt;chr&gt;,
-## #   net_revenue_7 &lt;chr&gt;, net_revenue_8 &lt;chr&gt;, net_revenue_9 &lt;chr&gt;,
-## #   net_revenue_10 &lt;chr&gt;, net_revenue_11 &lt;chr&gt;, net_revenue_12 &lt;chr&gt;,
-## #   net_revenue_13 &lt;chr&gt;, net_revenue_14 &lt;chr&gt;, net_revenue_15 &lt;chr&gt;,
-## #   net_revenue_16 &lt;chr&gt;, net_revenue_17 &lt;chr&gt;, net_revenue_18 &lt;chr&gt;,
-## #   net_revenue_19 &lt;chr&gt;, net_revenue_20 &lt;chr&gt;, net_revenue_21 &lt;chr&gt;,
-## #   cogs &lt;chr&gt;, cogs_1 &lt;chr&gt;, cogs_2 &lt;chr&gt;, cogs_3 &lt;chr&gt;, cogs_4 &lt;chr&gt;,
-## #   cogs_5 &lt;chr&gt;, cogs_6 &lt;chr&gt;, cogs_7 &lt;chr&gt;, cogs_8 &lt;chr&gt;, cogs_9 &lt;chr&gt;,
-## #   cogs_10 &lt;chr&gt;, cogs_11 &lt;chr&gt;, cogs_12 &lt;chr&gt;, cogs_13 &lt;chr&gt;, cogs_14 &lt;chr&gt;,
-## #   cogs_15 &lt;chr&gt;, cogs_16 &lt;chr&gt;, cogs_17 &lt;chr&gt;, cogs_18 &lt;chr&gt;, cogs_19 &lt;chr&gt;,
-## #   cogs_20 &lt;chr&gt;, cogs_21 &lt;chr&gt;, investment &lt;chr&gt;, investment_1 &lt;chr&gt;,
-## #   investment_2 &lt;chr&gt;, investment_3 &lt;chr&gt;, investment_4 &lt;chr&gt;,
-## #   investment_5 &lt;chr&gt;, investment_6 &lt;chr&gt;, investment_7 &lt;chr&gt;,
-## #   investment_8 &lt;chr&gt;, investment_9 &lt;chr&gt;, investment_10 &lt;chr&gt;,
-## #   investment_11 &lt;chr&gt;, investment_12 &lt;chr&gt;, investment_13 &lt;chr&gt;,
-## #   investment_14 &lt;chr&gt;, investment_15 &lt;chr&gt;, investment_16 &lt;chr&gt;,
-## #   investment_17 &lt;chr&gt;, investment_18 &lt;chr&gt;, investment_19 &lt;chr&gt;,
-## #   investment_20 &lt;chr&gt;, investment_21 &lt;chr&gt;, ebitda &lt;chr&gt;, ebitda_1 &lt;chr&gt;,
-## #   ebitda_2 &lt;chr&gt;, ebitda_3 &lt;chr&gt;, ebitda_4 &lt;chr&gt;, ebitda_5 &lt;chr&gt;,
-## #   ebitda_6 &lt;chr&gt;, ebitda_7 &lt;chr&gt;, ebitda_8 &lt;chr&gt;, ebitda_9 &lt;chr&gt;,
-## #   ebitda_10 &lt;chr&gt;, ebitda_11 &lt;chr&gt;, ebitda_12 &lt;chr&gt;, ebitda_13 &lt;chr&gt;,
-## #   ebitda_14 &lt;chr&gt;, ebitda_15 &lt;chr&gt;, ebitda_16 &lt;chr&gt;, ebitda_17 &lt;chr&gt;,
-## #   ebitda_18 &lt;chr&gt;, ebitda_19 &lt;chr&gt;, ebitda_20 &lt;chr&gt;, ebitda_21 &lt;chr&gt;,
-## #   net_cash_flow &lt;chr&gt;, net_cash_flow_1 &lt;chr&gt;, net_cash_flow_2 &lt;chr&gt;,
-## #   net_cash_flow_3 &lt;chr&gt;, net_cash_flow_4 &lt;chr&gt;, net_cash_flow_5 &lt;chr&gt;,
-## #   net_cash_flow_6 &lt;chr&gt;, net_cash_flow_7 &lt;chr&gt;, net_cash_flow_8 &lt;chr&gt;,
-## #   net_cash_flow_9 &lt;chr&gt;, net_cash_flow_10 &lt;chr&gt;, net_cash_flow_11 &lt;chr&gt;,
-## #   net_cash_flow_12 &lt;chr&gt;, net_cash_flow_13 &lt;chr&gt;, ...</code></pre>
+  head() %&gt;%
+  kableExtra::kable(format.args = list(big.mark = &quot;.&quot;, decimal.mark = &quot;.&quot;))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+company
+</th>
+<th style="text-align:left;">
+class
+</th>
+<th style="text-align:left;">
+symbol
+</th>
+<th style="text-align:left;">
+economatica_classification
+</th>
+<th style="text-align:left;">
+net_revenue
+</th>
+<th style="text-align:left;">
+net_revenue_1
+</th>
+<th style="text-align:left;">
+net_revenue_2
+</th>
+<th style="text-align:left;">
+net_revenue_3
+</th>
+<th style="text-align:left;">
+net_revenue_4
+</th>
+<th style="text-align:left;">
+net_revenue_5
+</th>
+<th style="text-align:left;">
+net_revenue_6
+</th>
+<th style="text-align:left;">
+net_revenue_7
+</th>
+<th style="text-align:left;">
+net_revenue_8
+</th>
+<th style="text-align:left;">
+net_revenue_9
+</th>
+<th style="text-align:left;">
+net_revenue_10
+</th>
+<th style="text-align:left;">
+net_revenue_11
+</th>
+<th style="text-align:left;">
+net_revenue_12
+</th>
+<th style="text-align:left;">
+net_revenue_13
+</th>
+<th style="text-align:left;">
+net_revenue_14
+</th>
+<th style="text-align:left;">
+net_revenue_15
+</th>
+<th style="text-align:left;">
+net_revenue_16
+</th>
+<th style="text-align:left;">
+net_revenue_17
+</th>
+<th style="text-align:left;">
+net_revenue_18
+</th>
+<th style="text-align:left;">
+net_revenue_19
+</th>
+<th style="text-align:left;">
+net_revenue_20
+</th>
+<th style="text-align:left;">
+net_revenue_21
+</th>
+<th style="text-align:left;">
+cogs
+</th>
+<th style="text-align:left;">
+cogs_1
+</th>
+<th style="text-align:left;">
+cogs_2
+</th>
+<th style="text-align:left;">
+cogs_3
+</th>
+<th style="text-align:left;">
+cogs_4
+</th>
+<th style="text-align:left;">
+cogs_5
+</th>
+<th style="text-align:left;">
+cogs_6
+</th>
+<th style="text-align:left;">
+cogs_7
+</th>
+<th style="text-align:left;">
+cogs_8
+</th>
+<th style="text-align:left;">
+cogs_9
+</th>
+<th style="text-align:left;">
+cogs_10
+</th>
+<th style="text-align:left;">
+cogs_11
+</th>
+<th style="text-align:left;">
+cogs_12
+</th>
+<th style="text-align:left;">
+cogs_13
+</th>
+<th style="text-align:left;">
+cogs_14
+</th>
+<th style="text-align:left;">
+cogs_15
+</th>
+<th style="text-align:left;">
+cogs_16
+</th>
+<th style="text-align:left;">
+cogs_17
+</th>
+<th style="text-align:left;">
+cogs_18
+</th>
+<th style="text-align:left;">
+cogs_19
+</th>
+<th style="text-align:left;">
+cogs_20
+</th>
+<th style="text-align:left;">
+cogs_21
+</th>
+<th style="text-align:left;">
+investment
+</th>
+<th style="text-align:left;">
+investment_1
+</th>
+<th style="text-align:left;">
+investment_2
+</th>
+<th style="text-align:left;">
+investment_3
+</th>
+<th style="text-align:left;">
+investment_4
+</th>
+<th style="text-align:left;">
+investment_5
+</th>
+<th style="text-align:left;">
+investment_6
+</th>
+<th style="text-align:left;">
+investment_7
+</th>
+<th style="text-align:left;">
+investment_8
+</th>
+<th style="text-align:left;">
+investment_9
+</th>
+<th style="text-align:left;">
+investment_10
+</th>
+<th style="text-align:left;">
+investment_11
+</th>
+<th style="text-align:left;">
+investment_12
+</th>
+<th style="text-align:left;">
+investment_13
+</th>
+<th style="text-align:left;">
+investment_14
+</th>
+<th style="text-align:left;">
+investment_15
+</th>
+<th style="text-align:left;">
+investment_16
+</th>
+<th style="text-align:left;">
+investment_17
+</th>
+<th style="text-align:left;">
+investment_18
+</th>
+<th style="text-align:left;">
+investment_19
+</th>
+<th style="text-align:left;">
+investment_20
+</th>
+<th style="text-align:left;">
+investment_21
+</th>
+<th style="text-align:left;">
+ebitda
+</th>
+<th style="text-align:left;">
+ebitda_1
+</th>
+<th style="text-align:left;">
+ebitda_2
+</th>
+<th style="text-align:left;">
+ebitda_3
+</th>
+<th style="text-align:left;">
+ebitda_4
+</th>
+<th style="text-align:left;">
+ebitda_5
+</th>
+<th style="text-align:left;">
+ebitda_6
+</th>
+<th style="text-align:left;">
+ebitda_7
+</th>
+<th style="text-align:left;">
+ebitda_8
+</th>
+<th style="text-align:left;">
+ebitda_9
+</th>
+<th style="text-align:left;">
+ebitda_10
+</th>
+<th style="text-align:left;">
+ebitda_11
+</th>
+<th style="text-align:left;">
+ebitda_12
+</th>
+<th style="text-align:left;">
+ebitda_13
+</th>
+<th style="text-align:left;">
+ebitda_14
+</th>
+<th style="text-align:left;">
+ebitda_15
+</th>
+<th style="text-align:left;">
+ebitda_16
+</th>
+<th style="text-align:left;">
+ebitda_17
+</th>
+<th style="text-align:left;">
+ebitda_18
+</th>
+<th style="text-align:left;">
+ebitda_19
+</th>
+<th style="text-align:left;">
+ebitda_20
+</th>
+<th style="text-align:left;">
+ebitda_21
+</th>
+<th style="text-align:left;">
+net_cash_flow
+</th>
+<th style="text-align:left;">
+net_cash_flow_1
+</th>
+<th style="text-align:left;">
+net_cash_flow_2
+</th>
+<th style="text-align:left;">
+net_cash_flow_3
+</th>
+<th style="text-align:left;">
+net_cash_flow_4
+</th>
+<th style="text-align:left;">
+net_cash_flow_5
+</th>
+<th style="text-align:left;">
+net_cash_flow_6
+</th>
+<th style="text-align:left;">
+net_cash_flow_7
+</th>
+<th style="text-align:left;">
+net_cash_flow_8
+</th>
+<th style="text-align:left;">
+net_cash_flow_9
+</th>
+<th style="text-align:left;">
+net_cash_flow_10
+</th>
+<th style="text-align:left;">
+net_cash_flow_11
+</th>
+<th style="text-align:left;">
+net_cash_flow_12
+</th>
+<th style="text-align:left;">
+net_cash_flow_13
+</th>
+<th style="text-align:left;">
+net_cash_flow_14
+</th>
+<th style="text-align:left;">
+net_cash_flow_15
+</th>
+<th style="text-align:left;">
+net_cash_flow_16
+</th>
+<th style="text-align:left;">
+net_cash_flow_17
+</th>
+<th style="text-align:left;">
+net_cash_flow_18
+</th>
+<th style="text-align:left;">
+net_cash_flow_19
+</th>
+<th style="text-align:left;">
+net_cash_flow_20
+</th>
+<th style="text-align:left;">
+net_cash_flow_21
+</th>
+<th style="text-align:left;">
+operational_expenses
+</th>
+<th style="text-align:left;">
+operational_expenses_1
+</th>
+<th style="text-align:left;">
+operational_expenses_2
+</th>
+<th style="text-align:left;">
+operational_expenses_3
+</th>
+<th style="text-align:left;">
+operational_expenses_4
+</th>
+<th style="text-align:left;">
+operational_expenses_5
+</th>
+<th style="text-align:left;">
+operational_expenses_6
+</th>
+<th style="text-align:left;">
+operational_expenses_7
+</th>
+<th style="text-align:left;">
+operational_expenses_8
+</th>
+<th style="text-align:left;">
+operational_expenses_9
+</th>
+<th style="text-align:left;">
+operational_expenses_10
+</th>
+<th style="text-align:left;">
+operational_expenses_11
+</th>
+<th style="text-align:left;">
+operational_expenses_12
+</th>
+<th style="text-align:left;">
+operational_expenses_13
+</th>
+<th style="text-align:left;">
+operational_expenses_14
+</th>
+<th style="text-align:left;">
+operational_expenses_15
+</th>
+<th style="text-align:left;">
+operational_expenses_16
+</th>
+<th style="text-align:left;">
+operational_expenses_17
+</th>
+<th style="text-align:left;">
+operational_expenses_18
+</th>
+<th style="text-align:left;">
+operational_expenses_19
+</th>
+<th style="text-align:left;">
+operational_expenses_20
+</th>
+<th style="text-align:left;">
+operational_expenses_21
+</th>
+<th style="text-align:left;">
+financial_expenses
+</th>
+<th style="text-align:left;">
+financial_expenses_1
+</th>
+<th style="text-align:left;">
+financial_expenses_2
+</th>
+<th style="text-align:left;">
+financial_expenses_3
+</th>
+<th style="text-align:left;">
+financial_expenses_4
+</th>
+<th style="text-align:left;">
+financial_expenses_5
+</th>
+<th style="text-align:left;">
+financial_expenses_6
+</th>
+<th style="text-align:left;">
+financial_expenses_7
+</th>
+<th style="text-align:left;">
+financial_expenses_8
+</th>
+<th style="text-align:left;">
+financial_expenses_9
+</th>
+<th style="text-align:left;">
+financial_expenses_10
+</th>
+<th style="text-align:left;">
+financial_expenses_11
+</th>
+<th style="text-align:left;">
+financial_expenses_12
+</th>
+<th style="text-align:left;">
+financial_expenses_13
+</th>
+<th style="text-align:left;">
+financial_expenses_14
+</th>
+<th style="text-align:left;">
+financial_expenses_15
+</th>
+<th style="text-align:left;">
+financial_expenses_16
+</th>
+<th style="text-align:left;">
+financial_expenses_17
+</th>
+<th style="text-align:left;">
+financial_expenses_18
+</th>
+<th style="text-align:left;">
+financial_expenses_19
+</th>
+<th style="text-align:left;">
+financial_expenses_20
+</th>
+<th style="text-align:left;">
+financial_expenses_21
+</th>
+<th style="text-align:left;">
+financial_revenue
+</th>
+<th style="text-align:left;">
+financial_revenue_1
+</th>
+<th style="text-align:left;">
+financial_revenue_2
+</th>
+<th style="text-align:left;">
+financial_revenue_3
+</th>
+<th style="text-align:left;">
+financial_revenue_4
+</th>
+<th style="text-align:left;">
+financial_revenue_5
+</th>
+<th style="text-align:left;">
+financial_revenue_6
+</th>
+<th style="text-align:left;">
+financial_revenue_7
+</th>
+<th style="text-align:left;">
+financial_revenue_8
+</th>
+<th style="text-align:left;">
+financial_revenue_9
+</th>
+<th style="text-align:left;">
+financial_revenue_10
+</th>
+<th style="text-align:left;">
+financial_revenue_11
+</th>
+<th style="text-align:left;">
+financial_revenue_12
+</th>
+<th style="text-align:left;">
+financial_revenue_13
+</th>
+<th style="text-align:left;">
+financial_revenue_14
+</th>
+<th style="text-align:left;">
+financial_revenue_15
+</th>
+<th style="text-align:left;">
+financial_revenue_16
+</th>
+<th style="text-align:left;">
+financial_revenue_17
+</th>
+<th style="text-align:left;">
+financial_revenue_18
+</th>
+<th style="text-align:left;">
+financial_revenue_19
+</th>
+<th style="text-align:left;">
+financial_revenue_20
+</th>
+<th style="text-align:left;">
+financial_revenue_21
+</th>
+<th style="text-align:left;">
+short_term_loans
+</th>
+<th style="text-align:left;">
+short_term_loans_1
+</th>
+<th style="text-align:left;">
+short_term_loans_2
+</th>
+<th style="text-align:left;">
+short_term_loans_3
+</th>
+<th style="text-align:left;">
+short_term_loans_4
+</th>
+<th style="text-align:left;">
+short_term_loans_5
+</th>
+<th style="text-align:left;">
+short_term_loans_6
+</th>
+<th style="text-align:left;">
+short_term_loans_7
+</th>
+<th style="text-align:left;">
+short_term_loans_8
+</th>
+<th style="text-align:left;">
+short_term_loans_9
+</th>
+<th style="text-align:left;">
+short_term_loans_10
+</th>
+<th style="text-align:left;">
+short_term_loans_11
+</th>
+<th style="text-align:left;">
+short_term_loans_12
+</th>
+<th style="text-align:left;">
+short_term_loans_13
+</th>
+<th style="text-align:left;">
+short_term_loans_14
+</th>
+<th style="text-align:left;">
+short_term_loans_15
+</th>
+<th style="text-align:left;">
+short_term_loans_16
+</th>
+<th style="text-align:left;">
+short_term_loans_17
+</th>
+<th style="text-align:left;">
+short_term_loans_18
+</th>
+<th style="text-align:left;">
+short_term_loans_19
+</th>
+<th style="text-align:left;">
+short_term_loans_20
+</th>
+<th style="text-align:left;">
+short_term_loans_21
+</th>
+<th style="text-align:left;">
+long_term_loans
+</th>
+<th style="text-align:left;">
+long_term_loans_1
+</th>
+<th style="text-align:left;">
+long_term_loans_2
+</th>
+<th style="text-align:left;">
+long_term_loans_3
+</th>
+<th style="text-align:left;">
+long_term_loans_4
+</th>
+<th style="text-align:left;">
+long_term_loans_5
+</th>
+<th style="text-align:left;">
+long_term_loans_6
+</th>
+<th style="text-align:left;">
+long_term_loans_7
+</th>
+<th style="text-align:left;">
+long_term_loans_8
+</th>
+<th style="text-align:left;">
+long_term_loans_9
+</th>
+<th style="text-align:left;">
+long_term_loans_10
+</th>
+<th style="text-align:left;">
+long_term_loans_11
+</th>
+<th style="text-align:left;">
+long_term_loans_12
+</th>
+<th style="text-align:left;">
+long_term_loans_13
+</th>
+<th style="text-align:left;">
+long_term_loans_14
+</th>
+<th style="text-align:left;">
+long_term_loans_15
+</th>
+<th style="text-align:left;">
+long_term_loans_16
+</th>
+<th style="text-align:left;">
+long_term_loans_17
+</th>
+<th style="text-align:left;">
+long_term_loans_18
+</th>
+<th style="text-align:left;">
+long_term_loans_19
+</th>
+<th style="text-align:left;">
+long_term_loans_20
+</th>
+<th style="text-align:left;">
+long_term_loans_21
+</th>
+<th style="text-align:left;">
+ev_over_ebitda
+</th>
+<th style="text-align:left;">
+net_equity
+</th>
+<th style="text-align:left;">
+total_assets
+</th>
+<th style="text-align:left;">
+total_liabilities
+</th>
+<th style="text-align:left;">
+close_price
+</th>
+<th style="text-align:left;">
+stock_volume
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+na
+</td>
+<td style="text-align:left;">
+na
+</td>
+<td style="text-align:left;">
+na
+</td>
+<td style="text-align:left;">
+na
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+31/03/2016
+</td>
+<td style="text-align:left;">
+30/06/2016
+</td>
+<td style="text-align:left;">
+30/09/2016
+</td>
+<td style="text-align:left;">
+31/12/2016
+</td>
+<td style="text-align:left;">
+31/03/2017
+</td>
+<td style="text-align:left;">
+30/06/2017
+</td>
+<td style="text-align:left;">
+30/09/2017
+</td>
+<td style="text-align:left;">
+31/12/2017
+</td>
+<td style="text-align:left;">
+31/03/2018
+</td>
+<td style="text-align:left;">
+30/06/2018
+</td>
+<td style="text-align:left;">
+30/09/2018
+</td>
+<td style="text-align:left;">
+31/12/2018
+</td>
+<td style="text-align:left;">
+31/03/2019
+</td>
+<td style="text-align:left;">
+30/06/2019
+</td>
+<td style="text-align:left;">
+30/09/2019
+</td>
+<td style="text-align:left;">
+31/12/2019
+</td>
+<td style="text-align:left;">
+31/03/2020
+</td>
+<td style="text-align:left;">
+30/06/2020
+</td>
+<td style="text-align:left;">
+30/09/2020
+</td>
+<td style="text-align:left;">
+31/12/2020
+</td>
+<td style="text-align:left;">
+31/03/2021
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+<td style="text-align:left;">
+last_snapshot
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3r Petroleum
+</td>
+<td style="text-align:left;">
+ON
+</td>
+<td style="text-align:left;">
+RRRP3
+</td>
+<td style="text-align:left;">
+oil_and_gas
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+32.400
+</td>
+<td style="text-align:left;">
+8.200
+</td>
+<td style="text-align:left;">
+17.252
+</td>
+<td style="text-align:left;">
+27.556
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+27.556
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+16.031
+</td>
+<td style="text-align:left;">
+3.443
+</td>
+<td style="text-align:left;">
+8.712
+</td>
+<td style="text-align:left;">
+14.156
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+14.156
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-8.048
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+46.549
+</td>
+<td style="text-align:left;">
+-49.179
+</td>
+<td style="text-align:left;">
+-17.132
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-17.132
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+31.650
+</td>
+<td style="text-align:left;">
+5.676
+</td>
+<td style="text-align:left;">
+47.824
+</td>
+<td style="text-align:left;">
+61.252
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+61.252
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+19.377
+</td>
+<td style="text-align:left;">
+27.394
+</td>
+<td style="text-align:left;">
+32.948
+</td>
+<td style="text-align:left;">
+37.067
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+37.067
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+6.527
+</td>
+<td style="text-align:left;">
+1.003
+</td>
+<td style="text-align:left;">
+3.258
+</td>
+<td style="text-align:left;">
+3.689
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+3.689
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+-91,9
+</td>
+<td style="text-align:left;">
+218.364
+</td>
+<td style="text-align:left;">
+400.857
+</td>
+<td style="text-align:left;">
+400.857
+</td>
+<td style="text-align:left;">
+38,02
+</td>
+<td style="text-align:left;">
+109.504
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+524 Particip
+</td>
+<td style="text-align:left;">
+ON
+</td>
+<td style="text-align:left;">
+QVQP3B
+</td>
+<td style="text-align:left;">
+electrical_energy
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+-136
+</td>
+<td style="text-align:left;">
+-163
+</td>
+<td style="text-align:left;">
+-108
+</td>
+<td style="text-align:left;">
+-118
+</td>
+<td style="text-align:left;">
+-117
+</td>
+<td style="text-align:left;">
+-99
+</td>
+<td style="text-align:left;">
+-155
+</td>
+<td style="text-align:left;">
+-156
+</td>
+<td style="text-align:left;">
+-190
+</td>
+<td style="text-align:left;">
+-188
+</td>
+<td style="text-align:left;">
+-141
+</td>
+<td style="text-align:left;">
+-133
+</td>
+<td style="text-align:left;">
+-141
+</td>
+<td style="text-align:left;">
+-147
+</td>
+<td style="text-align:left;">
+-142
+</td>
+<td style="text-align:left;">
+-142
+</td>
+<td style="text-align:left;">
+-130
+</td>
+<td style="text-align:left;">
+-133
+</td>
+<td style="text-align:left;">
+-131
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-131
+</td>
+<td style="text-align:left;">
+-30
+</td>
+<td style="text-align:left;">
+-23
+</td>
+<td style="text-align:left;">
+-28
+</td>
+<td style="text-align:left;">
+-22
+</td>
+<td style="text-align:left;">
+-33
+</td>
+<td style="text-align:left;">
+-25
+</td>
+<td style="text-align:left;">
+-24
+</td>
+<td style="text-align:left;">
+-24
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-29
+</td>
+<td style="text-align:left;">
+-16
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-17
+</td>
+<td style="text-align:left;">
+-17
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-8
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-8
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+80
+</td>
+<td style="text-align:left;">
+94
+</td>
+<td style="text-align:left;">
+118
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+61
+</td>
+<td style="text-align:left;">
+131
+</td>
+<td style="text-align:left;">
+156
+</td>
+<td style="text-align:left;">
+69
+</td>
+<td style="text-align:left;">
+93
+</td>
+<td style="text-align:left;">
+116
+</td>
+<td style="text-align:left;">
+133
+</td>
+<td style="text-align:left;">
+77
+</td>
+<td style="text-align:left;">
+107
+</td>
+<td style="text-align:left;">
+125
+</td>
+<td style="text-align:left;">
+142
+</td>
+<td style="text-align:left;">
+65
+</td>
+<td style="text-align:left;">
+98
+</td>
+<td style="text-align:left;">
+114
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+114
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+164
+</td>
+<td style="text-align:left;">
+164
+</td>
+<td style="text-align:left;">
+164
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+228.361
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Abc Brasil
+</td>
+<td style="text-align:left;">
+PN
+</td>
+<td style="text-align:left;">
+ABCB4
+</td>
+<td style="text-align:left;">
+finance_and_securities
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+4.288.263
+</td>
+<td style="text-align:left;">
+43.328.841
+</td>
+<td style="text-align:left;">
+43.328.841
+</td>
+<td style="text-align:left;">
+15,95
+</td>
+<td style="text-align:left;">
+219.905
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Aco Altona
+</td>
+<td style="text-align:left;">
+PN
+</td>
+<td style="text-align:left;">
+EALT4
+</td>
+<td style="text-align:left;">
+steel_industry
+</td>
+<td style="text-align:left;">
+37.863
+</td>
+<td style="text-align:left;">
+69.114
+</td>
+<td style="text-align:left;">
+89.851
+</td>
+<td style="text-align:left;">
+117.687
+</td>
+<td style="text-align:left;">
+30.436
+</td>
+<td style="text-align:left;">
+76.830
+</td>
+<td style="text-align:left;">
+121.258
+</td>
+<td style="text-align:left;">
+168.407
+</td>
+<td style="text-align:left;">
+57.896
+</td>
+<td style="text-align:left;">
+115.516
+</td>
+<td style="text-align:left;">
+183.809
+</td>
+<td style="text-align:left;">
+246.961
+</td>
+<td style="text-align:left;">
+87.896
+</td>
+<td style="text-align:left;">
+166.826
+</td>
+<td style="text-align:left;">
+232.299
+</td>
+<td style="text-align:left;">
+299.194
+</td>
+<td style="text-align:left;">
+59.676
+</td>
+<td style="text-align:left;">
+129.072
+</td>
+<td style="text-align:left;">
+188.787
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+188.787
+</td>
+<td style="text-align:left;">
+27.659
+</td>
+<td style="text-align:left;">
+53.880
+</td>
+<td style="text-align:left;">
+74.526
+</td>
+<td style="text-align:left;">
+100.019
+</td>
+<td style="text-align:left;">
+24.962
+</td>
+<td style="text-align:left;">
+60.604
+</td>
+<td style="text-align:left;">
+94.254
+</td>
+<td style="text-align:left;">
+137.902
+</td>
+<td style="text-align:left;">
+44.160
+</td>
+<td style="text-align:left;">
+87.776
+</td>
+<td style="text-align:left;">
+140.275
+</td>
+<td style="text-align:left;">
+196.304
+</td>
+<td style="text-align:left;">
+70.306
+</td>
+<td style="text-align:left;">
+131.942
+</td>
+<td style="text-align:left;">
+181.123
+</td>
+<td style="text-align:left;">
+234.512
+</td>
+<td style="text-align:left;">
+46.259
+</td>
+<td style="text-align:left;">
+95.476
+</td>
+<td style="text-align:left;">
+140.137
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+140.137
+</td>
+<td style="text-align:left;">
+601
+</td>
+<td style="text-align:left;">
+1.008
+</td>
+<td style="text-align:left;">
+1.366
+</td>
+<td style="text-align:left;">
+1.482
+</td>
+<td style="text-align:left;">
+1.263
+</td>
+<td style="text-align:left;">
+939
+</td>
+<td style="text-align:left;">
+1.755
+</td>
+<td style="text-align:left;">
+1.527
+</td>
+<td style="text-align:left;">
+1.935
+</td>
+<td style="text-align:left;">
+776
+</td>
+<td style="text-align:left;">
+1.393
+</td>
+<td style="text-align:left;">
+2.106
+</td>
+<td style="text-align:left;">
+5.054
+</td>
+<td style="text-align:left;">
+2.304
+</td>
+<td style="text-align:left;">
+2.916
+</td>
+<td style="text-align:left;">
+3.150
+</td>
+<td style="text-align:left;">
+2.458
+</td>
+<td style="text-align:left;">
+2.821
+</td>
+<td style="text-align:left;">
+13.329
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+13.329
+</td>
+<td style="text-align:left;">
+22.414
+</td>
+<td style="text-align:left;">
+16.935
+</td>
+<td style="text-align:left;">
+6.210
+</td>
+<td style="text-align:left;">
+12.790
+</td>
+<td style="text-align:left;">
+10.088
+</td>
+<td style="text-align:left;">
+19.670
+</td>
+<td style="text-align:left;">
+29.770
+</td>
+<td style="text-align:left;">
+57.679
+</td>
+<td style="text-align:left;">
+63.190
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+30.090
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+35.327
+</td>
+<td style="text-align:left;">
+39.280
+</td>
+<td style="text-align:left;">
+37.245
+</td>
+<td style="text-align:left;">
+33.753
+</td>
+<td style="text-align:left;">
+37.032
+</td>
+<td style="text-align:left;">
+36.812
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+36.812
+</td>
+<td style="text-align:left;">
+6.910
+</td>
+<td style="text-align:left;">
+2.964
+</td>
+<td style="text-align:left;">
+3.847
+</td>
+<td style="text-align:left;">
+-5.570
+</td>
+<td style="text-align:left;">
+1.260
+</td>
+<td style="text-align:left;">
+4.708
+</td>
+<td style="text-align:left;">
+2.719
+</td>
+<td style="text-align:left;">
+-20.228
+</td>
+<td style="text-align:left;">
+769
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-46.389
+</td>
+<td style="text-align:left;">
+90.821
+</td>
+<td style="text-align:left;">
+7.029
+</td>
+<td style="text-align:left;">
+-22.047
+</td>
+<td style="text-align:left;">
+33.354
+</td>
+<td style="text-align:left;">
+-15.517
+</td>
+<td style="text-align:left;">
+4.529
+</td>
+<td style="text-align:left;">
+4.867
+</td>
+<td style="text-align:left;">
+24.442
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+24.442
+</td>
+<td style="text-align:left;">
+7.149
+</td>
+<td style="text-align:left;">
+17.288
+</td>
+<td style="text-align:left;">
+22.500
+</td>
+<td style="text-align:left;">
+14.622
+</td>
+<td style="text-align:left;">
+5.058
+</td>
+<td style="text-align:left;">
+11.315
+</td>
+<td style="text-align:left;">
+17.054
+</td>
+<td style="text-align:left;">
+-17.605
+</td>
+<td style="text-align:left;">
+7.626
+</td>
+<td style="text-align:left;">
+16.720
+</td>
+<td style="text-align:left;">
+27.705
+</td>
+<td style="text-align:left;">
+30.497
+</td>
+<td style="text-align:left;">
+8.446
+</td>
+<td style="text-align:left;">
+18.996
+</td>
+<td style="text-align:left;">
+26.834
+</td>
+<td style="text-align:left;">
+37.608
+</td>
+<td style="text-align:left;">
+8.052
+</td>
+<td style="text-align:left;">
+18.479
+</td>
+<td style="text-align:left;">
+25.049
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+25.049
+</td>
+<td style="text-align:left;">
+2.853
+</td>
+<td style="text-align:left;">
+4.527
+</td>
+<td style="text-align:left;">
+6.462
+</td>
+<td style="text-align:left;">
+8.519
+</td>
+<td style="text-align:left;">
+1.847
+</td>
+<td style="text-align:left;">
+3.579
+</td>
+<td style="text-align:left;">
+5.484
+</td>
+<td style="text-align:left;">
+8.340
+</td>
+<td style="text-align:left;">
+1.901
+</td>
+<td style="text-align:left;">
+5.323
+</td>
+<td style="text-align:left;">
+8.002
+</td>
+<td style="text-align:left;">
+11.824
+</td>
+<td style="text-align:left;">
+3.685
+</td>
+<td style="text-align:left;">
+6.585
+</td>
+<td style="text-align:left;">
+9.630
+</td>
+<td style="text-align:left;">
+12.681
+</td>
+<td style="text-align:left;">
+3.974
+</td>
+<td style="text-align:left;">
+9.076
+</td>
+<td style="text-align:left;">
+12.947
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+12.947
+</td>
+<td style="text-align:left;">
+524
+</td>
+<td style="text-align:left;">
+1.275
+</td>
+<td style="text-align:left;">
+1.912
+</td>
+<td style="text-align:left;">
+2.483
+</td>
+<td style="text-align:left;">
+1.280
+</td>
+<td style="text-align:left;">
+1.963
+</td>
+<td style="text-align:left;">
+2.327
+</td>
+<td style="text-align:left;">
+2.994
+</td>
+<td style="text-align:left;">
+944
+</td>
+<td style="text-align:left;">
+2.081
+</td>
+<td style="text-align:left;">
+3.740
+</td>
+<td style="text-align:left;">
+3.962
+</td>
+<td style="text-align:left;">
+987
+</td>
+<td style="text-align:left;">
+1.957
+</td>
+<td style="text-align:left;">
+3.077
+</td>
+<td style="text-align:left;">
+5.059
+</td>
+<td style="text-align:left;">
+1.153
+</td>
+<td style="text-align:left;">
+1.945
+</td>
+<td style="text-align:left;">
+13.278
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+13.278
+</td>
+<td style="text-align:left;">
+22.226
+</td>
+<td style="text-align:left;">
+24.315
+</td>
+<td style="text-align:left;">
+23.591
+</td>
+<td style="text-align:left;">
+29.472
+</td>
+<td style="text-align:left;">
+29.281
+</td>
+<td style="text-align:left;">
+28.241
+</td>
+<td style="text-align:left;">
+27.650
+</td>
+<td style="text-align:left;">
+49.858
+</td>
+<td style="text-align:left;">
+49.391
+</td>
+<td style="text-align:left;">
+50.684
+</td>
+<td style="text-align:left;">
+58.304
+</td>
+<td style="text-align:left;">
+55.954
+</td>
+<td style="text-align:left;">
+51.193
+</td>
+<td style="text-align:left;">
+47.421
+</td>
+<td style="text-align:left;">
+51.363
+</td>
+<td style="text-align:left;">
+60.622
+</td>
+<td style="text-align:left;">
+93.474
+</td>
+<td style="text-align:left;">
+87.253
+</td>
+<td style="text-align:left;">
+73.249
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+73.249
+</td>
+<td style="text-align:left;">
+18.611
+</td>
+<td style="text-align:left;">
+16.109
+</td>
+<td style="text-align:left;">
+17.581
+</td>
+<td style="text-align:left;">
+12.686
+</td>
+<td style="text-align:left;">
+9.413
+</td>
+<td style="text-align:left;">
+5.409
+</td>
+<td style="text-align:left;">
+3.654
+</td>
+<td style="text-align:left;">
+4.592
+</td>
+<td style="text-align:left;">
+3.803
+</td>
+<td style="text-align:left;">
+17.909
+</td>
+<td style="text-align:left;">
+19.630
+</td>
+<td style="text-align:left;">
+26.254
+</td>
+<td style="text-align:left;">
+25.320
+</td>
+<td style="text-align:left;">
+23.645
+</td>
+<td style="text-align:left;">
+30.748
+</td>
+<td style="text-align:left;">
+27.026
+</td>
+<td style="text-align:left;">
+27.231
+</td>
+<td style="text-align:left;">
+22.924
+</td>
+<td style="text-align:left;">
+44.096
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+44.096
+</td>
+<td style="text-align:left;">
+9,8
+</td>
+<td style="text-align:left;">
+179.500
+</td>
+<td style="text-align:left;">
+441.746
+</td>
+<td style="text-align:left;">
+441.746
+</td>
+<td style="text-align:left;">
+4,94
+</td>
+<td style="text-align:left;">
+22.500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Aerisenergia
+</td>
+<td style="text-align:left;">
+ON
+</td>
+<td style="text-align:left;">
+AERI3
+</td>
+<td style="text-align:left;">
+industry_machines
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+834.259
+</td>
+<td style="text-align:left;">
+288.924
+</td>
+<td style="text-align:left;">
+752.955
+</td>
+<td style="text-align:left;">
+1.458.778
+</td>
+<td style="text-align:left;">
+2.208.702
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+2.208.702
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+686.132
+</td>
+<td style="text-align:left;">
+256.541
+</td>
+<td style="text-align:left;">
+661.393
+</td>
+<td style="text-align:left;">
+1.275.759
+</td>
+<td style="text-align:left;">
+1.962.843
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+1.962.843
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+148.232
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+229.066
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+229.066
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-232.470
+</td>
+<td style="text-align:left;">
+-58.618
+</td>
+<td style="text-align:left;">
+-150.783
+</td>
+<td style="text-align:left;">
+-349.397
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+-349.397
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+12.733
+</td>
+<td style="text-align:left;">
+3.380
+</td>
+<td style="text-align:left;">
+14.879
+</td>
+<td style="text-align:left;">
+22.405
+</td>
+<td style="text-align:left;">
+40.403
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+40.403
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+91.231
+</td>
+<td style="text-align:left;">
+48.921
+</td>
+<td style="text-align:left;">
+99.041
+</td>
+<td style="text-align:left;">
+146.995
+</td>
+<td style="text-align:left;">
+235.462
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+235.462
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+59.522
+</td>
+<td style="text-align:left;">
+39.611
+</td>
+<td style="text-align:left;">
+70.628
+</td>
+<td style="text-align:left;">
+101.154
+</td>
+<td style="text-align:left;">
+150.097
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+150.097
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+184.650
+</td>
+<td style="text-align:left;">
+355.028
+</td>
+<td style="text-align:left;">
+449.159
+</td>
+<td style="text-align:left;">
+546.849
+</td>
+<td style="text-align:left;">
+690.291
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+690.291
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+191.827
+</td>
+<td style="text-align:left;">
+266.393
+</td>
+<td style="text-align:left;">
+376.778
+</td>
+<td style="text-align:left;">
+529.777
+</td>
+<td style="text-align:left;">
+452.711
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+452.711
+</td>
+<td style="text-align:left;">
+38,2
+</td>
+<td style="text-align:left;">
+966.252
+</td>
+<td style="text-align:left;">
+2.370.629
+</td>
+<td style="text-align:left;">
+2.370.629
+</td>
+<td style="text-align:left;">
+10,81
+</td>
+<td style="text-align:left;">
+766.213
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
