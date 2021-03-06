@@ -2,6 +2,12 @@
 title: "Análise Exploratória de Dados Financeiros - Dataset da Economatica"
 date: 2021-02-27
 math: true
+output:
+  html_document:
+      fig_width: 9.5
+      fig_height: 7
+      fig_align: center
+      df_print: paged
 ---
 
 <script src="index_files/header-attrs/header-attrs.js"></script>
@@ -60,10 +66,10 @@ symbol
 <th style="text-align:left;">
 metric_name
 </th>
-<th style="text-align:left;">
+<th style="text-align:right;">
 31/03/2016
 </th>
-<th style="text-align:left;">
+<th style="text-align:right;">
 30/06/2016
 </th>
 </tr>
@@ -82,12 +88,12 @@ RRRP3
 <td style="text-align:left;">
 net_revenue
 </td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -102,10 +108,10 @@ QVQP3B
 <td style="text-align:left;">
 net_revenue
 </td>
-<td style="text-align:left;">
+<td style="text-align:right;">
 0
 </td>
-<td style="text-align:left;">
+<td style="text-align:right;">
 0
 </td>
 </tr>
@@ -122,12 +128,12 @@ ABCB4
 <td style="text-align:left;">
 net_revenue
 </td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -142,10 +148,10 @@ EALT4
 <td style="text-align:left;">
 net_revenue
 </td>
-<td style="text-align:left;">
+<td style="text-align:right;">
 37863
 </td>
-<td style="text-align:left;">
+<td style="text-align:right;">
 69114
 </td>
 </tr>
@@ -162,18 +168,207 @@ AERI3
 <td style="text-align:left;">
 net_revenue
 </td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
-</table></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
+</table>
+<p>Agora vamos a sessão de perguntas e respostas referentes ao dataset que formará nossa análise exploratória:</p>
+<ol style="list-style-type: lower-roman">
+<li>Quantidade de empresas no dataset por setor econômico.</li>
+</ol>
+<pre class="r"><code>dataset_1 %&gt;% 
+  distinct(economatica_classification, symbol) %&gt;% 
+  group_by(economatica_classification) %&gt;% 
+  summarise(count = n()) %&gt;% 
+  arrange(desc(count)) -&gt; df
+
+total &lt;- 
+  df %&gt;%
+  group_by() %&gt;% 
+  summarise(total = sum(count)) %&gt;% 
+  as.data.frame()
+
+df[nrow(df)+1, ] = list(&quot;Total&quot;,total[1,1])
+
+df %&gt;% 
+  knitr::kable(format.args = list(big.mark = &quot;.&quot;,
+                                  decimal.mark = &quot;,&quot;))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+economatica_classification
+</th>
+<th style="text-align:right;">
+count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+other
+</td>
+<td style="text-align:right;">
+95
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+electrical_energy
+</td>
+<td style="text-align:right;">
+41
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+finance_and_securities
+</td>
+<td style="text-align:right;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+retail
+</td>
+<td style="text-align:right;">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+real_state
+</td>
+<td style="text-align:right;">
+29
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+transport_and_services
+</td>
+<td style="text-align:right;">
+21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+textile
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+steel_industry
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vehicles
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+food_and_beverages
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+software_and_data
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oil_and_gas
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+chemistry
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+industry_machines
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mining
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+telecom
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+eletronics
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agriculture
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+paper_and_cellulose
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+376
+</td>
+</tr>
+</tbody>
+</table>

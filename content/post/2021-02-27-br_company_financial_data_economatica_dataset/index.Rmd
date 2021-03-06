@@ -2,6 +2,12 @@
 title: "Análise Exploratória de Dados Financeiros - Dataset da Economatica"
 date: 2021-02-27
 math: true
+output:
+  html_document:
+      fig_width: 9.5
+      fig_height: 7
+      fig_align: center
+      df_print: paged
 ---
 
 ```{r, message=F, warning=F, echo=F}
@@ -66,5 +72,41 @@ dataset_1 %>%
   knitr::kable()
 ```
 
+Agora vamos a sessão de perguntas e respostas referentes ao dataset que formará nossa análise exploratória:
 
+(i) Quantidade de empresas no dataset por setor econômico.
+
+```{r}
+dataset_2 %>% 
+  group_by(economatica_classification) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) -> df
+
+total <- 
+  df %>%
+  group_by() %>% 
+  summarise(total = sum(count)) %>% 
+  as.data.frame()
+
+df[nrow(df)+1, ] = list("Total",total[1,1])
+
+df %>% 
+  knitr::kable(format.args = list(big.mark = ".",
+                                  decimal.mark = ","))
+```
+
+(ii) Distribuição do preço da ação por setor econômico
+
+```{r}
+dataset_2 %>% 
+  mutate(close_price = as.numeric(close_price)) %>% 
+  ggplot2::ggplot()+
+  geom_boxplot(mapping = aes(x = economatica_classification,
+                             y = close_price))+
+  coord_flip()+
+  theme_graph()+
+  labs(title = "Distribuição do preço de fechamdo (25/02/2021)",
+       x = "",
+       y = "")
+```
 
