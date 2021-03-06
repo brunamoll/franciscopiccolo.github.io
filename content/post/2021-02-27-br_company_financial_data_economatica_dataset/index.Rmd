@@ -24,7 +24,10 @@ Como vou ter que fazer uma análise exploratória do dataset para ver o que ser�
 # Pacote necessário para usar a função abaixo, que lê o arquivo no github
 library(readr)
 
-dataset <- readr::read_delim(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv",
+dataset_1 <- readr::read_delim(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/dataset_1.csv",
+                           delim = ";")
+
+dataset_2 <- readr::read_delim(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/dataset_2.csv",
                            delim = ";")
 ```
 
@@ -36,6 +39,7 @@ Para esta análise, vou usar os pacotes abaixo:
 library(tidyverse)
 library(patchwork)
 library(kableExtra)
+library(DT)
 
 # Função para padronizar o design dos gráficos
 theme_graph <- function(){
@@ -56,49 +60,11 @@ theme_graph <- function(){
 Abaixo consta uma amostra dos dados:
 
 ```{r}
-dataset %>% 
-  head() %>%
-  tibble::tibble()
+dataset_1 %>% 
+  select(company,class,symbol,metric_name,"31/03/2016","30/06/2016") %>% 
+  head(5) %>% 
+  knitr::kable()
 ```
-
-Note que o dataset está em um formato não mto prático para manipulação, pois as métricas estão no formato "wider", ao invés de "longer". Vou fazer a transformação para facilitar a manipulação ao longo da análise. Como quase todas as métricas possuem a mesma quantidade de colunas (19), é possível fazer isso de forma massiva.
-
-ev_over_ebitda	net_equity	total_assets	total_liabilities	close_price	stock_volume
-
-
-```{r}
-#dataset <- 
-  
-df1 <- 
-  dataset %>% 
-  select(1:23) %>% 
-  renam
-
-df1 %>% dim()
-  
-df2 <-
-  dataset %>%
-  select(1:4, 24:(24+18))
-
-df1 %>% union_all(df2) %>% View()
-
-df2 %>% dim()
-
-union_all(dataset %>% 
-            select(1:4, (24+19):(24+19+18))) %>% 
-union_all(dataset %>% 
-            select(1:4, (24+19+19):(24+19+19+18))) %>% 
-  View()
-  
-  
-  
-  
-  dataset %>% 
-      select(1:4, 24:(24+18)) %>% 
-  head()
-```
-
-
 
 
 
