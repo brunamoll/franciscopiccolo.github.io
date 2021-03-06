@@ -16,21 +16,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-A Economatica é uma empresa de tecnologia do setor financeiro que fornece dados sobre empresas, fundos de investimentos e ações, que auxiliam investidores na tomada de decisão e também acadêmicos na elaboração de estudos. Recentemente comecei a elaborar um artigo acadêmico relacionado a finanças e precisei recorrer à Economatica para pegar alguns dados necessários.
+A Economatica é uma empresa de tecnologia do setor financeiro que fornece dados sobre empresas, fundos de investimentos e ações, que auxiliam investidores na tomada de decisão e também acadêmicos na elaboração de estudos. Recentemente comecei a elaborar um artigo acadêmico relacionado a finanças e precisei recorrer à Economatica para pegar alguns dados financeiros de empresas listadas na Bovespa.
 
 Como vou ter que fazer uma análise exploratória do dataset para ver o que será relevante usar no artigo, vou aproveitar para documentar esta análise e deixar o dataset disponível para que outras pessoas usem também. O dataset pode ser acessado neste [link](https://github.com/FranciscoPiccolo/franciscopiccolo.github.io/tree/master/datasets/2021-02-27-dataset_economatica) ou através do comando abaixo:
 
 ```{r}
+# Pacote necessário para usar a função abaixo, que lê o arquivo no github
 library(readr)
 
 dataset <- readr::read_delim(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv",
                            delim = ";")
-
-dataset %>%
-  head()
 ```
 
-Para este projeto, vou usar os pacotes abaixo, e também o template de gráficos criando a função 'theme_graph':
+O dataset apresenta dados de Março/2016 até Set/2020 das seguintes métricas: Receita líquida; custo de produtos vendidos (cpv); investimentos; EBITDA; Fluxo de caixa livre; Despesas operacionais; Despesas financeiras; Receitas financeiras; Empréstimos de curto prazo; Empréstimos de longo prazo; EV/EBITDA; Patrimônio Líquido; Ativo toal; Passivo + Patrimônio Líquido.
+
+Para esta análise, vou usar os pacotes abaixo:
 
 ```{r}
 library(tidyverse)
@@ -53,16 +53,50 @@ theme_graph <- function(){
 }
 ```
 
-O dataset apresenta dados financeiros de empresas de capital aberto negociadas na Ibovespa. Abaixo há uma amostra dos dados presentes nele:
+Abaixo consta uma amostra dos dados:
 
 ```{r}
 dataset %>% 
   head() %>%
-  kableExtra::kable(format.args = list(big.mark = ".", decimal.mark = "."))
+  tibble::tibble()
 ```
 
+Note que o dataset está em um formato não mto prático para manipulação, pois as métricas estão no formato "wider", ao invés de "longer". Vou fazer a transformação para facilitar a manipulação ao longo da análise. Como quase todas as métricas possuem a mesma quantidade de colunas (19), é possível fazer isso de forma massiva.
+
+ev_over_ebitda	net_equity	total_assets	total_liabilities	close_price	stock_volume
 
 
+```{r}
+#dataset <- 
+  
+df1 <- 
+  dataset %>% 
+  select(1:23) %>% 
+  renam
+
+df1 %>% dim()
+  
+df2 <-
+  dataset %>%
+  select(1:4, 24:(24+18))
+
+df1 %>% union_all(df2) %>% View()
+
+df2 %>% dim()
+
+union_all(dataset %>% 
+            select(1:4, (24+19):(24+19+18))) %>% 
+union_all(dataset %>% 
+            select(1:4, (24+19+19):(24+19+19+18))) %>% 
+  View()
+  
+  
+  
+  
+  dataset %>% 
+      select(1:4, 24:(24+18)) %>% 
+  head()
+```
 
 
 
