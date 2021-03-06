@@ -24,3 +24,6 @@ date: 2020-12-06
 
 <img src=./library_images/elements_of_forecasting.png
      style="float: left; widh: 150px; height: 250px" />
+
+<img src=./library_images/the_man_who_solved_the_market.png
+     style="float: left; widh: 150px; height: 250px" />

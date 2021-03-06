@@ -25,6 +25,9 @@ library(readr)
 
 dataset <- readr::read_delim(file = "https://raw.githubusercontent.com/FranciscoPiccolo/franciscopiccolo.github.io/master/datasets/2021-02-27-dataset_economatica/economatica_dataset_original.csv",
                            delim = ";")
+
+dataset %>%
+  head()
 ```
 
 Para este projeto, vou usar os pacotes abaixo, e também o template de gráficos criando a função 'theme_graph':
