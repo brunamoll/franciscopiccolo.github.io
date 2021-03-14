@@ -12,11 +12,12 @@ date: 2020-12-06
 |![](./library_images/basic_econometrics_gujarati.png)|![](./library_images/data_analysis_and_graphics_using_R.png)|![](./library_images/forecasting_principles_and_practices.png)|
 |:---:|:---:|:---:|
 
-<p float="left">
+
+<div float="left">
   <img src="./library_images/forecasting_principles_and_practices.png" style="widh: 150px; height: 250px" />
   <img src="./library_images/data_analysis_and_graphics_using_R.png" style="widh: 150px; height: 250px" />
   <img src="./library_images/basic_econometrics_gujarati.png" style="widh: 150px; height: 250px" />
-</p>
+</div>
 
 
 <p float="left">
