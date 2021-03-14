@@ -3,9 +3,11 @@ aliases:
 - library
 author:
   name: Francisco Piccolo
-title: Livros Recomendados
+title: Livros que Li e Recomendo
 date: 2020-12-06
 ---
+
+## 2021
 
 <img src=./library_images/basic_econometrics_gujarati.png
      style="float: left; widh: 150px; height: 250px" />
@@ -27,3 +29,17 @@ date: 2020-12-06
 
 <img src=./library_images/the_man_who_solved_the_market.png
      style="float: left; widh: 150px; height: 250px" />
+
+
+## 2020
+
+
+## 2019
+
+## 2018
+
+## 2017
+
+## 2016
+
+## 2015

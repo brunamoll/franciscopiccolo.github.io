@@ -1,0 +1,140 @@
+---
+title: "Explorando o pacote Get DFP Data"
+date: "2021-03-08"
+output:
+    html_document:
+      fig_height: 4
+      fig_width: 6
+      df_print: paged
+      css: style.css
+---
+
+```{r, eval=T,message=F,warning=F}
+knitr::opts_chunk$set(echo = T,
+                      warning = F,
+                      message = F,
+                      fig.align = "center")
+```
+
+Neste post vou explorar um novo pacote que apareceu em minha limeline do Linkedin. O pacote 'getdfpdata2', que é um banco de dados com informações financeiras das empresas listadas na B3. Vou entender como se acessa estes dados, como eles estão estruturados e alguns usos que podem ser feitos a partir dele.
+
+O pacote está em fase de desenvolvimento, podendo ser instaldo via devtools:
+
+```{r, eval=F}
+library(devtools)
+devtools::install_github("msperlin/GetDFPData2")
+```
+
+Após instalar o pacote, vou trazer para o ambiente ele e o tidyverse para me auxiliar na manipulação dos dados.
+
+```{r}
+library(tidyverse)
+library(GetDFPData2)
+```
+
+Para trazer o dataset financeiro, basta executar o comando abaixo, que irá solicitar o ano de início, fim e o tipo de informação (e.g. DRE, BP). No comando abaixo, eu baixo o dataset referente à DRE de todas as empresas disponíveis, de 2010 até 2020 e em seguida salvo este dataset em formato '.csv', para não preicsar ficar baixando sempre.
+
+```{r, eval=F}
+dataset_original <- GetDFPData2::get_dfp_data(
+                          first_year = "2010",
+                          last_year = "2020",
+                          type_docs = "DRE",
+                          type_format = "ind")
+
+
+
+
+# Note a utilização do Encoding para preservar os acentos
+write.csv(x = dataset_original$`DF Individual - Demonstração do Resultado`,
+          file = "C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/datasets/2021-03-10-financial_dataset_b3_getdfpdata_package/dataset_1.csv",
+          fileEncoding = "latin1")
+```
+
+Agora basta fazer a leitura do arquivo '.csv' para poder fazer a análise exploratória.
+
+```{r}
+# Novamente, mantendo o encoding na hora da leitura
+dataset <- 
+  read.csv(file = "C:/Users/fppicco/Desktop/R/Github/franciscopiccolo.github.io/datasets/2021-03-10-financial_dataset_b3_getdfpdata_package/dataset_1.csv",
+           encoding = "latin1") %>% 
+  select(-1) %>% 
+  distinct_all()  # Retirando linhas duplicadas do dataset
+
+dataset$DT_INI_EXERC <- lubridate::ymd(dataset$DT_INI_EXERC)
+dataset$DT_FIM_EXERC <- lubridate::ymd(dataset$DT_FIM_EXERC)
+```
+
+## Estrutura do dataset - linhas e colunas
+
+```{r}
+dataset %>%
+  dim()
+```
+
+```{r}
+dataset %>%
+  head() %>% 
+  DT::datatable()
+```
+
+## Quantidade de CNPJs no dataset
+
+```{r}
+dataset %>% 
+  distinct(CNPJ_CIA) %>% 
+  dim()
+```
+
+### Quantidade de CNPJs por anos de dados disponíveis
+
+```{r}
+dataset %>%
+  #filter(lubridate::year(DT_FIM_EXERC) != "2020") %>% 
+  select(DENOM_CIA, DT_INI_EXERC, DT_FIM_EXERC) %>%
+  group_by(DENOM_CIA) %>% 
+  summarise(first_year = lubridate::year(min(DT_INI_EXERC)),
+            last_year = lubridate::year(max(DT_FIM_EXERC))) %>% 
+  mutate(diff = last_year-first_year) %>% 
+  group_by(diff) %>% 
+  summarise(count = n()) %>% 
+  ggplot2::ggplot()+
+  geom_col(mapping = aes(x = diff, y = count),
+           fill = "steel blue")+
+  scale_x_continuous(breaks = seq(0,10,by = 1))+
+  labs(title = "# Empresas por anos de dados disponibilizado",
+       subtitle = "Maioria das empreas com 9 anos de dados disponível",
+       x = "Anos em que a empresa possuí dados no dataset")
+```
+
+## Quantidade de métricas no dataset
+
+```{r}
+dataset %>%
+  distinct(CD_CONTA) %>%
+  dim()
+```
+
+```{r}
+dataset %>% 
+  distinct(DS_CONTA) %>% 
+  dim()
+```
+
+```{r}
+dataset %>%
+  #filter(lubridate::year(DT_FIM_EXERC) != "2020") %>% 
+  select(DENOM_CIA, CD_CONTA, DT_INI_EXERC, DT_FIM_EXERC) %>%
+  group_by(DENOM_CIA, CD_CONTA) %>% 
+  summarise(first_year = lubridate::year(min(DT_INI_EXERC)),
+            last_year = lubridate::year(max(DT_FIM_EXERC))) %>% 
+  mutate(diff = last_year-first_year) %>% 
+  group_by(diff, CD_CONTA) %>% 
+  summarise(count = n()) %>%
+  mutate(share = count/960) %>% 
+  View()
+```
+
+## Quantidade de 
+
+
+

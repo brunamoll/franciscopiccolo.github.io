@@ -110,3 +110,17 @@ dataset_2 %>%
        y = "")
 ```
 
+(iii) Validação de valores nulos no dataset 1
+
+```{r}
+df <- dataset_1
+  
+df[df == 0] <- NA  
+
+Amelia::missmap(df)
+```
+
+
+
+
+
