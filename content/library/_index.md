@@ -9,7 +9,7 @@ date: 2020-12-06
 
 ## 2021
 
-|![](./library_images/basic_econometrics_gujarati.png){ width=50% }|![](./library_images/data_analysis_and_graphics_using_R.png){ width=50% }|![](./library_images/forecasting_principles_and_practices.png){ width=50% }|
+|![](./library_images/basic_econometrics_gujarati.png)<!-- .element height="50%" width="50%" -->|![](./library_images/data_analysis_and_graphics_using_R.png)<!-- .element height="50%" width="50%" -->|![](./library_images/forecasting_principles_and_practices.png)<!-- .element height="50%" width="50%" -->|
 |:---:|:---:|:---:|
 
 
