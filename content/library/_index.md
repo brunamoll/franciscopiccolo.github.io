@@ -9,6 +9,8 @@ date: 2020-12-06
 
 ## 2021
 
+<p float="left">
+
 <img src=./library_images/basic_econometrics_gujarati.png
      style="widh: 150px; height: 250px" />
 
@@ -29,6 +31,7 @@ date: 2020-12-06
 
 <img src=./library_images/the_man_who_solved_the_market.png
      style="widh: 150px; height: 250px" />
+</p>
 
 
 ## 2020
@@ -47,6 +50,10 @@ date: 2020-12-06
 <img src=./library_images/2014_estrutura_e_analise_de_balancos_assaf_neto.png
      style="widh: 150px; height: 250px" />
 
+## 2014
+
+<img src=./library_images/2014_pmbook_pmi.png
+     style="widh: 150px; height: 250px" />
 
 ## 2013
 
