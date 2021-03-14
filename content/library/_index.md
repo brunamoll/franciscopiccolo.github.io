@@ -10,7 +10,6 @@ date: 2020-12-06
 ## 2021
 
 <p float="left">
-
 <img src=./library_images/basic_econometrics_gujarati.png
      style="widh: 150px; height: 250px" />
 
@@ -53,7 +52,6 @@ date: 2020-12-06
 ## 2014
 
 <p float="left">
-
 <img src=./library_images/2014_pmbook_pmi.png
      style="widh: 150px; height: 250px" />
 
@@ -64,7 +62,6 @@ date: 2020-12-06
 ## 2013
 
 <p float="left">
-
 <img src=./library_images/2013_o_coracao_da_lideranca.png
      style="widh: 150px; height: 250px" />
 
