@@ -52,13 +52,22 @@ date: 2020-12-06
 
 ## 2014
 
+<p float="left">
+
 <img src=./library_images/2014_pmbook_pmi.png
      style="widh: 150px; height: 250px" />
 
+<img src=./library_images/2014_como_fazer_amigos_e_influenciar_pessoas.png
+     style="widh: 150px; height: 250px" />
+</p>
+
 ## 2013
+
+<p float="left">
 
 <img src=./library_images/2013_o_coracao_da_lideranca.png
      style="widh: 150px; height: 250px" />
 
 <img src=./library_images/2013_o_poder_do_habito.png
      style="widh: 150px; height: 250px" />
+</p>
