@@ -43,3 +43,9 @@ date: 2020-12-06
 ## 2016
 
 ## 2015
+
+<img src=./library_images/2014_estrutura_e_analise_de_balancos_assaf_neto.png
+     style="float: left; widh: 150px; height: 250px" />
+
+
+     
