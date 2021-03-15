@@ -39,7 +39,8 @@ date: 2020-12-06
 
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
-|<img src=./library_images/2016_a_utopia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_administracao_estrategica.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_oceano_azul.png style="float: left; widh: 150px; height: 250px" />|
+|<img src=./library_images/2016_a_utopia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_administracao_estrategica.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_oceano_azul.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_business_model_generation.png style="float: left; widh: 150px; height: 250px" />|
+
 
 ## **2015**
 
