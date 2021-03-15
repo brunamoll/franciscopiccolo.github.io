@@ -45,7 +45,7 @@ date: 2020-12-06
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
 |<img src=./library_images/2015_a_origem_do_capitalismo_ellen_wood.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_a_nova_contabilidade_social_leda_maria.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_filosofia_da_ciencia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_fundamentos_da_economia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_muito_alem_da_economia_verde.png style="float: left; widh: 150px; height: 250px" />|
-|<img src=./library_images/2015_a_ultima_gota.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_porque_as_nacoes_fracassam.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_contabilidade_basica.png style="float: left; widh: 150px; height: 250px" />|
+|<img src=./library_images/2015_a_ultima_gota.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_porque_as_nacoes_fracassam.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_contabilidade_basica.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_o_principe.png style="float: left; widh: 150px; height: 250px" />|
 
 
 ## **2014**
