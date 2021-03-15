@@ -40,7 +40,7 @@ date: 2020-12-06
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
 |<img src=./library_images/2016_a_utopia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_administracao_estrategica.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_oceano_azul.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_business_model_generation.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_competicao.png style="float: left; widh: 150px; height: 250px" />|
-|<img src=./library_images/2016_conquistando_mercados_mundiais.png style="float: left; widh: 150px; height: 250px" />|
+|<img src=./library_images/2016_conquistando_mercados_mundiais.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_contabilidade_social.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_economia_das_empresas.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2016_nos_bastidores_da_mckinskey.png style="float: left; widh: 150px; height: 250px" />|
 
 
 ## **2015**
