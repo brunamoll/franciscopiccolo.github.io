@@ -23,7 +23,7 @@ date: 2020-12-06
 
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
-|<img src=./library_images/r_for_data_science.png style="float: left; widh: 150px; height: 250px" />|
+|<img src=./library_images/r_for_data_science.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_beggining_my_sql.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_redes_de_computadores.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_querying_microsoft_sql_server.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_the_dw_etl_tooklit.png style="float: left; widh: 150px; height: 250px" />|
 
 ## **2018**
 
