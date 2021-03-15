@@ -24,6 +24,7 @@ date: 2020-12-06
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
 |<img src=./library_images/r_for_data_science.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_beggining_my_sql.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_redes_de_computadores.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_querying_microsoft_sql_server.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_the_dw_etl_tooklit.png style="float: left; widh: 150px; height: 250px" />|
+|<img src=./library_images/2019_start_schema.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_uma_senhora_toma_cha.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2019_a_loja_de_tudo.png style="float: left; widh: 150px; height: 250px" />|
 
 ## **2018**
 
@@ -35,7 +36,8 @@ date: 2020-12-06
 
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
-|<img src=./library_images/2017_business_analysis.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_como_mentir_com_estatistica.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_economia_da_estrategia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_elon_musk.png style="float: left; widh: 150px; height: 250px" />|
+|<img src=./library_images/2017_business_analysis.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_como_mentir_com_estatistica.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_economia_da_estrategia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_elon_musk.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_financas_corporativa_e_valor.png style="float: left; widh: 150px; height: 250px" />|
+|<img src=./library_images/2017_os_numeros_do_jogo.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_balance_scorecard.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_the_seven_cs_of_consulting.png style="float: left; widh: 150px; height: 250px" />|
 
 
 ## **2016**
