@@ -44,8 +44,17 @@ date: 2020-12-06
 
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
+|<img src=./library_images/2015_a_origem_do_capitalismo_ellen_wood.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_a_nova_contabilidade_social_leda_maria.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_a_nova_contabilidade_social_leda_maria.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_fundamentos_da_economia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_muito_alem_da_economia_verde.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_fundamentos_da_economia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2015_porque_as_nacoes_fracassam.png style="float: left; widh: 150px; height: 250px" />|
+
 
 ## 2014
 
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
+|<img src=./library_images/2014_pmbook_pmi.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2014_como_fazer_amigos_e_influenciar_pessoas.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2014_estrutura_e_analise_de_balancos_assaf_neto.png style="float: left; widh: 150px; height: 250px" />|
+
+## 2013
+
+|  1  |  2  |  3  |  4  |  5  |
+|-----|-----|-----|-----|-----|
+|<img src=./library_images/2013_o_poder_do_habito.png style="float: left; widh: 150px; height: 250px" />|
