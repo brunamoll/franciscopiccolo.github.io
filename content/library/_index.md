@@ -34,6 +34,8 @@ date: 2020-12-06
 
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
+|<img src=./library_images/2017_business_analysis.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_como_mentir_com_estatistica.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_economia_da_estrategia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2017_elon_musk.png style="float: left; widh: 150px; height: 250px" />|
+
 
 ## **2016**
 
