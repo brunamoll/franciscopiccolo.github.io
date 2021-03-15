@@ -29,6 +29,7 @@ date: 2020-12-06
 
 |  1  |  2  |  3  |  4  |  5  |
 |-----|-----|-----|-----|-----|
+|<img src=./library_images/2018_a_historia_da_heineken.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2018_marketing_de_a_a_z.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2018_safari_da_estrategia.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2018_the_lords_of_strategy.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/2018_the_dw_lifecycle_toolkit.png style="float: left; widh: 150px; height: 250px" />|
 
 ## **2017**
 
