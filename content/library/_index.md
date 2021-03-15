@@ -9,6 +9,10 @@ date: 2020-12-06
 
 ## 2021
 
+|col1|col2|
+|----|----|
+|<img src=./library_images/basic_econometrics_gujarati.png style="float: left; widh: 150px; height: 250px" />|<img src=./library_images/data_analysis_and_graphics_using_R.png style="float: left; widh: 150px; height: 250px" />|
+
 
 <p float="left">
   <img src=./library_images/basic_econometrics_gujarati.png style="float: left; widh: 150px; height: 250px" />
